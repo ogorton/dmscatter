@@ -306,16 +306,16 @@ subroutine readalldensities(resfile)
 
           call read2Jtrans(resfile,foundjt)
           if(.not.foundjt)then
-                endoflist = .true.
-                backspace(resfile)
-                exit
+              endoflist = .true.
+              backspace(resfile)
+              exit
           end if
-   print *, endoflist, jt
+          print *, endoflist, jt
 !          if(map2parent(istate) > 0 .and. map2daughter(fstate) > 0)then
 !                         print*,' states ',istate,map2parent(istate),fstate,map2daughter(fstate)
 
-             call readdensity(resfile,success)
-             if(success)nodensities=.false.
+          call readdensity(resfile,success)
+          if(success)nodensities=.false.
 !          end if
       end do ! endoflist
 !CFJIAO
