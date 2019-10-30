@@ -1,0 +1,11 @@
+File structure tree
+
+SubRoutine							File
+darkmattermain							darkmattermain.f90
+....GetSPS							getsps.f90
+....openresults							densities.f90
+....setupdensities						densities.f90
+....readheaderv2						read.f90
+....readalldensities						read.f90
+........read2state                                              read.f90
+........read2Jtrans                                             read.f90
