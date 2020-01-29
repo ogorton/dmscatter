@@ -1,0 +1,23 @@
+    if (ioption .le. 3) then
+        Do j = 0,6,2
+            Do t = 0, 1
+                Do a = 1, ntotal(1)
+                    Do b = 1, ntotal(1)
+                        If (abs(densitymats%rho(j,t,a,b)) .ge. 1.0e-9) then
+                            call OperME(op1,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME)
+                            IsoME(t)= spOME * sqrt(2.d0) *sqrt(2*dble(t)+1.0)
+                            DRME(j,t) = DRME(j,t) + densitymats%rho(j,t,a,b)*IsoME(t)
+                            SRME(j,t) = (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*t,Tiso,-Mtiso,0,Mtiso)*DRME(j,t)
+                        end if
+                    end do !b
+                end do !a
+            end do !t
+        end do !j
+
+        Do j = 0, 6, 2
+            Do tt1 = 0,1
+                Do tt2 = 0,1
+                    Response(tt1,tt2) = Response(tt1,tt2)+ SRME(j,tt1)*SRME(j,tt2)
+                end do !tt2
+            end do !tt1
+        end do !j

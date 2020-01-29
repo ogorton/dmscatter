@@ -5,7 +5,7 @@ subroutine readheaderv2(resfile)
    integer resfile
 !   character(1) :: ctrlchar
    character(23) :: tmpline
-   integer i,j,n,k
+   integer i,j,n
    real e,ex,xj,xt
 !   real etol
 !   real, pointer :: ee(:)
@@ -124,7 +124,7 @@ subroutine read2state(resfile,locchar,n,found,finished)
    integer n
    logical found,finished
    character(4) :: myloc
-   integer m
+   !integer m
    found = .false.
    select case (locchar)
      case ('i')
@@ -166,7 +166,7 @@ subroutine read2Jtrans(resfile,found)
    integer resfile
    logical found
    character(3) :: tmpchar
-   integer j
+   !integer j
 
    read(resfile,'(a3)',end=111)tmpchar
    if(tmpchar(2:3) == ' ' .or. tmpchar(2:3)=='In' .or. tmpchar(1:2)=='++')then
@@ -201,12 +201,12 @@ subroutine readdensity(resfile,success)
 !   use op_info
    implicit none
    integer resfile
-   integer istate,fstate
+   !integer istate,fstate
    integer a,b,i
    real ops,opv
-   real fact0t,fact1t  ! isospin factors
+   !real fact0t,fact1t  ! isospin factors
    logical :: success
-   real cleb !       ! function from LIBRA.f
+   !real cleb !       ! function from LIBRA.f
 
    success=.false.
 
@@ -274,8 +274,8 @@ subroutine readalldensities(resfile)
    implicit none
    integer resfile
    integer istate,fstate
-   integer a,b,i,j
-   real ops,opv
+   !integer a,b,i,j
+   !real ops,opv
    logical foundi,foundf,foundjt
    logical endoffile,endoflist
    logical finished,success
