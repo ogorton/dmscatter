@@ -3,11 +3,13 @@ module response
 
     implicit none
     
+    ! Nonrelativistic operator coefficients
     type coeff
         real(kind=8), dimension(:), allocatable :: c
     end type coeff
  
-    type(coeff) :: cvec(0:1)
+    ! 0 = protons, 1 = neutrons
+    type(coeff) :: cvec(0:1) 
 
 end module response
 
@@ -67,5 +69,7 @@ module masses
     REAL(kind=8) :: Miso = 1.0
     ! Reduced mass of the target
     REAL(kind=8) :: muT = 1.0
+    ! Harmonic oscillator parameter
+    real(kind=8) :: bfm
 
 end module masses

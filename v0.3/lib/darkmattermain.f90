@@ -10,6 +10,7 @@ program darkmattermain
     use response
     use spspace
     use stateinfo
+    use masses
     implicit none
 
     interface
@@ -36,14 +37,20 @@ program darkmattermain
     ! TEST BLOCK <<<<<<
     real(kind=8) :: transprob
     real(kind=8) :: q,v,jchi,y
+    REAL(kind=8)  :: nucResponse
     q=1.
     v=1.
-    jchi=1.
+    jchi=.5
     y=1.
+    mchi=50.
     allocate(cvec(1)%c(17))
     allocate(cvec(0)%c(17))
-    cvec(1)%c=1.0
-    cvec(0)%c=1.0
+    cvec(0)%c = 0.0
+    cvec(0)%c = 0.0
+
+    call opencoeffmatrix(2)
+    call readcoeffmatrix(2)
+
     ! >>>>>>> END TEST BLOCK
     
     call GetSPS
@@ -66,10 +73,15 @@ program darkmattermain
     print*,' Enter the proton number '
     read(5,*)ap
 
+    bfm = (41.467/(45.*(an+ap)**(-1./3) - 25.*(ap+an)**(-2./3)))**0.5
+    y = (q*bfm/2.0)**2.0
+    print*,'b[fm]=',bfm
+    print*,'y=',y
+    print*,'cvec p',cvec(0)%c
+    print*,'cvec n',cvec(1)%c
+
     Mtiso = ap-an
-
-    call test_nucresponse(Mtiso) 
-
+ 
     transprob = transition_probability(q,v,jchi,y,Mtiso)
    
     print*,transprob

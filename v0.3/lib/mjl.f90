@@ -60,8 +60,12 @@ function MJLDivQoverall(lp,jp,l,j,bigJ,bigL)
     xjp = dble(jp)/2.0
     xj  = dble(j )/2.0
 
-    MJLDivQoverall = (-1)**(bigL+j+0.5)* Qnorm(dble(lp))*Qnorm(xjp)*Qnorm(xj)*Qnorm(dble(bigJ))*Qnorm(dble(bigL)) &
-        & *Wigner_6j(2*lp,jp,1,j,2*l,2*bigJ)/SQRT(4*Pi)
+    ! Error trap
+    print*,bigL+j
+
+    MJLDivQoverall = (-1.0)**(bigL+j)* Qnorm(dble(lp))*Qnorm(xjp) &
+        *Qnorm(xj)*Qnorm(dble(bigJ))*Qnorm(dble(bigL)) &
+        *Wigner_6j(2*lp,jp,1,j,2*l,2*bigJ)/SQRT(4*Pi)
 
 end function MJLDivQoverall
 
@@ -126,8 +130,10 @@ function MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL)
     REAL(kind=8) :: Wigner_3j,Wigner_6j
     REAL(kind=8) :: MJLDivQsummand2
 
-    MJLDivQsummand2 = SQRT(dble(l))*Qnorm(dble(l)-1.0)*Wigner_6j(2*bigL,2,2*bigJ,2*l,2*lp,2*(l-1))  &
-        & *Wigner_3j(2*lp,2*bigL,2*(l-1),0,0,0)*BesselElementplus(y,np,lp,n,l,bigL)
+    MJLDivQsummand2 = SQRT(dble(l))*Qnorm(dble(l)-1.0) &
+        *Wigner_6j(2*bigL,2,2*bigJ,2*l,2*lp,2*(l-1))  &
+        *Wigner_3j(2*lp,2*bigL,2*(l-1),0,0,0) &
+        *BesselElementplus(y,np,lp,n,l,bigL)
 
 end function MJLDivQsummand2
 
@@ -163,10 +169,14 @@ function MJLDivQ(y,np,lp,jp,n,l,j,bigJ,bigL)
 
      INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ,bigL
      REAL(kind=8), INTENT(IN) :: y
-     REAL(kind=8) :: MJLDivQ
+     REAL(kind=8) :: MJLDivQ, tmp
 
-     MJLDivQ = MJLDivQoverall(lp,jp,l,j,bigJ,bigL) * (MJLDivQsummand1(y,np,lp,jp,n,l,j,bigJ,bigL) &
-         &+MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL))
+     MJLDivQ = MJLDivQoverall(lp,jp,l,j,bigJ,bigL) &
+         * (MJLDivQsummand1(y,np,lp,jp,n,l,j,bigJ,bigL) &
+         +MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL))
+     tmp = MJLDivQoverall(lp,jp,l,j,bigJ,bigL)
+     tmp = MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL)
+     print*,mjldivq,tmp
 
 end function MJLDivQ
 

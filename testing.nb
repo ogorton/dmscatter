@@ -1,0 +1,303 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     11752,        295]
+NotebookOptionsPosition[      9710,        255]
+NotebookOutlinePosition[     10047,        270]
+CellTagsIndexPosition[     10004,        267]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{"<<", 
+  RowBox[{
+  "(", "\"\</Users/oliver/sdsu/darkmatter/dmformfactor-V6.m\>\"", 
+   ")"}]}], "\[IndentingNewLine]", 
+ RowBox[{"v", "=", "1"}], "\[IndentingNewLine]", 
+ RowBox[{"qGeV", "=", "1"}], "\[IndentingNewLine]", 
+ RowBox[{"SetJChi", "[", 
+  RowBox[{"1", "/", "2"}], "]"}], "\n", 
+ RowBox[{"SetMChi", "[", 
+  RowBox[{"50", " ", "GeV"}], "]"}], "\n", 
+ RowBox[{
+  RowBox[{"F19filename", "=", "\"\<default\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"bFM", "=", "\"\<default\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"SetIsotope", "[", 
+   RowBox[{"9", ",", "19", ",", "bFM", ",", "F19filename"}], "]"}], 
+  " "}], "\[IndentingNewLine]", "bFM", "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetCoeffsNonrel", "[", 
+   RowBox[{"3", ",", "3.1", ",", "\"\<p\>\""}], "]"}], 
+  " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"TransitionProbability", "[", 
+   RowBox[{"v", ",", "qGeV"}], "]"}], " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"TransitionProbability", "[", 
+   RowBox[{"v", ",", "qGeV", ",", "True"}], "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.790518683227404*^9, 3.790518773824355*^9}, {
+  3.790518806961668*^9, 3.790518837030019*^9}, {3.790518870792315*^9, 
+  3.790518877959256*^9}, {3.790518915681859*^9, 3.790518916727191*^9}, {
+  3.790518947720324*^9, 3.79051897579113*^9}, {3.790519017799795*^9, 
+  3.790519025975636*^9}, {3.790520787555048*^9, 3.790520809417397*^9}},
+ CellLabel->"In[44]:=",ExpressionUUID->"e1b2dd94-2fd5-4521-a488-b8c36979e6cd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ StyleBox["\<\"Welcome to DMFormFactor version 1.1.\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0, 0, 1],
+  FrontFaceColor->RGBColor[0, 0, 1],
+  BackFaceColor->RGBColor[0, 0, 1],
+  GraphicsColor->RGBColor[0, 0, 1],
+  FontSize->32,
+  FontColor->RGBColor[0, 0, 1]]], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.790520812369412*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"1d30bd27-2d5c-43f1-aeb3-23b23874b4e7"],
+
+Cell[BoxData["\<\"Functions are SetCoeffsNonrel, SetCoeffsRel, SetCoeffsNucl, \
+ZeroCoeffs, SetJChi, SetMchi, SetIsotope, SetHALO, SetHelm, \
+TransitionProbability, ResponseNucl, DiffCrossSection, \
+ApproxTotalCrossSection, and EventRate.\"\>"], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.790520812371172*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"ea8aca41-e6df-4fae-ac04-fca46864b136"]
+}, Open  ]],
+
+Cell[BoxData["1"], "Output",
+ CellChangeTimes->{
+  3.79051893248201*^9, 3.790518985609095*^9, 3.790519026670197*^9, {
+   3.790520799313642*^9, 3.79052081237267*^9}},
+ CellLabel->"Out[45]=",ExpressionUUID->"56b981bd-f52a-4563-9f98-1faf213b90ee"],
+
+Cell[BoxData["1"], "Output",
+ CellChangeTimes->{
+  3.79051893248201*^9, 3.790518985609095*^9, 3.790519026670197*^9, {
+   3.790520799313642*^9, 3.790520812374125*^9}},
+ CellLabel->"Out[46]=",ExpressionUUID->"d32482b3-1ade-47e4-a870-210364521d4e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Getting default matrix...\"\>"], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.790520812375753*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"b9ea54cc-8246-42ba-917f-b599147cf149"],
+
+Cell[BoxData["\<\"Setting isotope to fluorine-19 (default.)\"\>"], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.790520812377325*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"3fa786cb-49d0-41cd-958e-045915efcac9"]
+}, Open  ]],
+
+Cell[BoxData["\<\"default\"\>"], "Output",
+ CellChangeTimes->{
+  3.79051893248201*^9, 3.790518985609095*^9, 3.790519026670197*^9, {
+   3.790520799313642*^9, 3.790520812378735*^9}},
+ CellLabel->"Out[52]=",ExpressionUUID->"0e3412c2-0a51-46f5-b78b-0f3957c4251e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Your Lagrangian is\"\>"], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.790520812380144*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"92ecf5b1-f6ee-4a4d-be65-a4471d4d9039"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\" \\!\\(\\*SubscriptBox[\\(L\\), \\(prot\\)]\\)=\"\>", 
+    "\[InvisibleSpace]", "0.`"}], "\[VeryThinSpace]", "+", 
+   FractionBox[
+    RowBox[{
+    "0.000054507572408256263`", 
+     " ", "\<\"\[ImaginaryI] \\!\\(\\*SubscriptBox[\\(S\\), \\(N\\)]\\)\
+\[CenterDot](q\[Times]\\!\\(\\*SuperscriptBox[\\(v\\), \
+\\(\[Perpendicular]\\)]\\))\"\>"}], 
+    SuperscriptBox["GeV", "3"]]}],
+  SequenceForm[
+  " \!\(\*SubscriptBox[\(L\), \(prot\)]\)=", 0. + 
+   0.000054507572408256263` 
+    "\[ImaginaryI] \!\(\*SubscriptBox[\(S\), \(N\)]\)\[CenterDot](q\[Times]\!\
+\(\*SuperscriptBox[\(v\), \(\[Perpendicular]\)]\))" dmformfactor`GeV^(-3)],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.790520812381793*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"980bd5b1-6e3f-4e20-8f5e-da266e263a98"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\" \\!\\(\\*SubscriptBox[\\(L\\), \\(neut\\)]\\)=\"\>", 
+   "\[InvisibleSpace]", "0.`"}],
+  SequenceForm[" \!\(\*SubscriptBox[\(L\), \(neut\)]\)=", 0.],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.79052081238377*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"814feee2-a2c7-4ece-aaa4-fba6918caca1"],
+
+Cell[BoxData["\<\"Your transition probability is\"\>"], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.7905208123848677`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"d8b62238-493b-4556-bb1e-97c857035928"]
+}, Open  ]],
+
+Cell[BoxData[
+ FractionBox["7.504738188864083`*^-23", 
+  SuperscriptBox["GeV", "4"]]], "Output",
+ CellChangeTimes->{
+  3.79051893248201*^9, 3.790518985609095*^9, 3.790519026670197*^9, {
+   3.790520799313642*^9, 3.790520818743227*^9}},
+ CellLabel->"Out[54]=",ExpressionUUID->"d5286c1f-cb0b-46bd-8fd5-e60cb8aef0e6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Your Lagrangian is\"\>"], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.790520818746009*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"2bcb5ee5-36a3-45c3-9353-8c158fd515ca"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   RowBox[{"\<\" \\!\\(\\*SubscriptBox[\\(L\\), \\(prot\\)]\\)=\"\>", 
+    "\[InvisibleSpace]", "0.`"}], "\[VeryThinSpace]", "+", 
+   FractionBox[
+    RowBox[{
+    "0.000054507572408256263`", 
+     " ", "\<\"\[ImaginaryI] \\!\\(\\*SubscriptBox[\\(S\\), \\(N\\)]\\)\
+\[CenterDot](q\[Times]\\!\\(\\*SuperscriptBox[\\(v\\), \
+\\(\[Perpendicular]\\)]\\))\"\>"}], 
+    SuperscriptBox["GeV", "3"]]}],
+  SequenceForm[
+  " \!\(\*SubscriptBox[\(L\), \(prot\)]\)=", 0. + 
+   0.000054507572408256263` 
+    "\[ImaginaryI] \!\(\*SubscriptBox[\(S\), \(N\)]\)\[CenterDot](q\[Times]\!\
+\(\*SuperscriptBox[\(v\), \(\[Perpendicular]\)]\))" dmformfactor`GeV^(-3)],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.79052081874767*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"464a0cb6-f7b3-46a4-a609-71b5145c8fd1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\" \\!\\(\\*SubscriptBox[\\(L\\), \\(neut\\)]\\)=\"\>", 
+   "\[InvisibleSpace]", "0.`"}],
+  SequenceForm[" \!\(\*SubscriptBox[\(L\), \(neut\)]\)=", 0.],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.790520818751193*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"53e86575-b346-45ad-b3f8-b6ee140c43e5"],
+
+Cell[BoxData["\<\"Your transition probability is\"\>"], "Print",
+ CellChangeTimes->{
+  3.790518872169276*^9, 3.790518918597055*^9, 3.7905189790257196`*^9, 
+   3.790519026666377*^9, {3.7905207993104563`*^9, 3.790520818752239*^9}},
+ CellLabel->
+  "During evaluation of \
+In[44]:=",ExpressionUUID->"d23d0529-2842-41fe-82e3-372f99322054"]
+}, Open  ]],
+
+Cell[BoxData["9.540260902775725`*^-16"], "Output",
+ CellChangeTimes->{
+  3.79051893248201*^9, 3.790518985609095*^9, 3.790519026670197*^9, {
+   3.790520799313642*^9, 3.79052082526462*^9}},
+ CellLabel->"Out[55]=",ExpressionUUID->"36257f88-0bb6-4249-8d1f-fe8dffa45efb"]
+}, Open  ]]
+},
+WindowSize->{808, 911},
+WindowMargins->{{Automatic, 38}, {33, Automatic}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 1548, 35, 304, "Input",ExpressionUUID->"e1b2dd94-2fd5-4521-a488-b8c36979e6cd"],
+Cell[CellGroupData[{
+Cell[2153, 61, 564, 14, 49, "Print",ExpressionUUID->"1d30bd27-2d5c-43f1-aeb3-23b23874b4e7"],
+Cell[2720, 77, 524, 9, 63, "Print",ExpressionUUID->"ea8aca41-e6df-4fae-ac04-fca46864b136"]
+}, Open  ]],
+Cell[3259, 89, 244, 4, 34, "Output",ExpressionUUID->"56b981bd-f52a-4563-9f98-1faf213b90ee"],
+Cell[3506, 95, 245, 4, 34, "Output",ExpressionUUID->"d32482b3-1ade-47e4-a870-210364521d4e"],
+Cell[CellGroupData[{
+Cell[3776, 103, 329, 6, 24, "Print",ExpressionUUID->"b9ea54cc-8246-42ba-917f-b599147cf149"],
+Cell[4108, 111, 345, 6, 24, "Print",ExpressionUUID->"3fa786cb-49d0-41cd-958e-045915efcac9"]
+}, Open  ]],
+Cell[4468, 120, 259, 4, 34, "Output",ExpressionUUID->"0e3412c2-0a51-46f5-b78b-0f3957c4251e"],
+Cell[CellGroupData[{
+Cell[4752, 128, 322, 6, 24, "Print",ExpressionUUID->"92ecf5b1-f6ee-4a4d-be65-a4471d4d9039"],
+Cell[5077, 136, 990, 23, 45, "Print",ExpressionUUID->"980bd5b1-6e3f-4e20-8f5e-da266e263a98"],
+Cell[6070, 161, 498, 11, 24, "Print",ExpressionUUID->"814feee2-a2c7-4ece-aaa4-fba6918caca1"],
+Cell[6571, 174, 336, 6, 24, "Print",ExpressionUUID->"d8b62238-493b-4556-bb1e-97c857035928"]
+}, Open  ]],
+Cell[6922, 183, 313, 6, 55, "Output",ExpressionUUID->"d5286c1f-cb0b-46bd-8fd5-e60cb8aef0e6"],
+Cell[CellGroupData[{
+Cell[7260, 193, 322, 6, 24, "Print",ExpressionUUID->"2bcb5ee5-36a3-45c3-9353-8c158fd515ca"],
+Cell[7585, 201, 989, 23, 45, "Print",ExpressionUUID->"464a0cb6-f7b3-46a4-a609-71b5145c8fd1"],
+Cell[8577, 226, 499, 11, 24, "Print",ExpressionUUID->"53e86575-b346-45ad-b3f8-b6ee140c43e5"],
+Cell[9079, 239, 334, 6, 24, "Print",ExpressionUUID->"d23d0529-2842-41fe-82e3-372f99322054"]
+}, Open  ]],
+Cell[9428, 248, 266, 4, 68, "Output",ExpressionUUID->"36257f88-0bb6-4249-8d1f-fe8dffa45efb"]
+}, Open  ]]
+}
+]
+*)
+

@@ -1357,7 +1357,9 @@ Sum[DMResponseCoeff[MJ][[iiFF,jjFF]]*FF[DMmatrix,MJ,J,T][[iiFF,jjFF]]+DMResponse
 
 Fv0MB[\[Eta]_,xmin_]:=(Erf[xmin+\[Eta]]-Erf[xmin-\[Eta]])/(2 \[Eta]);
 FvsqMB[\[Eta]_,xmin_]:=((E^-(-xmin+\[Eta])^2 (xmin+\[Eta])-E^-(xmin+\[Eta])^2 (xmin-\[Eta]))/(2 Sqrt[\[Pi]] \[Eta])+((1+2 \[Eta]^2) (Erf[xmin+\[Eta]]-Erf[xmin-\[Eta]]))/(4 \[Eta]));
+
 Fv0MBcutoff[\[Eta]_,xmin_,xesc_]:=(-4 \[Eta] (-3-3 xesc^2+3 xmin^2+\[Eta]^2)+3 E^xesc^2 Sqrt[\[Pi]] (Erf[xmin-\[Eta]]-Erf[xmin+\[Eta]]))/(2 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])) UnitStep[xesc-xmin-\[Eta]]+(2 (xesc-xmin+\[Eta]) (3+(2 xesc+xmin-\[Eta]) (xesc-xmin+\[Eta]))+3 E^xesc^2 Sqrt[\[Pi]] (-Erf[xesc]+Erf[xmin-\[Eta]]))/(2 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])) UnitStep[xesc-xmin+\[Eta],-xesc+xmin+\[Eta]];
+
 FvsqMBcutoff[\[Eta]_,xmin_,xesc_]:=(-(E^(-2 (xmin^2+\[Eta]^2)) (-30 E^(xesc^2+(xmin-\[Eta])^2) (xmin-\[Eta])+30 E^(xesc^2+(xmin+\[Eta])^2) (xmin+\[Eta])+4 E^(2 (xmin^2+\[Eta]^2)) \[Eta] (-15 (2+2 xesc^2+xesc^4-xmin^4)-10 (1+xesc^2) \[Eta]^2+\[Eta]^4)+15 E^(xesc^2+2 (xmin^2+\[Eta]^2)) Sqrt[\[Pi]] (1+2 \[Eta]^2) (-Erf[xmin-\[Eta]]+Erf[xmin+\[Eta]])))/(20 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])))UnitStep[xesc-xmin-\[Eta]]+((E^(-xmin^2-\[Eta]^2) (2 E^(xmin^2+\[Eta]^2) (15 xesc+10 xesc^3+4 xesc^5-10 xmin^3-10 xesc^2 xmin^3+6 xmin^5+15 (2+2 xesc^2+xesc^4-xmin^4) \[Eta]+10 (3 xesc+2 xesc^3+xmin^3) \[Eta]^2+10 (1+xesc^2) \[Eta]^3-\[Eta]^5)+15 E^xesc^2 (-2 E^(2 xmin \[Eta]) (xmin+\[Eta])+E^(xmin^2+\[Eta]^2) Sqrt[\[Pi]] (1+2 \[Eta]^2) (-Erf[xesc]+Erf[xmin-\[Eta]]))))/(20 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])))UnitStep[xesc-xmin+\[Eta],-xesc+xmin+\[Eta]];
 
 

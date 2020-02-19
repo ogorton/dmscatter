@@ -3,6 +3,7 @@ OPTIONS = -O2 -fbounds-check   # -r8
 
 OBJ1 = \
 modules.o\
+setcoeffs.o\
 getsps.o\
 densities.o\
 read.o\

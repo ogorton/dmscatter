@@ -116,7 +116,7 @@ function dmrPhiPPJMJ(tau1, tau2, q, v, jchi)
                 cvec(tau1)%c(1) + cvec(tau1)%c(2) * ( &
                     v*v - q*q/(4*muT*muT) &
                 ) &
-            )
+        )
 
 end function dmrPhiPPJMJ
 

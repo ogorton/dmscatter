@@ -29,31 +29,29 @@ subroutine OperME(i,y,np,lp,jp,n,l,j,bigJ,operatorME)
     else if (i .eq. 3) then
         operatorMe = Qnorm(dble(bigJ)+1.0)*SQRT(dble(bigJ)+1.0)*(PhiPPsummand1(y,np,lp,jp,n,l,j,bigJ) &
             & +PhiPPsummand2(y,np,lp,jp,n,l,j,bigJ))
-    if (bigJ .ne. 0) then
-        operatorMe = operatorMe + Qnorm(dble(bigJ)-1)*SQRT(dble(bigJ)) &
-             & *(PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)    &
-             & +PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ))
-    end if
-
-    operatorME = operatorME * PhiPPoverall(lp,jp,l,j)
-
+        if (bigJ .ne. 0) then
+            operatorMe = operatorMe + Qnorm(dble(bigJ)-1)*SQRT(dble(bigJ)) &
+                 & *(PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)    &
+                 & +PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ))
+        end if
+    
+        operatorME = operatorME * PhiPPoverall(lp,jp,l,j)
+    
     ! i = 4, for operator PhiTPJ
-
     else if (i .eq. 4) then
 
-    operatorME = -Qnorm(dble(bigJ)+1.0)*SQRT(dble(bigJ))*(PhiPPsummand1(y,np,lp,jp,n,l,j,bigJ) &
-        & +PhiPPsummand2(y,np,lp,jp,n,l,j,bigJ))
-    if (bigJ .ne. 0) then
-        operatorMe = operatorMe + Qnorm(dble(bigJ)-1.0)*SQRT(dble(bigJ)+1.0) &
-             & *(PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)    &
-             & +PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ))
-    end if
+        operatorME = -Qnorm(dble(bigJ)+1.0)*SQRT(dble(bigJ))*(PhiPPsummand1(y,np,lp,jp,n,l,j,bigJ) &
+            & +PhiPPsummand2(y,np,lp,jp,n,l,j,bigJ))
+        if (bigJ .ne. 0) then
+            operatorMe = operatorMe + Qnorm(dble(bigJ)-1.0)*SQRT(dble(bigJ)+1.0) &
+                 & *(PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)    &
+                 & +PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ))
+        end if
 
-    operatorME = operatorME * PhiPPoverall(lp,jp,l,j)
-    operatorME = operatorME + SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ)/2.0
+        operatorME = operatorME * PhiPPoverall(lp,jp,l,j)
+        operatorME = operatorME + SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ)/2.0
 
     ! i = 5, for operator DeltaJ
-
     else if (i .eq. 5) then
         operatorME = MJLDivQ(y,np,lp,jp,n,l,j,bigJ,bigJ)
 
