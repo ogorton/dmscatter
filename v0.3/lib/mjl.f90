@@ -61,7 +61,6 @@ function MJLDivQoverall(lp,jp,l,j,bigJ,bigL)
     xj  = dble(j )/2.0
 
     ! Error trap
-    print*,bigL+j
 
     MJLDivQoverall = (-1.0)**(bigL+j)* Qnorm(dble(lp))*Qnorm(xjp) &
         *Qnorm(xj)*Qnorm(dble(bigJ))*Qnorm(dble(bigL)) &
@@ -106,6 +105,8 @@ end function MJLDivQsummand1
 !-------------------------------------------------------------------------------
 function MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL)
 
+    ! l must be .ge. 1 for Qnorm function.
+
     implicit none
     INTERFACE
 
@@ -130,10 +131,16 @@ function MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL)
     REAL(kind=8) :: Wigner_3j,Wigner_6j
     REAL(kind=8) :: MJLDivQsummand2
 
-    MJLDivQsummand2 = SQRT(dble(l))*Qnorm(dble(l)-1.0) &
-        *Wigner_6j(2*bigL,2,2*bigJ,2*l,2*lp,2*(l-1))  &
-        *Wigner_3j(2*lp,2*bigL,2*(l-1),0,0,0) &
-        *BesselElementplus(y,np,lp,n,l,bigL)
+    if (l.eq.0) then ! O.C.G: avoid Qnorm(-1)
+        MJLDivQsummand2 = 0.0
+    else
+
+        MJLDivQsummand2 = SQRT(dble(l))*Qnorm(dble(l)-1.0) &
+            *Wigner_6j(2*bigL,2,2*bigJ,2*l,2*lp,2*(l-1))  &
+            *Wigner_3j(2*lp,2*bigL,2*(l-1),0,0,0) &
+            *BesselElementplus(y,np,lp,n,l,bigL)
+
+    endif
 
 end function MJLDivQsummand2
 
@@ -174,9 +181,6 @@ function MJLDivQ(y,np,lp,jp,n,l,j,bigJ,bigL)
      MJLDivQ = MJLDivQoverall(lp,jp,l,j,bigJ,bigL) &
          * (MJLDivQsummand1(y,np,lp,jp,n,l,j,bigJ,bigL) &
          +MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL))
-     tmp = MJLDivQoverall(lp,jp,l,j,bigJ,bigL)
-     tmp = MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL)
-     print*,mjldivq,tmp
 
 end function MJLDivQ
 

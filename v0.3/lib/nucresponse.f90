@@ -77,14 +77,12 @@ function nucResponse(tau1,tau2,ioption,y,Mtiso)
     Do j = jmin,jmax,2
         Do a = 1, ntotal(1)
             Do b = 1, ntotal(1)
-                print*,j,a,b
                 If (abs(densitymats%rho(j,tau1,a,b)) .ge. 1.0e-9) then
                 If (abs(densitymats%rho(j,tau2,a,b)) .ge. 1.0e-9) then
 
                     ! Operator 1 with tau2 <j| op1,tau1 |j>
                     call OperME(op1,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME1)
                     IsoME1= spOME1 * sqrt(2.d0) *sqrt(2*dble(tau1)+1.0)
-                    print*,'a',spome1,op1
                     DRME1(j) = DRME1(j) + densitymats%rho(j,tau1,a,b)*IsoME1
                     SRME1(j) = (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso)*DRME1(j)
 
@@ -99,7 +97,7 @@ function nucResponse(tau1,tau2,ioption,y,Mtiso)
             end do
         end do
         nucResponse = nucResponse + SRME1(j)*SRME2(j)
-        print*,SRME1(j),SRME2(j)
+        if (isnan(SRME1(j)).or.isnan(SRME2(j)))print*,SRME1(j),SRME2(j)
     end do
 
 end function nucResponse

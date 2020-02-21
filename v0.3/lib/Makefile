@@ -26,7 +26,7 @@ darkmattermain.o
 .f.o:;  ($(COMP) -c $(OPTIONS) $(<F)) 
 
 darkmatter.x: $(OBJ1) 
-	$(COMP) -o darkmatter.x -lblas -llapack $(OPTIONS) $(OBJ1) 
+	$(COMP) -o darkmatter.x  $(OPTIONS) $(OBJ1) 
 
 clean:
 	rm *.o *.x *.mod
