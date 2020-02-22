@@ -63,7 +63,6 @@ subroutine readcoeffmatrix(resfile)
         do while(.not.EOF)
 
             read(resfile,*,end=111) nucleon, op, coef
-            print*,nucleon, op, coef
             call setcoeffsnonrel(op, coef, nucleon)
 
         end do
@@ -77,3 +76,45 @@ subroutine readcoeffmatrix(resfile)
     end do
 
 end subroutine readcoeffmatrix
+
+!!  If[Op==1,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==2,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==3,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==4,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==5,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==6,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN^2;];
+!!  If[Op==7,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==8,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==9,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==10, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==11, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==12, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==13, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==14, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==15, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN^2;];
+!!  
+subroutine normalizecoeffs
+    use masses
+    use response
+    implicit none
+    integer :: i, j, op, mNdenomOps(7), mNmNdenomOps(2)
+
+    mNdenomOps = [3, 5, 9, 10, 11, 13, 14]
+    mNmNdenomOps = [6, 15]
+
+    do i=0,1
+        cvec(i)%c = cvec(i)%c * 4*mN*mchi/(mV*mV)
+        do j = 1, 2
+            op = mNmNdenomOps(j)
+            cvec(i)%c(op) = cvec(i)%c(op)/(mN*mN)
+        enddo
+        do j = 1, 7
+            op = mNdenomOps(j)
+            cvec(i)%c(op) = cvec(i)%c(op)/(mN)
+        enddo
+    enddo
+
+end subroutine normalizecoeffs
+
+
+

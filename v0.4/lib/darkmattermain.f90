@@ -37,12 +37,13 @@ program darkmattermain
     ! TEST BLOCK <<<<<<
     real(kind=8) :: transprob
     real(kind=8) :: q,v,jchi,y
-    REAL(kind=8)  :: nucResponse
+    REAL(kind=8) :: nucResponse
+
     q=1.
     v=1.
     jchi=.5
-    y=1.
     mchi=50.
+
     allocate(cvec(1)%c(17))
     allocate(cvec(0)%c(17))
     cvec(0)%c = 0.0
@@ -50,6 +51,7 @@ program darkmattermain
 
     call opencoeffmatrix(2)
     call readcoeffmatrix(2)
+    call normalizecoeffs
 
     ! >>>>>>> END TEST BLOCK
     
@@ -77,14 +79,18 @@ program darkmattermain
     y = (q*bfm/2.0)**2.0
     print*,'b[fm]=',bfm
     print*,'y=',y
-    print*,'cvec p',cvec(0)%c
-    print*,'cvec n',cvec(1)%c
 
-    Mtiso = ap-an
- 
-    transprob = transition_probability(q,v,jchi,y,Mtiso)
+    Mtiso = (ap-an)
+    Miso = ap+an
+    muT = mchi * Miso * mN / (mchi+Miso*mN)
+
+    print*,'Mtiso=',Mtiso
+    print*,'Miso=',Miso
+    print*,'muT=',muT
+
+    transprob = exp(-2.0*y)*transition_probability(q,v,jchi,y,Mtiso)/(4.0*mN*mchi)**2
    
-    print*,transprob
+    print*,"Transition probability =",transprob
 
 end program  
 
