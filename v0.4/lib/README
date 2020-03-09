@@ -1,0 +1,18 @@
+File structure tree
+
+Format:
+program
+....subroutine							File
+--------function
+
+darkmattermain							darkmattermain.f90
+....GetSPS							getsps.f90
+....openresults							densities.f90
+....setupdensities						densities.f90
+....readheaderv2						read.f90
+....readalldensities						read.f90
+........read2state                                              read.f90
+........read2Jtrans                                             read.f90
+........readdensity						read.f90
+........coredensity						densities.f90
+....OperMe							operme.f90

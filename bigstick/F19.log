@@ -1,7 +1,7 @@
   = = = = = = BIGSTICK run log file = = = = = = 
   Code and run information 
   BIGSTICK Version 7.8.4 Apr  2018
-  Run date: 2020-02-12
+  Run date: 2020-02-21
   Menu choice: d  
 
  Running on NERSC_HOST: none
@@ -37,40 +37,44 @@
  Total nonzero matrix (including indices, assuming hermitian) would require   0.2906E-04 Gb storage 
   
   Interactions read in: 
-  opening OXBASH/NuSHELL-style isospin formatted file usdb.int
- ! depmas=  0.30 lincom=  56 icntrl= 1 fgserr=  1.00                   
- ! 1=d3/2 2=d5/2 3=s1/2                                                
- ! the first line has the three single-particle energies               
- ! the - sign tells oxbash that the tbme have a mass dependence of the 
- ! [18/(16+n)]^0.3 where n is the number of valence particles          
+  opening OXBASH/NuSHELL-style isospin formatted file w18.int
+ ! The "USD" interaction of B. H. Wildenthal for A=18                  
+ ! For other A the two-body matrix elements should be multiplied       
+ ! by (18/A)**(0.3) and the single-particle matrix elements            
+ ! are mass independent. In OXBASH the multiplication is done          
+ ! automatically in the subroutine SHSP.FOR                            
+ ! ERROR CHANGED AUG 1988   (2   2   2   1        2   1     -0.2878000)
+ ! ORDER:  1 = 1D3/2    2 = 1D5/2    3 = 2S1/2                         
+ ! The following spe give values of 15.63, 21.75 and 18.13 relative to 
+ ! 40Ca (1.612 -2.684 -2.967)                                          
   Scaling: spe    1.00000000      TBMEs by (   18.0000000     /   19.0000000     )^  0.300000012      =   0.983910680    
           63  two-body matrix elements in this file 
   No one-body potential beyond single-particle energies 
   Time to compute jumps :    0.0000000000000000     
-  Time to run after lanczos:    26.172999999951571     
+  Time to run after lanczos:    35.929000000003725     
   Total storage of jumps =    8.81999995E-07  Gb 
-  Time to run after lanczos:    26.591000000014901     
-  Total time to run :    26.988000000012107     
-  Time to compute basis :    1.0000000474974513E-003
-  Time to count up jumps :    0.0000000000000000     
+  Time to run after lanczos:    36.356999999843538     
+  Total time to run :    37.047999999951571     
+  Time to compute basis :    0.0000000000000000     
+  Time to count up jumps :    9.9999993108212948E-004
   Time to create descendents :    0.0000000000000000     
   Time to setup for matrix elements :    0.0000000000000000     
-  Time to decouple matrix elements :    1.9999999785795808E-003
+  Time to decouple matrix elements :    1.9999998621642590E-003
   Time to compute jumps :    0.0000000000000000     
-  Time to sort 1b-jumps :    0.0000000000000000     
+  Time to sort 1b-jumps :    1.0000001639127731E-003
   Time to set up pivot :    0.0000000000000000     
-  Time to compute lanczos :    3.3999999985098839E-002
+  Time to compute lanczos :    5.1000000210478902E-002
   Time total in H mat-vec multiply  :    0.0000000000000000     
   Time to apply sp energies :    0.0000000000000000     
-  Time in pn :    8.9999998454004526E-003
-  Time in pn(back) :    7.0000000996515155E-003
-  Time in 2-body (pp) :    0.0000000000000000     
-  Time in 2-body (nn) :    1.1000000056810677E-002
+  Time in pn :    1.6999999992549419E-002
+  Time in pn(back) :    9.9999997764825821E-003
+  Time in 2-body (pp) :    9.9999993108212948E-004
+  Time in 2-body (nn) :    7.9999999143183231E-003
   Time in reorthogonalization :    0.0000000000000000     
   Time spent diagonalizing. :    0.0000000000000000     
   Time to build eigenvectors. :    0.0000000000000000     
-  Time to compute J^2, T^2 :   0.81500000006053597     
-  Time to compute 1b densities:   0.41800000006332994     
-  Time to write 1b densities :   0.39699999999720603     
+  Time to compute J^2, T^2 :    1.1189999999478459     
+  Time to compute 1b densities:   0.42799999983981252     
+  Time to write 1b densities :   0.69100000010803342     
   
   *** END OF LOG *** END OF LOG *** END OF LOG *** 
