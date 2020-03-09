@@ -1,5 +1,6 @@
 d      ! menu choice 
-F19                                                    
+F19_1                                                  
+wsd    !  name of .sps file 
 sd    !  name of .sps file 
            1           2  ! # of valence protons, neutrons 
            1        ! 2 x Jz of systems 

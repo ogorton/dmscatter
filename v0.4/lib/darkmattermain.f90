@@ -38,8 +38,11 @@ program darkmattermain
     real(kind=8) :: transprob
     real(kind=8) :: q,v,jchi,y
     REAL(kind=8) :: nucResponse
+    real(kind=8) :: femtometer, GeV
 
-    q=1.
+    GeV = 1.0
+    femtometer = 5.0677/GeV
+    q=1.*GeV
     v=1.
     jchi=.5
     mchi=50.
@@ -75,8 +78,9 @@ program darkmattermain
     print*,' Enter the proton number '
     read(5,*)ap
 
-    bfm = (41.467/(45.*(an+ap)**(-1./3) - 25.*(ap+an)**(-2./3)))**0.5
-    y = (q*bfm/2.0)**2.0
+    bfm = femtometer * (41.467/(45.*(an+ap)**(-1./3) - 25.*(ap+an)**(-2./3)))**0.5
+    y = (q*bfm/(2.0))**2.0
+    print*,'b[dimless]=',bfm/femtometer
     print*,'b[fm]=',bfm
     print*,'y=',y
 
@@ -88,7 +92,7 @@ program darkmattermain
     print*,'Miso=',Miso
     print*,'muT=',muT
 
-    transprob = exp(-2.0*y)*transition_probability(q,v,jchi,y,Mtiso)/(4.0*mN*mchi)**2
+    transprob = exp(-2.0*y)*transition_probability(q,v,jchi,y,Mtiso)*(4.0*mN*mchi)**2.0
    
     print*,"Transition probability =",transprob
 

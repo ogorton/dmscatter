@@ -30,7 +30,8 @@ function MJ(y,np,lp,jp,n,l,j,bigJ)
     xjp = dble(jp)/2.0
     xj  = dble(j )/2.0
 
-    MJ = (-1)**(0.5d0+xj+dble(bigJ))*SQRT(Jnorm(xj)*Jnorm(xjp)*Jnorm(dble(l))*Jnorm(dble(lp))*Jnorm(dble(bigJ))/(4*Pi)) &
+    MJ = (-1)**(0.5d0+xj+dble(bigJ))*SQRT(Jnorm(xj)*Jnorm(xjp) &
+        *Jnorm(dble(l))*Jnorm(dble(lp))*Jnorm(dble(bigJ))/(4*Pi)) &
         & * Wigner_3j(2*lp,2*bigJ,2*l,0,0,0) * Wigner_6j(2*lp,jp,1,j,2*l,2*bigJ)   &
         & * BesselElement(y,np,lp,n,l,bigJ)
 
@@ -96,8 +97,10 @@ function MJLDivQsummand1(y,np,lp,jp,n,l,j,bigJ,bigL)
     REAL(kind=8) :: Wigner_3j,Wigner_6j
     REAL(kind=8) :: MJLDivQsummand1
 
-    MJLDivQsummand1 = -SQRT(dble(l)+1.0)*Qnorm(dble(l)+1.0)*Wigner_6j(2*bigL,2,2*bigJ,2*l,2*lp,2*(l+1))  &
-        & *Wigner_3j(2*lp,2*bigL,2*(l+1),0,0,0)*BesselElementminus(y,np,lp,n,l,bigL)
+    MJLDivQsummand1 = -SQRT(dble(l)+1.0)*Qnorm(dble(l)+1.0) &
+        * Wigner_6j(2*bigL,2,2*bigJ,2*l,2*lp,2*(l+1))  &
+        * Wigner_3j(2*lp,2*bigL,2*(l+1),0,0,0) &
+        * BesselElementminus(y,np,lp,n,l,bigL)
 
 end function MJLDivQsummand1
 

@@ -1,7 +1,0 @@
-d      ! menu choice 
-F19                                                    
-sd    !  name of .sps file 
-           1           2  ! # of valence protons, neutrons 
-           1        ! 2 x Jz of systems 
-0     !  LANCZOS FRAGMENT SIZE (0 = use default)
-w18
