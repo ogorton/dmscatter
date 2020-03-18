@@ -21,8 +21,8 @@ KilogramDay=7.3634*10^55
 
 
 
-SetCoeffsNonrel::usage="SetCoeffsNonrel[Op,coeff,nucleon] with Op=1,...,12, 
-  coeff=EFT coefficient, and nucleon=n,p,0, or 1."
+(*SetCoeffsNonrel::usage="SetCoeffsNonrel[Op,coeff,nucleon] with Op=1,...,12, 
+  coeff=EFT coefficient, and nucleon=n,p,0, or 1."*)
 
 SetCoeffsNucl::usage="SetCoeffsNucl[var,ell,nucleon] with var=1,...,9, 
   ell=nuclear coefficient, and nucleon=n,p,0, or 1."
@@ -36,9 +36,9 @@ CheckCoeffDims::usage="CheckCoeffDims[]."
 
 SetDMmatrixLength::usage="SetDMMatrixLength[DMMatrixLength]."
 
-SetJChi::usage="SetJChi[Jchi], where Jchi is the dark matter spin."
+(*SetJChi::usage="SetJChi[Jchi], where Jchi is the dark matter spin."*)
 
-SetMChi::usage="SetMChi[Mchi], where Mchi is the dark matter particle mass."
+(*SetMChi::usage="SetMChi[Mchi], where Mchi is the dark matter particle mass."*)
 
 SetMM::usage="SetMM[MM], where MM is a fiducial scale for the relativistic interactions."
 
@@ -147,6 +147,7 @@ UseHelm=bool;
 MyChop[t_]:=Chop[t,10.^-99.];
 
 
+
 (* ::Text:: *)
 (*Halo options*)
 
@@ -163,27 +164,22 @@ HALO=halomodel;
 
 
 (*Library of default density matrices*)
-(*m.e. j t nf jf ni ji*)
-sdF[1]={sdF00x0101=0.0000000,0,0,0,1,0,1};
-sdF[2]={sdF00x1111=0.0000000,0,0,1,1,1,1};
-sdF[3]={sdF00x1313=0.0000000,0,0,1,3,1,3};
+sdF[1]={sdF00x0101=4.0000000,0,0,0,1,0,1};
+sdF[2]={sdF00x1111=4.0000000,0,0,1,1,1,1};
+sdF[3]={sdF00x1313=5.6568542,0,0,1,3,1,3};
 sdF[4]={sdF00x2121=1.2252593,0,0,2,1,2,1};
 sdF[5]={sdF00x2323=0.2036611,0,0,2,3,2,3};
 sdF[6]={sdF00x2525=0.8583583,0,0,2,5,2,5};
-
 sdF[7]={sdF01x2121=0.3698483,0,1,2,1,2,1};
 sdF[8]={sdF01x2323=0.0479437,0,1,2,3,2,3};
 sdF[9]={sdF01x2525=0.3246722,0,1,2,5,2,5};
-
 sdF[10]={sdF10x2121=0.4451426,1,0,2,1,2,1};
 sdF[11]={sdF10x2321=-0.0119775,1,0,2,3,2,1};
 sdF[12]={sdF10x2123=0.0119775,1,0,2,1,2,3};
-
 sdF[13]={sdF10x2323=-0.0542883,1,0,2,3,2,3};
 sdF[14]={sdF10x2523=-0.1217257,1,0,2,5,2,3};
 sdF[15]={sdF10x2325=0.1217257,1,0,2,3,2,5};
 sdF[16]={sdF10x2525=0.1228063,1,0,2,5,2,5};
-
 sdF[17]={sdF11x2121=-0.4078034,1,1,2,1,2,1};
 sdF[18]={sdF11x2321=-0.0127852,1,1,2,3,2,1};
 sdF[19]={sdF11x2123=0.0127852,1,1,2,1,2,3};
@@ -1361,9 +1357,7 @@ Sum[DMResponseCoeff[MJ][[iiFF,jjFF]]*FF[DMmatrix,MJ,J,T][[iiFF,jjFF]]+DMResponse
 
 Fv0MB[\[Eta]_,xmin_]:=(Erf[xmin+\[Eta]]-Erf[xmin-\[Eta]])/(2 \[Eta]);
 FvsqMB[\[Eta]_,xmin_]:=((E^-(-xmin+\[Eta])^2 (xmin+\[Eta])-E^-(xmin+\[Eta])^2 (xmin-\[Eta]))/(2 Sqrt[\[Pi]] \[Eta])+((1+2 \[Eta]^2) (Erf[xmin+\[Eta]]-Erf[xmin-\[Eta]]))/(4 \[Eta]));
-
 Fv0MBcutoff[\[Eta]_,xmin_,xesc_]:=(-4 \[Eta] (-3-3 xesc^2+3 xmin^2+\[Eta]^2)+3 E^xesc^2 Sqrt[\[Pi]] (Erf[xmin-\[Eta]]-Erf[xmin+\[Eta]]))/(2 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])) UnitStep[xesc-xmin-\[Eta]]+(2 (xesc-xmin+\[Eta]) (3+(2 xesc+xmin-\[Eta]) (xesc-xmin+\[Eta]))+3 E^xesc^2 Sqrt[\[Pi]] (-Erf[xesc]+Erf[xmin-\[Eta]]))/(2 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])) UnitStep[xesc-xmin+\[Eta],-xesc+xmin+\[Eta]];
-
 FvsqMBcutoff[\[Eta]_,xmin_,xesc_]:=(-(E^(-2 (xmin^2+\[Eta]^2)) (-30 E^(xesc^2+(xmin-\[Eta])^2) (xmin-\[Eta])+30 E^(xesc^2+(xmin+\[Eta])^2) (xmin+\[Eta])+4 E^(2 (xmin^2+\[Eta]^2)) \[Eta] (-15 (2+2 xesc^2+xesc^4-xmin^4)-10 (1+xesc^2) \[Eta]^2+\[Eta]^4)+15 E^(xesc^2+2 (xmin^2+\[Eta]^2)) Sqrt[\[Pi]] (1+2 \[Eta]^2) (-Erf[xmin-\[Eta]]+Erf[xmin+\[Eta]])))/(20 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])))UnitStep[xesc-xmin-\[Eta]]+((E^(-xmin^2-\[Eta]^2) (2 E^(xmin^2+\[Eta]^2) (15 xesc+10 xesc^3+4 xesc^5-10 xmin^3-10 xesc^2 xmin^3+6 xmin^5+15 (2+2 xesc^2+xesc^4-xmin^4) \[Eta]+10 (3 xesc+2 xesc^3+xmin^3) \[Eta]^2+10 (1+xesc^2) \[Eta]^3-\[Eta]^5)+15 E^xesc^2 (-2 E^(2 xmin \[Eta]) (xmin+\[Eta])+E^(xmin^2+\[Eta]^2) Sqrt[\[Pi]] (1+2 \[Eta]^2) (-Erf[xesc]+Erf[xmin-\[Eta]]))))/(20 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])))UnitStep[xesc-xmin+\[Eta],-xesc+xmin+\[Eta]];
 
 

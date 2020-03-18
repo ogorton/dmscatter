@@ -78,8 +78,10 @@ program darkmattermain
     print*,' Enter the proton number '
     read(5,*)ap
 
-    bfm = femtometer * (41.467/(45.*(an+ap)**(-1./3) - 25.*(ap+an)**(-2./3)))**0.5
+    bfm = femtometer*(41.467/(45.*(an+ap)**(-1./3) - 25.*(ap+an)**(-2./3)))**0.5
     y = (q*bfm/(2.0))**2.0
+    
+
     print*,'b[dimless]=',bfm/femtometer
     print*,'b[fm]=',bfm
     print*,'y=',y
