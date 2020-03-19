@@ -78,23 +78,28 @@ program darkmattermain
     print*,' Enter the proton number '
     read(5,*)ap
 
-    bfm = femtometer*(41.467/(45.*(an+ap)**(-1./3) - 25.*(ap+an)**(-2./3)))**0.5
-    y = (q*bfm/(2.0))**2.0
-    
+    bfm = (41.467/(45.*(an+ap)**(-1./3) - 25.*(ap+an)**(-2./3)))**0.5 * femtometer
+    y = (q*bfm/(2.0*0.197*GeV*femtometer))**2.0
+!    y = (q*bfm/2.0)**2.0
+!    y = 19.9382 
 
     print*,'b[dimless]=',bfm/femtometer
     print*,'b[fm]=',bfm
     print*,'y=',y
+    print*,'cpvec(3)',cvec(0)%c(3)
+    print*,'mN',mN
+    print*,'mchi',mchi
 
     Mtiso = (ap-an)
     Miso = ap+an
     muT = mchi * Miso * mN / (mchi+Miso*mN)
+    print*,'Jiso, Tiso=',Jiso,Tiso
 
     print*,'Mtiso=',Mtiso
     print*,'Miso=',Miso
     print*,'muT=',muT
 
-    transprob = exp(-2.0*y)*transition_probability(q,v,jchi,y,Mtiso)*(4.0*mN*mchi)**2.0
+    transprob = transition_probability(q,v,jchi,y,Mtiso)/(4.0*mN*mchi)**2.0
    
     print*,"Transition probability =",transprob
 

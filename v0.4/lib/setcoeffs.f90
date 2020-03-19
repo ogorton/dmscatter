@@ -1,12 +1,13 @@
 subroutine setcoeffsnonrel(op, coeffdimless, nucleon)
     use response
+    use masses
     implicit none
     integer, intent(in) :: op
     real(kind=8), intent(in) :: coeffdimless
     integer, intent(in) :: nucleon 
     ! nucleon = 0 : proton, 1 : neutron
 
-    cvec(nucleon)%c(op) = coeffdimless
+    cvec(nucleon)%c(op) = coeffdimless 
 
 end subroutine
 
@@ -103,7 +104,8 @@ subroutine normalizecoeffs
     mNmNdenomOps = [6, 15]
 
     do i=0,1
-        cvec(i)%c = cvec(i)%c * 4*mN*mchi/(mV*mV)
+        cvec(i)%c = cvec(i)%c * (4*mN*mchi)/(mV*mV)
+
         do j = 1, 2
             op = mNmNdenomOps(j)
             cvec(i)%c(op) = cvec(i)%c(op)/(mN*mN)

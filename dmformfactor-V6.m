@@ -21,8 +21,8 @@ KilogramDay=7.3634*10^55
 
 
 
-(*SetCoeffsNonrel::usage="SetCoeffsNonrel[Op,coeff,nucleon] with Op=1,...,12, 
-  coeff=EFT coefficient, and nucleon=n,p,0, or 1."*)
+SetCoeffsNonrel::usage="SetCoeffsNonrel[Op,coeff,nucleon] with Op=1,...,12, 
+  coeff=EFT coefficient, and nucleon=n,p,0, or 1."
 
 SetCoeffsNucl::usage="SetCoeffsNucl[var,ell,nucleon] with var=1,...,9, 
   ell=nuclear coefficient, and nucleon=n,p,0, or 1."
@@ -36,9 +36,9 @@ CheckCoeffDims::usage="CheckCoeffDims[]."
 
 SetDMmatrixLength::usage="SetDMMatrixLength[DMMatrixLength]."
 
-(*SetJChi::usage="SetJChi[Jchi], where Jchi is the dark matter spin."*)
+SetJChi::usage="SetJChi[Jchi], where Jchi is the dark matter spin."
 
-(*SetMChi::usage="SetMChi[Mchi], where Mchi is the dark matter particle mass."*)
+SetMChi::usage="SetMChi[Mchi], where Mchi is the dark matter particle mass."
 
 SetMM::usage="SetMM[MM], where MM is a fiducial scale for the relativistic interactions."
 
@@ -72,7 +72,7 @@ EventRate::usage="EventRate[NT,rhoDM,q,ve,v0] outputs the event rate."
 (*ReadInDMFile::usage="ReadInDMFile[DensityMatrix] reads in the density matrix from file DensityMatrix."*)
 
 SetIsotope::usage="SetIsotope[Z,M,b, filename] reads the density matrix for
-the isotope stored in filename. Z is the charge, M is the mass number, and b is
+theIisotope stored in filename. Z is the charge, M is the mass number, and b is
 the harmonic oscillator parameter. If b is set to default (in quotes), it will
 be set to \!\(\*SqrtBox[\(41.467/\((45 \*SuperscriptBox[\(M\), \(\(-1\)/3\)] - 25 \*SuperscriptBox[\(M\), \(\(-2\)/3\)])\)\)]\)femtometers. If filename is set
 to default (in quotes), SetIsotope will load the default density matrix."
@@ -164,9 +164,14 @@ HALO=halomodel;
 
 
 (*Library of default density matrices*)
+(*i
 sdF[1]={sdF00x0101=4.0000000,0,0,0,1,0,1};
 sdF[2]={sdF00x1111=4.0000000,0,0,1,1,1,1};
 sdF[3]={sdF00x1313=5.6568542,0,0,1,3,1,3};
+*)
+sdF[1]={sdF00x0101=0.0000000,0,0,0,1,0,1};
+sdF[2]={sdF00x1111=0.0000000,0,0,1,1,1,1};
+sdF[3]={sdF00x1313=0.0,0,0,1,3,1,3};
 sdF[4]={sdF00x2121=1.2252593,0,0,2,1,2,1};
 sdF[5]={sdF00x2323=0.2036611,0,0,2,3,2,3};
 sdF[6]={sdF00x2525=0.8583583,0,0,2,5,2,5};
@@ -1095,21 +1100,21 @@ UsingRelCoeffs=False;
 ];
 
 (*Convert from the old normalization of c coefficients to the new one *)
-If[Op==1, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
-If[Op==2, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
-If[Op==3, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
-If[Op==4, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
-If[Op==5, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
-If[Op==6, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN^2;];
-If[Op==7, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
-If[Op==8, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
-If[Op==9, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
-If[Op==10, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
-If[Op==11, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
-If[Op==12, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
-If[Op==13, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
-If[Op==14, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
-If[Op==15, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN^2;];
+If[Op==1, coeff=(4mN*mchi/mV^2)coeffdimless;];
+If[Op==2, coeff=(4mN*mchi/mV^2)coeffdimless;];
+If[Op==3, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
+If[Op==4, coeff=(4mN*mchi/mV^2)coeffdimless;];
+If[Op==5, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
+If[Op==6, coeff=(4mN*mchi/mV^2)coeffdimless/mN^2;];
+If[Op==7, coeff=(4mN*mchi/mV^2)coeffdimless;];
+If[Op==8, coeff=(4mN*mchi/mV^2)coeffdimless;];
+If[Op==9, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
+If[Op==10, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
+If[Op==11, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
+If[Op==12, coeff=(4mN*mchi/mV^2)coeffdimless;];
+If[Op==13, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
+If[Op==14, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
+If[Op==15, coeff=(4mN*mchi/mV^2)coeffdimless/mN^2;];
 
 If[nucleon!="n"&&nucleon!="p"&&nucleon!=0&&nucleon!=1,
 Print["3rd argument must be one of \"p\",\"n\",0, or 1"];Return[];
@@ -1395,7 +1400,17 @@ PrintLag[];
 (* The factor of 1/(4mN mchi)^2 is necessary to convert the c coefficients to a coefficients *)
 Print["Your transition probability is"];
 myFF=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.FormalReplace;
+Print["y="]
+Print[(qqdimless bHO/2)^2];
+Print["bfm="]
+Print[bHO];
+Print["tiso"]
+Print[TIso];
+Print["jiso"]
+Print[JIso];
+
 Return[ANonrelToRel/(4mN mchi)^2*myFF/.y->(q bHO/2)^2/.q->qqdimless*GeV/.v->vv/.b->bHO//Expand//MyChop//Simplify];
+
 ];
 
 

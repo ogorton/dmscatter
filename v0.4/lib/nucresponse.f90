@@ -62,7 +62,7 @@ function nucResponse(tau1,tau2,ioption,y,Mtiso)
         jmin = 1; jmax = 5
     end if
 
-    print*,'operators: ',op1, op2
+    !print*,'operators: ',op1, op2
  
     IsoME1=0.d0
     DRME1(0:6) = 0.d0
@@ -82,21 +82,21 @@ function nucResponse(tau1,tau2,ioption,y,Mtiso)
 
                     ! Operator 1 with tau2 <j| op1,tau1 |j>
                     call OperME(op1,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME1)
-                    IsoME1= spOME1 * sqrt(2.d0) *sqrt(2*dble(tau1)+1.0)
-                    DRME1(j) = DRME1(j) + densitymats%rho(j,tau1,a,b)*IsoME1
-                    SRME1(j) = (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso)*DRME1(j)
+                    DRME1(j) = DRME1(j) + densitymats%rho(j,tau1,a,b) &
+                                        * spOME1 * sqrt(2.d0) *sqrt(2*dble(tau1)+1.0)
 
                     ! Operator 2 with tau2 <j| op2,tau2 |j>
                     call OperME(op2,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME2)
-                    IsoME2= spOME2 * sqrt(2.d0) *sqrt(2*dble(tau2)+1.0)
-                    DRME2(j) = DRME2(j) + densitymats%rho(j,tau2,a,b)*IsoME2
-                    SRME2(j) = (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso)*DRME2(j)
+                    DRME2(j) = DRME2(j) + densitymats%rho(j,tau2,a,b) &
+                                        * spOME2 * sqrt(2.d0) *sqrt(2*dble(tau2)+1.0)
 
                 end if
                 end if
             end do
         end do
-        nucResponse = nucResponse + SRME1(j)*SRME2(j)
+        nucResponse = nucResponse + (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
+                                  * (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso) &
+                                  * DRME1(j) * DRME2(j)
         if (isnan(SRME1(j)).or.isnan(SRME2(j)))print*,SRME1(j),SRME2(j)
     end do
 

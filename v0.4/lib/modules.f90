@@ -21,7 +21,7 @@ module stateinfo
    integer nlocalstates !,maxlocalstates
    integer nsporb   ! # of single-particle orbits
    integer jt, tt   ! spin, isospin of transition operator
-   integer Jiso, Tiso   ! ang, isospin of ground state
+   integer Jiso, Tiso   ! ang, isospin of ground state times 2
    logical ::  pndens
    type onebdenmat
    logical good

@@ -109,7 +109,8 @@ PhiTPJ[y_,{ncapp_,jp_},{ncap_,j_},jcap_]:=PhiPJ[y,{ncapp,jp},{ncap,j},jcap]+Sigm
 (***Operators of Abnormal Parity***)
 
 (**DeltaJ**)
-MJLDivQoverall[y_,{np_,lp_,jp_},{n_,l_,j_},jcap_,lcap_]:=minus^(lcap+j+1/2)*QNorm[lp]*QNorm[jp]*QNorm[j]*QNorm[jcap]*QNorm[lcap]*SixJ[{lp,jp,1/2},{j,l,jcap}]/Sqrt[4 Pi]
+MJLDivQoverall[y_,{np_,lp_,jp_},{n_,l_,j_},jcap_,lcap_]:=
+	minus^(lcap+j+1/2)*QNorm[lp]*QNorm[jp]*QNorm[j]*QNorm[jcap]*QNorm[lcap]*SixJ[{lp,jp,1/2},{j,l,jcap}]/Sqrt[4 Pi]
 MJLDivQsummand1[y_,{np_,lp_,jp_},{n_,l_,j_},jcap_,lcap_]:=-Sqrt[l+1] QNorm[l+1] SixJ[{lcap,1,jcap},{l,lp,l+1}] ThreeJ[{lp,0},{lcap,0},{l+1,0}] BesselElementMinus[y,{np,lp},{n,l},lcap]
 MJLDivQsummand2[y_,{np_,lp_,jp_},{n_,l_,j_},jcap_,lcap_]:=Sqrt[l] QNorm[l-1] SixJ[{lcap,1,jcap},{l,lp,l-1}] ThreeJ[{lp,0},{lcap,0},{l-1,0}] BesselElementPlus[y,{np,lp},{n,l},lcap]
 MJLDivQ[y_,{np_,lp_,jp_},{n_,l_,j_},jcap_,lcap_]:=MJLDivQoverall[y,{np,lp,jp},{n,l,j},jcap,lcap]*(MJLDivQsummand1[y,{np,lp,jp},{n,l,j},jcap,lcap]+MJLDivQsummand2[y,{np,lp,jp},{n,l,j},jcap,lcap])
@@ -186,13 +187,46 @@ Sum[iDMmatrix[i][[1]](If[iDMmatrix[i][[3]]==0,Sqrt[2]/Sqrt[2iT+1] ((an+ap)/2),-(
 Simplify[(4\[Pi])/(2J+1) Sum[1/2 Table[D[(Coefficient[Response[DMmatrix,Operator,T],Jbase[n]]^2),{ap,an}[[ii]],{ap,an}[[jj]]],{ii,2},{jj,2}],{n,0,Jmax}]]
 ];
 
+
+
+
+
 FF[DMmatrix_,Operator1_,Operator2_,J_,T_]:=Block[{Response},
 
-Response[iDMmatrix_,iOperator_,iT_]:=Response[iDMmatrix,iOperator,iT]=Simplify[Block[{},
-Sum[iDMmatrix[i][[1]](If[iDMmatrix[i][[3]]==0,Sqrt[2]/Sqrt[2iT+1] ((an+ap)/2),-(Sqrt[6iT]/Sqrt[(2iT+1)(iT+1)])((ap-an)/2)])*E^y (iOperator[y,{iDMmatrix[i][[4]],iDMmatrix[i][[5]]/2},{iDMmatrix[i][[6]],iDMmatrix[i][[7]]/2},iDMmatrix[i][[2]]])Jbase[iDMmatrix[i][[2]]],{i,DMmatrixLength}]]];
+Response[iDMmatrix_,iOperator_,iT_]:=
+	Response[iDMmatrix,iOperator,iT]=
+		Simplify[
+		Block[{},
+			Sum[iDMmatrix[i][[1]](
+				If[iDMmatrix[i][[3]]==0,
+					Sqrt[2]/Sqrt[2iT+1] ((an+ap)/2),
+					-(Sqrt[6iT]/Sqrt[(2iT+1)(iT+1)])((ap-an)/2)]
+			)*E^y (iOperator[
+				y,
+				{iDMmatrix[i][[4]],
+					iDMmatrix[i][[5]]/2},
+				{iDMmatrix[i][[6]],
+					iDMmatrix[i][[7]]/2},
+				iDMmatrix[i][[2]]
+			]) Jbase[iDMmatrix[i][[2]]],
+
+			{i,DMmatrixLength}
+			]
+		]]
 
 
-Simplify[(4\[Pi])/(2J+1) Sum[Table[D[(Coefficient[Response[DMmatrix,Operator1,T]/.{ap->ap1,an->an1},Jbase[n]])(Coefficient[Response[DMmatrix,Operator2,T]/.{ap->ap2,an->an2},Jbase[n]]),{ap1,an1}[[ii]],{ap2,an2}[[jj]]],{ii,2},{jj,2}],{n,0,Jmax}]]
+Simplify[(4\[Pi])/(2J+1) Sum[
+	Table[D[
+			(Coefficient[Response[DMmatrix,Operator1,T]/.{ap->ap1,an->an1},Jbase[n]])
+			(Coefficient[Response[DMmatrix,Operator2,T]/.{ap->ap2,an->an2},Jbase[n]]),
+		{ap1,an1}[[ii]],
+		{ap2,an2}[[jj]]
+		],
+	{ii,2},
+	{jj,2}
+	],
+	{n,0,Jmax}]
+]
 ];
 
 
@@ -215,7 +249,12 @@ If[jjj==7,Operator1=MJ; Operator2=PhiPPJ;];
 If[jjj==8,Operator1=SigmaPJ; Operator2=DeltaJ;];
 
 If[1<=jjj<=6,
-If[tau1==0&&tau2==0,Return[E^(-2y)*(2JIso+1)/(4Pi)*1/4(FF[DensityMatrix,Operator1,JIso,TIso][[2,2]]+FF[DensityMatrix,Operator1,JIso,TIso][[1,1]]+FF[DensityMatrix,Operator1,JIso,TIso][[1,2]]+FF[DensityMatrix,Operator1,JIso,TIso][[2,1]])/.y->yyy/.FormalReplace//Simplify//MyChop]
+If[tau1==0&&tau2==0,Return[
+	E^(-2y)*(2JIso+1)/(4Pi)*
+	1/4(FF[DensityMatrix,Operator1,JIso,TIso][[2,2]]
+	+FF[DensityMatrix,Operator1,JIso,TIso][[1,1]]
+	+FF[DensityMatrix,Operator1,JIso,TIso][[1,2]]
+	+FF[DensityMatrix,Operator1,JIso,TIso][[2,1]])/.y->yyy/.FormalReplace//Simplify//MyChop]
 ];
 If[tau1==1&&tau2==1,Return[E^(-2y)*(2JIso+1)/(4Pi)*1/4(FF[DensityMatrix,Operator1,JIso,TIso][[2,2]]+FF[DensityMatrix,Operator1,JIso,TIso][[1,1]]-FF[DensityMatrix,Operator1,JIso,TIso][[1,2]]-FF[DensityMatrix,Operator1,JIso,TIso][[2,1]])/.y->yyy/.FormalReplace//Simplify//MyChop]
 ];
