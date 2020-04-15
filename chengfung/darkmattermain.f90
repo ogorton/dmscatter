@@ -765,7 +765,7 @@ end
 
 1     continue
       write(6,*)' Enter shell-model space file name (.sps)'
-      read(5,'(a)')spsfil
+      read(5,*)spsfil
       ilast=index(spsfil,' ')
       if(ilast.ne.0)then
          ilast=ilast-1

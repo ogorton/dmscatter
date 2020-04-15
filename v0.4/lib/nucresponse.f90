@@ -94,7 +94,8 @@ function nucResponse(tau1,tau2,ioption,y,Mtiso)
                 end if
             end do
         end do
-        nucResponse = nucResponse + (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
+        nucResponse = nucResponse + 1 &
+                                  * (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
                                   * (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso) &
                                   * DRME1(j) * DRME2(j)
         if (isnan(SRME1(j)).or.isnan(SRME2(j)))print*,SRME1(j),SRME2(j)

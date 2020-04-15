@@ -1,12 +1,12 @@
 COMP =  gfortran
-OPTIONS = -O2 -fbounds-check   # -r8 
+OPTIONS = -O2 -fbounds-check -Wall
 
 OBJ1 = \
 modules.o\
 setcoeffs.o\
 getsps.o\
 densities.o\
-read.o\
+readdensities.o\
 bessel.o\
 summand.o\
 phi.o\
