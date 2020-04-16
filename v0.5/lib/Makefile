@@ -1,5 +1,5 @@
 COMP =  gfortran
-OPTIONS = -O2 #-fbounds-check
+OPTIONS = -O2 -fbounds-check
 
 OBJ1 = \
 norm.o\
@@ -20,6 +20,10 @@ dmresponse2.o\
 nucresponse.o\
 test_nucresponse.o\
 transition.o\
+diffcrosssection.o\
+velocitydist.o\
+quadrature_simpson.o\
+eventrate.o\
 cg.o\
 darkmattermain.o
 

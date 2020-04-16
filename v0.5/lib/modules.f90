@@ -1,4 +1,12 @@
 !===============================================================================
+module kinds
+    implicit none
+    integer,parameter :: doublep = kind(1.d0)
+
+end module kinds
+
+
+!===============================================================================
 module response
 
     implicit none
@@ -45,10 +53,10 @@ module spspace
     integer ncore(2)               ! # of single-particle j-orbits in the core
                                    ! 1 = p,  2 = n
     integer ntotal(2)
-    integer,allocatable  :: jorb(:)        ! 2 x J of orbit (note: p,n different)
+    integer,allocatable  :: jorb(:)     ! 2 x J of orbit (note: p,n different)
     integer,allocatable  :: lorb(:)
-    integer,allocatable  :: nrorb(:)       ! radial quantum number N of j-orbit
-    integer,allocatable  :: torb(:)        ! 2 x Tz of orbit ( p/n = +/-1 )
+    integer,allocatable  :: nrorb(:)    ! radial quantum number N of j-orbit
+    integer,allocatable  :: torb(:)     ! 2 x Tz of orbit ( p/n = +/-1 )
     integer,allocatable  :: nprincipal(:)
     integer,allocatable  :: nodal(:)
     logical spinless
@@ -71,5 +79,23 @@ module masses
     REAL(kind=8) :: muT = 1.0
     ! Harmonic oscillator parameter
     real(kind=8) :: bfm
+    ! Dark matter density
+    real(kind=8) :: rhoDM
 
 end module masses
+
+!===============================================================================
+module velocities
+
+    implicit none
+    REAL(kind=8) :: vesc = 12*220 ! km/s
+    REAL(kind=8) :: v0 = 220 ! km/s 
+
+end module velocities
+
+!===============================================================================
+module constants
+    implicit none
+    real(kind=8) :: pi = 3.14159265358979323846264338327950288419716939937510
+    real(kind=8) :: GeV = 1.0
+end module constants

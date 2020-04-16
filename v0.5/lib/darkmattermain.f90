@@ -1,4 +1,3 @@
-
 !  ctrlchar = 'c'  count up # of states
 !  ctrlchar = 'f'  fill up info on states
 !  ctrlchar = 'p'  fill up parent reference states
@@ -29,6 +28,19 @@ program darkmattermain
             integer, intent(in) :: Mtiso
             real(kind=8) :: transition_probability
         end function
+        function eventrate(Nt, rhochi, ve, v0, q, jchi, y, Mtiso)
+            use kinds
+            implicit none
+            real(doublep) :: EventRate
+            real(doublep), intent(in) :: Nt ! Number of target nuclei
+            real(doublep), intent(in) :: rhochi ! local dark matter density
+            real(doublep), intent(in) :: ve ! Earth's velocity in the galactic rest frame
+            real(doublep), intent(in) :: v0 ! rms velocity of the visible matter distribution 
+            real(doublep), intent(in) :: q
+            real(doublep), intent(in) :: y
+            real(doublep), intent(in) :: jchi
+            integer, intent(in) :: Mtiso            
+        end function
     end interface
 
     integer, parameter :: resfile = 33
@@ -38,7 +50,7 @@ program darkmattermain
     real(kind=8) :: output
     real(kind=8) :: q,v,jchi,y
     REAL(kind=8) :: nucResponse
-    real(kind=8) :: femtometer, GeV
+    real(kind=8) :: femtometer, GeV, diffcrosssection
 
     integer :: i
 
@@ -108,5 +120,9 @@ program darkmattermain
     output = transition_probability(q,v,jchi,y,Mtiso)/(4.0*mN*mchi)**2.0
     print*,"Transition probability =",output
 
-end program  
+    print*,'bb0'
+    output = diffCrossSection(1000.d0, 1.d0, 1.d0, 1.d0, 1.d0, 0)
+    print*,'bb1'
+    output = EventRate(1000.d0,1.0d0,225.d0,220.d0,1.0d0,0.5d0,1.0d0,Mtiso)
 
+end program  
