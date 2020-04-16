@@ -40,7 +40,7 @@ subroutine setupdensities
     print*, ntotal(1)
 
 !                 densitymats%good = .true.
-    allocate(densitymats%rho( 0:10,0:1,1:ntotal(1),1:ntotal(1)) )
+    allocate(densitymats%rho( 0:16,0:1,1:ntotal(1),1:ntotal(1)) )
     densitymats%rho(:,:,:,:) = 0.0
     allocate(densitymats%rhop(0:10,1:ntotal(1),1:ntotal(1)))
     allocate(densitymats%rhon(0:10,1:ntotal(1),1:ntotal(1)))
@@ -63,6 +63,28 @@ subroutine coredensity
   end do
 
 end subroutine coredensity
+
+!===================================================================
+
+subroutine printdensities
+    use stateinfo
+    use spspace
+    implicit none
+    integer J,a, b
+    print*,'Printing density matrix:'
+    do J=0,16
+        print*,'J=',J
+        do a=1,ntotal(1)
+            do b=1,ntotal(1)
+                print*,a,b,densitymats%rho(J,0,a,b),densitymats%rho(J,1,a,b)
+            enddo
+        enddo
+    enddo
+
+end subroutine printdensities
+
+!===================================================================
+
 
 !================================================
 !
