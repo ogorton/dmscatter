@@ -7,14 +7,22 @@
 !================================================
 
 function nucResponse(tau1,tau2,ioption,y,Mtiso)
+<<<<<<< HEAD
+
+=======
     use kinds
+>>>>>>> d06b32874511a3bc0215f9626d0f3ef18003df9c
     use spspace
     use stateinfo
     implicit none
 
     integer :: tau1, tau2
     integer :: ioption
+<<<<<<< HEAD
+    real(kind=8) :: y
+=======
     real(doublep) :: y
+>>>>>>> d06b32874511a3bc0215f9626d0f3ef18003df9c
     integer :: Mtiso
 
     integer :: j,a,b!,ap,an
@@ -22,11 +30,19 @@ function nucResponse(tau1,tau2,ioption,y,Mtiso)
     
     integer :: op1, op2
 
+<<<<<<< HEAD
+    REAL(kind=8) :: Wigner_3j
+    REAL(kind=8) :: spOME, spOME1,spOME2
+    REAL(kind=8) :: IsoME,IsoME1,IsoME2
+    REAL(kind=8), dimension (0:6) :: DRME, SRME, DRME1, SRME1, DRME2, SRME2 
+    REAL(kind=8)  :: nucResponse
+=======
     REAL(doublep) :: Wigner_3j
     REAL(doublep) :: spOME, spOME1,spOME2
     REAL(doublep) :: IsoME,IsoME1,IsoME2
     REAL(doublep), dimension (0:6) :: DRME, SRME, DRME1, SRME1, DRME2, SRME2 
     REAL(doublep)  :: nucResponse
+>>>>>>> d06b32874511a3bc0215f9626d0f3ef18003df9c
 
     if (ioption .eq. 1) then   
         ! Mj Mj

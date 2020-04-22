@@ -1,4 +1,7 @@
 COMP =  gfortran
+<<<<<<< HEAD
+OPTIONS = -O2 #-fbounds-check
+=======
 OPTIONS = -O2 -fbounds-check
 
 OBJ1 = \
