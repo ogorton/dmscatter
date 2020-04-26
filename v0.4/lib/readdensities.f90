@@ -329,7 +329,7 @@ subroutine readalldensities(resfile)
 
 !  fill the one-body density matrix of the core
 
-!   call coredensity
+   call coredensity
 
    return
 end subroutine readalldensities

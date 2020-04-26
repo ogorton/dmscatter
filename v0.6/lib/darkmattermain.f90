@@ -19,16 +19,15 @@ program darkmattermain
             integer resfile
             character(22):: filename
         end subroutine openresults
-        function transition_probability(q,v,jchi,y,Mtiso)
+        function transition_probability(q,v,jchi,y)
             implicit none
             REAL(kind=8), INTENT(IN) :: q
             REAL(kind=8), INTENT(IN) :: v
             REAL(kind=8), INTENT(IN) :: jchi
             REAL(kind=8), INTENT(IN) :: y
-            integer, intent(in) :: Mtiso
             real(kind=8) :: transition_probability
         end function
-        function eventrate(Nt, rhochi, ve, v0, q, jchi, y, Mtiso)
+        function eventrate(Nt, rhochi, ve, v0, q, jchi, y)
             use kinds
             implicit none
             real(doublep) :: EventRate
@@ -39,16 +38,15 @@ program darkmattermain
             real(doublep), intent(in) :: q
             real(doublep), intent(in) :: y
             real(doublep), intent(in) :: jchi
-            integer, intent(in) :: Mtiso            
         end function
     end interface
 
     integer, parameter :: resfile = 33
-    integer :: ap, an, Mtiso
+    integer :: ap, an
 
     ! TEST BLOCK <<<<<<
     real(kind=8) :: output
-    real(kind=8) :: q,v,jchi,y
+    real(kind=8) :: q,v,jchi,y,yy
     REAL(kind=8) :: nucResponse
     real(kind=8) :: femtometer, GeV, diffcrosssection
 
@@ -113,13 +111,18 @@ program darkmattermain
     print*,'Mtiso=',Mtiso
     print*,'Miso=',Miso
     print*,'muT=',muT
+    print*,'v=',v
+    print*,'q=',q
 
     print*,'denom',(4.0*mN*mchi)**2.0
     print*,'cvec',cvec(0)%c(:)
+    yy = 1.0
+    output = nucResponse(0,0,1,y)
+    print*,'Nuclear response =',output
 
-    output = transition_probability(q,v,jchi,y,Mtiso)/(4.0*mN*mchi)**2.0
+    output = transition_probability(q,v,jchi,y)
     print*,"Transition probability =",output
 
-    output = EventRate(1000.d0,1.0d0,225.d0,220.d0,1.0d0,0.5d0,1.0d0,Mtiso)
+!    output = EventRate(1000.d0,1.0d0,225.d0,220.d0,1.0d0,0.5d0,1.0d0,Mtiso)
 
 end program  

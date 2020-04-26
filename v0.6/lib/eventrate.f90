@@ -63,7 +63,7 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y, Mtiso)
     y = 1.
     mtiso = 0.
     print*,'aa0'
-    tmp = diffCrossSection(1000.d0, 1.d0, 1.d0, 1.d0, 1.d0, 0)
+    tmp = diffCrossSection(ERkev,v,q,jchi,y,Mtiso)
     print*,'aa1'
 
     do i = 1, Nv

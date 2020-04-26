@@ -1005,7 +1005,9 @@ FF[DMmatrix_,Operator_,J_,T_]:=Block[
 	Simplify[(4\[Pi])/(2J+1) Sum[
 		1/2 Table[
 			D[
-				(Coefficient[Response[DMmatrix,Operator,T],Jbase[n]]^2),
+				(Coefficient[
+					Response[DMmatrix,Operator,T], Jbase[n]
+				]^2),
 				{ap,an}[[ii]],
 				{ap,an}[[jj]]
 			],
@@ -1511,14 +1513,6 @@ Sum[DMResponseCoeff[MJ][[iiFF,jjFF]]*FF[DMmatrix,MJ,J,T][[iiFF,jjFF]]+DMResponse
 
 (* ::Text:: *)
 (*Velocity Distributions*)
-<<<<<<< HEAD
-
-
-Fv0MB[\[Eta]_,xmin_]:=(Erf[xmin+\[Eta]]-Erf[xmin-\[Eta]])/(2 \[Eta]);
-FvsqMB[\[Eta]_,xmin_]:=((E^-(-xmin+\[Eta])^2 (xmin+\[Eta])-E^-(xmin+\[Eta])^2 (xmin-\[Eta]))/(2 Sqrt[\[Pi]] \[Eta])+((1+2 \[Eta]^2) (Erf[xmin+\[Eta]]-Erf[xmin-\[Eta]]))/(4 \[Eta]));
-Fv0MBcutoff[\[Eta]_,xmin_,xesc_]:=(-4 \[Eta] (-3-3 xesc^2+3 xmin^2+\[Eta]^2)+3 E^xesc^2 Sqrt[\[Pi]] (Erf[xmin-\[Eta]]-Erf[xmin+\[Eta]]))/(2 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])) UnitStep[xesc-xmin-\[Eta]]+(2 (xesc-xmin+\[Eta]) (3+(2 xesc+xmin-\[Eta]) (xesc-xmin+\[Eta]))+3 E^xesc^2 Sqrt[\[Pi]] (-Erf[xesc]+Erf[xmin-\[Eta]]))/(2 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])) UnitStep[xesc-xmin+\[Eta],-xesc+xmin+\[Eta]];
-FvsqMBcutoff[\[Eta]_,xmin_,xesc_]:=(-(E^(-2 (xmin^2+\[Eta]^2)) (-30 E^(xesc^2+(xmin-\[Eta])^2) (xmin-\[Eta])+30 E^(xesc^2+(xmin+\[Eta])^2) (xmin+\[Eta])+4 E^(2 (xmin^2+\[Eta]^2)) \[Eta] (-15 (2+2 xesc^2+xesc^4-xmin^4)-10 (1+xesc^2) \[Eta]^2+\[Eta]^4)+15 E^(xesc^2+2 (xmin^2+\[Eta]^2)) Sqrt[\[Pi]] (1+2 \[Eta]^2) (-Erf[xmin-\[Eta]]+Erf[xmin+\[Eta]])))/(20 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])))UnitStep[xesc-xmin-\[Eta]]+((E^(-xmin^2-\[Eta]^2) (2 E^(xmin^2+\[Eta]^2) (15 xesc+10 xesc^3+4 xesc^5-10 xmin^3-10 xesc^2 xmin^3+6 xmin^5+15 (2+2 xesc^2+xesc^4-xmin^4) \[Eta]+10 (3 xesc+2 xesc^3+xmin^3) \[Eta]^2+10 (1+xesc^2) \[Eta]^3-\[Eta]^5)+15 E^xesc^2 (-2 E^(2 xmin \[Eta]) (xmin+\[Eta])+E^(xmin^2+\[Eta]^2) Sqrt[\[Pi]] (1+2 \[Eta]^2) (-Erf[xesc]+Erf[xmin-\[Eta]]))))/(20 \[Eta] (6 xesc+4 xesc^3-3 E^xesc^2 Sqrt[\[Pi]] Erf[xesc])))UnitStep[xesc-xmin+\[Eta],-xesc+xmin+\[Eta]];
-=======
 Fv0MB[\[Eta]_,xmin_]:=(Erf[xmin+\[Eta]]-Erf[xmin-\[Eta]])/(2 \[Eta]);
 
 FvsqMB[\[Eta]_,xmin_]:=(
@@ -1589,59 +1583,16 @@ FvsqMBcutoff[\[Eta]_,xmin_,xesc_]:=
 		)
 	)
 	* UnitStep[xesc-xmin+\[Eta],-xesc+xmin+\[Eta]];
->>>>>>> d06b32874511a3bc0215f9626d0f3ef18003df9c
 
 
 (* ::Text:: *)
 (*Here is the function for the user*)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d06b32874511a3bc0215f9626d0f3ef18003df9c
 (*the optional argument for formfactor if the user wants to output the form
 factor to a TeX source, myFormFactor.tex. This file, by default, will appear
 in the Users/username directory*)
 StrucFunction[vv_,qqdimless_,ifOutFile_:0]:=Block[{ii, myFF},
 
-<<<<<<< HEAD
-
-PrintLag[];
-
-
-Print["Your structure function is"];
-(* The factor of 1/(4mN mchi)^2 is necessary to convert the c coefficients to a coefficients *)
-myFF=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.FormalReplace;
-If[ifOutFile!=1,Return[1/(4mN mchi)^2*myFF/.y->(q bHO/2)^2/.q->qqdimless*GeV/.v->vv/.b->bHO//Expand//MyChop//Simplify]];
-
-If[ifOutFile==1,
-Print["Writing to TeX file..."];
-TeXForm[1/(4mN mchi)^2*myFF/.y->(q bHO/2)^2/.q->qqdimless*GeV/.v->vv/.b->bHO//Expand//MyChop//Simplify]>>"myFormFactor.tex";
-];];
-
-TransitionProbability[vv_,qqdimless_,IfRel_:False]:=Block[{ii, myFF,ANonrelToRel},
-
-ANonrelToRel=1;
-If[IfRel,ANonrelToRel=(4mchi*M*mN)^2];
-
-PrintLag[];
-
-
-(* The factor of 1/(4mN mchi)^2 is necessary to convert the c coefficients to a coefficients *)
-Print["Your transition probability is"];
-myFF=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.FormalReplace;
-Print["y="]
-Print[(qqdimless bHO/2)^2];
-Print["bfm="]
-Print[bHO];
-Print["tiso"]
-Print[TIso];
-Print["jiso"]
-Print[JIso];
-
-Return[ANonrelToRel/(4mN mchi)^2*myFF/.y->(q bHO/2)^2/.q->qqdimless*GeV/.v->vv/.b->bHO//Expand//MyChop//Simplify];
-
-=======
 	PrintLag[];
 	
 	Print["Your structure function is"];
@@ -1675,42 +1626,10 @@ TransitionProbability[vv_,qqdimless_,IfRel_:False]:=Block[{ii, myFF,ANonrelToRel
 	Print["jiso"]
 	Print[JIso];
 	Return[ANonrelToRel/(4mN mchi)^2*myFF/.y->(q bHO/2)^2/.q->qqdimless*GeV/.v->vv/.b->bHO//Expand//MyChop//Simplify];
->>>>>>> d06b32874511a3bc0215f9626d0f3ef18003df9c
 ];
 
 
 DiffCrossSection[ERkeV_,vv_]:=Block[{FFTemp,ER,bb,qq},
-<<<<<<< HEAD
-bb=bHO;
-ER=ERkeV*10^(-6)*GeV;
-qq=Sqrt[2M*(mN/GeV)*ERkeV]*10^(-3)GeV;
-
-PrintLag[];
-
-
-FFTemp=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.q->qq/.y->((qq bb)/2)^2/.b->bb/.v->vv;
-
-
-Print["Your cross-section is"];
-Return[M/(32\[Pi] vv^2 mchi^2 mN) FFTemp(*/.vmin->qq/(2\[Mu]T[mchi,M])*)]/.FormalReplace//MyChop
-];
-
-
-ApproxTotalCrossSection[vv_]:=Block[{FFTempNoExp,FFTempNoExp2,ER,qqmax,bb,qq},
-bb=bHO;
-qqmax=2\[Mu]T[mchi,M]*vv;
-
-PrintLag[];
-
-
-FFTempNoExp=FFfinal[DensityMatrix,JIso,TIso]/.q->qq/.y->((qq bb)/2)^2/.b->bb/.v->vv;
-(*Change integration variables using dER=(q/mT)dq and integrate*)
-FFTempNoExp2=Collect[(qq/(M*mN))*FFTempNoExp,qq]/.{qq^{a_Integer} -> Superscript[qqmax, a+1]/(a+1),qq->qqmax/2} (*/.qq^(a_)->(qqmax^(a+1))/(a+1)*);
-
-Print["Here is your small-nucleus-radius approximate cross-section.
-This approximation is valid only at v \[LessLess] 1/(2\!\(\*SubscriptBox[\(\[Mu]\), \(T\)]\)b)."];
-Return[M/(32\[Pi] vv^2 mchi^2 mN) FFTempNoExp2]/.FormalReplace//MyChop//Expand
-=======
 	bb=bHO;
 	ER=ERkeV*10^(-6)*GeV;
 	qq=Sqrt[2M*(mN/GeV)*ERkeV]*10^(-3)GeV;
@@ -1736,40 +1655,11 @@ ApproxTotalCrossSection[vv_]:=Block[{FFTempNoExp,FFTempNoExp2,ER,qqmax,bb,qq},
 	Print["Here is your small-nucleus-radius approximate cross-section.
 	This approximation is valid only at v \[LessLess] 1/(2\!\(\*SubscriptBox[\(\[Mu]\), \(T\)]\)b)."];
 	Return[M/(32\[Pi] vv^2 mchi^2 mN) FFTempNoExp2]/.FormalReplace//MyChop//Expand
->>>>>>> d06b32874511a3bc0215f9626d0f3ef18003df9c
 ];
 
 
 EventRate[NT_,\[Rho]chi_,qqGeV_,vve_,vv0_]:=EventRate[NT,\[Rho]chi,qqGeV,vve,vv0,12*vv0];
 EventRate[NT_,\[Rho]chi_,qqGeV_,vve_,vv0_,vvesc_]:=EventRateInelastic[NT,\[Rho]chi,0,qqGeV,vve,vv0,vvesc];
-<<<<<<< HEAD
-
-
-EventRateInelastic[NT_,\[Rho]chi_,\[Delta]\[Delta]_,qqGeV_,vve_,vv0_]:=EventRateInelastic[NT,\[Rho]chi,\[Delta]\[Delta],qqGeV,vve,vv0,12vv0];
-EventRateInelastic[NT_,\[Rho]chi_,\[Delta]\[Delta]_,qqGeV_,vve_,vv0_,vvesc_]:=Block[{FFTemp,ERTemp,bb,qq},
-
-bb=bHO;
-qq=qqGeV*GeV;
-PrintLag[];
-
-
-
-FFTemp=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.q->qq/.y->((qq bb)/2)^2/.b->bb;
-
-(*FFTemp=FormFactor[((qq bb)/2)^2,bb,v];*)
-If[(HALO!="MB")&&(HALO!="MBcutoff"),Print["Warning: Halo option not recognized.  Setting to Maxwell-Boltzmann."]; HALO="MB";];
-If[HALO=="MB",ERTemp=Coefficient[FFTemp,v,0] Fv0MB[vve/vv0,vmin/vv0]/vv0+Coefficient[FFTemp,v,2]FvsqMB[vve/vv0,vmin/vv0]*vv0];
-If[HALO=="MBcutoff",ERTemp=Coefficient[FFTemp,v,0] Fv0MBcutoff[vve/vv0,vmin/vv0,vvesc/vv0]/vv0+Coefficient[FFTemp,v,2]FvsqMBcutoff[vve/vv0,vmin/vv0,vvesc/vv0]*vv0];
-Print["Your event rate is"];
-Return[NT \[Rho]chi M/(32\[Pi] mchi^3 mN) ERTemp/.vmin->qq/(2\[Mu]T[mchi,M])+\[Delta]\[Delta]/qq]/.FormalReplace
-];
-
-
-
-
-
-(***************
-=======
 EventRateInelastic[NT_,\[Rho]chi_,\[Delta]\[Delta]_,qqGeV_,vve_,vv0_]:=EventRateInelastic[NT,\[Rho]chi,\[Delta]\[Delta],qqGeV,vve,vv0,12vv0];
 EventRateInelastic[NT_,\[Rho]chi_,\[Delta]\[Delta]_,qqGeV_,vve_,vv0_,vvesc_]:=Block[{FFTemp,ERTemp,bb,qq},
 
@@ -1792,7 +1682,6 @@ EventRateInelastic[NT_,\[Rho]chi_,\[Delta]\[Delta]_,qqGeV_,vve_,vv0_,vvesc_]:=Bl
 ];
 
 (******************************************************************************
->>>>>>> d06b32874511a3bc0215f9626d0f3ef18003df9c
 * Section for Density Matrix I/O 
 *)
 

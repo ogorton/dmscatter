@@ -30,6 +30,7 @@ module stateinfo
    integer nsporb   ! # of single-particle orbits
    integer jt, tt   ! spin, isospin of transition operator
    integer Jiso, Tiso   ! ang, isospin of ground state times 2
+   integer Mtiso ! iso spin projection
    logical ::  pndens
    type onebdenmat
    logical good

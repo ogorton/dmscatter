@@ -6,7 +6,7 @@
 
 !================================================
 
-function nucResponse(tau1,tau2,ioption,y,Mtiso)
+function nucResponse(tau1,tau2,ioption,y)
     use kinds
     use spspace
     use stateinfo
@@ -15,7 +15,6 @@ function nucResponse(tau1,tau2,ioption,y,Mtiso)
     integer :: tau1, tau2
     integer :: ioption
     real(doublep) :: y
-    integer :: Mtiso
 
     integer :: j,a,b!,ap,an
     integer :: jmin, jmax

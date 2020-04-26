@@ -1,5 +1,5 @@
 COMP =  gfortran
-OPTIONS = -O2 -fbounds-check
+OPTIONS = -O2 -fbounds-check -Wall
 
 OBJ1 = \
 norm.o\

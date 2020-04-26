@@ -72,7 +72,7 @@ EventRate::usage="EventRate[NT,rhoDM,q,ve,v0] outputs the event rate."
 (*ReadInDMFile::usage="ReadInDMFile[DensityMatrix] reads in the density matrix from file DensityMatrix."*)
 
 SetIsotope::usage="SetIsotope[Z,M,b, filename] reads the density matrix for
-theIisotope stored in filename. Z is the charge, M is the mass number, and b is
+the isotope stored in filename. Z is the charge, M is the mass number, and b is
 the harmonic oscillator parameter. If b is set to default (in quotes), it will
 be set to \!\(\*SqrtBox[\(41.467/\((45 \*SuperscriptBox[\(M\), \(\(-1\)/3\)] - 25 \*SuperscriptBox[\(M\), \(\(-2\)/3\)])\)\)]\)femtometers. If filename is set
 to default (in quotes), SetIsotope will load the default density matrix."
@@ -1103,21 +1103,21 @@ UsingRelCoeffs=False;
 ];
 
 (*Convert from the old normalization of c coefficients to the new one *)
-If[Op==1, coeff=(4mN*mchi/mV^2)coeffdimless;];
-If[Op==2, coeff=(4mN*mchi/mV^2)coeffdimless;];
-If[Op==3, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
-If[Op==4, coeff=(4mN*mchi/mV^2)coeffdimless;];
-If[Op==5, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
-If[Op==6, coeff=(4mN*mchi/mV^2)coeffdimless/mN^2;];
-If[Op==7, coeff=(4mN*mchi/mV^2)coeffdimless;];
-If[Op==8, coeff=(4mN*mchi/mV^2)coeffdimless;];
-If[Op==9, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
-If[Op==10, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
-If[Op==11, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
-If[Op==12, coeff=(4mN*mchi/mV^2)coeffdimless;];
-If[Op==13, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
-If[Op==14, coeff=(4mN*mchi/mV^2)coeffdimless/mN;];
-If[Op==15, coeff=(4mN*mchi/mV^2)coeffdimless/mN^2;];
+If[Op==1, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+If[Op==2, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+If[Op==3, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+If[Op==4, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+If[Op==5, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+If[Op==6, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN^2;];
+If[Op==7, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+If[Op==8, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+If[Op==9, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+If[Op==10, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+If[Op==11, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+If[Op==12, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+If[Op==13, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+If[Op==14, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+If[Op==15, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN^2;];
 
 If[nucleon!="n"&&nucleon!="p"&&nucleon!=0&&nucleon!=1,
 Print["3rd argument must be one of \"p\",\"n\",0, or 1"];Return[];
@@ -1411,9 +1411,9 @@ Print["tiso"]
 Print[TIso];
 Print["jiso"]
 Print[JIso];
-
+Print["denom"];
+Print[(4mN mchi)^2];
 Return[ANonrelToRel/(4mN mchi)^2*myFF/.y->(q bHO/2)^2/.q->qqdimless*GeV/.v->vv/.b->bHO//Expand//MyChop//Simplify];
-
 ];
 
 
@@ -1502,6 +1502,18 @@ SetbHO[bHOdimlessxx Femtometer];
 If[filename=="default"||filename=="Default"||filename=="DEFAULT",
 (*set it to the default isotope, in this case sdF*)
 Print["Getting default matrix..."];
+
+If[Ziso==2&&Mxx==4,
+Print["Setting isotope to helium-4 (default.)"];
+DensityMatrix=sHe4;
+SetDMmatrixLength[sHe4length];
+Return[];];
+
+If[Ziso==8&&Mxx==16,
+Print["Setting isotope to oxygen-16 (default.)"];
+DensityMatrix=sO16;
+SetDMmatrixLength[sO16length];
+Return[];];
 
 If[Ziso==9&&Mxx==19,
 Print["Setting isotope to fluorine-19 (default.)"];
