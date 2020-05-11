@@ -96,7 +96,7 @@ function nucResponse(tau1,tau2,ioption,y)
         nucResponse = nucResponse + 1 &
                                   * (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
                                   * (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso) &
-                                  * DRME1(j) * DRME2(j) /4.0 ! /4.0 is a hack.
+                                  * DRME1(j) * DRME2(j) !/4.0 ! /4.0 is a hack.
         if (isnan(SRME1(j)).or.isnan(SRME2(j)))print*,SRME1(j),SRME2(j)
     end do
 

@@ -10,6 +10,7 @@ program darkmattermain
     use spspace
     use stateinfo
     use masses
+    use kinds
     implicit none
 
     interface
@@ -44,12 +45,16 @@ program darkmattermain
     integer, parameter :: resfile = 33
     integer :: ap, an
 
-    ! TEST BLOCK <<<<<<
+    ! TEST BLOCK <<<<<a
+    real(doublep) :: Nt ! Number of target nuclei
+    real(doublep) :: rhochi ! local dark matter density
+    real(doublep) :: ve ! Earth's velocity in the galactic rest frame
+    real(doublep) :: v0 ! rms velocity of the visible matter distribution<
     real(kind=8) :: output
     real(kind=8) :: q,v,jchi,y,yy
     REAL(kind=8) :: nucResponse
     real(kind=8) :: femtometer, GeV, diffcrosssection
-
+    character :: yn
     integer :: i
 
     GeV = 1.0
@@ -82,7 +87,12 @@ program darkmattermain
     call setupdensities
     call readheaderv2(resfile)
     call readalldensities(resfile)
-    call coredensity
+    print*,'Fill core? [y/n]'
+    read*,yn
+    if (yn=='y') then
+        print*,'Filling core shell density matrix elements.'
+        call coredensity
+    end if
     call printdensities
 
     print*,' '
@@ -123,6 +133,10 @@ program darkmattermain
     output = transition_probability(q,v,jchi,y)
     print*,"Transition probability =",output
 
-!    output = EventRate(1000.d0,1.0d0,225.d0,220.d0,1.0d0,0.5d0,1.0d0,Mtiso)
+    Nt = 1.
+    rhochi = 1.
+    ve = 232.
+    v0 = 220.
+    output= eventrate(Nt, rhochi, ve, v0, q, jchi, y)
 
 end program  

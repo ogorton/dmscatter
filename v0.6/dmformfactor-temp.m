@@ -13,7 +13,7 @@ BeginPackage["dmformfactor`"]
 
 (*Provide GeV as a unit for the user to check dimensions.*)
 
-GeV;
+GeV=1;
 Femtometer=5.0677/GeV;
 KilometerPerSecond=3.3356*10^-6;
 KilogramDay=7.3634*10^55
@@ -973,7 +973,7 @@ If[Operator==MJ&&UseHelm==True,Return[FHelm={{ZZ^2,ZZ(M-ZZ)},{ZZ(M-ZZ),(M-ZZ)^2}
 Response[iDMmatrix_,iOperator_,iT_]:=Response[iDMmatrix,iOperator,iT]=Simplify[Block[{},
 Sum[iDMmatrix[i][[1]](If[iDMmatrix[i][[3]]==0,Sqrt[2]/Sqrt[2iT+1] ((an+ap)/2),-(Sqrt[6iT]/Sqrt[(2iT+1)(iT+1)])((ap-an)/2)])*E^y (iOperator[y,{iDMmatrix[i][[4]],iDMmatrix[i][[5]]/2},{iDMmatrix[i][[6]],iDMmatrix[i][[7]]/2},iDMmatrix[i][[2]]])Jbase[iDMmatrix[i][[2]]],{i,DMmatrixLength}]]];
 
-Simplify[(4\[Pi])/(2J+1) Sum[1/2 Table[D[(Coefficient[Response[DMmatrix,Operator,T],Jbase[n]]^2),{ap,an}[[ii]],{ap,an}[[jj]]],{ii,2},{jj,2}],{n,0,Jmax}]]
+Simplify[(4\[Pi])/(2J+1) Sum[4/2 Table[D[(Coefficient[Response[DMmatrix,Operator,T],Jbase[n]]^2),{ap,an}[[ii]],{ap,an}[[jj]]],{ii,2},{jj,2}],{n,0,Jmax}]]
 ];
 
 FF[DMmatrix_,Operator1_,Operator2_,J_,T_]:=Block[{Response},
@@ -1461,7 +1461,12 @@ PrintLag[];
 
 
 FFTemp=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.q->qq/.y->((qq bb)/2)^2/.b->bb;
-
+Print["vmin="]
+Print[qq/(2\[Mu]T[mchi,M])]
+Print["q="]
+Print[qq]
+Print["y="]
+Print[((qq bb)/2)^2]
 (*FFTemp=FormFactor[((qq bb)/2)^2,bb,v];*)
 If[(HALO!="MB")&&(HALO!="MBcutoff"),Print["Warning: Halo option not recognized.  Setting to Maxwell-Boltzmann."]; HALO="MB";];
 If[HALO=="MB",ERTemp=Coefficient[FFTemp,v,0] Fv0MB[vve/vv0,vmin/vv0]/vv0+Coefficient[FFTemp,v,2]FvsqMB[vve/vv0,vmin/vv0]*vv0];

@@ -34,16 +34,16 @@ function transition_probability(q,v,jchi,y)
     do tau1 = 0, 1
         do tau2 = 0, 1
             do ifunc = 1, 8
-                tmp = dmresponsecoef(ifunc, tau1, tau2, q, v, jchi)
-                print*,'tmp',tmp
+                tmp = nucResponse(tau1,tau2,ifunc,y)
+!                print*,'tmp',tmp
                 transition_probability = transition_probability &
                     + dmresponsecoef(ifunc, tau1, tau2, q, v, jchi) &
-                    * nucResponse(tau1,tau2,ifunc,y) *4.0*pi/(Jiso+1)
+                    * nucResponse(tau1,tau2,ifunc,y)
             end do ! ifunc
         end do ! tau2
     end do ! tau1
 
-    print*,'denom',(4.0*mN*mchi)**2.0
-    transition_probability = transition_probability/((4.0*mN*mchi)**2.0)
+!    print*,'denom',(4.0*mN*mchi)**2.0
+    transition_probability = transition_probability * (4.0*pi/(Jiso+1)) /((4.0*mN*mchi)**2.0)
     
 end function transition_probability

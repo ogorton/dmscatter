@@ -1,4 +1,4 @@
-function EventRate(Nt, rhochi, ve, v0, q, jchi, y, Mtiso)
+function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
     ! Computes the differential cross section per recoil energy ds/dEr
     use kinds
     use masses
@@ -44,49 +44,36 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y, Mtiso)
     real(doublep),allocatable :: v_lattice(:) ! velocity domain
     real(doublep), allocatable :: EventRate_integrand(:)
     integer :: i, Nv
-    real(doublep) :: tmp, diffcrosssection
+    real(doublep) :: tmp, diffcrosssection, vmin
 
-    dv = v0 / 100
+    dv = 12*v0 / 1000
     Nv = (12*v0 )/dv
+    vmin = q/(2.0*muT)
 
     print*,'Integral lattice size = ',Nv
 
     allocate(v_lattice(Nv))
     allocate(EventRate_integrand(Nv))
-
-    print*,'vmin = ',-Nv*dv/2,'vmax = ',Nv*dv/2
-
-    ERkev = 1.0
-    v = 1.
-    q = 1.
-    jchi = 0.5
-    y = 1.
-    mtiso = 0.
-    print*,'aa0'
-    tmp = diffCrossSection(ERkev,v,q,jchi,y,Mtiso)
-    print*,'aa1'
+    
+    print*,'vmin = ',vmin,'vmax = ',Nv*dv+vmin
+    print*,'dv=',dv
+    print*,'nt',nt
+    print*,'rhochi',rhochi
+    print*,'mchi',mchi
 
     do i = 1, Nv
 
-        print*,i
-        v = (i-Nv/2-1) * dv
-        print*,'g'
+        v = vmin + (i-1) * dv + 0.00001
         v_lattice(i) = v
-        print*,'k',ERkev,v,q,jchi,y,mtiso
-        tmp = diffCrossSection(ERkev, v, q, jchi, y, Mtiso)
-        print*,'h'
         
-        EventRate_integrand(i) = diffCrossSection(ERkev, v, q, jchi, y, Mtiso)&
-                    * v * maxwell_boltzmann(v,v0)
-        print*,'g'
+        EventRate_integrand(i) = diffCrossSection(v, q, jchi, y, Mtiso)&
+                    * v * maxwell_boltzmann(v,v0) *v*v
     end do
-    print*,'here'
+    print*,'here',v
     
-    ERkev = q*q/(2.0*Miso)
+    call boole(Nv,EventRate_integrand,dv,EventRate)
 
-    call simpson(Nv,Nv,EventRate_integrand,dv,EventRate)
-
-    EventRate = Nt * rhochi * EventRate
+    EventRate = Nt * rhochi * EventRate * 4*pi/mchi
   
     print*,'Event Rate = ',EventRate
 

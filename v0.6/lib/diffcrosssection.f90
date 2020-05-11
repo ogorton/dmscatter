@@ -1,4 +1,4 @@
-function diffCrossSection(ERkev, v, q, jchi, y, Mtiso)
+function diffCrossSection(v, q, jchi, y, Mtiso)
     ! Computes the differential cross section per recoil energy ds/dEr
     use kinds
     use masses
@@ -17,15 +17,14 @@ function diffCrossSection(ERkev, v, q, jchi, y, Mtiso)
         end function
     end interface
     real(doublep) :: diffCrossSection
-    real(doublep) :: ERkev ! Recoil energy in keV
     real(doublep) :: v ! velocity of DM particle in lab frame
     real(doublep) :: q
     real(doublep) :: y
     real(doublep) :: jchi
     integer :: Mtiso
 
-    q = sqrt(2.0 * Miso * (mN/GeV) * ERkeV) * 1E-3 * GeV
-    y = ((q * bfm)/2.0)**2.0
+    !q = sqrt(2.0 * Miso * (mN/GeV) * ERkeV) * 1E-3 * GeV
+    !y = ((q * bfm)/2.0)**2.0
 
     diffCrossSection = (2.0*Miso/(4.0*pi*v*v)) * transition_probability(q,v,jchi,y,Mtiso)
 
