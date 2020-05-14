@@ -46,7 +46,7 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
     integer :: i, Nv
     real(doublep) :: tmp, diffcrosssection, vmin
 
-    dv = 12*v0 / 1000
+    dv = 12*v0 / 10000
     Nv = (12*v0 )/dv
     vmin = q/(2.0*muT)
 
@@ -63,7 +63,7 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
 
     do i = 1, Nv
 
-        v = vmin + (i-1) * dv + 0.00001
+        v = vmin + (i-1) * dv + 0.000000001
         v_lattice(i) = v
         
         EventRate_integrand(i) = diffCrossSection(v, q, jchi, y, Mtiso)&
@@ -71,7 +71,7 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
     end do
     print*,'here',v
     
-    call boole(Nv,EventRate_integrand,dv,EventRate)
+    call simpson(Nv,Nv,EventRate_integrand,dv,EventRate)
 
     EventRate = Nt * rhochi * EventRate * 4*pi/mchi
   
