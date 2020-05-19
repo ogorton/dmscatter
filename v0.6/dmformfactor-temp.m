@@ -1398,7 +1398,6 @@ If[ifOutFile==1,
 Print["Writing to TeX file..."];
 TeXForm[1/(4mN mchi)^2*myFF/.y->(q bHO/2)^2/.q->qqdimless*GeV/.v->vv/.b->bHO//Expand//MyChop//Simplify]>>"myFormFactor.tex";
 ];];
-
 TransitionProbability[vv_,qqdimless_,IfRel_:False]:=Block[{ii, myFF,ANonrelToRel},
 
 ANonrelToRel=1;
@@ -1418,7 +1417,7 @@ DiffCrossSection[ERkeV_,vv_]:=Block[{FFTemp,ER,bb,qq},
 bb=bHO;
 ER=ERkeV*10^(-6)*GeV;
 qq=Sqrt[2M*(mN/GeV)*ERkeV]*10^(-3)GeV;
-
+qq=1;
 PrintLag[];
 
 
@@ -1463,15 +1462,28 @@ PrintLag[];
 FFTemp=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.q->qq/.y->((qq bb)/2)^2/.b->bb;
 Print["vmin="]
 Print[qq/(2\[Mu]T[mchi,M])]
+Print["ve="]
+Print[vve]
+Print["v0="]
+Print[vv0]
 Print["q="]
 Print[qq]
 Print["y="]
 Print[((qq bb)/2)^2]
+Print["miso="]
+Print[M]
+Print["mchi="]
+Print[mchi]
 (*FFTemp=FormFactor[((qq bb)/2)^2,bb,v];*)
 If[(HALO!="MB")&&(HALO!="MBcutoff"),Print["Warning: Halo option not recognized.  Setting to Maxwell-Boltzmann."]; HALO="MB";];
-If[HALO=="MB",ERTemp=Coefficient[FFTemp,v,0] Fv0MB[vve/vv0,vmin/vv0]/vv0+Coefficient[FFTemp,v,2]FvsqMB[vve/vv0,vmin/vv0]*vv0];
+If[
+	HALO=="MB",
+	ERTemp = Coefficient[FFTemp,v,0] Fv0MB[vve/vv0,vmin/vv0]/vv0
+		+ Coefficient[FFTemp,v,2]FvsqMB[vve/vv0,vmin/vv0]*vv0
+];
 If[HALO=="MBcutoff",ERTemp=Coefficient[FFTemp,v,0] Fv0MBcutoff[vve/vv0,vmin/vv0,vvesc/vv0]/vv0+Coefficient[FFTemp,v,2]FvsqMBcutoff[vve/vv0,vmin/vv0,vvesc/vv0]*vv0];
 Print["Your event rate is"];
+
 Return[NT \[Rho]chi M/(32\[Pi] mchi^3 mN) ERTemp/.vmin->qq/(2\[Mu]T[mchi,M])+\[Delta]\[Delta]/qq]/.FormalReplace
 ];
 

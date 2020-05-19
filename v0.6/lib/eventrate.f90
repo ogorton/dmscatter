@@ -20,6 +20,16 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
 !            real(doublep) :: jchi
 !            integer :: Mtiso
 !        end function
+         function transition_probability(q,v,jchi,y,Mtiso)
+            use kinds
+            implicit none
+            REAL(doublep), INTENT(IN) :: q
+            REAL(doublep), INTENT(IN) :: v
+            REAL(doublep), INTENT(IN) :: jchi
+            REAL(doublep), INTENT(IN) :: y
+            integer, intent(in) :: Mtiso
+            real(doublep) :: transition_probability
+        end function
         function maxwell_boltzmann(v,v0)
             use kinds
             real(doublep), intent(in) :: v
@@ -44,15 +54,16 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
     real(doublep),allocatable :: v_lattice(:) ! velocity domain
     real(doublep), allocatable :: EventRate_integrand(:)
     integer :: i, Nv
-    real(doublep) :: tmp, diffcrosssection, vmin
+    real(doublep) :: tmp, diffcrosssection, vmin, vmax
 
-    dv = 12*v0 / 10000
-    Nv = (12*v0 )/dv
+    Nv = 1000
     vmin = q/(2.0*muT)
+
+    vmax =544! 12*v0
+    dv = (vmax-vmin)/Nv
 
     print*,'Integral lattice size = ',Nv
 
-    allocate(v_lattice(Nv))
     allocate(EventRate_integrand(Nv))
     
     print*,'vmin = ',vmin,'vmax = ',Nv*dv+vmin
@@ -60,20 +71,21 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
     print*,'nt',nt
     print*,'rhochi',rhochi
     print*,'mchi',mchi
+    print*,'v0=',v0
+    print*,'ve=',ve
 
     do i = 1, Nv
 
-        v = vmin + (i-1) * dv + 0.000000001
-        v_lattice(i) = v
+        v = vmin + (i-1) * dv
         
         EventRate_integrand(i) = diffCrossSection(v, q, jchi, y, Mtiso)&
-                    * v * maxwell_boltzmann(v,v0) *v*v
+                    * v * maxwell_boltzmann(v+ve,v0) &
+                    * 4*pi*v*v ! spherical coord.
     end do
-    print*,'here',v
     
     call simpson(Nv,Nv,EventRate_integrand,dv,EventRate)
 
-    EventRate = Nt * rhochi * EventRate * 4*pi/mchi
+    EventRate = Nt * (rhochi/Mchi) * EventRate
   
     print*,'Event Rate = ',EventRate
 

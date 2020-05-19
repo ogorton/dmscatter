@@ -103,7 +103,6 @@ program darkmattermain
     read(5,*)ap
 
     bfm = (41.467/(45.*(an+ap)**(-1./3) - 25.*(ap+an)**(-2./3)))**0.5 * femtometer
-!    y = (q*bfm/(2.0*0.197*GeV*femtometer))**2.0
     y = (q*bfm/2.0)**2.0
 
     print*,'b[dimless]=',bfm/femtometer
@@ -116,6 +115,7 @@ program darkmattermain
     Mtiso = (ap-an)
     Miso = ap+an
     muT = mchi * Miso * mN / (mchi+Miso*mN)
+
     print*,'Jiso, Tiso=',Jiso,Tiso
 
     print*,'Mtiso=',Mtiso
@@ -126,12 +126,14 @@ program darkmattermain
 
     print*,'denom',(4.0*mN*mchi)**2.0
     print*,'cvec',cvec(0)%c(:)
-    yy = 1.0
     output = nucResponse(0,0,1,y)
     print*,'Nuclear response =',output
 
     output = transition_probability(q,v,jchi,y)
     print*,"Transition probability =",output
+
+    output = diffCrossSection(v, q, jchi, y, Mtiso)
+    print*,'Differential cross section =',output
 
     Nt = 1.
     rhochi = 1.

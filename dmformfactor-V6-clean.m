@@ -1515,11 +1515,16 @@ Sum[DMResponseCoeff[MJ][[iiFF,jjFF]]*FF[DMmatrix,MJ,J,T][[iiFF,jjFF]]+DMResponse
 (*Velocity Distributions*)
 Fv0MB[\[Eta]_,xmin_]:=(Erf[xmin+\[Eta]]-Erf[xmin-\[Eta]])/(2 \[Eta]);
 
+
+(* integral of v^2 A exp( -(v/B)^2 ) ?    *)
 FvsqMB[\[Eta]_,xmin_]:=(
 	(E^-(-xmin+\[Eta])^2 (xmin+\[Eta]) 
-		- E^-(xmin+\[Eta])^2 (xmin-\[Eta]))/(2 Sqrt[\[Pi]] \[Eta])
-		+ ((1+2 \[Eta]^2) (Erf[xmin+\[Eta]]-Erf[xmin-\[Eta]]))/(4 \[Eta])
+		- E^-(xmin+\[Eta])^2 (xmin-\[Eta])i
+	)/(2 Sqrt[\[Pi]] \[Eta])
+	+ ((1+2 \[Eta]^2) (Erf[xmin+\[Eta]]-Erf[xmin-\[Eta]]))/(4 \[Eta])
 );
+
+
 
 Fv0MBcutoff[\[Eta]_,xmin_,xesc_]:=
 	(
