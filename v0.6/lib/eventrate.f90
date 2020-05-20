@@ -59,7 +59,7 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
     Nv = 1000
     vmin = q/(2.0*muT)
 
-    vmax =544! 12*v0
+    vmax = 12*v0
     dv = (vmax-vmin)/Nv
 
     print*,'Integral lattice size = ',Nv
@@ -75,18 +75,20 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
     print*,'ve=',ve
 
     do i = 1, Nv
-
+ 
         v = vmin + (i-1) * dv
+ 
+        write(22,*)v,maxwell_boltzmann(v+ve,v0)
         
         EventRate_integrand(i) = diffCrossSection(v, q, jchi, y, Mtiso)&
-                    * v * maxwell_boltzmann(v+ve,v0) &
-                    * 4*pi*v*v ! spherical coord.
+                    * v * v * ( + maxwell_boltzmann(v-ve,v0) &
+                            - maxwell_boltzmann(v+ve,v0) ) &
+                    * (pi*v0**2/(ve))
+        write(23,*),v,EventRate_integrand(i)/Mchi
     end do
     
     call simpson(Nv,Nv,EventRate_integrand,dv,EventRate)
 
     EventRate = Nt * (rhochi/Mchi) * EventRate
   
-    print*,'Event Rate = ',EventRate
-
 end function EventRate
