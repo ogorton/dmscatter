@@ -126,6 +126,8 @@ program darkmattermain
     print*,"Transition probability =",output
     print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
 
+    stop 1
+
     output = diffCrossSection(v, q, jchi, y, Mtiso)
     print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     print*,'Differential cross section =',output

@@ -44,6 +44,6 @@ function transition_probability(q,v,jchi,y)
     end do ! tau1
 
 !    print*,'denom',(4.0*mN*mchi)**2.0
-    transition_probability = transition_probability * (4.0*pi/(Jiso+1)) /((4.0*mN*mchi)**2.0)
+    transition_probability = transition_probability * (4.0*pi/(Jiso+1)) / ((4.0*mN*mchi)**2.0)
     
 end function transition_probability
