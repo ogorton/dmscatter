@@ -400,6 +400,7 @@ subroutine readalldensities(resfile)
 !  fill the one-body density matrix of the core
 
    call coredensity
+   call printdensities
 
    return
 end subroutine readalldensities
@@ -581,13 +582,14 @@ Program darkmattermain
     SRME2(0:6,0:1) = 0.d0
 
     Response(0:1,0:1) = 0.d0
+   print*,'debugg',Tiso,Mtiso
 
    if (ioption .le. 3) then
       Do j = 0,6,2
        Do t = 0, 1
         Do a = 1, ntotal(1)
          Do b = 1, ntotal(1)
-      If (abs(densitymats%rho(j,t,a,b)) .ge. 1.0e-9) then
+!      If (abs(densitymats%rho(j,t,a,b)) .ge. 1.0e-9) then
 !           write(*,"(i4,i4,i4,i4,i4,i4,f9.5)") &
 !           & jt,tt,nprincipal(a),jorb(a),nprincipal(b),jorb(b), densitymats%rho(jt,tt,a,b)
 
@@ -597,7 +599,8 @@ Program darkmattermain
            IsoME(t)= spOME * sqrt(2.d0) *sqrt(2*dble(t)+1.0)
            DRME(j,t) = DRME(j,t) + densitymats%rho(j,t,a,b)*IsoME(t)
            SRME(j,t) = (-1.0)**((Tiso - Mtiso)/2)*Wigner_3j(Tiso,2*t,Tiso,-Mtiso,0,Mtiso)*DRME(j,t)    
-      end if
+           if (a==b.and.j==0.and.t==1)print*,j,t,a,b,'tiso mtiso spome srme',tiso,mtiso,spome,srme(j,t),'d',densitymats%rho(j,t,a,b)
+!      end if
          end do 
        end do
       end do
@@ -681,7 +684,7 @@ Program darkmattermain
    Do tt1 = 0,1
     Do tt2 = 0,1
       if (abs(Response(tt1,tt2)) .gt. 1.0d-15) then
-       Write(*,"(i4,i4,f25.17)") tt1, tt2, Response(tt1,tt2)
+       print*, tt1, tt2, Response(tt1,tt2)
       end if
     end do
    end do
@@ -694,11 +697,32 @@ subroutine coredensity
 
   integer :: i
 
+  print*,'filling core!'
+
   do i = norb(1)+1, ntotal(1)
      densitymats%rho(0,0,i,i) = sqrt(2.0*(jorb(i)+1.0)*(Jiso+1.0)*(Tiso+1.0))
   end do
 
 end 
+
+subroutine printdensities
+    use stateinfo
+    use spspace
+    implicit none
+    integer J,a, b
+    print*,'Printing density matrix.'
+    print*,'# spo =', ntotal(1)
+    do J=0,10
+        print*,'J=',J
+        do a=1,ntotal(1)
+            do b=1,ntotal(1)
+                if (densitymats%rho(J,0,a,b)+densitymats%rho(J,1,a,b) .eq. 0) cycle
+                print*,a,b,densitymats%rho(J,0,a,b),densitymats%rho(J,1,a,b)
+            enddo
+        enddo
+    enddo
+
+end subroutine printdensities
 
       subroutine GetSPS
 !

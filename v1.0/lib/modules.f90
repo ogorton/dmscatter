@@ -26,6 +26,18 @@ module response
 
 end module response
 
+!===============================================================================
+module dmparticles
+
+    use kinds
+    implicit none
+
+    real(doublep) :: jchi ! darkmatter spin
+    real(doublep) :: Nt ! Number of target nuclei
+    real(doublep) :: rhochi ! local dark matter density 
+
+end module dmparticles
+
 
 !===============================================================================
 module stateinfo
@@ -74,28 +86,43 @@ module masses
     implicit none
 
     ! Mass neutron and mass proton in GeV
-    REAL(kind=8) :: mN = 0.938272
+    REAL(kind=8) :: mN
     ! 
-    REAL(kind=8) :: mV = 246.2
+    REAL(kind=8) :: mV
     ! Mass dark matter particle
-    REAL(kind=8) :: mchi = 1.0
+    REAL(kind=8) :: mchi
     ! Mass isotope (number of nucleons)
-    REAL(kind=8) :: Miso = 1.0
+    REAL(kind=8) :: Miso
+    ! Number of protons and neutron in target nucleus
+    integer :: num_p, num_n
     ! Reduced mass of the target
-    REAL(kind=8) :: muT = 1.0
-    ! Harmonic oscillator parameter
-    real(kind=8) :: bfm
+    REAL(kind=8) :: muT
     ! Dark matter density
     real(kind=8) :: rhoDM
 
 end module masses
 
 !===============================================================================
+module momenta
+    use kinds
+    implicit none
+
+    real(doublep) :: q ! three-momentum transfer of the dm-nucleus scattering
+    real(doublep) :: y ! y^2 is the rescaled q
+
+    ! Harmonic oscillator parameter
+    real(kind=8) :: bfm    
+
+end module momenta
+
+!===============================================================================
 module velocities
 
+    use kinds
     implicit none
-    REAL(kind=8) :: vesc = 12*220 ! km/s
-    REAL(kind=8) :: v0 = 220 ! km/s 
+    real(doublep) :: ve !km/s
+    REAL(kind=8) :: vesc ! km/s
+    REAL(kind=8) :: v0 ! km/s 
 
 end module velocities
 
@@ -103,5 +130,18 @@ end module velocities
 module constants
     implicit none
     real(kind=8) :: pi = 3.14159265358979323846264338327950288419716939937510
-    real(kind=8) :: GeV = 1.0
+    real(kind=8) :: GeV
+    real(kind=8) :: femtometer
 end module constants
+
+!===============================================================================
+module quadrature
+    use kinds
+    implicit none
+
+    integer :: quadrature_type
+    integer :: lattice_points
+    real(doublep) :: vdist_min
+    real(doublep) :: vdist_max
+
+end module quadrature

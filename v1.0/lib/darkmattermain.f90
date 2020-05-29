@@ -11,6 +11,10 @@ program darkmattermain
     use stateinfo
     use masses
     use kinds
+    use constants
+    use dmparticles
+    use velocities
+    use momenta
     implicit none
 
     interface
@@ -43,34 +47,13 @@ program darkmattermain
     end interface
 
     integer, parameter :: resfile = 33
-    integer :: ap, an
 
-    ! TEST BLOCK <<<<<a
-    real(doublep) :: Nt ! Number of target nuclei
-    real(doublep) :: rhochi ! local dark matter density
-    real(doublep) :: ve ! Earth's velocity in the galactic rest frame
-    real(doublep) :: v0 ! rms velocity of the visible matter distribution<
     real(kind=8) :: output
-    real(kind=8) :: q,v,jchi,y,yy
-    REAL(kind=8) :: nucResponse
-    real(kind=8) :: femtometer, GeV, diffcrosssection
     character :: yn
-    integer :: i
 
-    GeV = 1.0
-    femtometer = 5.0677/GeV
-    q=1.*GeV
-    v=1.
-    jchi=0.5
-    mchi=50.
-
+    call setparameters
     call setupcoef
-
     call GetSPS
-
-    print*,' '
-    print*,' Reading one-body density matrix from Bigstick .res file '
-    print*,' '
 
     nsporb = norb(1)
 
@@ -78,65 +61,26 @@ program darkmattermain
     call setupdensities
     call readheaderv2(resfile)
     call readalldensities(resfile)
+
     print*,'Fill core? [y/n]'
     read*,yn
     if (yn=='y') then
-        print*,'Filling core shell density matrix elements.'
         call coredensity
     end if
     call printdensities
 
     print*,' '
     print*,' Enter the neutron number '
-    read(5,*)an
+    read(5,*)num_n
     print*,' '
     print*,' Enter the proton number '
-    read(5,*)ap
+    read(5,*)num_p
 
-    bfm = (41.467/(45.*(an+ap)**(-1./3) - 25.*(ap+an)**(-2./3)))**0.5 * femtometer
-    y = (q*bfm/2.0)**2.0
+    print*,'Enter q, the three-momentum transfer of the scattering reaction:'
+    read*,q
 
-    print*,'b[dimless]=',bfm/femtometer
-    print*,'b[fm]=',bfm
-    print*,'y=',y
-    print*,'mN',mN
-    print*,'jchi',jchi
-    print*,'mchi',mchi
+    call setparameters
 
-    Mtiso = (ap-an)
-    Miso = ap+an
-    muT = mchi * Miso * mN / (mchi+Miso*mN)
-
-    print*,'Jiso, Tiso=',Jiso,Tiso
-
-    print*,'Mtiso=',Mtiso
-    print*,'Miso=',Miso
-    print*,'muT=',muT
-    print*,'v=',v
-    print*,'q=',q
-
-    output = nucResponse(0,0,1,y)
-
-    print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-    print*,'Nuclear response =',output
-    print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-
-    output = transition_probability(q,v,jchi,y)
-    print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-    print*,"Transition probability =",output
-    print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-
-    stop 1
-
-    output = diffCrossSection(v, q, jchi, y, Mtiso)
-    print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-    print*,'Differential cross section =',output
-    print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-
-    Nt = 1.
-    rhochi = 1.
-    ve = 232.
-    v0 = 220.
     output= eventrate(Nt, rhochi, ve, v0, q, jchi, y)
     print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     print*,'Event rate = ',output

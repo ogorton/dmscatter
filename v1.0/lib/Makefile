@@ -4,6 +4,7 @@ OPTIONS = -O2 -fbounds-check -Wall
 OBJ1 = \
 norm.o\
 modules.o\
+setparameters.o\
 setcoeffs.o\
 getsps.o\
 densities.o\
