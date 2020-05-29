@@ -153,7 +153,8 @@ module keywords
 
     ! Do not change the order of these keywords!!! Their order determines which
     ! parameters are modified when the string is found in the control file.
-    character(len=20), dimension(5) :: keyword_array = [character(20) :: &
-        "coefnonrel","vearth","dmdens","ntarget","intpoints"]
+    character(len=20), dimension(14) :: keyword_array = [character(20) :: &
+        "coefnonrel","vearth","dmdens","quadtype","intpoints","gev","femtometer",&
+        "dmmass","vescape","ntarget","weakmscale","vscale","mnucleon","dmspin"]
 
 end module keywords

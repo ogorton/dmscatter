@@ -54,7 +54,7 @@ subroutine readheaderv2(resfile)
       read(resfile,'(a)')tmpline
       read(resfile,'(a)')tmpline
       read(resfile,*)zp,np
-      print*,zp,np
+!      print*,zp,np
 !          if(.not.readinZN)then
 !                  Z0 = zp
 !                  N0 = np
@@ -88,7 +88,7 @@ subroutine readheaderv2(resfile)
                if(n==1)then
                  backspace(resfile)
                  read(resfile,*,err=3)n,e,ex,xj,xt
-               print*, n,e,ex,xj,xt
+         !      print*, n,e,ex,xj,xt
 
                end if
 
@@ -134,7 +134,7 @@ subroutine read2state(resfile,locchar,n,found,finished)
         if(myloc(2:4)=='Ini')then
         backspace(resfile)
         read(resfile,11)myloc,n
-       print*, 'int', n
+!       print*, 'int', n
 11 format(a4,13x,i4)
 
            found = .true.
@@ -148,7 +148,7 @@ subroutine read2state(resfile,locchar,n,found,finished)
         read(resfile,11)myloc,n
         if(myloc(2:4)=='Fin')found=.true.
 
-        print*, 'fin',n
+!        print*, 'fin',n
    end select
    finished = .false.
    return
@@ -310,7 +310,7 @@ subroutine readalldensities(resfile)
               backspace(resfile)
               exit
           end if
-          print *, endoflist, jt
+!          print *, endoflist, jt
 !          if(map2parent(istate) > 0 .and. map2daughter(fstate) > 0)then
 !                         print*,' states ',istate,map2parent(istate),fstate,map2daughter(fstate)
 

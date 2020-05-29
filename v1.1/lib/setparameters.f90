@@ -46,3 +46,37 @@ subroutine setparameters
     vdist_max = 12*v0
 
 end subroutine setparameters
+
+subroutine printparameters
+
+    use constants
+    use masses
+    use dmparticles
+    use velocities
+    use stateinfo
+    use quadrature
+    use momenta
+
+    print*,'b[dimless]=',bfm/femtometer
+    print*,'b[fm]=',bfm
+    print*,'y=',y
+    print*,'mN',mN
+    print*,'jchi',jchi
+    print*,'mchi',mchi
+    print*,'Jiso=',Jiso
+    print*,'Tiso=',Tiso
+    print*,'Mtiso=',Mtiso
+    print*,'ap,an',num_p,num_n
+    print*,'Miso=',Miso
+    print*,'muT=',muT
+    print*,'q=',q
+    print*,'vdist_min = ',vdist_min
+    print*,'vdist_max = ',vdist_max
+    print*,'nt',nt
+    print*,'rhochi',rhochi
+    print*,'mchi',mchi
+    print*,'v0=',v0
+    print*,'ve=',ve
+    print*,'Integral lattice size = ',lattice_points
+
+end subroutine printparameters

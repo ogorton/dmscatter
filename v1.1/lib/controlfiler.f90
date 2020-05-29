@@ -46,7 +46,7 @@ subroutine readcontrolfile(resfile)
     EOF = .false.
 
     print*,'Possible keywords:'
-    do i =1,5
+    do i =1,14
         print*,keyword_array(i)
     enddo
     print*,''
@@ -80,16 +80,18 @@ subroutine readcontrolfile(resfile)
 
         end do
 
+        print*,'End of control file.'
+        print*,''
+
         return
 111     continue
 
         EOF = .true.
+        print*,'End of control file.'
+        print*,''
         return
 
     end do
-  
-    print*,'End of control file.'
-    print*,''
 
 end subroutine readcontrolfile
 subroutine setkeyword(keyword, keyvalue)
@@ -107,20 +109,63 @@ subroutine setkeyword(keyword, keyvalue)
     character (len=20) :: keyword
     real(doublep) :: keyvalue
 
-    if (trim(keyword) == trim(keyword_array(2))) then
+    select case (keyword)
+
+    case('vearth')
         ve = keyvalue
         print*,trim(keyword),": Set velocity of earth in galactic frame set to",ve
-    else if (trim(keyword) == trim(keyword_array(3))) then
+
+    case('dmdens')
         rhochi = keyvalue
         print*,trim(keyword),": Set local dark matter density to",rhochi
-    else if (trim(keyword) == trim(keyword_array(4))) then
-        print*,keyword,'not yet implemented.'
-    else if (trim(keyword) == trim(keyword_array(5))) then
+
+    case('quadtype')
+        print*,keyword,': not implemented.'
+
+    case('intpoints')
         lattice_points = int( keyvalue )
         print*,trim(keyword),": Set number of integral lattice points to",lattice_points
-    else
+
+    case('gev')
+        gev = keyvalue
+        print*,keyword,': Set GeV units to',gev
+
+    case('femtometer')
+        femtometer = keyvalue
+        print*,keyword,': Set femtometer units to',femtometer
+
+    case('dmmass')
+        mchi = keyvalue
+        print*,keyword,': Set dark matter particle mass to',mchi
+
+    case('vescape')
+        vesc = keyvalue
+        print*,keyword,': Set escape velocity to', vesc
+
+    case('ntarget')
+        Nt = keyvalue
+        print*,keyword,': Set number of target nuclei to', Nt
+
+    case('weakmscale')
+        mV = keyvalue
+        print*,keyword,': Set standard-model weak interaction mass scale to',mv
+
+    case('vscale')
+        v0 = keyvalue
+        print*,keyword,': Set velocity distribution scaling to',v0
+
+    case('mnucleon')
+        mn = keyvalue
+        print*,keyword,': Set nucleon mass to',mn
+
+    case('dmspin')
+        jchi = keyvalue
+        print*,keyword,': Set dark matter particle spin to',jchi
+
+    case default
         print*,'Invalid keyword "',trim(keyword),'". Ignoring.'
-    endif
+
+    end select
 
 
 end subroutine setkeyword
