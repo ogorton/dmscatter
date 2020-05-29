@@ -46,8 +46,6 @@ A FORTRAN Program for Experimental Analysis}
 
 This is the manual for the FORTRAN version of the model-independent WIMP scattering response and event rate code, which was originally written in Mathematica and described in \href{http://arxiv.org/abs/1308.6288v1}{arXiv:1308.6288}.
 
-\section{Theory}
-
 \section{Primary functions}
 
 \subsection{Differential event rate}
@@ -124,9 +122,144 @@ Where $v$ is the velocity of the dark matter particles in the lab-frame, $q$ is 
 
 
 \section{Inputs and control file usage}
+This code has a twofold user-interface scheme. This first is through the interactive command-line interface. The program will prompt the user for the minimum necessary inputs to run a calculation with default parameter values. In the case of a differential event rate calculation, these would be the momentum transfer $q$, information about the target nucleus including the density matrices, and finally the coefficient of the WIMP-nucleus interaction. The coefficients are read in from the second user-interface scheme: the control file. 
+
+The simplest and necessary use case of the control file is to read in the coefficients of the WIMP-nucleon interaction. Each coefficient is stored on its one line in a file which ends in .control, with 4 entries each: the keyword "coefnonrel", a 0 or 1 indicating proton or neutron coupling, the index of the coefficient to set, and finally the value of the coefficient. These entries can be separated by tabs or spaces. For example, to set $c_5^(n)=3.1$, the corresponding line in the control file would be:
+\begin{verbatim}
+coefnonrel    1    5     3.1
+\end{verbatim}
+
+The control file also serves a more general but optional function: to set any parameter in the program to a custom value.
 
 
+\subsection{Example: si28 differential scattering rate}
 
+\begin{verbatim}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Welcome to our FORTAN 90 implementation of the WIMP-nucleon scattering code.
+ Based on the Mathematica script described in arXiv:1308.6288 (2003).
+   VERSION 1.1 UPDATED: 2020.05.23 @ SDSU
+   Dev. contact: cjohnson@sdsu.edu
+                  ogorton@sdsu.edu
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+ Select an option:
+ [1] Differential scattering rate per detector per unit recoil energy.
+ [2] Scattering probability.
+ [3] Differential cross section per recoil energy.
+ [4] (Future feature) Total cross section.
+ [5] (Future feature) Total scattering rate per detector.
+ [6] (Future featuer) 
+1
+ Enter q, the three-momentum transfer of the scattering reaction:
+1
+  
+ Enter the neutron number 
+14
+  
+ Enter the proton number 
+14
+ Setting default parameter values.
+  
+ Enter name of control file (.control):
+../si28
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Reading control file.
+ Possible keywords:
+ coefnonrel          
+ vearth              
+ dmdens              
+ quadtype            
+ intpoints           
+ gev                 
+ femtometer          
+ dmmass              
+ vescape             
+ ntarget             
+ weakmscale          
+ vscale              
+ mnucleon            
+ dmspin              
+ 
+ # Coefficient matrix
+ # Ommitted values ar
+ # c_i^t             
+ # i = 1,...,16      
+ # t = 0 protons, 1 n
+ #control name	 t	i	c
+ Set non-relativistic coefficient: op           1 p/n           1 c   3.1000000000000001     
+ Set non-relativistic coefficient: op           3 p/n           1 c   3.1000000000000001     
+ Set non-relativistic coefficient: op           4 p/n           1 c   3.1000000000000001     
+ Set non-relativistic coefficient: op           5 p/n           1 c   3.1000000000000001     
+ Set non-relativistic coefficient: op           6 p/n           1 c   3.1000000000000001     
+ Set non-relativistic coefficient: op           7 p/n           1 c   3.1000000000000001     
+ Set non-relativistic coefficient: op           8 p/n           1 c   3.1000000000000001     
+ Invalid keyword "fakekeyword". Ignoring.
+ vearth: Set velocity of earth in galactic frame set to   232.00000000000000     
+ dmdens: Set local dark matter density to   1.0000000000000000     
+ intpoints: Set number of integral lattice points to        1000
+ End of control file.
+ 
+  Enter shell-model space file name (.sps)
+../sd
+ Shell-Model space file name ../sd          
+           1           0           3           2
+           2           0           5           2
+           3           1           1           0
+           4           0           1           1
+           5           0           3           1
+           6           0           1           0
+  
+  Enter name of one-body density file (.res) 
+../si28w
+           6
+ Fill core? [y/n]
+y
+ Filling core orbitals.
+ Printing density matrix.
+ # spo =           6
+ J=           0
+           1           1  0.475710005       0.00000000    
+           2           2   2.66933990       0.00000000    
+           3           3  0.703809977       0.00000000    
+           4           4   2.00000000       2.00000000    
+           5           5   2.82842708       2.82842708    
+           6           6   2.00000000       2.00000000    
+ J=           1
+ J=           2
+ J=           3
+ J=           4
+ J=           5
+ J=           6
+ J=           7
+ J=           8
+ J=           9
+ J=          10
+ b[dimless]=   1.8506094217300415     
+ b[fm]=   9.3783331984848814     
+ y=   21.988283395450917     
+ mN  0.93827199935913086     
+ jchi  0.50000000000000000     
+ mchi   50.000000000000000     
+ Jiso=           0
+ Tiso=           0
+ Mtiso=           0
+ ap,an          14          14
+ Miso=   28.000000000000000     
+ muT=   17.222406817915434     
+ q=   1.0000000000000000     
+ vdist_min =    2.9031946886766143E-002
+ vdist_max =    2640.0000000000000     
+ nt   1.0000000000000000     
+ rhochi   1.0000000000000000     
+ mchi   50.000000000000000     
+ v0=   220.00000000000000     
+ ve=   232.00000000000000     
+ Integral lattice size =         1000
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Event rate =    1.3425254633130306E-021
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{verbatim}
 
 \end{document}  
 
