@@ -23,8 +23,11 @@ function nucResponse(tau1,tau2,ioption,y)
 
     REAL(doublep) :: Wigner_3j
     REAL(doublep) :: spOME1,spOME2
-    REAL(doublep), dimension (0:6) :: DRME1, DRME2
+    REAL(doublep), dimension (0:50) :: DRME1, DRME2
     REAL(doublep)  :: nucResponse
+   
+    jmin = -1
+    jmax = -1
 
     if (ioption .eq. 1) then   
         ! Mj Mj
@@ -62,8 +65,8 @@ function nucResponse(tau1,tau2,ioption,y)
 
     !print*,'operators: ',op1, op2
  
-    DRME1(0:6) = 0.d0
-    DRME2(0:6) = 0.d0
+    DRME1(0:jmax) = 0.d0
+    DRME2(0:jmax) = 0.d0
 
     nucResponse = 0.d0
 
@@ -79,17 +82,18 @@ function nucResponse(tau1,tau2,ioption,y)
                     ! Operator 2 with tau2 <j| op2,tau2 |j>
                     call OperME(op2,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME2)
                     DRME2(j) = DRME2(j) + densitymats%rho(j,tau2,a,b) * spOME2 
-!if(a==b.and.op1==1.and.op2==1)print*,j,tau1,a,b,'tiso mtiso spome srme',tiso,mtiso,spome1,drme1(j),'d',densitymats%rho(j,tau1,a,b)
 
                 end if
             end do
         end do
-        nucResponse = nucResponse + DRME1(j) * DRME2(j) &
+        nucResponse = nucResponse + DRME1(j) * DRME2(j)
+
+    end do
+
+    nucResponse = nucResponse &
                       * sqrt(2.d0) *sqrt(2*dble(tau1)+1.0) &
                       * sqrt(2.d0) *sqrt(2*dble(tau2)+1.0) &
                       * (-1.0)**((Tiso - Mtiso)/2) * Wigner_3j(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
                       * (-1.0)**((Tiso - Mtiso)/2) * Wigner_3j(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso)
-
-    end do
 
 end function nucResponse

@@ -10,17 +10,6 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
     
     implicit none
     interface
-!         function diffCrossSection(ERkev, v, q, jchi, y, Mtiso)
-!            use kinds
-!            implicit none
-!            real(doublep) :: diffCrossSection
-!            real(doublep) :: ERkev
-!            real(doublep) :: v
-!            real(doublep) :: q
-!            real(doublep) :: y
-!            real(doublep) :: jchi
-!            integer :: Mtiso
-!        end function
          function transition_probability(q,v,jchi,y,Mtiso)
             use kinds
             implicit none
@@ -69,6 +58,7 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
         EventRate_integrand(i) = diffCrossSection(v, q, jchi, y, Mtiso)&
                     * v * v * ( + maxwell_boltzmann(v-ve,v0) &
                             - maxwell_boltzmann(v+ve,v0) ) 
+
         write(23,*),v,EventRate_integrand(i)/Mchi
 
     end do

@@ -12,7 +12,10 @@ program darkmattermain
     implicit none
 
     integer :: resfile = 100
-    real(kind=8) :: output, eventrate, v, transition_probability
+    real(kind=8) :: output, v
+    real(doublep) :: diffCrossSection
+    real(doublep) :: transition_probability
+    real(doublep) :: eventrate
     character :: yn
     integer :: computeoption
 
@@ -33,7 +36,7 @@ program darkmattermain
     print*,'[6] (Future featuer) '
     read*,computeoption
 
-    if (computeoption==2) then
+    if (computeoption==2.or.computeoption==3) then
         print*,"Enter darkmatter velocity:"
         read*,v
     endif
@@ -81,6 +84,11 @@ program darkmattermain
         output = transition_probability(q,v,jchi,y)
         print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
         print*,'Scattering probability = ',output
+        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    else if (computeoption == 3) then
+        output = diffCrossSection(v, q, jchi, y, Mtiso)
+        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+        print*,'Differential cross section = ',output
         print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     endif
 

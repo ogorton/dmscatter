@@ -24,7 +24,7 @@ test_nucresponse.o\
 transition.o\
 diffcrosssection.o\
 velocitydist.o\
-quadrature_simpson.o\
+quadrature.o\
 eventrate.o\
 cg.o\
 darkmattermain.o
