@@ -34,13 +34,19 @@
 }
 \lstset{style=mystyle}
 
-\title{Model-Independent WIMP Scattering Responses and Event Rates:\\ 
-A FORTRAN Program for Experimental Analysis}
-\author{Oliver Gorton and Calvin Johnson}
+\title{A FORTRAN Program for Experimental WIMP Analysis}
+\author{Oliver Gorton, Changfeng Jiao and Calvin Johnson}
 %\date{}                                           % Activate to display a given date or no date
 
 \begin{document}
 \maketitle
+
+{
+\centering
+
+Model-Independent WIMP Scattering Responses and Event Rates
+
+}
 
 \tableofcontents
 
@@ -120,19 +126,32 @@ Where $v$ is the velocity of the dark matter particles in the lab-frame, $q$ is 
 
 \subsection{Transition probability / Scattering probability}
 
+The scattering probability is
+
+\begin{equation}
+\begin{split}
+T(v,q) &= \frac{1}{2j_\chi+1}\frac{1}{2j_T+1}\sum_{spins}|\mathcal{M}(v,q)|^2 \\
+	&= \frac{1}{2j_\chi+1}\frac{1}{2j_T+1} 
+\end{split}
+\end{equation}
+
 
 \section{Inputs and control file usage}
 This code has a twofold user-interface scheme. This first is through the interactive command-line interface. The program will prompt the user for the minimum necessary inputs to run a calculation with default parameter values. In the case of a differential event rate calculation, these would be the momentum transfer $q$, information about the target nucleus including the density matrices, and finally the coefficient of the WIMP-nucleus interaction. The coefficients are read in from the second user-interface scheme: the control file. 
 
-The simplest and necessary use case of the control file is to read in the coefficients of the WIMP-nucleon interaction. Each coefficient is stored on its one line in a file which ends in .control, with 4 entries each: the keyword "coefnonrel", a 0 or 1 indicating proton or neutron coupling, the index of the coefficient to set, and finally the value of the coefficient. These entries can be separated by tabs or spaces. For example, to set $c_5^(n)=3.1$, the corresponding line in the control file would be:
+The simplest and necessary use case of the control file is to read in the coefficients of the WIMP-nucleon interaction. Each coefficient is stored on its one line in a file which ends in .control, with 4 entries each: the keyword "coefnonrel", a 0 or 1 indicating proton or neutron coupling, the index of the coefficient to set, and finally the value of the coefficient. These entries can be separated by tabs or spaces. For example, to set $c_5^{(n)}=3.1$, the corresponding line in the control file would be:
 \begin{verbatim}
 coefnonrel    1    5     3.1
 \end{verbatim}
 
-The control file also serves a more general but optional function: to set any parameter in the program to a custom value.
+The control file also serves a more general but optional function: to set any parameter in the program to a custom value. To use this functionality is simple: simply add an entry to the control file with two values: the first should be the keyword for the parameter (see section \ref{keywords}) and the second should be the value to set that parameter to. For example, to set the velocity of the earth in the galactic frame to $240\ km/s$, you should add the line:
+\begin{verbatim}
+vearth  240.0
+\end{verbatim}
 
+\section{Keywords}\label{keywords}
 
-\subsection{Example: si28 differential scattering rate}
+\section{Example: si28 differential scattering rate}
 
 \begin{verbatim}
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
