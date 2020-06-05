@@ -2,6 +2,9 @@
 \BOOKMARK [2][-]{subsection.1.1}{1.1. Differential event rate}{section.1}% 2
 \BOOKMARK [2][-]{subsection.1.2}{1.2. Differential cross section}{section.1}% 3
 \BOOKMARK [2][-]{subsection.1.3}{1.3. Transition probability / Scattering probability}{section.1}% 4
-\BOOKMARK [1][-]{section.2}{2. Inputs and control file usage}{}% 5
-\BOOKMARK [1][-]{section.3}{3. Keywords}{}% 6
-\BOOKMARK [1][-]{section.4}{4. Example: si28 differential scattering rate}{}% 7
+\BOOKMARK [2][-]{subsection.1.4}{1.4. Dark matter response functions}{section.1}% 5
+\BOOKMARK [2][-]{subsection.1.5}{1.5. Nuclear response functions}{section.1}% 6
+\BOOKMARK [2][-]{subsection.1.6}{1.6. Nuclear operators}{section.1}% 7
+\BOOKMARK [1][-]{section.2}{2. Inputs and control file usage}{}% 8
+\BOOKMARK [1][-]{section.3}{3. Keywords}{}% 9
+\BOOKMARK [1][-]{section.4}{4. Example: si28 differential scattering rate}{}% 10
