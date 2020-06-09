@@ -101,6 +101,8 @@ subroutine setkeyword(keyword, keyvalue)
     use masses
     use velocities
     use constants
+    use stateinfo
+    use momenta
     use dmparticles
     use quadrature
 
@@ -129,18 +131,29 @@ subroutine setkeyword(keyword, keyvalue)
     case('gev')
         gev = keyvalue
         print*,keyword,': Set GeV units to',gev
+        femtometer = 5.0677/GeV
+        print*,'femtometer updated'
+        bfm = (41.467/(45.*(num_n+num_p)**(-1./3) - 25.*(num_n+num_p)**(-2./3)))**0.5 * femtometer
+        print*,'bfm updated.'
 
     case('femtometer')
         femtometer = keyvalue
         print*,keyword,': Set femtometer units to',femtometer
+        bfm = (41.467/(45.*(num_n+num_p)**(-1./3) - 25.*(num_n+num_p)**(-2./3)))**0.5 * femtometer
+        print*,'bfm updated.'
 
     case('dmmass')
         mchi = keyvalue
         print*,keyword,': Set dark matter particle mass to',mchi
+        muT = mchi * Miso * mN / (mchi+Miso*mN)
+        print*,'muT reduced mass updated.'
+        vdist_min = q/(2.0*muT)
+        print*,'vmin updated.'
 
     case('vescape')
         vesc = keyvalue
         print*,keyword,': Set escape velocity to', vesc
+        vdist_max = vesc
 
     case('ntarget')
         Nt = keyvalue
@@ -157,6 +170,10 @@ subroutine setkeyword(keyword, keyvalue)
     case('mnucleon')
         mn = keyvalue
         print*,keyword,': Set nucleon mass to',mn
+        muT = mchi * Miso * mN / (mchi+Miso*mN)
+        print*,'muT reduced mass udpated.'
+        vdist_min = q/(2.0*muT)
+        print*,'vmin updated'
 
     case('dmspin')
         jchi = keyvalue

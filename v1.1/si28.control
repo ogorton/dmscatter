@@ -11,7 +11,14 @@ coefnonrel      1       5       3.1
 coefnonrel      1       6       3.1
 coefnonrel      1       7       3.1
 coefnonrel      1       8       3.1
+coefnonrel      1       9       3.1
+coefnonrel      1       10       3.1
+coefnonrel      1       11       3.1
+coefnonrel      1       12       3.1
+coefnonrel      1       13      3.1
+coefnonrel      1       14       3.1
+coefnonrel      1       15       3.1
 fakekeyword   3.141
 vearth 232.0
 dmdens 1.0
-intpoints 1000
+intpoints 5000
