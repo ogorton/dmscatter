@@ -84,7 +84,8 @@ function dmrPhiPPJ(tau1, tau2, q, v, jchi)
     ! functions called
     !REAL(kind=8) :: Cl
 
-    dmrPhiPPJ = q*q/(16*mN*mN) * Cl(jchi) * (cvec(tau1)%c(12) - cvec(tau1)%c(15)*q*q) &
+    dmrPhiPPJ = q*q/(16*mN*mN) * Cl(jchi) * (cvec(tau1)%c(12) &
+            - cvec(tau1)%c(15)*q*q) &
             * (cvec(tau2)%c(12) - cvec(tau2)%c(15)*q*q) &
             + q**4.0/(4*mN*mN) * cvec(tau1)%c(3)*cvec(tau2)%c(3)
 
@@ -143,7 +144,8 @@ function dmrPhiTPJ(tau1, tau2, q, v, jchi)
     !REAL(kind=8) :: Cl
 
     dmrPhiTPJ = q*q/(16*mN*mN)*Cl(jchi) * ( &
-            cvec(tau1)%c(12)*cvec(tau2)%c(12)*q*q + cvec(tau1)%c(12)*cvec(tau2)%c(12) &
+            cvec(tau1)%c(12)*cvec(tau2)%c(12)*q*q &
+            + cvec(tau1)%c(12)*cvec(tau2)%c(12) &
         )
 
 end function dmrPhiTPJ
@@ -171,9 +173,11 @@ function dmrSigmaPPJ(tau1, tau2, q, v, jchi)
 
     dmrSigmaPPJ = (1./16) * Cl(jchi) * ( &
             cvec(tau1)%c(6)*cvec(tau2)%c(6)*q**4 + ( &
-                cvec(tau1)%c(13)*cvec(tau2)%c(13)*q*q + cvec(tau1)%c(12)*cvec(tau2)%c(12) &
+                cvec(tau1)%c(13)*cvec(tau2)%c(13)*q*q &
+                + cvec(tau1)%c(12)*cvec(tau2)%c(12) &
             ) * (v*v - q*q/(4*muT*muT)) &
-            + 2*cvec(tau1)%c(4)*cvec(tau2)%c(6)*q*q + cvec(tau1)%c(4)*cvec(tau2)%c(4) &
+            + 2*cvec(tau1)%c(4)*cvec(tau2)%c(6)*q*q &
+            + cvec(tau1)%c(4)*cvec(tau2)%c(4) &
         ) + (1./4)*cvec(tau1)%c(10)*cvec(tau2)%c(10)*q*q
 
 end function dmrSigmaPPJ
@@ -205,7 +209,8 @@ function dmrSigmaPJ(tau1, tau2, q, v, jchi)
                 + cvec(tau1)%c(14)*cvec(tau2)%c(14)*q*q &
                 - 2*cvec(tau1)%c(12)*cvec(tau2)%c(15)*q*q &
                 + cvec(tau1)%c(12)*cvec(tau2)%c(12) &
-            ) * (v*v - q*q/(4*muT*muT)) + 2*cvec(tau1)%c(4)*cvec(tau2)%c(4) &
+            ) * (v*v - q*q/(4*muT*muT)) &
+            + 2*cvec(tau1)%c(4)*cvec(tau2)%c(4) &
         ) + (1./8) * ( &
             cvec(tau1)%c(3)*cvec(tau2)%c(3)*q*q &
             + cvec(tau1)%c(7)*cvec(tau2)%c(7) &

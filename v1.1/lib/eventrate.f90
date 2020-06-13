@@ -64,7 +64,7 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
     end do
 
     if (quadrature_type == 1) then    
-        call simpson(lattice_points,lattice_points,EventRate_integrand,dv,EventRate)
+        call boole(lattice_points,EventRate_integrand,dv,EventRate)
     else
         EventRate = -1
    end if

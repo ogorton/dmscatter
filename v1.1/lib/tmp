@@ -1,0 +1,3995 @@
+!-------------------------------------------------------------------------------
+function BesselF1(y,np,lp,n,l,bigL)
+    implicit none
+    INTERFACE
+
+        function FacLOG(N)
+            implicit none
+            INTEGER, INTENT(IN) :: N
+            REAL(kind = 8) ::  FacLOG
+        end function FacLOG
+
+        function DBLEFacLOG(N)
+            implicit none
+            INTEGER, INTENT(IN) :: N
+            REAL(kind = 8) :: DBLEFacLOG
+        end function DBLEFacLOG
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,n,l,bigL
+    REAL(kind=8),INTENT(IN) :: y
+    REAL(kind=8) :: BesselF1
+
+    BesselF1 = 2.0**(dble(bigL)) / exp(DBLEFacLOG(2*bigL+1)) * y**(bigL/2.d0) &
+        & * exp(-y) * sqrt (EXP(FacLOG(np-1)+FacLOG(n-1)))
+
+end function BesselF1
+
+
+!-------------------------------------------------------------------------------
+function BesselF1A(y,np,lp,n,l,bigL)
+    implicit none
+    INTERFACE
+
+         function FacLOG(N)
+             implicit none
+             INTEGER, INTENT(IN) :: N
+             REAL(kind=8) ::  FacLOG
+         end function FacLOG
+
+         function DBLEFacLOG(N)
+             implicit none
+             INTEGER, INTENT(IN) :: N
+             REAL(kind=8) :: DBLEFacLOG
+         end function DBLEFacLOG
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,n,l,bigL
+    REAL(kind=8),INTENT(IN) :: y
+    REAL(kind=8) :: BesselF1A
+
+    BesselF1A = 2**(dble(bigL)-1.0) / exp(DBLEFacLOG(2*bigL+1)) * y**((dble(bigL)-1.0)/2.d0) &
+        & * exp(-y) * sqrt (EXP(FacLOG(np-1)+FacLOG(n-1)))
+
+end function BesselF1A
+
+
+!-------------------------------------------------------------------------------
+function BesselF2(np,lp,n,l)
+  implicit none
+  INTEGER, INTENT(IN) :: np,lp,n,l
+  REAL(kind=8) :: BesselF2
+  BesselF2 = sqrt(gamma(np+lp+0.5d0) * gamma(n+l+0.5d0))
+end function BesselF2
+
+
+!-------------------------------------------------------------------------------
+function BesselF3(y,np,lp,n,l,bigL)
+    implicit none
+    INTERFACE
+
+        function Summand1(m,mp,n,np)
+            implicit none
+            INTEGER, INTENT(IN) :: m, mp, n, np
+            Real(kind=8) ::  Summand1
+        end function Summand1
+
+        function Summand2(m,mp,l,lp,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: m, mp, l, lp, bigL
+            Real(kind=8) :: Summand2
+        end function Summand2
+
+        function Summand3(y,m,mp,l,lp,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: m, mp, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            Real(kind=8) ::  Summand3
+        end function Summand3
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,n,l, bigL
+    REAL(kind=8),INTENT(IN) :: y
+    INTEGER :: m,mp!ip, i, m, mp
+    REAL(kind=8) :: BesselF3
+
+    BesselF3 = 0.0d0
+
+    do m = 0, n-1
+        do mp = 0, np-1
+            BesselF3 = BesselF3 + Summand1(m,mp,n,np) * Summand2(m,mp,l,lp,bigL) * Summand3(y,m,mp,l,lp,bigL)
+        end do
+    end do
+
+end function BesselF3
+
+
+!-------------------------------------------------------------------------------
+function BesselF3A(y,np,lp,n,l,bigL)
+    implicit none
+    INTERFACE
+
+        function Summand1(m,mp,n,np)
+            implicit none
+            INTEGER, INTENT(IN) :: m, mp, n, np
+            Real(kind=8) ::  Summand1
+        end function Summand1
+
+        function Summand2A(m,mp,l,lp,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: m, mp, l, lp, bigL
+            Real(kind=8) ::  Summand2A
+        end function Summand2A
+
+        function Summand3A(y,m,mp,l,lp,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: m, mp, l, lp, bigL
+            real(kind=8), INTENT(IN) :: y
+            Real(kind=8) ::  Summand3A
+        end function Summand3A
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,n,l, bigL
+    REAL(kind=8),INTENT(IN) :: y
+    INTEGER :: mp, m
+    REAL(kind=8) :: BesselF3A
+
+    BesselF3A = 0.d0
+
+    do m = 0, n-1
+        do mp = 0, np-1
+            BesselF3A = BesselF3A + Summand1(m,mp,n,np) * Summand2A(m,mp,l,lp,bigL) * Summand3A(y,m,mp,l,lp,bigL)
+        end do
+    end do
+
+end function BesselF3A
+
+
+!-------------------------------------------------------------------------------
+function BesselF4A(y,np,lp,n,l,bigL)
+    implicit none
+    INTERFACE
+
+        function Summand1(m,mp,n,np)
+            implicit none
+            INTEGER, INTENT(IN) :: m, mp, n, np
+            Real(kind=8) ::  Summand1
+        end function Summand1
+
+        function Summand2A(m,mp,l,lp,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: m, mp, l, lp, bigL
+            Real(kind=8) :: Summand2A
+        end function Summand2A
+
+        function Summand4A(y,m,mp,l,lp,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: m, mp, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            Real(kind=8) :: Summand4A
+        end function Summand4A
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,n,l, bigL
+    REAL(kind=8),INTENT(IN) :: y
+    INTEGER :: mp, m
+    REAL(kind=8) :: BesselF4A
+
+    BesselF4A = 0.d0
+
+    do m = 0, n-1
+        do mp = 0, np-1
+            BesselF4A = BesselF4A + Summand1(m,mp,n,np) * Summand2A(m,mp,l,lp,bigL) * Summand4A(y,m,mp,l,lp,bigL)
+        end do
+    end do
+
+end function BesselF4A
+
+
+!-------------------------------------------------------------------------------
+function BesselElement(y,np,lp,n,l,bigL)
+
+    implicit none
+    INTERFACE
+
+        function BesselF1(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: BesselF1
+        end function BesselF1
+
+        function BesselF2(np,lp,n,l)
+            implicit none
+            INTEGER, INTENT(IN) :: np, lp, n, l
+            Real(kind=8) ::  BesselF2
+        end function BesselF2
+
+        function BesselF3(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: BesselF3
+        end function BesselF3
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,n,l, bigL
+    REAL(kind=8),INTENT(IN) :: y
+    REAL(kind=8) :: BesselElement
+
+    BesselElement = BesselF1(y,np,lp,n,l,bigL) * BesselF2(np,lp,n,l) * BesselF3(y,np,lp,n,l,bigL)
+
+end function BesselElement
+
+
+!-------------------------------------------------------------------------------
+function BesselElementminus(y,np,lp,n,l,bigL)
+
+    implicit none
+    INTERFACE
+
+        function BesselF1A(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: BesselF1A
+        end function BesselF1A
+
+        function BesselF2(np,lp,n,l)
+            implicit none
+            INTEGER, INTENT(IN) :: np, lp, n, l
+            Real(kind=8) ::  BesselF2
+        end function BesselF2
+
+        function BesselF3A(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: BesselF3A
+        end function BesselF3A
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,n,l, bigL
+    REAL(kind=8),INTENT(IN) :: y
+    REAL(kind=8) :: BesselElementminus
+
+    BesselElementminus = BesselF1A(y,np,lp,n,l,bigL) * BesselF2(np,lp,n,l) * BesselF3A(y,np,lp,n,l,bigL)
+
+end function BesselElementminus
+
+
+!-------------------------------------------------------------------------------
+function BesselElementplus(y,np,lp,n,l,bigL)
+
+    implicit none
+    INTERFACE
+
+        function BesselF1A(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: BesselF1A
+        end function BesselF1A
+
+        function BesselF2(np,lp,n,l)
+            implicit none
+            INTEGER, INTENT(IN) :: np, lp, n, l
+            Real(kind=8) ::  BesselF2
+        end function BesselF2
+
+        function BesselF4A(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: BesselF4A
+        end function BesselF4A
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,n,l, bigL
+    REAL(kind=8),INTENT(IN) :: y
+    REAL(kind=8) :: BesselElementplus
+
+    BesselElementplus = BesselF1A(y,np,lp,n,l,bigL) * BesselF2(np,lp,n,l) * BesselF4A(y,np,lp,n,l,bigL)
+
+end function BesselElementplus
+
+FUNCTION CG(j1, m1, j2, m2, J, M)
+
+  IMPLICIT NONE
+
+  INTERFACE
+     FUNCTION FacLOG(N)
+
+       IMPLICIT NONE
+       INTEGER, INTENT(IN) :: N  
+       REAL(kind=8) ::  FacLOG
+     END FUNCTION FacLOG
+  END INTERFACE
+  
+  INTEGER, INTENT(IN) :: j1, j2, m1, m2, J, M
+  REAL(kind=8) :: CG
+
+  INTEGER :: H_Min, H_Max, H
+  REAL(kind=8) :: CG_1, CG_2
+
+  REAL(kind=8) :: fact1, fact2, fact3, fact4, fact5, fact6, fact7, fact8
+  REAL(kind=8) :: fact9, fact10
+
+  REAL(kind=8) :: fact11
+  
+  IF (  &
+       & (m1 + m2   .NE. M )        .OR. &
+       & (ABS(m1)   .GT. j1)        .OR. &
+       & (ABS(m2)   .GT. j2)        .OR. &
+       & (ABS(M)    .GT. J )        .OR. &  
+       & (MOD(j1+m1,2) .NE. 0) .OR. &
+       & (MOD(j2+m2,2) .NE. 0) .OR. &  
+       & (MOD(J + M,2 ).NE. 0) .OR. &
+       & (j1 + J  - j2 .LT. 0)       .OR. &
+       & (J  - j1 + j2 .LT. 0)       .OR. &
+       & (j1 + j2 - J  .LT. 0)       .OR. &
+       & (j1 .LT. 0) .OR. (j2 .LT. 0) .OR. (J .LT. 0))THEN
+     CG = 0 
+     RETURN
+  END IF
+
+  H_Max = MIN(J-j1+j2, J+m1+m2, J+j2+m1) / 2
+  H_Min = MAX(0, m1-j1, -j1+j2+m1+m2) / 2
+
+  IF (H_Min .GT. H_Max) STOP "Factorial: Hmin Hmax error"
+
+  fact1 = FacLOG((j1 + J - j2) / 2) 
+  fact2 = FacLOG((J - j1 + j2) / 2) 
+  fact3 = FacLOG((j1 + j2 - J) / 2) 
+  fact4 = FacLOG((J + m1 + m2) / 2) 
+  fact5 = FacLOG((J - m1 - m2) / 2) 
+  fact6 = FacLOG((J + j1 + j2) / 2 + 1) 
+  fact7 = FacLOG((j1 - m1)     / 2) 
+  fact8 = FacLOG((j1 + m1)     / 2) 
+  fact9 = FacLOG((j2 - m2)     / 2) 
+  fact10= FacLOG((j2 + m2)     / 2) 
+
+ !  IF (   fact1 .LE. 0.0 .OR. &
+ !      & fact2 .LE. 0.0 .OR. &
+ !      & fact3 .LE. 0.0 .OR. &
+ !      & fact4 .LE. 0.0 .OR. &
+ !      & fact5 .LE. 0.0 .OR. &
+ !      & fact6 .LE. 0.0 .OR. &
+ !      & fact7 .LE. 0.0 .OR. &
+ !      & fact8 .LE. 0.0 .OR. &
+ !      & fact9 .LE. 0.0 .OR. &
+ !      & fact10 .LE. 0.0 ) THEN
+ !    WRITE(0,*) j1, j2, J, m1, m2
+ !    WRITE(0,*) fact1, fact2, fact3, fact4, fact5
+ !    WRITE(0,*) fact6, fact7, fact8, fact9, fact10
+ !    STOP
+  !END IF
+
+ CG_1 = fact1 + fact2 + fact3 + fact4 + fact5 &
+       & - &
+       &(fact6 + fact7 + fact8 + fact9 + fact10)
+
+ CG_2 = 0.0D0
+
+  DO H = H_Min, H_Max
+
+     fact1 = FacLOG((J + j2 + m1) / 2 - H) 
+     fact2 = FacLOG((j1 - m1) / 2 + H) 
+     fact3 = FacLOG((J - j1 + j2) / 2 - H) 
+     fact4 = FacLOG((J + m1 + m2) / 2 - H) 
+     fact5 = FacLOG(H) 
+     fact6 = FacLOG((j1 - j2 - m1 - m2) / 2 + H) 
+
+     fact11 = fact1 + fact2 - (fact3 + fact4 + fact5 + fact6)
+
+     CG_2 = CG_2 + &
+          & (-1)**(MOD(H+(j2+m2)/2,2)) * SQRT(DBLE(J+1)) * EXP(fact11)
+
+  END DO
+
+  CG = exp(0.50D0 * CG_1) * CG_2
+
+  RETURN
+
+END FUNCTION CG
+
+FUNCTION Wigner_3j (j1, j2, J, m1, m2, M)
+
+  IMPLICIT NONE
+  
+  ! Wigner 3j-Symbol 
+  
+  ! j1/2 j2/2 J/2 !
+  ! m1/2 m2/2 M/2 !
+
+  INTERFACE     
+     FUNCTION CG(j1, m1, j2, m2, J, M)
+
+       IMPLICIT NONE
+       INTEGER, INTENT(IN) :: j1, j2, m1, m2, J, M
+       REAL(kind=8) :: CG
+     END FUNCTION CG
+  END INTERFACE
+
+  INTEGER, INTENT(IN) :: j1, j2, J, m1, m2, M
+
+  REAL (kind=8) :: Wigner_3j
+
+  Wigner_3j = (-1)**((j1-j2-M)/2) / SQRT(DBLE(J)+1.0D0) * CG(j1,m1,j2,m2,J,-M)
+
+  RETURN
+
+END FUNCTION Wigner_3j
+
+
+FUNCTION FacLOG(N)
+
+  IMPLICIT NONE
+
+  ! return LOG(N!), not N!
+
+  INTEGER, INTENT(IN) :: N
+  
+  REAL(kind=8) ::  FacLOG
+
+  INTEGER :: i
+
+  FacLOG = 1.0D0
+
+  IF ( N .EQ. 0) THEN
+     FacLOG = 0.0D0
+     RETURN
+  END IF
+ 
+  IF ( N .LT. 0) THEN
+     PRINT *, N
+     STOP "FacLOG: Impossible to calculate N! N is negative"
+  END IF
+  
+  DO i = 1, N
+     FacLOG = FacLOG * DBLE(i)
+  END DO
+
+  FacLOG = LOG(FacLOG)
+  
+  RETURN
+
+END FUNCTION FacLOG
+
+FUNCTION DBLEFacLOG(N)
+
+  IMPLICIT NONE
+  ! returns LOG(N!!), not N!!
+  INTEGER, INTENT(IN) :: N
+  REAL(kind=8) ::  DBLEFacLOG
+
+  INTEGER :: i
+
+  DBLEFacLOG = 1.0D0
+
+  IF ( N .EQ. 0) THEN
+     DBLEFacLOG = 0.0D0
+     RETURN
+  END IF
+ 
+  IF ( N .LT. 0) THEN
+     PRINT *, N
+     STOP "FacLOG: Impossible to calculate N! N is negative"
+  END IF
+
+  IF (MOD(N, 2) .EQ. 0 ) THEN ! N = even
+     DO i = 2, N, 2
+        DBLEFacLOG = DBLEFacLOG * DBLE(i)
+     END DO
+  ELSE ! N = odd
+     DO i = 1, N, 2
+        DBLEFacLOG = DBLEFacLOG * DBLE(i)
+     END DO
+  END IF
+
+  DBLEFacLOG = LOG(DBLEFacLOG)
+  
+  RETURN
+
+END FUNCTION DBLEFacLOG
+
+FUNCTION Triangle(a,b,c)
+
+  IMPLICIT NONE
+
+  ! \Delta(a/2, b/2, c/2)
+  ! \Delta(a/2, b/2, c/2) = sqrt( (a/2+b/2-c/2)! (a/2-b/2+c/2)! (-a/2+b/2+c/2)! / (a/2+b/2+c/2+1)! )
+  ! if a/2,b/2,c/2 do not satisfy the triangle inequality, it returns zero.
+
+  INTERFACE
+     FUNCTION FacLOG(N)
+
+       IMPLICIT NONE
+       INTEGER, INTENT(IN) :: N
+       REAL(kind=8) ::  FacLOG
+     END FUNCTION FacLOG
+  END INTERFACE
+
+  INTEGER, INTENT(IN) :: a,b,c
+
+  REAL(kind=8) :: Triangle, temp
+
+  REAL(kind=8) :: F1, F2, F3, F4
+
+  Triangle = 0.0D0
+  IF (a+b-c .LT. 0 .OR. a-b+c .LT. 0 .OR. -a+b+c .LT. 0 .OR. a+b+c+1 .LT. 0) RETURN 
+
+  IF( MOD( a+b-c,2) .NE. 0) RETURN
+  IF( MOD( a-b+c,2) .NE. 0) RETURN
+  IF( MOD(-a+b+c,2) .NE. 0) RETURN
+  IF( MOD( a+b+c,2) .NE. 0) RETURN
+
+  F1 = FacLOG(( a + b - c    )/2)
+  F2 = FacLOG(( a - b + c    )/2)
+  F3 = FacLOG((-a + b + c    )/2)
+  F4 = FacLOG(( a + b + c)/2 + 1)
+
+  temp = F1 + F2 + F3 - F4
+  Triangle = EXP(0.50D0 * temp)
+
+!  Triangle = F1 * F2 * F3 / F4
+
+  RETURN
+
+END FUNCTION Triangle
+
+FUNCTION Wigner_6j(a,b,c,d,e,f)
+
+  IMPLICIT NONE
+
+  ! Wigner 6j Symbol
+
+  ! a b c !
+  ! d e f !
+ 
+  INTERFACE
+
+     FUNCTION FacLOG(N)
+
+       IMPLICIT NONE
+       INTEGER, INTENT(IN) :: N
+       REAL(kind=8) ::  FacLOG
+     END FUNCTION FacLOG
+
+     FUNCTION Triangle(a,b,c)
+
+       IMPLICIT NONE
+       INTEGER, INTENT(IN) :: a,b,c
+       REAL(kind=8) :: Triangle
+     END FUNCTION Triangle
+
+  END INTERFACE
+
+ INTEGER, INTENT(IN) :: a,b,c,d,e,f
+
+  REAL(kind=8) :: Wigner_6j
+
+  REAL(kind=8),DIMENSION(1:4) :: Delta  
+  REAL(kind=8),DIMENSION(1:7) :: Fact
+  REAL(kind=8) :: W6J1, W6J2, temp
+
+  INTEGER :: t, t_min, t_max
+
+  Wigner_6j = 0.0D0
+  
+  IF ( a < 0) RETURN
+  IF ( b < 0) RETURN
+  IF ( c < 0) RETURN
+  IF ( d < 0) RETURN
+  IF ( e < 0) RETURN
+  IF ( f < 0) RETURN
+  IF ( a < ABS(b-c) .OR. a > b+c ) RETURN
+  IF ( a < ABS(e-f) .OR. a > e+f ) RETURN
+  IF ( d < ABS(b-f) .OR. d > b+f ) RETURN
+  IF ( d < ABS(e-c) .OR. d > e+c ) RETURN
+
+
+  Delta(1) = DBLE(Triangle(a,b,c))
+  Delta(2) = DBLE(Triangle(a,e,f))
+  Delta(3) = DBLE(Triangle(d,b,f))
+  Delta(4) = DBLE(Triangle(d,e,c))
+  
+  W6J1 = Delta(1)*Delta(2)*Delta(3)*Delta(4)
+
+!  IF ( ABS(W6J1) .LT. 1.0D-10) THEN
+!     Wigner_6j = 0.0D0
+!     RETURN
+!  END IF
+
+  t_max = MIN((a+b+d+e)/2, (b+c+e+f)/2, (c+a+f+d)/2)
+
+  t_min = MAX((a+b+c)/2, (a+e+f)/2, (d+b+f)/2, (d+e+c)/2)
+
+!  IF ( t_min .GT. t_max) THEN
+!     Wigner_6j = 0.0D0
+!     RETURN
+!  END IF
+
+  W6J2 = 0.0D0
+
+  DO t = t_min, t_max
+
+     fact(1) = FacLOG( t + (- a - b - c)/2 )
+     fact(2) = FacLOG( t + (- a - e - f)/2 )
+     fact(3) = FacLOG( t + (- d - b - f)/2 )
+     fact(4) = FacLOG( t + (- d - e - c)/2 )
+     fact(5) = FacLOG(-t + (  a + b + d + e )/2 )
+     fact(6) = FacLOG(-t + (  b + c + e + f )/2 )
+     fact(7) = FacLOG(-t + (  c + a + f + d )/2 )
+
+     temp = FacLOG(t+1) - ( fact(1) + fact(2) + fact(3) + fact(4) + fact(5) + fact(6) + fact(7))
+
+     W6J2 = W6J2 + (-1)**(t) * EXP(temp)
+
+!     W6J2 = W6J2 + (-1)**(t) * DBLE(FacLOG(t+1)) / &
+!          & (fact(1)*fact(2)*fact(3)*fact(4)*fact(5)*fact(6)*fact(7))
+
+  END DO
+
+  Wigner_6j = W6J1 * W6J2
+
+  RETURN
+
+END FUNCTION Wigner_6j
+
+FUNCTION Wigner_9j(j1,j2,j3,j4,j5,j6,j7,j8,j9)
+
+  IMPLICIT NONE
+
+! j1/2 j2/2 j3/2 !
+! j4/2 j5/2 j6/2 !
+! j7/2 j8/2 j9/2 !
+
+  INTERFACE
+
+  FUNCTION Wigner_6j(a,b,c,d,e,f)
+
+       IMPLICIT NONE
+       INTEGER, INTENT(IN) :: a,b,c,d,e,f
+       REAL(kind=8) :: Wigner_6j
+     END FUNCTION Wigner_6j
+
+  END INTERFACE
+
+  INTEGER, INTENT(IN) :: j1,j2,j3,j4,j5,j6,j7,j8,j9
+  REAL(kind=8) :: Wigner_9j
+
+  INTEGER :: x_min, x_max, x
+
+  Wigner_9j = 0.0D0
+
+  IF(j1 .LT. 0) RETURN
+  IF(j2 .LT. 0) RETURN
+  IF(j3 .LT. 0) RETURN
+  IF(j4 .LT. 0) RETURN
+  IF(j5 .LT. 0) RETURN
+  IF(j6 .LT. 0) RETURN
+  IF(j7 .LT. 0) RETURN
+  IF(j8 .LT. 0) RETURN
+  IF(j9 .LT. 0) RETURN
+
+  x_min = MAX( ABS(j1-j9), ABS(j4-j8), ABS(j2-j6))
+  x_max = MIN(     j1+j9,      j4+j8,      j2+j6)
+
+  DO x = x_min, x_max
+
+     Wigner_9j = Wigner_9j + (-1)**(x) * (x + 1.0D0) * &
+          & Wigner_6j(j1,j4,j7,j8,j9, x)  * &
+          & Wigner_6j(j2,j5,j8,j4, x,j6) * &
+          & Wigner_6j(j3,j6,j9, x,j1,j2)
+     
+  END DO
+  
+  RETURN
+
+END FUNCTION Wigner_9j
+
+
+subroutine opencontrolfile(resfile)
+    implicit none
+    integer, intent(in) :: resfile
+    character(22) :: filename
+    integer :: ilast
+    logical :: success
+
+    success = .false.
+    print*,' '
+    do while(.not.success)
+
+        print*,'Enter name of control file (.control):'
+
+        read(5,'(a)')filename
+        ilast = index(filename,' ')-1
+        open(unit=resfile,file=filename(1:ilast)//'.control',status='old',err=2)
+        success = .true.
+        return
+2       continue
+        print*,filename(1:ilast),'.control does not exist '
+
+    end do    
+
+end subroutine opencontrolfile
+
+subroutine readcontrolfile(resfile)
+    use keywords
+    implicit none
+    integer, intent(in) :: resfile
+    character(20) :: line
+    character(20) :: keyword
+    integer :: op
+    real(kind=8) :: coef,keyvalue
+    integer :: nucleon
+    character(20) :: coefkey
+
+    integer :: i
+
+    logical :: EOF
+
+    print*,"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    print*,"Reading control file."
+
+    coefkey = "coefnonrel"
+    EOF = .false.
+
+    print*,'Possible keywords:'
+    do i =1,14
+        print*,keyword_array(i)
+    enddo
+    print*,''
+
+    do while (.not. EOF)
+
+        ! Read past comments
+        read(resfile,'(a20)',end=111) line
+
+        if (line(1:1).eq.'#' .or. line(1:1).eq.'!') then 
+            print*,line
+            cycle
+        end if
+
+        backspace(resfile)
+    
+        ! Read in coefficient matrix
+        do while(.not.EOF)
+
+            read(resfile,*,end=111)keyword, keyvalue
+            if (keyword == coefkey) then
+                ! Coefficients have more arguments.
+                ! Go back to read them.
+                backspace(resfile)
+                read(resfile,*,end=111)keyword, nucleon, op, coef
+                call setpncoeffsnonrel(op, coef, nucleon)
+                print*,'Set non-relativistic coefficient: op',op,'p/n',nucleon,'c',coef
+            else
+                call setkeyword(keyword,keyvalue)
+            endif
+
+        end do
+
+        print*,'End of control file.'
+        print*,''
+
+        return
+111     continue
+
+        EOF = .true.
+        print*,'End of control file.'
+        print*,''
+        return
+
+    end do
+
+end subroutine readcontrolfile
+subroutine setkeyword(keyword, keyvalue)
+
+    use kinds
+    use keywords
+    use masses
+    use velocities
+    use constants
+    use stateinfo
+    use momenta
+    use dmparticles
+    use quadrature
+
+    implicit none
+
+    character (len=20) :: keyword
+    real(doublep) :: keyvalue
+
+    select case (keyword)
+
+    case('vearth')
+        ve = keyvalue
+        print*,trim(keyword),": Set velocity of earth in galactic frame set to",ve
+
+    case('dmdens')
+        rhochi = keyvalue
+        print*,trim(keyword),": Set local dark matter density to",rhochi
+
+    case('quadtype')
+        print*,keyword,': not implemented.'
+
+    case('intpoints')
+        lattice_points = int( keyvalue )
+        print*,trim(keyword),": Set number of integral lattice points to",lattice_points
+
+    case('gev')
+        gev = keyvalue
+        print*,keyword,': Set GeV units to',gev
+        femtometer = 5.0677/GeV
+        print*,'femtometer updated'
+        bfm = (41.467/(45.*(num_n+num_p)**(-1./3) - 25.*(num_n+num_p)**(-2./3)))**0.5 * femtometer
+        print*,'bfm updated.'
+
+    case('femtometer')
+        femtometer = keyvalue
+        print*,keyword,': Set femtometer units to',femtometer
+        bfm = (41.467/(45.*(num_n+num_p)**(-1./3) - 25.*(num_n+num_p)**(-2./3)))**0.5 * femtometer
+        print*,'bfm updated.'
+
+    case('dmmass')
+        mchi = keyvalue
+        print*,keyword,': Set dark matter particle mass to',mchi
+        muT = mchi * Miso * mN / (mchi+Miso*mN)
+        print*,'muT reduced mass updated.'
+        vdist_min = q/(2.0*muT)
+        print*,'vmin updated.'
+
+    case('vescape')
+        vesc = keyvalue
+        print*,keyword,': Set escape velocity to', vesc
+        vdist_max = vesc
+
+    case('ntarget')
+        Nt = keyvalue
+        print*,keyword,': Set number of target nuclei to', Nt
+
+    case('weakmscale')
+        mV = keyvalue
+        print*,keyword,': Set standard-model weak interaction mass scale to',mv
+
+    case('vscale')
+        v0 = keyvalue
+        print*,keyword,': Set velocity distribution scaling to',v0
+
+    case('mnucleon')
+        mn = keyvalue
+        print*,keyword,': Set nucleon mass to',mn
+        muT = mchi * Miso * mN / (mchi+Miso*mN)
+        print*,'muT reduced mass udpated.'
+        vdist_min = q/(2.0*muT)
+        print*,'vmin updated'
+
+    case('dmspin')
+        jchi = keyvalue
+        print*,keyword,': Set dark matter particle spin to',jchi
+
+    case default
+        print*,'Invalid keyword "',trim(keyword),'". Ignoring.'
+
+    end select
+
+
+end subroutine setkeyword
+
+
+
+
+
+program darkmattermain
+    use response
+    use spspace
+    use stateinfo
+    use masses
+    use kinds
+    use constants
+    use dmparticles
+    use velocities
+    use momenta
+    use quadrature
+    implicit none
+
+    integer :: resfile = 100
+    real(kind=8) :: output, v
+    real(doublep) :: diffCrossSection
+    real(doublep) :: transition_probability
+    real(doublep) :: eventrate
+    character :: yn
+    integer :: computeoption
+
+    print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    print*,'Welcome to our FORTAN 90 implementation of the WIMP-nucleon scattering code.'
+    print*,'Based on the Mathematica script described in arXiv:1308.6288 (2003).'
+    print*,'  VERSION 1.1 UPDATED: 2020.05.23 @ SDSU'
+    print*,'  Dev. contact: cjohnson@sdsu.edu'
+    print*,'                 ogorton@sdsu.edu'
+    print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    print*,''
+    print*,'Select an option:'
+    print*,'[1] Differential scattering rate per detector per unit recoil energy.'
+    print*,'[2] Scattering probability.'
+    print*,'[3] Differential cross section per recoil energy.'
+    print*,'[4] (Future feature) Total cross section.'
+    print*,'[5] (Future feature) Total scattering rate per detector.'
+    print*,'[6] (Future featuer) '
+    read*,computeoption
+
+    if (computeoption==2.or.computeoption==3) then
+        print*,"Enter darkmatter velocity:"
+        read*,v
+    endif
+
+    print*,'Enter q, the three-momentum transfer of the scattering reaction:'
+    read*,q
+    print*,' '
+    print*,'Enter the neutron number '
+    read(5,*)num_n
+    print*,' '
+    print*,'Enter the proton number '
+    read(5,*)num_p
+
+    call setparameters
+    call setupcoef
+
+    call opencontrolfile(2)
+    call readcontrolfile(2)
+    call normalizecoeffs
+    call convertisospinform
+
+    call GetSPS
+
+    nsporb = norb(1)
+
+    call openresults(resfile)
+    call setupdensities
+    call readheaderv2(resfile)
+    call readalldensities(resfile)
+
+    print*,'Fill core? [y/n]'
+    read*,yn
+    if (yn=='y') then
+        call coredensity
+    end if
+    call printdensities
+    call printparameters
+
+    if (computeoption == 1) then
+        output= eventrate(Nt, rhochi, ve, v0, q, jchi, y)
+        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+        print*,'Event rate = ',output
+        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    else if (computeoption == 2) then
+        output = transition_probability(q,v,jchi,y)
+        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+        print*,'Scattering probability = ',output
+        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    else if (computeoption == 3) then
+        output = diffCrossSection(v, q, jchi, y, Mtiso)
+        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+        print*,'Differential cross section = ',output
+        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    endif
+
+end program  
+!===================================================================
+subroutine openresults(resfile)
+   use stateinfo
+   implicit none
+   integer resfile
+
+   character(22):: filename
+   integer ilast
+
+   logical success
+
+   success = .false.
+   print*,' '
+   do while(.not.success)
+
+       print*,' Enter name of one-body density file (.res) '
+
+       read(5,'(a)')filename
+       ilast = index(filename,' ')-1
+       open(unit=resfile,file=filename(1:ilast)//'.res',status='old',err=2)
+       success = .true.
+       return
+2      continue
+       print*,filename(1:ilast),'.res does not exist '
+
+   end do
+
+   return
+end subroutine openresults
+
+
+!===================================================================
+subroutine setupdensities
+
+    use spspace
+    use stateinfo
+!    use op_info
+    implicit none
+
+    print*, ntotal(1)
+
+!                 densitymats%good = .true.
+    ! densities(J,iso,a,b)
+    allocate(densitymats%rho( 0:10,0:1,1:ntotal(1),1:ntotal(1)) )
+    densitymats%rho(:,:,:,:) = 0.0
+    allocate(densitymats%rhop(0:10,1:ntotal(1),1:ntotal(1)))
+    allocate(densitymats%rhon(0:10,1:ntotal(1),1:ntotal(1)))
+    densitymats%rhop(:,:,:) = 0.0
+    densitymats%rhon(:,:,:) = 0.0
+
+end subroutine setupdensities
+
+
+!===================================================================
+subroutine coredensity
+
+  use spspace
+  use stateinfo
+
+  integer :: i
+
+  print*,'Filling core orbitals.'
+
+  do i = norb(1)+1, ntotal(1) ! core comes after valence. ntotal = ncore+nval.
+     densitymats%rho(0,0,i,i) = sqrt(2.0*(jorb(i)+1.0)*(Jiso+1.0)*(Tiso+1.0))
+     densitymats%rho(0,1,i,i) = sqrt(2.0*(jorb(i)+1.0)*(Jiso+1.0)*(Tiso+1.0))
+  end do
+
+end subroutine coredensity
+
+!===================================================================
+
+subroutine printdensities
+    use stateinfo
+    use spspace
+    implicit none
+    integer J,a, b
+    print*,'Printing density matrix.'
+    print*,'# spo =', ntotal(1)
+    do J=0,10
+        print*,'J=',J
+        do a=1,ntotal(1)
+            do b=1,ntotal(1)
+                if (densitymats%rho(J,0,a,b)+densitymats%rho(J,1,a,b) .eq. 0) cycle
+                print*,a,b,densitymats%rho(J,0,a,b),densitymats%rho(J,1,a,b)
+            enddo
+        enddo
+    enddo
+
+end subroutine printdensities
+
+!===================================================================
+
+
+!================================================
+!
+!  function to force conversion of unconverged xJ to integer J
+!  that is, odd 2 x J for odd A, and even for even A
+!
+  function closest2J(evenA,xj)
+
+  implicit none
+  integer closest2J
+  real xj
+  logical evenA
+
+  if(evenA)then
+     closest2J = 2*nint(xj)
+     if(closest2J < 0)closest2J = 0
+  else
+     closest2J = 2*nint(xj-0.5)+1
+     if(closest2J < 1)closest2J = 1
+  end if
+
+  return
+  end function closest2J
+!================================================
+function diffCrossSection(v, q, jchi, y, Mtiso)
+    ! Computes the differential cross section per recoil energy ds/dEr
+    use kinds
+    use masses
+    use constants
+    implicit none
+    interface
+         function transition_probability(q,v,jchi,y,Mtiso)
+            use kinds
+            implicit none
+            REAL(doublep), INTENT(IN) :: q
+            REAL(doublep), INTENT(IN) :: v
+            REAL(doublep), INTENT(IN) :: jchi
+            REAL(doublep), INTENT(IN) :: y
+            integer, intent(in) :: Mtiso
+            real(doublep) :: transition_probability
+        end function
+    end interface
+    real(doublep) :: diffCrossSection
+    real(doublep) :: v ! velocity of DM particle in lab frame
+    real(doublep) :: q
+    real(doublep) :: y
+    real(doublep) :: jchi
+    integer :: Mtiso
+
+
+    diffCrossSection = (Miso*mN/(2.0*pi*v*v)) * transition_probability(q,v,jchi,y,Mtiso)
+
+end function diffCrossSection
+
+function totalcrosssection(v,jchi,Mtiso)
+
+end function totalcrosssection
+! File contains dark matter response (dmr) functions roughly corresponding to
+! equation (40) in the paper.
+!
+
+module dmresponse
+
+    use response
+
+    implicit none
+
+contains
+
+    ! Darkmatter particle response function:
+    !   $R_M^{\tau\tau'}(\vec{v}_T^{\perp 2}, \frac{\vec{q}^2}{2m_N^2})$
+    !   Eqn. 38 
+    !
+    !   This function comes from "dmformfactor-V6.m: FFfinal[DMmatrix_,J_,T)]".
+    !   This is the coef. for $W_M^{\tau\tau'}(y)$.
+
+    ! dmrMJ(tau1, tau2, q, v, jchi)
+    ! dmrPhiPPJ(tau1, tau2, q, v, jchi)
+    ! dmrPhiPPJMJ(tau1, tau2, q, v, jchi)
+    ! dmrPhiTPJ(tau1, tau2, q, v, jchi)
+    ! dmrSigmaPPJ(tau1, tau2, q, v, jchi)
+    ! dmrSigmaPJ(tau1, tau2, q, v, jchi)
+    ! dmrDeltaJ(tau1, tau2, q, v, jchi)
+    ! dmrSigmaPJDeltaJ(tau1, tau2, q, v, jchi)
+
+    ! From dmformfactor-V6.m:
+    ! (*These response coefficients differ in their definition from those in the paper 
+    ! because they have c's instead of a's, resulting in an overall factor of 
+    ! 1/(4mN mchi)^2.  This will show up as an additional factor that we multiply
+    ! FF by before printing out StrucFunction, TransitionProbability, and 
+    ! ResponseNucl *)
+
+!-------------------------------------------------------------------------------
+function dmrMJ(tau1, tau2, q, v, jchi)
+    ! O. Gorton 2020.01.
+    ! import modules from modules.f90
+    use masses
+
+    implicit none
+
+    ! outputs
+    REAL(kind=8) :: dmrMJ
+
+    ! inputs
+    integer, INTENT(IN) :: tau1, tau2
+    REAL(kind=8), INTENT(IN) :: q
+    REAL(kind=8), INTENT(IN) :: v
+    REAL(kind=8), INTENT(IN) :: jchi
+
+    ! functions called
+    !REAL(kind=8) :: Cl
+
+    dmrMJ = 0.25*Cl(jchi) * ( &
+            (cvec(tau1)%c(5)*cvec(tau2)%c(5)*q*q + cvec(tau1)%c(8)*cvec(tau2)%c(8)) &
+            * (v*v - q*q/(4*muT*muT)) &
+            + cvec(tau1)%c(11)*cvec(tau2)%c(11)*q*q &
+        ) + (cvec(tau1)%c(1) + cvec(tau1)%c(2) * (v*v - q*q/(4*muT*muT))) * ( &
+            cvec(tau2)%c(1) + cvec(tau2)%c(2) * (v*v - q*q/(4*muT*muT)) &
+        )
+
+end function dmrMJ
+
+!-------------------------------------------------------------------------------
+function dmrPhiPPJ(tau1, tau2, q, v, jchi)
+    ! O. Gorton 2020.01.
+
+    ! import modules from modules.f90
+    use masses
+
+    implicit none
+
+    ! outputs
+    REAL(kind=8) :: dmrPhiPPJ
+
+    ! inputs
+    REAL(kind=8), INTENT(IN) :: q
+    REAL(kind=8), INTENT(IN) :: v
+    REAL(kind=8), INTENT(IN) :: jchi
+    integer, INTENT(IN) :: tau1, tau2
+
+    ! functions called
+    !REAL(kind=8) :: Cl
+
+    dmrPhiPPJ = q*q/(16*mN*mN) * Cl(jchi) * (cvec(tau1)%c(12) - cvec(tau1)%c(15)*q*q) &
+            * (cvec(tau2)%c(12) - cvec(tau2)%c(15)*q*q) &
+            + q**4.0/(4*mN*mN) * cvec(tau1)%c(3)*cvec(tau2)%c(3)
+
+end function dmrPhiPPJ
+
+!-------------------------------------------------------------------------------
+function dmrPhiPPJMJ(tau1, tau2, q, v, jchi)
+    ! O. Gorton 2020.01.
+
+    ! import modules from modules.f90
+    use masses
+
+    implicit none
+
+    ! outputs
+    REAL(kind=8) :: dmrPhiPPJMJ
+
+    ! inputs
+    REAL(kind=8), INTENT(IN) :: q
+    REAL(kind=8), INTENT(IN) :: v
+    REAL(kind=8), INTENT(IN) :: jchi
+    integer, INTENT(IN) :: tau1, tau2
+
+    ! functions called
+    !REAL(kind=8) :: Cl
+
+    dmrPhiPPJMJ = q*q/(4*mN) * Cl(jchi) * cvec(tau1)%c(11) * ( &
+                cvec(tau2)%c(12) - cvec(tau2)%c(15)*q*q &
+            ) + q*q/(mN)*cvec(tau2)%c(3) * ( &
+                cvec(tau1)%c(1) + cvec(tau1)%c(2) * ( &
+                    v*v - q*q/(4*muT*muT) &
+                ) &
+        )
+
+end function dmrPhiPPJMJ
+
+!-------------------------------------------------------------------------------
+function dmrPhiTPJ(tau1, tau2, q, v, jchi)
+    ! O. Gorton 2020.01.
+
+    ! import modules from modules.f90
+    use masses
+
+    implicit none
+
+    ! outputs
+    REAL(kind=8) :: dmrPhiTPJ
+
+    ! inputs
+    REAL(kind=8), INTENT(IN) :: q
+    REAL(kind=8), INTENT(IN) :: v
+    REAL(kind=8), INTENT(IN) :: jchi
+    integer, INTENT(IN) :: tau1, tau2
+
+    ! functions called
+    !REAL(kind=8) :: Cl
+
+    dmrPhiTPJ = q*q/(16*mN*mN)*Cl(jchi) * ( &
+            cvec(tau1)%c(12)*cvec(tau2)%c(12)*q*q + cvec(tau1)%c(12)*cvec(tau2)%c(12) &
+        )
+
+end function dmrPhiTPJ
+
+!-------------------------------------------------------------------------------
+function dmrSigmaPPJ(tau1, tau2, q, v, jchi)
+    ! O. Gorton 2020.01.
+
+    ! import modules from modules.f90
+    use masses
+
+    implicit none
+
+    ! outputs
+    REAL(kind=8) :: dmrSigmaPPJ
+
+    ! inputs
+    REAL(kind=8), INTENT(IN) :: q
+    REAL(kind=8), INTENT(IN) :: v
+    REAL(kind=8), INTENT(IN) :: jchi
+    integer, INTENT(IN) :: tau1, tau2
+
+    ! functions called
+    !REAL(kind=8) :: Cl
+
+    dmrSigmaPPJ = (1./16) * Cl(jchi) * ( &
+            cvec(tau1)%c(6)*cvec(tau2)%c(6)*q**4 + ( &
+                cvec(tau1)%c(13)*cvec(tau2)%c(13)*q*q &
+                + cvec(tau1)%c(12)*cvec(tau2)%c(12) &
+            ) * (v*v - q*q/(4*muT*muT)) &
+            + 2*cvec(tau1)%c(4)*cvec(tau2)%c(6)*q*q &
+            + cvec(tau1)%c(4)*cvec(tau2)%c(4) &
+        ) + (1./4)*cvec(tau1)%c(10)*cvec(tau2)%c(10)*q*q
+
+end function dmrSigmaPPJ
+
+!-------------------------------------------------------------------------------
+function dmrSigmaPJ(tau1, tau2, q, v, jchi)
+    ! O. Gorton 2020.01.
+
+    ! import modules from modules.f90
+    use masses
+
+    implicit none
+
+    ! outputs
+    REAL(kind=8) :: dmrSigmaPJ
+
+    ! inputs
+    REAL(kind=8), INTENT(IN) :: q
+    REAL(kind=8), INTENT(IN) :: v
+    REAL(kind=8), INTENT(IN) :: jchi
+    integer, INTENT(IN) :: tau1, tau2
+
+    ! functions called
+    !REAL(kind=8) :: Cl
+
+    dmrSigmaPJ = (1./32) * Cl(jchi) * ( &
+            2*cvec(tau1)%c(9)*cvec(tau2)%c(9)*q*q + ( &
+                cvec(tau1)%c(15)*cvec(tau2)%c(15)*q**4 &
+                + cvec(tau1)%c(14)*cvec(tau2)%c(14)*q*q &
+                - 2*cvec(tau1)%c(12)*cvec(tau2)%c(15)*q*q &
+                + cvec(tau1)%c(12)*cvec(tau2)%c(12) &
+            ) * (v*v - q*q/(4*muT*muT)) + 2*cvec(tau1)%c(4)*cvec(tau2)%c(4) &
+        ) + (1./8) * ( &
+            cvec(tau1)%c(3)*cvec(tau2)%c(3)*q*q &
+            + cvec(tau1)%c(7)*cvec(tau2)%c(7) &
+        ) * (v*v - q*q/(4*muT*muT))
+
+end function dmrSigmaPJ
+
+!-------------------------------------------------------------------------------
+function dmrDeltaJ(tau1, tau2, q, v, jchi)
+    ! O. Gorton 2020.01.
+
+    ! import modules from modules.f90
+    use masses
+
+    implicit none
+
+    ! outputs
+    REAL(kind=8) :: dmrDeltaJ
+
+    ! inputs
+    REAL(kind=8), INTENT(IN) :: q
+    REAL(kind=8), INTENT(IN) :: v
+    REAL(kind=8), INTENT(IN) :: jchi
+    integer, INTENT(IN) :: tau1, tau2
+
+    ! functions called
+    !REAL(kind=8) :: Cl
+
+    dmrDeltaJ = q*q/(4*mN*mN) * Cl(jchi) * ( &
+            cvec(tau1)%c(5)*cvec(tau2)%c(5)*q*q &
+            + cvec(tau1)%c(8)*cvec(tau2)%c(8) &
+        ) + 2*q*q/(mN*mN) * cvec(tau1)%c(2)*cvec(tau2)%c(2) &
+            * (v*v - q*q/(4*muT*muT))
+
+end function dmrDeltaJ
+
+!-------------------------------------------------------------------------------
+function dmrSigmaPJDeltaJ(tau1, tau2, q, v, jchi)
+    ! O. Gorton 2020.01.
+
+    ! import modules from modules.f90
+    use masses
+
+    implicit none
+
+    ! outputs
+    REAL(kind=8) :: dmrSigmaPJDeltaJ
+
+    ! inputs
+    REAL(kind=8), INTENT(IN) :: q
+    REAL(kind=8), INTENT(IN) :: v
+    REAL(kind=8), INTENT(IN) :: jchi
+    integer, INTENT(IN) :: tau1, tau2
+
+    ! functions called
+    !REAL(kind=8) :: Cl
+
+    dmrSigmaPJDeltaJ = q*q/(4*mN*mN) * Cl(jchi) * ( &
+            cvec(tau1)%c(4)*cvec(tau2)%c(5) - cvec(tau2)%c(8)*cvec(tau1)%c(9) &
+        ) - q*q/(mN)*cvec(tau2)%c(2)*cvec(tau1)%c(3) * (v*v - q*q/(4*muT*muT))
+
+end function dmrSigmaPJDeltaJ
+
+!-------------------------------------------------------------------------------
+function Cl(j)
+    ! O. Gorton 2020.01.
+    ! Abbreviation for 4j(j+1)/3
+    implicit none
+    REAL(kind=8), INTENT(IN) :: j
+    REAL(kind=8) Cl
+
+    Cl = 4.0 * j * (j + 1) / 3.0
+
+end function Cl
+
+end module dmresponse
+function dmresponsecoef(ifunc, tau1, tau2, q, v, jchi)
+    use dmresponse
+    implicit none
+    ! output
+    real(kind=8) :: dmresponsecoef
+    ! inputs 
+    integer, intent(in) :: ifunc ! integer indicating response function
+    ! ifunc	nuclear operator combination which coef belongs to
+    ! 1 	Mj Mj
+    ! 2		PhiPPJ PhiPPJ
+    ! 3		PhiTPJ PhiTPJ
+    ! 4		DeltaJ DeltaJ
+    ! 5		SigmaPJ SigmaPJ
+    ! 6		SigmaPPJ SigmaPPJ
+    ! 7		PhiPPJ MJ
+    ! 8		DeltaJ SigmaPJ
+    ! (passed to the real response coefficient functions)
+    integer, INTENT(IN) :: tau1, tau2
+    REAL(kind=8), INTENT(IN) :: q
+    REAL(kind=8), INTENT(IN) :: v
+    REAL(kind=8), INTENT(IN) :: jchi
+    ! functions in dmresponse.f90
+!    real(kind=8) :: dmrMJ, dmrPhiPPJ, dmrPhiTPJ, dmrDeltaJ
+!    real(kind=8) :: dmrSigmaPJ, dmrSigmaPPJ, dmrPhiPPJMJ, dmrSigmaPJDeltaJ
+
+    dmresponsecoef = -1
+
+    if (ifunc == 1) dmresponsecoef = dmrMJ(tau1, tau2, q, v, jchi)
+    if (ifunc == 2) dmresponsecoef = dmrPhiPPJ(tau1, tau2, q, v, jchi)
+    if (ifunc == 3) dmresponsecoef = dmrPhiTPJ(tau1, tau2, q, v, jchi)
+    if (ifunc == 4) dmresponsecoef = dmrDeltaJ(tau1, tau2, q, v, jchi)
+    if (ifunc == 5) dmresponsecoef = dmrSigmaPJ(tau1, tau2, q, v, jchi)
+    if (ifunc == 6) dmresponsecoef = dmrSigmaPPJ(tau1, tau2, q, v, jchi)
+    if (ifunc == 7) dmresponsecoef = dmrPhiPPJMJ(tau1, tau2, q, v, jchi)
+    if (ifunc == 8) dmresponsecoef = dmrSigmaPJDeltaJ(tau1, tau2, q, v, jchi)
+
+    if (dmresponsecoef == -1) then
+        print*,"No dark matter response coefficient was set!"
+        STOP -1
+    end if
+
+end function dmresponsecoef
+function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
+    ! Computes the differential cross section per recoil energy ds/dEr
+    use quadrature
+    use kinds
+    use masses
+        ! Uses: 
+        !    mchi : Dark matter mass
+        !    Miso : nuclear isotope mass
+    use constants ! pi
+    
+    implicit none
+    interface
+         function transition_probability(q,v,jchi,y,Mtiso)
+            use kinds
+            implicit none
+            REAL(doublep), INTENT(IN) :: q
+            REAL(doublep), INTENT(IN) :: v
+            REAL(doublep), INTENT(IN) :: jchi
+            REAL(doublep), INTENT(IN) :: y
+            integer, intent(in) :: Mtiso
+            real(doublep) :: transition_probability
+        end function
+        function maxwell_boltzmann(v,v0)
+            use kinds
+            real(doublep), intent(in) :: v
+            real(doublep), intent(in) :: v0
+            real(doublep) :: maxwell_boltzmann            
+        end function
+    end interface
+    real(doublep) :: EventRate
+    real(doublep) :: Nt ! Number of target nuclei
+    real(doublep) :: rhochi ! local dark matter density
+    real(doublep) :: ve ! Earth's velocity in the galactic rest frame
+    real(doublep) :: v0 ! rms velocity of the visible matter distribution 
+    real(doublep) :: q
+    real(doublep) :: y
+    real(doublep) :: jchi
+    integer :: Mtiso
+
+    real(doublep) :: v  ! DM velocity variable
+    real(doublep) :: dv ! DM differential velocity / lattive spacing
+    real(doublep),allocatable :: v_lattice(:) ! velocity domain
+    real(doublep), allocatable :: EventRate_integrand(:)
+    integer :: i
+    real(doublep) :: tmp, diffcrosssection
+
+
+    dv = (vdist_max-vdist_min)/lattice_points
+
+    allocate(EventRate_integrand(lattice_points))
+    
+    do i = 1, lattice_points
+ 
+        v = vdist_min + (i-1) * dv
+ 
+        write(22,*)v,maxwell_boltzmann(v+ve,v0)
+        
+        EventRate_integrand(i) = diffCrossSection(v, q, jchi, y, Mtiso)&
+                    * v * v * ( + maxwell_boltzmann(v-ve,v0) &
+                            - maxwell_boltzmann(v+ve,v0) ) 
+
+        write(23,*),v,EventRate_integrand(i)/Mchi
+
+    end do
+
+    if (quadrature_type == 1) then    
+        call simpson(lattice_points,lattice_points,EventRate_integrand,dv,EventRate)
+    else
+        EventRate = -1
+   end if
+
+    EventRate = Nt * (rhochi/Mchi) * EventRate *  (pi*v0**2/(ve))
+  
+end function EventRate
+subroutine GetSPS
+!
+!  reads in .sps file information on j-orbits 
+!
+! REVISION 8 April 2004: reads in REDSTICK-compatible .sps files
+! Revision 13 May 2004: use allocatable arrays
+!
+!
+!  OUTPUT:     norb = # of j-orbits
+!              jorb(i) = 2*j of ith j-orbit 
+!              nrorb(i)=  radial quantum number of ith j-orbit
+!              torb(i) = 2*Tz of j-orbit
+!              nsps = # of m-states
+!              orb_qn = quantum numbers of j-orbits, stored differently
+!              spsqn  = quantum numbers of m-states
+!
+!  CALLED BY: main
+
+      use spspace
+!      use chf_dim
+      implicit none
+
+!..............INTERMEDIATES........................
+
+      integer,allocatable   :: ind(:)
+      real,allocatable      ::  xn(:),xl(:),xj(:)
+      !integer,allocatable   ::  ilabel(:,:)
+      integer i,j!,m
+      !integer ns
+
+!...............FINDING CLEBSCH GORDON ARRAY.....................
+
+      !real clebr
+      !integer ja, k!ia,ja,k
+      !real xji,xjj,xmi,xmj,xka
+      real xxn,xxl,xxj
+      !integer iphase
+
+!..............FILE HANDLING..........................
+
+      character spsfil*15               ! name of .sps file 
+      integer ilast
+      character isoread*3
+      logical isoflag
+      real yy                           ! dummy
+
+!================================================================      
+
+
+!      if(allocated(spsqn))deallocate(spsqn)
+!      if(allocated(orb_qn))deallocate(orb_qn)
+      if(allocated(jorb))deallocate(jorb)
+      if(allocated(torb))deallocate(torb)
+      if(allocated(nrorb))deallocate(nrorb)
+!      if(allocated(jcore))deallocate(jcore)
+!      if(allocated(tcore))deallocate(tcore)
+!      if(allocated(nrcore))deallocate(nrcore)
+!      if(allocated(spsqn))deallocate(spsqn)
+!      if(allocated(kmax))deallocate(kmax)
+!      if(allocated(kmin))deallocate(kmin)
+!      if(allocated(indx))deallocate(indx)
+!      if(allocated(clb))deallocate(clb)
+
+1     continue
+      write(6,*)' Enter shell-model space file name (.sps)'
+      read(5,'(a)')spsfil
+      ilast=index(spsfil,' ')
+      if(ilast.ne.0)then
+         ilast=ilast-1
+      else
+         ilast=15
+      endif
+!----------  Now get orbit information for the calculation
+!----------  njl is the number of single-particle states
+
+      open(unit=1,file=spsfil(1:ilast)//'.sps',status='old',err=3)
+      goto 4
+3     continue
+      write(6,*)' That file does not exist '
+      goto 1
+
+4     continue
+      write(6,'('' Shell-Model space file name'',1x,a15)')spsfil
+
+!.............................READS IN REDSTICK-COMPATIBLE FORMAT........
+
+      read(1,'(a3)')isoread
+      if(isoread.eq.'iso' .or. isoread.eq.'ISO')then
+        isoflag=.true.
+
+      elseif(isoread.eq.'pn' .or. isoread.eq.'PN')then
+        isoflag=.false.
+      else
+        write(6,*)' You do not have a redstick compatible .sps file '
+        write(6,*)' Nonetheless, I will try to read with old format '
+        rewind(1)
+        goto 1011
+      endif
+
+
+!....................ISOSPIN FORMALISM..........................
+
+      if(isoflag)then
+
+        read(1,*)norb(1)
+        allocate(xn(norb(1)),xl(norb(1)),xj(norb(1)))
+        do i = 1,norb(1)
+        read(1,*,err=44)xn(i),xl(i),xj(i),yy
+        enddo
+        read(1,*)ncore(1)
+        ntotal(1) = norb(1)+ncore(1)
+         deallocate(xn,xj,xl)
+
+        rewind(1)
+
+        read(1,'(a3)')isoread
+        read(1,*)norb(1)
+        allocate(xn(norb(1)),xl(norb(1)),xj(norb(1)))
+        allocate(nrorb(2*ntotal(1)),lorb(2*ntotal(1)),    &
+                & jorb(2*ntotal(1)),torb(2*ntotal(1)),    &
+                & nprincipal(2*ntotal(1)), nodal(2*ntotal(1)))
+        do i = 1,norb(1)
+
+        read(1,*,err=44)xn(i),xl(i),xj(i),yy
+
+        nrorb(i)=int(xn(i))
+        jorb(i)=int(2*xj(i))
+
+        torb(i)=1
+        lorb(i) = int(xl(i))
+!Add by CFJ
+        nprincipal(i) = 2*nrorb(i)+lorb(i)
+        nodal(i)      = nrorb(i)+1
+!................ERROR TRAPS ...............
+
+        spinless = .false.
+        if(xl(i) == xj(i))spinless = .true.
+
+!..............END ERROR TRAPS.............
+
+         enddo
+
+        deallocate(xn,xj,xl)
+!..............START TO READ CORE..........
+
+        read(1,*)ncore(1)
+        allocate(xn(ncore(1)),xl(ncore(1)),xj(ncore(1)))
+!        allocate(nrcore(2*ncore(1)),lcore(2*ncore(1)),        &
+!                & jcore(2*ncore(1)),tcore(2*ncore(1)))
+        do i = 1,ncore(1)
+           j = norb(1)+i
+        read(1,*,err=44)xn(i),xl(i),xj(i),yy
+
+        nrorb(j)=int(xn(i))
+        jorb(j) =int(2*xj(i))
+
+        torb(j) =1
+        lorb(j) = int(xl(i))
+!Add by CFJ
+        nprincipal(j) = 2*nrorb(j)+lorb(j)
+        nodal(j)      = nrorb(j)+1
+
+        enddo
+
+         goto 35
+   44    continue
+         write(6,*)' some error in reading file ',i
+         stop
+
+      endif
+
+
+!.......................PN FORMALISM.............................
+
+
+        if(.not.isoflag)then
+                write(6,*)' This formalism not yet implemented '
+                goto 1
+        endif
+
+      return
+!.............................THIS SECTION IS FOR OLD FORMAT.........
+
+ 1011 continue
+
+      write(6,*)' This version assumes equal proton and neutron orbits '
+      norb(1) = 0
+
+      i=0
+      do
+        read(1,*,err=3033,end=34)i,xxn,xxl,xxj
+        norb(1)=norb(1)+1
+!................ERROR TRAPS ...............
+        spinless = .false.
+        if(xl(i) == xl(j))spinless = .true.
+
+
+!..............END ERROR TRAPS.............
+
+      enddo
+
+
+ 34   continue
+
+
+      allocate(ind(norb(1)),xn(norb(1)),xl(norb(1)),xj(norb(1)))
+      allocate(nrorb(2*norb(1)),lorb(2*norb(1)),jorb(2*norb(1)),  &
+     &                                          torb(2*norb(1)))
+
+      rewind(1)
+
+
+      do i=1,norb(1)
+        read(1,*,end=35,err=3033)ind(i),xn(i),xl(i),xj(i)
+        write(6,*)i,ind(i),xn(i),xl(i),xj(i)
+        nrorb(ind(i))=int(xn(i))
+        jorb(ind(i))=int(2*xj(i))
+
+        torb(ind(i))=1
+
+        lorb(ind(i)) = int(xl(i))
+
+
+!..............END ERROR TRAPS.............
+
+      enddo
+
+      deallocate(xn,xj,xl,ind)
+
+   35 continue
+      close(unit=1)
+
+      norb(2) = norb(1)
+      ncore(2)= ncore(1)
+      ntotal(2)=ntotal(1)
+
+      do i =1,ntotal(1)
+        write(6,*)i,nrorb(i),jorb(i),lorb(i)
+
+!-----------FILL NEUTRON SPACES --------------
+
+        nrorb(i+ntotal(1))=nrorb(i)
+        jorb(i+ntotal(1)) = jorb(i)
+        lorb(i+ntotal(1)) = lorb(i)
+        torb(i+ntotal(1)) = -1
+
+      enddo
+
+!!-------- FILL IN WEO ARRAYS
+!
+!      allocate(orb_qn(norb(1)+norb(2),3))
+!
+!      do i =1,norb(1)+norb(2)
+!        orb_qn(i,1) = float(nrorb(i))
+!        orb_qn(i,2) = float(lorb(i))
+!        orb_qn(i,3) = float(jorb(i))/2.
+!      enddo
+!
+!      ns = 0
+!      do i=1,norb(1)
+!         do m=-jorb(i),jorb(i),2
+!           ns=ns+1
+!         enddo
+!      enddo
+!
+!      allocate(spsqn(2,ns,6))
+!
+!      j2max=0
+!      ns=0
+!      do i =1,norb(1)
+!        j2max=max(j2max,jorb(i))
+!        do m = -jorb(i),jorb(i),2
+!            ns=ns+1
+!            spsqn(1,ns,1) = i
+!            spsqn(1,ns,2) = nrorb(i)
+!            spsqn(1,ns,3) = lorb(i)
+!            spsqn(1,ns,4) = jorb(i)
+!            spsqn(1,ns,5) = m
+!            spsqn(1,ns,6) = 1
+!        enddo
+!      enddo
+!
+!      ns=0
+!      do i=norb(1)+1,norb(1)+norb(2)
+!        do m=-jorb(i),jorb(i),2
+!           ns=ns+1
+!            spsqn(2,ns,1) = i
+!            spsqn(2,ns,2) = nrorb(i)
+!            spsqn(2,ns,3) = lorb(i)
+!            spsqn(2,ns,4) = jorb(i)
+!            spsqn(2,ns,5) = m
+!            spsqn(2,ns,6) = -1
+!        enddo
+!      enddo
+!
+!      nsps(1) = ns
+!      nsps(2) = ns
+!
+!
+!      nindx=0
+!weo---  Set up all possible two particle combinations along with spin
+!weo---  Also find min and max angular momentum that can be coupled
+!weo---  Do all like particles first
+
+! CWJ -- NOTE NOTE I assume proton neutron have identical orbits --
+
+!      allocate(kmax(norb(1),norb(1)),kmin(norb(1),norb(1)))
+!
+!      do i=1,norb(1)
+!        do j=1,norb(1)
+!            if(torb(i).eq.torb(j))then
+!                  nindx=nindx+1
+!            end if
+!        end do
+!      end do
+!
+!      allocate(indx(2,nindx))
+!
+!      nindx=0
+!      allocate(ilabel(norb(1),norb(1)))
+!
+!      do i=1,norb(1)
+!        do j=1,norb(1)
+!            if(torb(i).eq.torb(j))then
+!                  nindx=nindx+1
+!                  indx(1,nindx)=i
+!                  indx(2,nindx)=j
+!                  ilabel(i,j) = nindx
+!
+!                  kmax(i,j)=int(xj(i)+xj(j))
+!                  kmin(i,j)=int(abs(xj(i)-xj(j)))
+!            end if
+!        end do
+!      end do
+!Cweo---- Now different types  ---- Note xtz(i)=0. in isospin formalism
+!C      do i=1,norb(1)+norb(2)
+!C        do j=1,norb(1)+norb(2)
+!C           if(torb(i).ne.torb(j))then
+!C                  nindx=nindx+1
+!C                  indx(1,nindx)=i
+!C                  indx(2,nindx)=j
+!C                 ilabel(i,j) = nindx
+!C                  kmax(i,j)=int(xj(i)+xj(j))
+!C                  kmin(i,j)=int(abs(xj(i)-xj(j)))
+!C             end if
+!C        end do
+!C      end do
+!C      write(6,*)'  nindx ',nindx
+!C
+!C---- compute phased Clebsch-Gordon array
+!      allocate(clb(0:j2max,1:nsps(1),1:nsps(1)))
+!      do i = 1,nsps(1)
+!         ia = spsqn(1,i,1)
+!         xji = float(spsqn(1,i,4))/2.
+!         xmi = float(spsqn(1,i,5))/2.
+!         do j = 1,nsps(1)
+!            ja = spsqn(1,j,1)
+!            xjj=float(spsqn(1,j,4))/2.
+!            xmj=float(spsqn(1,j,5))/2.
+!            iphase =  (spsqn(1,j,4)-spsqn(1,j,5))/2
+!            do k = kmin(ia,ja),kmax(ia,ja)
+!               xk = float(k)
+!               clb(k,i,j)=(-1)**iphase*
+!     &               clebr(xji,xmi,xjj,-xmj,xK,xmi-xmj)
+!            enddo
+!
+!         enddo
+!      enddo
+
+      return
+ 3033 continue
+      write(6,*)' I cannot understand this file. ', &
+     & 'Please choose another '
+      goto 1
+
+end subroutine GetSPS
+
+!-------------------------------------------------------------------------------
+function MJ(y,np,lp,jp,n,l,j,bigJ)
+
+    implicit none
+    INTERFACE
+
+      function BesselElement(y,np,lp,n,l,bigL)
+          implicit none
+          INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+          REAL(kind=8), INTENT(IN) :: y
+          REAL(kind=8) :: BesselElement
+      end function BesselElement
+
+      function Jnorm(j)
+          implicit none
+          REAL(kind=8), INTENT(IN)  :: j
+          REAL(kind=8) :: Jnorm
+      end function Jnorm
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ
+    REAL(kind=8), INTENT(IN) :: y
+    REAL(kind=8) :: xjp,xj
+    REAL(kind=8) :: Pi = 3.1415926535897932
+    REAL(kind=8) :: Wigner_3j,Wigner_6j
+    !REAL(kind=8) :: DBLEFacLOG
+    REAL(kind=8) :: MJ
+
+    xjp = dble(jp)/2.0
+    xj  = dble(j )/2.0
+
+    MJ = (-1)**(0.5d0+xj+dble(bigJ))&
+        *SQRT(Jnorm(xj)*Jnorm(xjp) &
+        *Jnorm(dble(l))*Jnorm(dble(lp))*Jnorm(dble(bigJ))/(4*Pi)) &
+        & * Wigner_3j(2*lp,2*bigJ,2*l,0,0,0) &
+          * Wigner_6j(2*lp,jp,1,j,2*l,2*bigJ)   &
+        & * BesselElement(y,np,lp,n,l,bigJ)
+
+end function MJ
+
+
+!-------------------------------------------------------------------------------
+function MJLDivQoverall(lp,jp,l,j,bigJ,bigL)
+
+    implicit none
+    INTERFACE
+
+        function Qnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Qnorm
+        end function Qnorm
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: lp,jp,l,j,bigJ,bigL
+    REAL(kind=8) :: xjp,xj
+    REAL(kind=8) :: Pi = 3.1415926535897932
+    REAL(kind=8) :: Wigner_6j
+    REAL(kind=8) :: MJLDivQoverall
+
+    xjp = dble(jp)/2.0
+    xj  = dble(j )/2.0
+
+    ! Error trap
+
+    MJLDivQoverall = (-1.0)**(bigL+j)* Qnorm(dble(lp))*Qnorm(xjp) &
+        *Qnorm(xj)*Qnorm(dble(bigJ))*Qnorm(dble(bigL)) &
+        *Wigner_6j(2*lp,jp,1,j,2*l,2*bigJ)/SQRT(4*Pi)
+
+end function MJLDivQoverall
+
+
+!-------------------------------------------------------------------------------
+function MJLDivQsummand1(y,np,lp,jp,n,l,j,bigJ,bigL)
+
+    implicit none
+    INTERFACE
+
+        function Qnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Qnorm
+        end function Qnorm
+
+        function BesselElementminus(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp
+            integer, INTENT(IN) :: bigL
+            REAL(kind=8),    INTENT(IN) :: y
+            REAL(kind=8) :: BesselElementminus
+        end function BesselElementminus
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ,bigL
+    REAL(kind=8), INTENT(IN) :: y
+    REAL(kind=8) :: Wigner_3j,Wigner_6j
+    REAL(kind=8) :: MJLDivQsummand1
+
+    MJLDivQsummand1 = -SQRT(dble(l)+1.0)*Qnorm(dble(l)+1.0) &
+        * Wigner_6j(2*bigL,2,2*bigJ,2*l,2*lp,2*(l+1))  &
+        * Wigner_3j(2*lp,2*bigL,2*(l+1),0,0,0) &
+        * BesselElementminus(y,np,lp,n,l,bigL)
+
+end function MJLDivQsummand1
+
+
+!-------------------------------------------------------------------------------
+function MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL)
+
+    ! l must be .ge. 1 for Qnorm function.
+
+    implicit none
+    INTERFACE
+
+        function Qnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Qnorm
+        end function Qnorm
+
+        function BesselElementplus(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp
+            integer, INTENT(IN) :: bigL
+            REAL(kind=8),    INTENT(IN) :: y
+            REAL(kind=8) :: BesselElementplus
+        end function BesselElementplus
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ,bigL
+    REAL(kind=8), INTENT(IN) :: y
+    REAL(kind=8) :: Wigner_3j,Wigner_6j
+    REAL(kind=8) :: MJLDivQsummand2
+
+    if (l.eq.0) then ! O.C.G: avoid Qnorm(-1)
+        MJLDivQsummand2 = 0.0
+    else
+
+        MJLDivQsummand2 = SQRT(dble(l))*Qnorm(dble(l)-1.0) &
+            *Wigner_6j(2*bigL,2,2*bigJ,2*l,2*lp,2*(l-1))  &
+            *Wigner_3j(2*lp,2*bigL,2*(l-1),0,0,0) &
+            *BesselElementplus(y,np,lp,n,l,bigL)
+
+    endif
+
+end function MJLDivQsummand2
+
+
+!-------------------------------------------------------------------------------
+function MJLDivQ(y,np,lp,jp,n,l,j,bigJ,bigL)
+
+    implicit none
+    INTERFACE
+
+        function MJLDivQoverall(lp,jp,l,j,bigJ,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: lp,jp,l,j,bigJ,bigL
+            REAL(kind=8) :: Pi = 3.1415926535897932
+            REAL(kind=8) :: MJLDivQoverall
+        end function MJLDivQoverall
+
+        function MJLDivQsummand1(y,np,lp,jp,n,l,j,bigJ,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ,bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: MJLDivQsummand1
+        end function MJLDivQsummand1
+
+        function MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ,bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: MJLDivQsummand2
+        end function MJLDivQsummand2
+
+    end INTERFACE
+
+     INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ,bigL
+     REAL(kind=8), INTENT(IN) :: y
+     REAL(kind=8) :: MJLDivQ, tmp
+
+     MJLDivQ = MJLDivQoverall(lp,jp,l,j,bigJ,bigL) &
+         * (MJLDivQsummand1(y,np,lp,jp,n,l,j,bigJ,bigL) &
+         +MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL))
+
+end function MJLDivQ
+
+
+
+!===============================================================================
+module kinds
+    implicit none
+    integer,parameter :: doublep = kind(1.d0)
+    integer :: keylength = 20
+
+end module kinds
+
+
+!===============================================================================
+module response
+
+    implicit none
+
+    integer :: num_response_coef
+    
+    ! Nonrelativistic operator coefficients
+    type coeff
+        real(kind=8), dimension(:), allocatable :: c
+    end type coeff
+ 
+    ! 0 = protons, 1 = neutrons
+    type(coeff) :: pncvec(0:1) 
+
+    ! c0 = (cp+cn)/2   c1 = (cp-cn)/2
+    type(coeff) :: cvec(0:1)
+
+end module response
+
+!===============================================================================
+module dmparticles
+
+    use kinds
+    implicit none
+
+    real(doublep) :: jchi ! darkmatter spin
+    real(doublep) :: Nt ! Number of target nuclei
+    real(doublep) :: rhochi ! local dark matter density 
+
+end module dmparticles
+
+
+!===============================================================================
+module stateinfo
+   implicit none
+   logical :: evenA
+   integer nlocalstates !,maxlocalstates
+   integer nsporb   ! # of single-particle orbits
+   integer jt, tt   ! spin, isospin of transition operator
+   integer Jiso, Tiso   ! ang, isospin of ground state times 2
+   integer Mtiso ! iso spin projection
+   logical ::  pndens
+   type onebdenmat
+   logical good
+   real, allocatable :: rho(:,:,:,:)
+   real, allocatable :: rhop(:,:,:),rhon(:,:,:)  ! added in version 9
+   end type onebdenmat
+   type (onebdenmat) :: densitymats
+
+end module stateinfo
+
+
+!===============================================================================
+module spspace
+    implicit none
+    !------------------SINGLE-PARTICLE STATES---------------------------   
+
+    integer norb(2)                ! # of single-particle j-orbits
+                                   ! 1 = p,  2 = n
+    integer nsps(2)                ! # of single-particle m-states
+                                   ! 1 = p, 2 = n
+    integer ncore(2)               ! # of single-particle j-orbits in the core
+                                   ! 1 = p,  2 = n
+    integer ntotal(2)
+    integer,allocatable  :: jorb(:)     ! 2 x J of orbit (note: p,n different)
+    integer,allocatable  :: lorb(:)
+    integer,allocatable  :: nrorb(:)    ! radial quantum number N of j-orbit
+    integer,allocatable  :: torb(:)     ! 2 x Tz of orbit ( p/n = +/-1 )
+    integer,allocatable  :: nprincipal(:)
+    integer,allocatable  :: nodal(:)
+    logical spinless
+end module spspace
+
+!===============================================================================
+module masses
+
+    implicit none
+
+    ! Mass neutron and mass proton in GeV
+    REAL(kind=8) :: mN
+    ! 
+    REAL(kind=8) :: mV
+    ! Mass dark matter particle
+    REAL(kind=8) :: mchi
+    ! Mass isotope (number of nucleons)
+    REAL(kind=8) :: Miso
+    ! Number of protons and neutron in target nucleus
+    integer :: num_p, num_n
+    ! Reduced mass of the target
+    REAL(kind=8) :: muT
+    ! Dark matter density
+    real(kind=8) :: rhoDM
+
+end module masses
+
+!===============================================================================
+module momenta
+    use kinds
+    implicit none
+
+    real(doublep) :: q ! three-momentum transfer of the dm-nucleus scattering
+    real(doublep) :: y ! y^2 is the rescaled q
+
+    ! Harmonic oscillator parameter
+    real(kind=8) :: bfm    
+
+end module momenta
+
+!===============================================================================
+module velocities
+
+    use kinds
+    implicit none
+    real(doublep) :: ve !km/s
+    REAL(kind=8) :: vesc ! km/s
+    REAL(kind=8) :: v0 ! km/s 
+
+end module velocities
+
+!===============================================================================
+module constants
+    implicit none
+    real(kind=8) :: pi = 3.14159265358979323846264338327950288419716939937510
+    real(kind=8) :: GeV
+    real(kind=8) :: femtometer
+end module constants
+
+!===============================================================================
+module quadrature
+    use kinds
+    implicit none
+
+    integer :: quadrature_type
+    integer :: lattice_points
+    real(doublep) :: vdist_min
+    real(doublep) :: vdist_max
+
+end module quadrature
+
+!===============================================================================
+module keywords
+    implicit none
+
+    ! Do not change the order of these keywords!!! Their order determines which
+    ! parameters are modified when the string is found in the control file.
+    character(len=20), dimension(14) :: keyword_array = [character(20) :: &
+        "coefnonrel","vearth","dmdens","quadtype","intpoints","gev","femtometer",&
+        "dmmass","vescape","ntarget","weakmscale","vscale","mnucleon","dmspin"]
+
+end module keywords
+!-------------------------------------------------------------------------------
+function Jnorm(j)
+    implicit none
+    REAL(kind=8), INTENT(IN)  :: j
+    REAL(kind=8) :: Jnorm
+    Jnorm = 2.0 * j + 1.0
+end function Jnorm
+
+
+!-------------------------------------------------------------------------------
+function Qnorm(j)
+    implicit none
+    REAL(kind=8), INTENT(IN) :: j
+    Real(kind=8)  :: Qnorm
+    if (j<0) STOP "qnorm error: negative j" ! O.C.G: avoid NAN
+    Qnorm = sqrt(2.0 * j + 1.0)
+end function Qnorm
+
+!  ctrlchar = 'c'  count up # of states
+!  ctrlchar = 'f'  fill up info on states
+!  ctrlchar = 'p'  fill up parent reference states
+!  ctrlchar = 'd'  fill up daughter reference states
+
+!================================================
+
+function nucResponse(tau1,tau2,ioption,y)
+    use kinds
+    use spspace
+    use stateinfo
+    implicit none
+
+    integer :: tau1, tau2
+    integer :: ioption
+    real(doublep) :: y
+
+    integer :: j,a,b!,ap,an
+    integer :: jmin, jmax
+    
+    integer :: op1, op2
+
+    REAL(doublep) :: Wigner_3j
+    REAL(doublep) :: spOME1,spOME2
+    REAL(doublep), dimension (0:50) :: DRME1, DRME2
+    REAL(doublep)  :: nucResponse
+   
+    jmin = -1
+    jmax = -1
+
+    if (ioption .eq. 1) then   
+        ! Mj Mj
+        op1 = 1; op2 = 1
+        jmin = 0; jmax = 6
+    else if (ioption .eq. 2) then
+        ! PhiPPJ PhiPPJ
+        op1 = 3; op2 = 3
+        jmin = 0; jmax = 6
+    else if (ioption .eq. 3) then
+        ! PhiTPJ PhiTPJ
+        op1 = 4; op2 = 4
+        jmin = 2; jmax = 6
+    else if (ioption .eq. 4) then
+        ! DeltaJ DeltaJ
+        op1 = 5; op2 = 5
+        jmin = 1; jmax = 5
+    else if (ioption .eq. 5) then
+        ! SigmaPJ SigmaPJ
+        op1 = 6; op2 = 6
+        jmin = 1; jmax = 5
+    else if (ioption .eq. 6) then
+        ! SigmaPPJ SigmaPPJ
+        op1 = 7; op2 = 7
+        jmin = 1; jmax = 5
+    else if (ioption .eq. 7) then
+        ! PhiPPJ MJ
+        op1 = 3; op2 = 1
+        jmin = 0; jmax = 6
+    else if (ioption .eq. 8) then
+        ! DeltaJ SigmaPJ
+        op1 = 5; op2 = 6
+        jmin = 1; jmax = 5
+    end if
+
+    !print*,'operators: ',op1, op2
+ 
+    DRME1(0:jmax) = 0.d0
+    DRME2(0:jmax) = 0.d0
+
+    nucResponse = 0.d0
+
+    Do j = jmin,jmax,2
+        Do a = 1, ntotal(1)
+            Do b = 1, ntotal(1)
+                If (abs(densitymats%rho(j,tau1,a,b)) .ge. 1.0e-9 .or. abs(densitymats%rho(j,tau2,a,b)) .ge. 1.0e-9) then
+
+                    ! Operator 1 with tau2 <j| op1,tau1 |j>
+                    call OperME(op1,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME1)
+                    DRME1(j) = DRME1(j) + densitymats%rho(j,tau1,a,b) * spOME1 
+
+                    ! Operator 2 with tau2 <j| op2,tau2 |j>
+                    call OperME(op2,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME2)
+                    DRME2(j) = DRME2(j) + densitymats%rho(j,tau2,a,b) * spOME2 
+
+                end if
+            end do
+        end do
+        nucResponse = nucResponse + DRME1(j) * DRME2(j)
+
+    end do
+
+    nucResponse = nucResponse &
+                      * sqrt(2.d0) *sqrt(2*dble(tau1)+1.0) &
+                      * sqrt(2.d0) *sqrt(2*dble(tau2)+1.0) &
+                      * (-1.0)**((Tiso - Mtiso)/2) * Wigner_3j(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
+                      * (-1.0)**((Tiso - Mtiso)/2) * Wigner_3j(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso)
+
+end function nucResponse
+
+!-------------------------------------------------------------------------------
+! OperatorsME(j, operatorME) outputs the reduced matrix element of jth operator 
+! (which correspond to the six operators and interferences in Eqn. 39).
+!-----------------------------------------------------------------------------------
+
+subroutine OperME(i,y,np,lp,jp,n,l,j,bigJ,operatorME)
+
+    implicit none
+
+    INTEGER, INTENT(IN) :: i
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ
+    REAL (kind=8), INTENT(IN)  :: y
+    REAL (kind=8), INTENT(OUT) :: operatorME
+    REAL (kind=8) :: MJ,SigmaJ,PhiPPoverall,Qnorm,PhiPPsummand1,PhiPPsummand2,PhiPPsummand3,PhiPPsummand4,&
+                    &MJLDivQ,SigmaPJ,SigmaPPJ
+
+
+    if (i .LT. 1 .or. i .GT. 7) then
+        print *, 'The choice of operator j should be from 1 to 6'
+        return
+    ! i = 1, for operator MJ
+    else if (i .eq. 1) then
+        operatorME = MJ(y,np,lp,jp,n,l,j,bigJ)
+    ! i = 2, for operator SigmaJ
+    else if (i .eq. 2) then
+        operatorME = SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ)
+    ! i = 3, for operator PhiPPJ
+    else if (i .eq. 3) then
+        operatorMe = Qnorm(dble(bigJ)+1.0)*SQRT(dble(bigJ)+1.0)*(PhiPPsummand1(y,np,lp,jp,n,l,j,bigJ) &
+            & +PhiPPsummand2(y,np,lp,jp,n,l,j,bigJ))
+        if (bigJ .ne. 0) then
+            operatorMe = operatorMe + Qnorm(dble(bigJ)-1)*SQRT(dble(bigJ)) &
+                 & *(PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)    &
+                 & +PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ))
+        end if
+    
+        operatorME = operatorME * PhiPPoverall(lp,jp,l,j)
+    
+    ! i = 4, for operator PhiTPJ
+    else if (i .eq. 4) then
+
+        operatorME = -Qnorm(dble(bigJ)+1.0)*SQRT(dble(bigJ))*(PhiPPsummand1(y,np,lp,jp,n,l,j,bigJ) &
+            & +PhiPPsummand2(y,np,lp,jp,n,l,j,bigJ))
+        if (bigJ .ne. 0) then
+            operatorMe = operatorMe + Qnorm(dble(bigJ)-1.0)*SQRT(dble(bigJ)+1.0) &
+                 & *(PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)    &
+                 & +PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ))
+        end if
+
+        operatorME = operatorME * PhiPPoverall(lp,jp,l,j)
+        operatorME = operatorME + SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ)/2.0
+
+    ! i = 5, for operator DeltaJ
+    else if (i .eq. 5) then
+        operatorME = MJLDivQ(y,np,lp,jp,n,l,j,bigJ,bigJ)
+
+    ! i = 6, for operator SigmaPJ
+    else if (i .eq. 6) then
+        operatorME = SigmaPJ(y,np,lp,jp,n,l,j,bigJ)
+
+    ! i = 7, for operator SigmaPPJ
+    else if (i .eq. 7) then
+        operatorME = SigmaPPJ(y,np,lp,jp,n,l,j,bigJ)
+
+    else
+
+    end if
+
+end subroutine OperME
+!-------------------------------------------------------------------------------
+function PhiPPsummand1(y,np,lp,jp,n,l,j,bigJ)
+
+    implicit none
+    INTERFACE
+
+        function Jnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Jnorm
+        end function Jnorm
+
+        function Qnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Qnorm
+        end function Qnorm
+
+        function BesselElementminus(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: BesselElementminus
+        end function BesselElementminus
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ
+    REAL(kind=8), INTENT(IN) :: y
+    INTEGER :: bigL
+    REAL(kind=8) :: xjp,xj
+    REAL(kind=8) :: Wigner_3j,Wigner_6j,Wigner_9j
+    REAL(kind=8) :: PhiPPsummand1
+
+    xjp = dble(jp)/2.0
+    xj  = dble(j )/2.0
+
+    PhiPPsummand1 = 0.D0
+
+    do bigL = bigJ,bigJ+1
+        PhiPPsummand1= PhiPPsummand1+(-1.0)**(bigJ-bigL+1.0)*Jnorm(dble(bigL))*Wigner_6j(2*(bigJ+1),2,2*bigL,2,2*bigJ,2) &
+              & *Wigner_6j(2*(bigJ+1),2,2*bigL,2*l,2*lp,2*(l+1))                                         &
+              & *Wigner_9j(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ)
+    end do
+        PhiPPsummand1= PhiPPsummand1*Qnorm(dble(l)+1.0)*SQRT(dble(l)+1.0)*Wigner_3j(2*lp,2*(bigJ+1),2*(l+1),0,0,0) &
+            &*BesselElementminus(y,np,lp,n,l,bigJ+1)
+
+end function PhiPPsummand1
+
+
+!-------------------------------------------------------------------------------
+function PhiPPsummand2(y,np,lp,jp,n,l,j,bigJ)
+
+    implicit none
+    INTERFACE
+
+        function Jnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Jnorm
+        end function Jnorm
+
+        function Qnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Qnorm
+        end function Qnorm
+
+        function BesselElementplus(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8),    INTENT(IN) :: y
+            REAL(kind=8) :: BesselElementplus
+        end function BesselElementplus
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
+    INTEGER, INTENT(IN) :: bigJ
+    INTEGER :: bigL
+    REAL(kind=8), INTENT(IN) :: y
+    !REAL(kind=8) :: xjp,xj
+    REAL(kind=8) :: Wigner_3j,Wigner_6j,Wigner_9j
+    REAL(kind=8) :: PhiPPsummand2
+
+    PhiPPsummand2 = 0.0
+
+    if (l .ne. 0) then
+
+        do bigL = bigJ,bigJ+1
+            PhiPPsummand2= PhiPPsummand2+(-1.0)**(bigJ-bigL)*Jnorm(dble(bigL))*Wigner_6j(2*(bigJ+1),2,2*bigL,2,2*bigJ,2) &
+                & *Wigner_6j(2*(bigJ+1),2,2*bigL,2*l,2*lp,2*(l-1))                                         &
+                & *Wigner_9j(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ)
+        end do
+
+        PhiPPsummand2= PhiPPsummand2*Qnorm(dble(l)-1.0)*SQRT(dble(l))*Wigner_3j(2*lp,2*(bigJ+1),2*(l-1),0,0,0) &
+            &*BesselElementplus(y,np,lp,n,l,bigJ+1)
+
+    end if
+
+end function PhiPPsummand2
+
+
+!-------------------------------------------------------------------------------
+function PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)
+    implicit none
+    INTERFACE
+
+        function Jnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Jnorm
+        end function Jnorm
+
+        function Qnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Qnorm
+        end function Qnorm
+
+        function BesselElementplus(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: BesselElementplus
+        end function BesselElementplus
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
+    INTEGER, INTENT(IN) :: bigJ
+    INTEGER :: bigL
+    REAL(kind=8), INTENT(IN) :: y
+    REAL(kind=8) :: Wigner_3j,Wigner_6j,Wigner_9j
+    REAL(kind=8) :: PhiPPsummand3
+
+    PhiPPsummand3 = 0.0
+
+    if (bigJ .ne. 0) then
+        do bigL = bigJ-1,bigJ
+            PhiPPsummand3= PhiPPsummand3+(-1.0)**(bigJ-bigL+1.0)*Jnorm(dble(bigL))*Wigner_6j(2*(bigJ-1),2,2*bigL,2,2*bigJ,2) &
+                & *Wigner_6j(2*(bigJ-1),2,2*bigL,2*l,2*lp,2*(l-1))                                         &
+                & *Wigner_9j(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ)
+        end do
+
+        PhiPPsummand3= PhiPPsummand3*Qnorm(dble(l)-1.0)*SQRT(dble(l))*Wigner_3j(2*lp,2*(bigJ-1),2*(l-1),0,0,0) &
+            &*BesselElementplus(y,np,lp,n,l,bigJ-1)
+
+    end if
+
+end function PhiPPsummand3
+
+
+!-------------------------------------------------------------------------------
+function PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ)
+
+    implicit none
+    INTERFACE
+
+        function Jnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Jnorm
+        end function Jnorm
+
+        function Qnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Qnorm
+        end function Qnorm
+
+        function BesselElementminus(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8),    INTENT(IN) :: y
+            REAL(kind=8) :: BesselElementminus
+      end function BesselElementminus
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ
+    REAL(kind=8), INTENT(IN) :: y
+    INTEGER :: bigL
+    REAL(kind=8) :: Wigner_3j,Wigner_6j,Wigner_9j
+    REAL(kind=8) :: PhiPPsummand4
+
+    PhiPPsummand4 = 0.0
+
+    if (bigJ .ne. 0 .and. l .ne. 0) then
+        do bigL = bigJ-1,bigJ
+            PhiPPsummand4= PhiPPsummand4+(-1.0)**(bigJ-bigL)*Jnorm(dble(bigL))*Wigner_6j(2*(bigJ-1),2,2*bigL,2,2*bigJ,2) &
+                  & *Wigner_6j(2*(bigJ-1),2,2*bigL,2*l,2*lp,2*(l+1))                                         &
+                  & *Wigner_9j(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ)
+        end do
+
+        PhiPPsummand4= PhiPPsummand4*Qnorm(dble(l)+1.0)*SQRT(dble(l)+1.0)*Wigner_3j(2*lp,2*(bigJ-1),2*(l+1),0,0,0) &
+            &*BesselElementminus(y,np,lp,n,l,bigJ-1)
+
+    end if
+
+end function PhiPPsummand4
+
+
+!-------------------------------------------------------------------------------
+function PhiPPoverall(lp,jp,l,j)
+
+    implicit none
+    INTERFACE
+
+        function Jnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Jnorm
+        end function Jnorm
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: lp,jp,l,j
+    REAL(kind=8) :: Pi = 3.1415926535897932
+    REAL(kind=8) :: xjp,xj
+    REAL(kind=8) :: PhiPPoverall
+
+    xjp = dble(jp)/2.0
+    xj  = dble(j )/2.0
+    PhiPPoverall = (-1)**(lp+1) * 6.0 * SQRT(Jnorm(xj)*Jnorm(xjp)*Jnorm(dble(lp))/(4*Pi))
+
+end function PhiPPoverall
+
+
+
+subroutine simpson(Np,N,array,h,ans)
+!   subroutine to compute integral using simpson's rule
+!   CWJ - SDSU - August 2006
+!
+!  INPUT:
+!    Np: declared dimension of array
+!    N : used dimension of array (note, must be even!) 
+!    array(0:Np): array of points of function to be integrated
+!    h :  dx 
+!
+!  OUTPUT:
+!    ans : integral
+!
+      implicit none
+
+!..........INPUT...............
+      integer Np, N        ! dimensions
+      real(kind=8) array(Np)     ! this is legal, since being fed from outside
+      real(kind=8) h               ! = dx
+
+!.........OUTPUT................
+      real(kind=8) ans
+
+!.........INTERMEDIATE..........
+      integer i
+
+!............. ERROR TRAP...........
+!..... check that N is even.........
+      if( (n/2)*2 .ne. n)then
+        print*,' Dimension of array is not even ',N
+        stop
+      endif
+!................. END ERROR TRAP
+
+      ans = 0.0            ! initialize output
+      do i = 2,N-1,2 
+        ans = ans+array(i-1)+ 4*array(i)+array(i+1)
+      enddo
+      ans = ans*h/3.
+
+      return
+
+end subroutine
+
+!.............................................Boole's rule
+      subroutine boole(N,arr,dx,ans)
+!INPUT: 
+!       N: DIMENSION OF FUNCTION ARRAY
+!     arr: ARRAY OF FUNCTION VALUES TO BE INTEGRATED
+!      dx: STEP SIZE OF FUNCTION VALUES
+!OUTPUT:
+!     ans: DEFINITE INTEGRAL OF FUNCTION ARRAY FROM BOOLES RULE
+!CALLS: 
+!     NONE   
+! 
+      implicit none            
+      integer N, i, m
+      real(kind=8) arr(N),ans
+      integer x0
+      real(kind=8) dboole, boole_out,dx  , intfx 
+                         
+      m = N/4
+      boole_out = 0 
+           
+      do i = 1, m-1, 1 
+        x0 = 4*i                       
+        dboole = ( 7.*arr(x0+4) &
+                   + 32.*arr(x0+3) &
+                   + 12.*arr(x0+2) &
+                   + 32.*arr(x0+1) &
+                   + 7.*arr(x0) )        
+        boole_out = boole_out + dboole
+      enddo  
+                 
+      ans=dx*(2./45)*boole_out
+         
+      end subroutine  
+
+
+
+subroutine readheaderv2(resfile)
+   use stateinfo
+!   use op_info,only:pndens,pnops
+   implicit none
+   integer resfile
+!   character(1) :: ctrlchar
+   character(23) :: tmpline
+   integer i,j,n
+   real e,ex,xj,xt
+!   real etol
+!   real, pointer :: ee(:)
+!   integer, pointer :: jx2(:),tx2(:)
+!   integer nmax
+   integer np,zp
+   integer closest2J   ! function to convert poorly converged values
+!   logical askfortshift
+
+!   askfortshift=.false.
+!
+!   print*,' reading file ',ctrlchar
+!   tshift = 0.0
+!   select case (ctrlchar)
+!     case ('f')
+!        ee => energy
+!        Jx2 => Jx2state
+!        Tx2 => Tx2state
+!        nmax = nlocalstates
+!                tshift = 0.0
+!                if(askfortshift)then
+!        print*,' Enter any shift for isospin ( x T(T+1) for all states )'
+!        print*,' (Typical value = 0, no shift )'
+!        read*,tshift
+!            end if
+!     case ('p')
+!        ee => energy_parent
+!        Jx2 => Jx2state_parent
+!        Tx2 => Tx2state_parent
+!        nmax = nparent_ref
+!     case ('d')
+!        ee => energy_daughter
+!        Jx2 => Jx2state_daughter
+!        Tx2 => Tx2state_daughter
+!        nmax = ndaughter_ref
+!
+!     case default
+!
+!   end select
+!
+!   etol = 1.0e-3
+!
+!   rewind(resfile)
+!............ check whether EVEN or ODD..............
+!   if(ctrlchar=='p')then
+      read(resfile,'(a)')tmpline
+      read(resfile,'(a)')tmpline
+      read(resfile,*)zp,np
+!      print*,zp,np
+!          if(.not.readinZN)then
+!                  Z0 = zp
+!                  N0 = np
+!          else
+!                  if(Z0/=zp .or. N0/=np)then
+!                          print*,' Mismatch in valence particles '
+!                          print*,' Expect Z,N = ',Z0,N0
+!                          print*,' Found ',zp,np
+!                          stop
+!                  end if
+!          end if
+      if( mod(np+zp,2) == 1)then
+         evenA = .false.
+      else
+         evenA = .true.
+      end if
+      rewind(resfile)
+!   end if
+   do i = 1,20
+      read(resfile,'(a)')tmpline
+      if(tmpline(3:7)=='State')then
+
+!         select case (ctrlchar)
+!         case ('c')
+
+            nlocalstates = 0
+            do j = 1,50000
+
+               read(resfile,*,err=3)n
+
+               if(n==1)then
+                 backspace(resfile)
+                 read(resfile,*,err=3)n,e,ex,xj,xt
+         !      print*, n,e,ex,xj,xt
+
+               end if
+
+              if(n==j)then
+                   nlocalstates = nlocalstates +1
+!                   print*, n,j
+               else
+!                   print*, n,j
+                   exit
+               end if
+            end do
+
+3           continue
+
+           Jiso = closest2J(evenA,xj)
+           Tiso = closest2J(evenA,xt)
+         backspace(resfile)
+         return
+      end if
+
+   end do
+   print*,' Did not find header '
+   stop
+
+end subroutine readheaderv2
+
+
+!-------------------------------------------------------------------------------
+subroutine read2state(resfile,locchar,n,found,finished)
+   implicit none
+   integer resfile
+   character(1) :: locchar
+   integer n
+   logical found,finished
+   character(4) :: myloc
+   !integer m
+   found = .false.
+   select case (locchar)
+     case ('i')
+     do while(.not.found)
+        read(resfile,1,end=111)myloc
+1 format(a4)
+        if(myloc(2:4)=='Ini')then
+        backspace(resfile)
+        read(resfile,11)myloc,n
+!       print*, 'int', n
+11 format(a4,13x,i4)
+
+           found = .true.
+           exit
+
+        endif
+      end do
+
+      case('f')
+
+        read(resfile,11)myloc,n
+        if(myloc(2:4)=='Fin')found=.true.
+
+!        print*, 'fin',n
+   end select
+   finished = .false.
+   return
+111 continue
+   finished = .true.
+   return
+
+end subroutine read2state
+
+
+subroutine read2Jtrans(resfile,found)
+   use stateinfo
+!   use op_info,only:pndens
+   implicit none
+   integer resfile
+   logical found
+   character(3) :: tmpchar
+   !integer j
+
+   read(resfile,'(a3)',end=111)tmpchar
+   if(tmpchar(2:3) == ' ' .or. tmpchar(2:3)=='In' .or. tmpchar(1:2)=='++')then
+      found = .false.
+      return
+   endif
+   if(tmpchar(2:3) == 'Jt')then
+     backspace(resfile)
+     read(resfile,'(5x,i4)')jt
+
+   end if
+   found = .true.
+!..... ADDED IN VERSION 9 MAR 2017.... CHECK IF ISOSPIN OR PN FORMALISM...
+   backspace(resfile)
+   read(resfile,'(11x,a3)')tmpchar
+
+   if(tmpchar=='pro')then
+           pndens=.true.
+   else
+           pndens=.false.
+   end if
+
+   return
+111 continue
+   found=.false.
+   return
+end subroutine read2Jtrans
+
+
+subroutine readdensity(resfile,success)
+   use stateinfo
+!   use op_info
+   implicit none
+   integer resfile
+   !integer istate,fstate
+   integer a,b,i
+   real ops,opv
+   !real fact0t,fact1t  ! isospin factors
+   logical :: success
+   !real cleb !       ! function from LIBRA.f
+
+   success=.false.
+
+!   fact0t = cleb(Tx2state_parent(istate),Mzi,0,0,Tx2state_daughter(fstate),Mzf)*sqrt(2.)/sqrt(Tx2state_daughter(fstate)+1.)
+!   fact1t = cleb(Tx2state_parent(istate),Mzi,2,0,Tx2state_daughter(fstate),Mzf)*sqrt(6.)/sqrt(Tx2state_daughter(fstate)+1.)
+
+    do i = 1,nsporb*nsporb
+        read(resfile,*,err=1,end=1)a,b,ops,opv
+
+!          if(j==jt .and. istate >0 .and. fstate > 0)then
+!             if(densitymats(istate,fstate)%good)then
+        if(pndens)then
+            if(ops/=0.0)then
+              densitymats%rhop(jt,a,b)= ops
+              success=.true.
+            end if
+            if(opv/=0.0)then
+              densitymats%rhon(jt,a,b)= opv
+              success=.true.
+            end if
+        else
+
+             if(ops /= 0.0)then
+               densitymats%rho(jt,0,a,b)= ops
+               success=.true.
+             end if
+
+             if(opv /= 0.0)then
+               densitymats%rho(jt,1,a,b) = opv
+               success=.true.
+             end if
+
+!.......... CONVERT DENSITIES FROM ISOSPIN TO PROTON-NEUTRON......................
+!                       if(success)then
+!                                                densitymats(istate,fstate)%rhop(a,b) = 0.5*(fact0t*ops+fact1t*opv)
+!                                                densitymats(istate,fstate)%rhon(a,b) = 0.5*(fact0t*ops-fact1t*opv)
+!                                          end if                                
+!                                  else  ! MUST CONVERT
+!                                          if(ops/=0.0 .or. opv /=0.0)then
+!                                                  success=.true.
+!                                                densitymats(istate,fstate)%rhop(a,b) = 0.5*(fact0t*ops+fact1t*opv)
+!                                                densitymats(istate,fstate)%rhon(a,b) = 0.5*(fact0t*ops-fact1t*opv)                                            
+!  
+!                                          end if
+!                                        
+!                                  end if        
+!                                
+        end if
+!             end if
+!          end if
+   end do
+
+   return
+
+1  continue
+   backspace(resfile)
+   return
+end subroutine readdensity
+
+
+subroutine readalldensities(resfile)
+!   use op_info
+!   use spspace
+   use stateinfo
+   implicit none
+   integer resfile
+   integer istate,fstate
+   !integer a,b,i,j
+   !real ops,opv
+   logical foundi,foundf,foundjt
+   logical endoffile,endoflist
+   logical finished,success
+   logical nodensities  ! flag to make sure densities are not empty
+
+   endoffile = .false.
+   nodensities=.true.
+
+   do while(.not.endoffile)
+      call read2state(resfile,'i',istate,foundi,finished)
+      if(finished)exit
+      if(.not.foundi)then
+           endoffile = .true.
+           exit
+      end if
+!      print *, 'foundi= ', foundi, 'finishedi = ',finished
+      call read2state(resfile,'f',fstate,foundf,finished)
+
+      if(.not.foundf)then
+           endoffile = .true.
+           exit
+      end if
+      if(finished)exit
+
+      if(istate .ne. 1 .or. fstate .ne. 1) cycle
+      endoflist = .false.
+      do while(.not.endoflist)
+
+          call read2Jtrans(resfile,foundjt)
+          if(.not.foundjt)then
+              endoflist = .true.
+              backspace(resfile)
+              exit
+          end if
+!          print *, endoflist, jt
+!          if(map2parent(istate) > 0 .and. map2daughter(fstate) > 0)then
+!                         print*,' states ',istate,map2parent(istate),fstate,map2daughter(fstate)
+
+          call readdensity(resfile,success)
+          if(success)nodensities=.false.
+!          end if
+      end do ! endoflist
+!CFJIAO
+      exit
+
+   end do  ! endoffile
+
+   if(nodensities)then
+          print*,' Wait! That density file held no densities ! '
+   end if
+
+!  fill the one-body density matrix of the core
+
+!   call coredensity
+
+   return
+end subroutine readalldensities
+
+
+
+
+
+
+subroutine setupcoef
+    use response
+
+    num_response_coef = 17
+
+    ! Explicit proton-neutron coefficients
+    allocate(pncvec(0)%c(num_response_coef))
+    allocate(pncvec(1)%c(num_response_coef))
+    ! Isospin formalism coefficients
+    allocate(cvec(0)%c(num_response_coef))
+    allocate(cvec(1)%c(num_response_coef))
+
+    pncvec(0)%c = 0.0
+    pncvec(1)%c = 0.0
+    cvec(0)%c = 0.0
+    cvec(1)%c = 0.0
+
+end subroutine setupcoef
+
+subroutine setpncoeffsnonrel(op, coeffdimless, nucleon)
+    use response
+    use masses
+    implicit none
+    integer, intent(in) :: op
+    real(kind=8), intent(in) :: coeffdimless
+    integer, intent(in) :: nucleon 
+
+    ! nucleon = 0 : proton, 1 : neutron
+    pncvec(nucleon)%c(op) = coeffdimless
+!    print*,"p/n coef set:",nucleon,op,coeffdimless 
+    
+
+end subroutine
+
+subroutine opencoeffmatrix(resfile)
+    implicit none
+    integer, intent(in) :: resfile
+    character(22) :: filename
+    integer :: ilast
+    logical :: success
+
+    success = .false.
+    print*,' '
+    do while(.not.success)
+
+        print*,' Enter name of coefficient matrix file (.mat) '
+
+        read(5,'(a)')filename
+        ilast = index(filename,' ')-1
+        open(unit=resfile,file=filename(1:ilast)//'.mat',status='old',err=2)
+        success = .true.
+        return
+2       continue
+        print*,filename(1:ilast),'.res does not exist '
+
+    end do    
+
+end subroutine opencoeffmatrix
+
+subroutine readcoeffmatrix(resfile)
+    implicit none
+    integer, intent(in) :: resfile
+    character(20) :: line
+    integer :: op
+    real(kind=8) :: coef
+    integer :: nucleon
+
+
+    logical :: EOF
+    EOF = .false.
+
+    do while (.not. EOF)
+
+        ! Read past comments
+        read(resfile,'(a20)',end=111) line
+
+        if (line(1:1).eq.'#' .or. line(1:1).eq.'!') then 
+            print*,line
+            cycle
+        end if
+
+        backspace(resfile)
+    
+        ! Read in coefficient matrix
+        do while(.not.EOF)
+
+            read(resfile,*,end=111) nucleon, op, coef
+            call setpncoeffsnonrel(op, coef, nucleon)
+
+        end do
+
+        return
+111     continue
+
+        EOF = .true.
+        return
+
+    end do
+
+end subroutine readcoeffmatrix
+
+subroutine convertisospinform
+    use response
+
+    cvec(0)%c = (pncvec(0)%c + pncvec(1)%c)/2
+    cvec(1)%c = (pncvec(0)%c - pncvec(1)%c)/2
+
+!    print*,'iso cvec 0',cvec(0)%c(:)
+
+end subroutine
+
+!!  If[Op==1,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==2,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==3,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==4,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==5,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==6,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN^2;];
+!!  If[Op==7,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==8,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==9,  coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==10, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==11, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==12, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless;];
+!!  If[Op==13, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==14, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
+!!  If[Op==15, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN^2;];
+!!  
+subroutine normalizecoeffs
+    use masses
+    use response
+    implicit none
+    integer :: i, j, op, mNdenomOps(7), mNmNdenomOps(2)
+
+    mNdenomOps = [3, 5, 9, 10, 11, 13, 14]
+    mNmNdenomOps = [6, 15]
+
+    do i=0,1
+        pncvec(i)%c = pncvec(i)%c * (4.0*mN*mchi)/(mV*mV)
+
+        do j = 1, 2
+            op = mNmNdenomOps(j)
+            pncvec(i)%c(op) = pncvec(i)%c(op)/(mN*mN)
+        enddo
+        do j = 1, 7
+            op = mNdenomOps(j)
+            pncvec(i)%c(op) = pncvec(i)%c(op)/(mN)
+        enddo
+    enddo
+
+end subroutine normalizecoeffs
+
+
+
+subroutine setparameters
+
+    use constants
+    use masses
+    use dmparticles
+    use velocities
+    use stateinfo
+    use quadrature 
+    use momenta
+
+    implicit none
+
+
+    print*,'Setting default parameter values.'
+
+    ! Constants
+    GeV = 1.0
+    femtometer = 5.0677/GeV
+
+
+    ! Masses
+    mV = 246.2
+    mN = 0.938272 
+    mchi = 50.0
+    Mtiso = num_p-num_n
+    Miso = num_p+num_n
+    muT = mchi * Miso * mN / (mchi+Miso*mN)
+
+    ! Velocities
+    ve = 232.0 !km/s earths velocity in the galactic rest frame.
+    v0 = 220.0 !km/s velocity distribution scaling
+    vesc = 12.0 * v0 !km/s ! infinity
+
+    bfm = (41.467/(45.*(num_n+num_p)**(-1./3) - 25.*(num_n+num_p)**(-2./3)))**0.5 * femtometer 
+    y = (q*bfm/2.0)**2.0
+
+    ! dm particles
+    Nt = 1.0
+    jchi=0.5
+    rhochi = 1.0
+
+    ! Quadrature
+    quadrature_type = 1
+    lattice_points = 1000
+    vdist_min = q/(2.0*muT)
+    vdist_max = 12*v0
+
+end subroutine setparameters
+
+subroutine printparameters
+
+    use constants
+    use masses
+    use dmparticles
+    use velocities
+    use stateinfo
+    use quadrature
+    use momenta
+
+    print*,'b[dimless]=',bfm/femtometer
+    print*,'b[fm]=',bfm
+    print*,'y=',y
+    print*,'mN',mN
+    print*,'jchi',jchi
+    print*,'mchi',mchi
+    print*,'Jiso=',Jiso
+    print*,'Tiso=',Tiso
+    print*,'Mtiso=',Mtiso
+    print*,'ap,an',num_p,num_n
+    print*,'Miso=',Miso
+    print*,'muT=',muT
+    print*,'q=',q
+    print*,'vdist_min = ',vdist_min
+    print*,'vdist_max = ',vdist_max
+    print*,'nt',nt
+    print*,'rhochi',rhochi
+    print*,'mchi',mchi
+    print*,'v0=',v0
+    print*,'ve=',ve
+    print*,'Integral lattice size = ',lattice_points
+
+end subroutine printparameters
+!-------------------------------------------------------------------------------
+function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
+
+    implicit none
+    INTERFACE
+
+        function Jnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Jnorm
+        end function Jnorm
+
+        function BesselElement(y,np,lp,n,l,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: BesselElement
+        end function BesselElement
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
+    INTEGER, INTENT(IN) :: bigJ,bigL
+    REAL(kind=8), INTENT(IN) :: y
+    REAL(kind=8) :: xjp,xj
+    REAL(kind=8) :: Pi = 3.14159265358979323
+    REAL(kind=8) :: Wigner_3j, Wigner_9j
+    REAL(kind=8) :: SigmaJ
+
+    xjp = dble(jp)/2.0
+    xj  = dble(j )/2.0
+
+    SigmaJ = (-1.0)**lp * SQRT(Jnorm(xj)*Jnorm(xjp)*Jnorm(dble(l))*Jnorm(dble(lp))  &
+         & *Jnorm(dble(bigJ))*Jnorm(dble(bigL))/(4*Pi))                       &
+         & * SQRT(6.0) * Wigner_3j(2*lp,2*bigL,2*l,0,0,0) * Wigner_9j(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ) &
+         & * BesselElement(y,np,lp,n,l,bigL)
+
+end function SigmaJ
+
+
+!-------------------------------------------------------------------------------
+function SigmaPJ(y,np,lp,jp,n,l,j,bigJ)
+
+    INTERFACE
+
+        function Qnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Qnorm
+        end function Qnorm
+
+        function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
+            INTEGER, INTENT(IN) :: bigJ,bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: SigmaJ
+        end function SigmaJ
+
+  end INTERFACE
+
+  INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
+  INTEGER, INTENT(IN) :: bigJ
+  REAL(kind=8), INTENT(IN) :: y
+  REAL(kind=8) :: SigmaPJ
+
+  SigmaPJ = -SQRT(dble(bigJ))/Qnorm(dble(bigJ))*SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ+1)   &
+      & +SQRT(dble(bigJ)+1.0)/Qnorm(dble(bigJ))*SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ-1)
+
+end function SigmaPJ
+
+
+!-------------------------------------------------------------------------------
+function SigmaPPJ(y,np,lp,jp,n,l,j,bigJ)
+
+    INTERFACE
+
+        function Qnorm(j)
+            implicit none
+            REAL(kind=8), INTENT(IN)  :: j
+            REAL(kind=8) :: Qnorm
+        end function Qnorm
+
+        function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
+            implicit none
+            INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
+            INTEGER, INTENT(IN) :: bigJ,bigL
+            REAL(kind=8), INTENT(IN) :: y
+            REAL(kind=8) :: SigmaJ
+       end function SigmaJ
+
+    end INTERFACE
+
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
+    INTEGER, INTENT(IN) :: bigJ
+    REAL(kind=8), INTENT(IN) :: y
+    REAL(kind=8) :: SigmaPPJ
+
+    SigmaPPJ = SQRT(dble(bigJ)+1.0)/Qnorm(dble(bigJ))*SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ+1)   &
+        & +SQRT(dble(bigJ))/Qnorm(dble(bigJ))*SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ-1)
+
+end function SigmaPPJ
+
+
+
+!-------------------------------------------------------------------------------
+function Summand1(m,mp,n,np)
+    implicit none
+    INTEGER, INTENT(IN) :: m, mp, n, np
+    REAL(kind=8) :: Summand1
+    INTERFACE
+        function FacLOG(N)
+            implicit none
+            INTEGER, INTENT(IN) :: N
+            REAL(kind=8) ::  FacLOG
+        end function FacLOG
+    end INTERFACE
+
+    Summand1 = (-1)**(m+mp) / exp(FacLOG(m)+FacLOG(mp)+FacLOG(n-1-m)+FacLOG(np-1-mp))
+
+end function Summand1
+
+
+!-------------------------------------------------------------------------------
+function Summand2(m,mp,l,lp,bigL)
+    implicit none
+    INTEGER, INTENT(IN) :: m, mp, l, lp,bigL
+    REAL(kind=8) :: Summand2
+    Summand2 = GAMMA((l+lp+bigL+2*m+2*mp+3.d0)/2.d0) / GAMMA(l+m+3.d0/2.d0) / GAMMA(lp+mp+3.d0/2.d0)
+end function Summand2
+
+
+!-------------------------------------------------------------------------------
+function Summand2A(m,mp,l,lp,bigL)
+    implicit none
+    INTEGER, INTENT(IN) :: m, mp, l, lp, bigL
+    REAL(kind=8) :: Summand2A
+    Summand2A =  GAMMA((l+lp+bigL+2*m+2*mp+2.d0)/2.d0) / GAMMA(l+m+3.d0/2.d0) / GAMMA(lp+mp+3.d0/2.d0)
+end function Summand2A
+
+
+!-------------------------------------------------------------------------------
+function Summand3(y,m,mp,l,lp,bigL)
+    implicit none
+    INTEGER, INTENT(IN) :: m, mp, l, lp,bigL
+    REAL(kind=8), INTENT(IN) :: y
+    REAL(kind=8) :: a, b
+    REAL(kind=8) :: Summand3,hg
+
+    a = dble(bigL-lp-l-2*mp-2*m)/2.d0
+    b = dble(bigL)+3.d0/2.d0
+    !  Summand3 = chg(a, b, y) 
+    call chgm(a,b,y,Summand3)
+    call chgm(0.0d0,1.5d0,4.0d0,hg)
+    !  if (abs(a) .le. 1.0d-7) Summand3 = -chg(a,b,y)
+    !  print*, 'here ', chg(0.0d0,1.5d0,4.d0), chg(-1.d0,1.5d0,4.d0), hg
+end function Summand3
+
+
+!-------------------------------------------------------------------------------
+function Summand3A(y,m,mp,l,lp,bigL)
+    implicit none
+    INTEGER, INTENT(IN) :: m, mp, l, lp, bigL
+    REAL(kind=8), INTENT(IN) :: y
+    REAL(kind=8) :: a, b, ap,hg1,hg2
+    REAL(kind=8) :: Summand3A
+
+    a = (bigL-lp-l-2*mp-2*m-1.d0)/2.d0
+    ap= (bigL-lp-l-2*mp-2*m+1.d0)/2.d0
+    b = bigL+3.d0/2.d0
+
+    call chgm(a,b,y,hg1)
+    call chgm(ap,b,y,hg2)
+
+    ! Summand3A = -(l+lp+bigL+2*m+2*mp+2.d0)/2.d0*chg(a, b, y)+2*m*chg(ap,b,y)
+    Summand3A = -(l+lp+bigL+2*m+2*mp+2.d0)/2.d0*hg1+2*m*hg2
+
+end function Summand3A
+
+
+!-------------------------------------------------------------------------------
+function Summand4A(y,m,mp,l,lp,bigL)
+    implicit none
+!    INTERFACE
+!  
+!       function chg(a,b,x)
+!         
+!         implicit none
+!         REAL(kind=8) :: a, b
+!         REAL(kind=8) :: x
+!         REAL(kind=8) ::  chg
+!       end function chg
+!  
+!    end INTERFACE
+
+    INTEGER, INTENT(IN) :: m, mp, l, lp, bigL
+    REAL(kind=8), INTENT(IN) :: y
+    REAL(kind=8) :: a, b, ap,hg1,hg2
+    REAL(kind=8) :: Summand4A
+
+    a = (bigL-lp-l-2*mp-2*m-1.d0)/2.d0
+    ap= (bigL-lp-l-2*mp-2*m+1.d0)/2.d0
+    b = bigL+3.d0/2.d0
+
+    call chgm(a,b,y,hg1)
+    call chgm(ap,b,y,hg2)
+
+    ! Summand4A = -(l+lp+bigL+2*m+2*mp+2.d0)/2.d0*chg(a, b, y)+(2*l+2*m+1.d0)*chg(ap,b,y)
+    Summand4A = -(l+lp+bigL+2*m+2*mp+2.d0)/2.d0*hg1+(2*l+2*m+1.d0)*hg2
+
+end function Summand4A
+
+
+subroutine test_nucresponse(Mtiso)
+
+    implicit none
+
+    interface
+       function nucresponse(tau1, tau2, ioption, y, Mtiso)
+           implicit none
+           REAL(kind=8) :: nucResponse
+           integer :: ioption
+           integer :: tau1, tau2
+           real(kind=8) :: y
+           integer :: Mtiso
+       end function nucresponse
+    end interface
+
+    integer :: ioption, op1, op2, Mtiso
+    integer :: tt1,tt2
+    REAL(kind=8) :: y !, spOME, spOME1,spOME2
+    REAL(kind=8) :: Response
+    logical :: success
+
+    success = .false.
+    print*,' '
+    do while(.not.success)
+
+       print*," Enter options of operator (1-8) "
+       ! J=0,2,...
+       print*," (1) W_M "
+       print*," (2) W_{\PhiPP}"
+       ! J=2,4,...
+       print*," (3) W_{\tilde{\Phi}'} "
+       ! J=1,3,...
+       print*," (4) W_{\Delta} "
+       print*," (5) W_{\SigmaP} "
+       print*," (6) W_{\SigmaPP} "
+       ! Two diff operators
+       print*," (7) W_{\PhiPP M} "
+       print*," (8) W_{\Delta \SigmaP} "
+
+       read(5,*)ioption
+
+       if (ioption .gt. 8 .or. ioption .lt. 1) goto 2
+       success = .true.
+       goto 1
+
+2      continue
+       print*,' options should be 1 to 8 '
+1      continue
+
+    end do
+
+    print*,' '
+    print*,' Enter the value of y '
+    read(5,*)y
+
+    Response = 0.d0
+
+    Write (*,*) "Non-zero Response for option",ioption
+    Do tt1 = 0,1
+        Do tt2 = 0,1
+            Response = 0.d0
+            Response = nucResponse(tt1, tt2, ioption, y, Mtiso)
+            print*, tt1, tt2, Response
+        end do
+    end do
+
+    print*,'test_nucresponse COMPLETE'
+
+end subroutine test_nucresponse
+function transition_probability(q,v,jchi,y)
+    use kinds
+    use masses
+    use dmresponse
+    use stateinfo 
+    implicit none
+    interface 
+        function nucResponse(tau1,tau2,ioption,y)
+            use kinds
+            integer :: tau1, tau2
+            integer :: ioption
+            real(doublep) :: y
+            REAL(doublep) :: nucResponse
+        end function
+        function dmresponsecoef(ifunc, tau1, tau2, q, v, jchi)
+            use kinds
+            integer :: ifunc
+            integer :: tau1, tau2
+            real(doublep) :: q, v, jchi
+            REAL(doublep) :: dmresponsecoef
+        end function
+    end interface
+    REAL(doublep) :: q
+    REAL(doublep) :: v
+    REAL(doublep) :: jchi
+    REAL(doublep) :: y
+    REAL(doublep) :: transition_probability
+    real(doublep) :: pi = 3.14159265358979, tmp, tmp2
+
+    integer :: tau1, tau2, ifunc
+
+    transition_probability = 0.0
+
+    do tau1 = 0, 1
+        do tau2 = 0, 1
+            do ifunc = 1, 8
+                transition_probability = transition_probability &
+                    + dmresponsecoef(ifunc, tau1, tau2, q, v, jchi) &
+                    * nucResponse(tau1,tau2,ifunc,y)
+            end do ! ifunc
+        end do ! tau2
+    end do ! tau1
+
+!    print*,'denom',(4.0*mN*mchi)**2.0
+    transition_probability = transition_probability * (4.0*pi/(Jiso+1)) / ((4.0*mN*mchi)**2.0)
+    
+end function transition_probability
+function maxwell_boltzmann(v,v0)
+    use kinds
+    use constants
+    implicit none
+
+    real(doublep), intent(in) :: v 
+    real(doublep), intent(in) :: v0
+    real(doublep) :: maxwell_boltzmann
+
+    maxwell_boltzmann = exp(-(v/v0)**2.0) / ((pi)**1.5d0 * v0**3.0)
+
+end function maxwell_boltzmann
+
+
+
+!-------------------------------------------------------------------------------
+subroutine chgm ( a, b, x, hg )
+
+!*****************************************************************************80
+!
+!! CHGM computes the confluent hypergeometric function M(a,b,x).
+!
+!  Licensing:
+!
+!    This routine is copyrighted by Shanjie Zhang and Jianming Jin.  However, 
+!    they give permission to incorporate this routine into a user program 
+!    provided that the copyright is acknowledged.
+!
+!  Modified:
+!
+!    27 July 2012
+!
+!  Author:
+!
+!    Shanjie Zhang, Jianming Jin
+!
+!  Reference:
+!
+!    Shanjie Zhang, Jianming Jin,
+!    Computation of Special functions,
+!    Wiley, 1996,
+!    ISBN: 0-471-11963-6,
+!    LC: QA351.C45.
+!
+!  Parameters:
+!
+!    Input, real ( kind = 8 ) A, B, parameters.
+!
+!    Input, real ( kind = 8 ) X, the argument.
+!
+!    Output, real ( kind = 8 ) HG, the value of M(a,b,x).
+!
+  implicit none
+
+  real ( kind = 8 ) a
+  real ( kind = 8 ) a0
+  real ( kind = 8 ) a1
+  !real ( kind = 8 ) aa
+  real ( kind = 8 ) b
+  real ( kind = 8 ) hg
+  real ( kind = 8 ) hg1
+  real ( kind = 8 ) hg2
+  integer ( kind = 4 ) i
+  integer ( kind = 4 ) j
+  integer ( kind = 4 ) k
+  integer ( kind = 4 ) la
+  integer ( kind = 4 ) m
+  integer ( kind = 4 ) n
+  integer ( kind = 4 ) nl
+  real ( kind = 8 ) pi
+  real ( kind = 8 ) r
+  real ( kind = 8 ) r1
+  real ( kind = 8 ) r2
+  real ( kind = 8 ) rg
+  real ( kind = 8 ) sum1
+  real ( kind = 8 ) sum2
+  real ( kind = 8 ) ta
+  real ( kind = 8 ) tb
+  real ( kind = 8 ) tba
+  real ( kind = 8 ) x
+  real ( kind = 8 ) x0
+  real ( kind = 8 ) xg
+  real ( kind = 8 ) y0
+  real ( kind = 8 ) y1
+
+  pi = 3.141592653589793D+00
+  a0 = a
+  a1 = a
+  x0 = x
+  hg = 0.0D+00
+
+  if ( b == 0.0D+00 .or. b == - abs ( int ( b ) ) ) then
+    hg = 1.0D+300
+  else if ( a == 0.0D+00 .or. x == 0.0D+00 ) then
+    hg = 1.0D+00
+  else if ( a == -1.0D+00 ) then
+    hg = 1.0D+00 - x / b
+  else if ( a == b ) then
+    hg = exp ( x )
+  else if ( a - b == 1.0D+00 ) then
+    hg = ( 1.0D+00 + x / b ) * exp ( x )
+  else if ( a == 1.0D+00 .and. b == 2.0D+00 ) then
+    hg = ( exp ( x ) - 1.0D+00 ) / x
+  else if ( a == int ( a ) .and. a < 0.0D+00 ) then
+    m = int ( - a )
+    r = 1.0D+00
+    hg = 1.0D+00
+    do k = 1, m
+      r = r * ( a + k - 1.0D+00 ) / k / ( b + k - 1.0D+00 ) * x
+      hg = hg + r
+    end do
+  end if
+
+  if ( hg /= 0.0D+00 ) then
+    return
+  end if
+
+  if ( x < 0.0D+00 ) then
+    a = b - a
+    a0 = a
+    x = abs ( x )
+  end if
+
+  if ( a < 2.0D+00 ) then
+    nl = 0
+  end if
+
+  if ( 2.0D+00 <= a ) then
+    nl = 1
+    la = int ( a )
+    a = a - la - 1.0D+00
+  end if
+
+  do n = 0, nl
+
+    if ( 2.0D+00 <= a0 ) then
+      a = a + 1.0D+00
+    end if
+
+    if ( x <= 30.0D+00 + abs ( b ) .or. a < 0.0D+00 ) then
+
+      hg = 1.0D+00
+      rg = 1.0D+00
+      do j = 1, 500
+        rg = rg * ( a + j - 1.0D+00 ) &
+          / ( j * ( b + j - 1.0D+00 ) ) * x
+        hg = hg + rg
+        if ( abs ( rg / hg ) < 1.0D-15 ) then
+          exit
+        end if
+      end do
+
+    else
+
+      call gamma ( a, ta )
+      call gamma ( b, tb )
+      xg = b - a
+      call gamma ( xg, tba )
+      sum1 = 1.0D+00
+      sum2 = 1.0D+00
+      r1 = 1.0D+00
+      r2 = 1.0D+00
+      do i = 1, 8
+        r1 = - r1 * ( a + i - 1.0D+00 ) * ( a - b + i ) / ( x * i )
+        r2 = - r2 * ( b - a + i - 1.0D+00 ) * ( a - i ) / ( x * i )
+        sum1 = sum1 + r1
+        sum2 = sum2 + r2
+      end do
+      hg1 = tb / tba * x ** ( - a ) * cos ( pi * a ) * sum1
+      hg2 = tb / ta * exp ( x ) * x ** ( a - b ) * sum2
+      hg = hg1 + hg2
+
+    end if
+
+    if ( n == 0 ) then
+      y0 = hg
+    else if ( n == 1 ) then
+      y1 = hg
+    end if
+
+  end do
+
+  if ( 2.0D+00 <= a0 ) then
+    do i = 1, la - 1
+      hg = ( ( 2.0D+00 * a - b + x ) * y1 + ( b - a ) * y0 ) / a
+      y0 = y1
+      y1 = hg
+      a = a + 1.0D+00
+    end do
+  end if
+
+  if ( x0 < 0.0D+00 ) then
+    hg = hg * exp ( x0 )
+  end if
+
+  a = a1
+  x = x0
+
+  return
+end
+
+
+
+
+!-------------------------------------------------------------------------------
+subroutine gamma ( x, ga )
+
+!*****************************************************************************80
+!
+!! GAMMA evaluates the Gamma function.
+!
+!  Licensing:
+!
+!    The original FORTRAN77 version of this routine is copyrighted by 
+!    Shanjie Zhang and Jianming Jin.  However, they give permission to 
+!    incorporate this routine into a user program that the copyright 
+!    is acknowledged.
+!
+!  Modified:
+!
+!    08 September 2007
+!
+!  Author:
+!
+!    Original FORTRAN77 version by Shanjie Zhang, Jianming Jin.
+!    FORTRAN90 version by John Burkardt.
+!
+!  Reference:
+!
+!    Shanjie Zhang, Jianming Jin,
+!    Computation of Special functions,
+!    Wiley, 1996,
+!    ISBN: 0-471-11963-6,
+!    LC: QA351.C45
+!
+!  Parameters:
+!
+!    Input, real ( kind = 8 ) X, the argument.
+!    X must not be 0, or any negative integer.
+!
+!    Output, real ( kind = 8 ) GA, the value of the Gamma function.
+!
+  implicit none
+
+  real ( kind = 8 ), dimension ( 26 ) :: g = (/ &
+    1.0D+00, &
+    0.5772156649015329D+00, &
+   -0.6558780715202538D+00, &
+   -0.420026350340952D-01, &
+    0.1665386113822915D+00, &
+   -0.421977345555443D-01, &
+   -0.96219715278770D-02, &
+    0.72189432466630D-02, &
+   -0.11651675918591D-02, &
+   -0.2152416741149D-03, &
+    0.1280502823882D-03, &
+   -0.201348547807D-04, &
+   -0.12504934821D-05, &
+    0.11330272320D-05, &
+   -0.2056338417D-06, &
+    0.61160950D-08, &
+    0.50020075D-08, &
+   -0.11812746D-08, &
+    0.1043427D-09, &
+    0.77823D-11, &
+   -0.36968D-11, &
+    0.51D-12, &
+   -0.206D-13, &
+   -0.54D-14, &
+    0.14D-14, &
+    0.1D-15 /)
+  real ( kind = 8 ) ga
+  real ( kind = 8 ) gr
+  integer ( kind = 4 ) k
+  integer ( kind = 4 ) m
+  integer ( kind = 4 ) m1
+  real ( kind = 8 ), parameter :: pi = 3.141592653589793D+00
+  real ( kind = 8 ) r
+  real ( kind = 8 ) x
+  real ( kind = 8 ) z
+
+  if ( x == aint ( x ) ) then
+
+    if ( 0.0D+00 < x ) then
+      ga = 1.0D+00
+      m1 = int ( x ) - 1
+      do k = 2, m1
+        ga = ga * k
+      end do
+    else
+      ga = 1.0D+300
+    end if
+
+  else
+
+    if ( 1.0D+00 < abs ( x ) ) then
+      z = abs ( x )
+      m = int ( z )
+      r = 1.0D+00
+      do k = 1, m
+        r = r * ( z - real ( k, kind = 8 ) )
+      end do
+      z = z - real ( m, kind = 8 )
+    else
+      z = x
+    end if
+
+    gr = g(26)
+    do k = 25, 1, -1
+      gr = gr * z + g(k)
+    end do
+
+    ga = 1.0D+00 / ( gr * z )
+
+    if ( 1.0D+00 < abs ( x ) ) then
+      ga = ga * r
+      if ( x < 0.0D+00 ) then
+        ga = - pi / ( x* ga * sin ( pi * x ) )
+      end if
+    end if
+
+  end if
+
+  return
+end

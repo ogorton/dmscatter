@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  5 JUN 2020 14:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  12 JUN 2020 23:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -662,72 +662,34 @@ LaTeX Info: Redefining \nameref on input line 41.
 \@outlinefile=\write3
 \openout3 = `manual.out'.
 
-
-
-Package hyperref Warning: old toc file detected, not used; run LaTeX again.
-
+ (./manual.toc)
 \tf@toc=\write4
 \openout4 = `manual.toc'.
 
-
-LaTeX Warning: Reference `ER' on page 1 undefined on input line 80.
-
-
-LaTeX Warning: Reference `boost' on page 1 undefined on input line 80.
-
-
-LaTeX Warning: Reference `crosssection' on page 1 undefined on input line 80.
-
-[1{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-
-LaTeX Warning: Reference `integral' on page 2 undefined on input line 116.
-
-
-LaTeX Warning: Reference `ER' on page 2 undefined on input line 116.
-
-
-LaTeX Warning: Reference `integral' on page 2 undefined on input line 116.
-
-[2]
-
-LaTeX Warning: Reference `keywords' on page 3 undefined on input line 175.
-
-[3]
+ [1{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] 
+[3] [4]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [4]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 311.
+ [5]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 399.
 
-[5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 311.
+[6]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 399.
  (./manual.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 311.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 311.
-
-
-Package rerunfilecheck Warning: File `manual.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `manual.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
-(rerunfilecheck)             After:  8A647FC0F0744A0AE165C4847982FB00;742.
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 311.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 399.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 399.
+Package rerunfilecheck Info: File `manual.out' has not changed.
+(rerunfilecheck)             Checksum: AB763ADE91222F76DBF6C702D33076D6;768.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 399.
  ) 
 Here is how much of TeX's memory you used:
- 18921 strings out of 492616
- 318849 string characters out of 6129482
- 408123 words of memory out of 5000000
- 22524 multiletter control sequences out of 15000+600000
+ 18952 strings out of 492616
+ 319237 string characters out of 6129482
+ 414474 words of memory out of 5000000
+ 22535 multiletter control sequences out of 15000+600000
  539953 words of font info for 54 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 47i,17n,65p,582b,453s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 47i,17n,65p,556b,453s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
 ></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
@@ -742,10 +704,10 @@ ive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
 ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive
 /2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
 019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on manual.pdf (5 pages, 184332 bytes).
+Output written on manual.pdf (6 pages, 193022 bytes).
 PDF statistics:
- 115 PDF objects out of 1000 (max. 8388607)
- 93 compressed objects within 1 object stream
- 30 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 190 PDF objects out of 1000 (max. 8388607)
+ 166 compressed objects within 2 object streams
+ 48 named destinations out of 1000 (max. 500000)
+ 81 words of extra memory for PDF output out of 10000 (max. 10000000)
 

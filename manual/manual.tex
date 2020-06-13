@@ -113,7 +113,7 @@ The final expression for $I$ can be trivially generalized to other spherically-s
 	= \frac{\pi v_0^2}{v_{earth} }\int_{v_{min}}^{v_{max}} dv \sigma(v) v^2\left( g(v-v_{earth}) - g(v+v_{earth}) \right).
 \end{split}
 \end{equation}
-The FORTRAN code uses equation (\ref{integral}) to evaluate the event rate integral in equation (\ref{ER}). Of course, analytic solutions of  (\ref{integral}) exist in the form of error functions, but the above form allows for evaluation with quadrature, making it easy to later modify the velocity distribution (as long as it remains spherically symmetric). For example, adding a velocity cut-off is as easy as changing the limit on the quadrature, with no need to write a whole new subroutine for the analytic forms found in the Mathematica script.
+The FORTRAN code uses equation (\ref{integral}) to evaluate the event rate integral in equation (\ref{ER}) with quadrature. Analytic solutions of  (\ref{integral}) exist in the form of error functions; we use the above form since it makes easy to later modify the velocity distribution (as long as it remains spherically symmetric). For example, adding a velocity cut-off is as easy as changing the limit on the quadrature, with no need to write a whole new subroutine for the analytic forms found in the Mathematica script.
 
 \subsection{Differential cross section}\label{crosssection}
 \begin{equation}
@@ -143,6 +143,65 @@ where $j_\chi$ is the spin of the WIMP, $j_T$ is the spin angular momentum of th
 \end{align}
 where $m_\chi$ is the mass of the dark matter particle and $\tau$ is an index used to sum over isospin couplings. The coefficients $R_i^{\tau,\tau'}$ are dark matter particle response functions, to be define in another section. The operators $W_i^{\tau\tau'}(q)$ are nuclear response functions, which are sums over matrix elements of nuclear operators constructed from Bessel spherical harmonics and vector spherical harmonics.
 \subsection{Dark matter response functions}
+There are 8 dark matter response functions which group 15 operator coefficients $c_i^\tau$ according the pair of nuclear response functions which they multiply.
+
+\begin{align}
+R_{M}^{\tau\tau'}(v,q) &= 
+\frac{1}{4}cl(j_\chi) \left(
+	(v^2-(\frac{q}{2\mu_t})^2)(c_5^{\tau}c_5^{\tau'}q^2 + c_8^{\tau}c_8^{\tau'})
+	+ c_{11}^{\tau}c_{11}^{\tau'}q^2
+\right)\\
+& + (c_1^{\tau} + c_2^{\tau}(v^2-(\frac{q}{2\mu_t})^2) )(c_1^{\tau'} + c_2^{\tau'}(v^2-(\frac{q}{2\mu_t})^2) )
+\\
+R_{\Sigma''}^{\tau\tau'}(v,q) &= 
+\frac{1}{16}cl(j_\chi) \left(
+	c_6^{\tau}c_6^{\tau'}q^4 + (c_{13}^{\tau}c_{13}^{\tau'}q^2 +c_{12}^{\tau} c_{12}^{\tau'} )
+	(v^2-q^2/(2\mu_T)^2) + 2c_4^\tau c_6^{\tau'} q^2 + c_4^\tau c_4^{\tau '}
+\right )
++ \frac{1}{4} c_{10}^\tau c_{10}^{\tau '} q^2
+\\
+R_{\Sigma'}^{\tau\tau'}(v,q) &= 
+\frac{1}{32} cl(j_\chi) \left (
+	2c_{9}^{\tau}c_{9}^{\tau'}q^2
+	+ (
+		c_{15}^{\tau}c_{15}^{\tau'}q^4
+		+ c_{14}^{\tau}c_{14}^{\tau'}q^2
+		-2 c_{12}^{\tau}c_{15}^{\tau'} q^2
+		+c_{12}^{\tau}c_{12}^{\tau'}
+	) (v^2-q^2/(2\mu_T)^2)
+	+2 c_{4}^{\tau}c_{4}^{\tau'}
+\right)\\
+&+\frac{1}{8} \left(
+	c_{3}^{\tau}c_3^{\tau'}q^2
+	+ c_{7}^{\tau}c_{7}^{\tau'}
+\right) (v^2-q^2/(2\mu_T)^2)
+\\
+R_{\Phi''}^{\tau\tau'}(v,q) &= 
+\frac{q^2}{(4m_N)^2}cl(j_\chi) \left(
+	c_{12}^\tau - c_{15}^{\tau} q^2
+\right ) \left(
+	c_{12}^{\tau '}-c_{15}^{\tau '}q^2
+\right )
++ \frac{q^2}{(4m_N)^2}q^2c_3^\tau c_3^{\tau'}
+\\
+R_{\tilde{\Phi}'}^{\tau\tau'}(v,q) &= 
+\frac{q^2}{(4m_N)^2}cl(j_\chi) \left(
+	c_{12}^\tau c_{12}^{\tau'} q^2
+	+ c_{12}^\tau c_{12}^{\tau'} 
+\right)
+\\
+R_{\Delta}^{\tau\tau'}(v,q) &= 
+\frac{q^2}{(2m_N)^2}cl(j_\chi) \left(
+	c_{5}^{\tau}c_{5}^{\tau'}q^2
+	+ c_{8}^{\tau}c_{8}^{\tau'}
+\right)
++2\frac{q^2}{m_N^2} c_{2}^{\tau}c_{2}^{\tau'}
+(v^2-q^2/(2\mu_T)^2)
+\\
+R_{\Delta \Sigma'}^{\tau\tau'}(v,q) &= 
+\\
+R_{\Phi''M}^{\tau\tau'}(v,q) &= 
+\end{align}
 
 \subsection{Nuclear response functions}
 There are eight nuclear response functions $W_i^{\tau\tau'}(y)$ considered here. The unit-less variable $y$ is defined 
@@ -156,12 +215,41 @@ b^2 = 41.467/(45A^{-1./3} - 25A^{-2/3})\ fm^2.
 
  
 \begin{align}
-W_M^{\tau\tau'}(y) = \sum_{even\ J} \bra{j_T}M_{J\tau}(y)\ket{j_T}^2\\
-W_{\Sigma''}^{\tau\tau'}(y) = \sum_{even\ J} \bra{j_T}{\Sigma''}_{J\tau}(y)\ket{j_T}^2
+W_M^{\tau\tau'}(y) &= \sum_{even\ J} 
+\bra{j_T}M_{J\tau}(y)\ket{j_T}
+\bra{j_T}M_{J\tau'}(y)\ket{j_T}
+\\
+W_{\Sigma''}^{\tau\tau'}(y) &= \sum_{odd\ J} 
+\bra{j_T}{\Sigma''}_{J\tau}(y)\ket{j_T}
+\bra{j_T}{\Sigma''}_{J\tau'}(y)\ket{j_T}
+\\
+W_{\Sigma'}^{\tau\tau'}(y) &= \sum_{odd\ J} 
+\bra{j_T}{\Sigma'}_{J\tau}(y)\ket{j_T}
+\bra{j_T}{\Sigma'}_{J\tau'}(y)\ket{j_T}
+\\
+W_{\Phi''}^{\tau\tau'}(y) &= \sum_{even\ J} 
+\bra{j_T}{\Phi''}_{J\tau}(y)\ket{j_T}
+\bra{j_T}{\Phi''}_{J\tau'}(y)\ket{j_T}
+\\
+W_{\tilde{\Phi}'}^{\tau\tau'}(y) &= \sum_{even\ J} 
+\bra{j_T}{\tilde{\Phi}'}_{J\tau}(y)\ket{j_T}
+\bra{j_T}{\tilde{\Phi}'}_{J\tau'}(y)\ket{j_T}
+\\
+W_{\Delta}^{\tau\tau'}(y) &= \sum_{odd\ J} 
+\bra{j_T}{\Delta}_{J\tau}(y)\ket{j_T}
+\bra{j_T}{\Delta}_{J\tau'}(y)\ket{j_T}
+\\
+W_{\Delta\Sigma'}^{\tau\tau'}(y) &= \sum_{odd\ J} 
+\bra{j_T}{\Delta}_{J\tau}(y)\ket{j_T}
+\bra{j_T}{\Sigma'}_{J\tau'}(y)\ket{j_T}
+\\
+W_{\Phi''M}^{\tau\tau'}(y) &= \sum_{even\ J} 
+\bra{j_T}{\Phi''}_{J\tau}(y)\ket{j_T}
+\bra{j_T}{M}_{J\tau'}(y)\ket{j_T}
 \end{align}
 
 
-\subsection{Nuclear operators}
+\subsection{Nuclear operators and their matrix elements}
 of which there are six, are nuclear operators constructed from Bessel spherical harmonics and vector spherical harmonics, and are evaluated here on the ground state of the target nucleus.
 
 \section{Inputs and control file usage}
