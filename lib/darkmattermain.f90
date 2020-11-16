@@ -33,7 +33,7 @@ program darkmattermain
     print*,'[3] Differential cross section per recoil energy.'
     print*,'[4] (Future feature) Total cross section.'
     print*,'[5] (Future feature) Total scattering rate per detector.'
-    print*,'[6] (Future featuer) '
+    print*,'[6] (Future feature) '
     read*,computeoption
 
     if (computeoption==2.or.computeoption==3) then

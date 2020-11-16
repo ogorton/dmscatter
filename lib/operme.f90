@@ -17,7 +17,7 @@ subroutine OperME(i,y,np,lp,jp,n,l,j,bigJ,operatorME)
 
 
     if (i .LT. 1 .or. i .GT. 7) then
-        print *, 'The choice of operator j should be from 1 to 6'
+        print *, 'The choice of operator j should be from 1 to 7'
         return
     ! i = 1, for operator MJ
     else if (i .eq. 1) then

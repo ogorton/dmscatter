@@ -1,0 +1,11 @@
+# Coefficient matrix (non-relativistic)
+# Ommitted values are assumed to be 0.0.
+# c_i^t
+# i = 1,...,16
+# t = 0 protons, 1 neutrons
+#control name	 t	i	c_i^t
+coefnonrel      1       5       3.1
+fakekeyword   3.141
+vearth 232.0
+dmdens 1.0
+intpoints 500
