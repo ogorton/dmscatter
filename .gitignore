@@ -1,1 +1,4 @@
-"*.o"
+lib/*.o
+lib/*.mod
+lib/*.x
+sample/fort*
