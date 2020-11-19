@@ -1,6 +1,8 @@
 # A Fortran Program for Experimental WIMP Analysis
+*Oliver Gorton, Changfeng Jiao, and Calvin Johnson*
 
-Computes the differential event rate for WIMP-nucleon scattering events.
+Computes the differential event rate for WIMP-nucleon scattering events. This code 
+is based on the Mathematica package described in [this arXiv link](https://arxiv.org/abs/1308.6288).
 
 Source code is located in src directory. To compile run from the src directory:
 
