@@ -2,8 +2,11 @@
 
 Computes the differential event rate for WIMP-nucleon scattering events.
 
-Source code is located in src directory. "make darkmatter.x" to compile. This
-places the darkmatter.x executable in the same directory. Move it to your bin
+Source code is located in src directory. To compile run from the src directory:
+
+    make darkmatter.x
+    
+This places the darkmatter.x executable in the src directory. Move it to your bin
 directory if desired.
 
 
