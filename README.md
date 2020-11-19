@@ -9,12 +9,14 @@ directory if desired.
 
 An example is provided in the "sample" directory. cd to this directory
 and run:
+
     ../src/darkmatter.x < input.si28
+    
 to run the sample input file.
 
 More extensive documentation can be found in the manual document.
 
 
 ## Developer contacts
-Calvin Johnson (PI) cjohnson@sdsu.edu
-Oliver Gorton (Grad. student) ogorton@sdsu.edu
+* Calvin Johnson (PI) cjohnson@sdsu.edu
+* Oliver Gorton (Grad. student) ogorton@sdsu.edu
