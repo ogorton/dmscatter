@@ -1,3 +1,7 @@
+# A Fortran Program for Experimental WIMP Analysis
+
+Computes the differential event rate for WIMP-nucleon scattering events.
+
 Source code is located in lib directory. 
 "make darkmatter.x" to compile.
 
