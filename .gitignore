@@ -1,4 +1,4 @@
-lib/*.o
-lib/*.mod
-lib/*.x
+src/*.o
+src/*.mod
+src/*.x
 sample/fort*
