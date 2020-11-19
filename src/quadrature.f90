@@ -57,7 +57,7 @@ end subroutine
       integer N, i, m
       real(kind=8) arr(N),ans
       integer x0
-      real(kind=8) dboole, boole_out,dx  , intfx 
+      real(kind=8) dboole, boole_out,dx
                          
       m = N/4
       boole_out = 0 

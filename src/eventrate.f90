@@ -39,10 +39,10 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
 
     real(doublep) :: v  ! DM velocity variable
     real(doublep) :: dv ! DM differential velocity / lattive spacing
-    real(doublep),allocatable :: v_lattice(:) ! velocity domain
+    !real(doublep),allocatable :: v_lattice(:) ! velocity domain
     real(doublep), allocatable :: EventRate_integrand(:)
     integer :: i
-    real(doublep) :: tmp, diffcrosssection
+    real(doublep) :: diffcrosssection
 
 
     dv = (vdist_max-vdist_min)/lattice_points
@@ -53,13 +53,13 @@ function EventRate(Nt, rhochi, ve, v0, q, jchi, y)
  
         v = vdist_min + (i-1) * dv
  
-        write(22,*)v,maxwell_boltzmann(v+ve,v0)
+!        write(22,*)v,maxwell_boltzmann(v+ve,v0)
         
         EventRate_integrand(i) = diffCrossSection(v, q, jchi, y, Mtiso)&
                     * v * v * ( + maxwell_boltzmann(v-ve,v0) &
                             - maxwell_boltzmann(v+ve,v0) ) 
 
-        write(23,*),v,EventRate_integrand(i)/Mchi
+!        write(23,*)v,EventRate_integrand(i)/Mchi
 
     end do
 
