@@ -71,7 +71,7 @@ program darkmattermain
         call coredensity
     end if
   
-    call printdensities
+!    call printdensities
     call printparameters
 
     if (computeoption == 1) then
