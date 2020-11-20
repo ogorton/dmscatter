@@ -4,3 +4,4 @@ src/*.x
 src/*.bak
 src/*.swp
 sample/fort*
+.DS_store
