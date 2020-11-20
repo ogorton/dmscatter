@@ -1,4 +1,6 @@
 src/*.o
 src/*.mod
 src/*.x
+src/*.bak
+src/*.swp
 sample/fort*
