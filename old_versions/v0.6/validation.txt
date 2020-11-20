@@ -1,9 +1,0 @@
-VALIDATED:
-
-coefficient after read-in and transformation
-
-nuclear response function (hacked divide by 4)
-
-MJ nuclear response coefficient w/ SetCoeffsNonrel[1, 3.1, "p"]
-
-

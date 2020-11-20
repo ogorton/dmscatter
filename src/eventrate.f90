@@ -32,13 +32,12 @@ function EventRate(q)
 
     real(doublep) :: v  ! DM velocity variable
     real(doublep) :: dv ! DM differential velocity / lattive spacing
-    !real(doublep),allocatable :: v_lattice(:) ! velocity domain
     real(doublep), allocatable :: EventRate_integrand(:)
     integer :: i
     real(doublep) :: diffcrosssection
 
     vdist_min = q/(2d0*muT)
-    print*,'Integrating dv from',vdist_min,'to',vdist_max
+    !print*,'Integrating dv from',vdist_min,'to',vdist_max
     dv = (vdist_max-vdist_min)/lattice_points
 
     allocate(EventRate_integrand(lattice_points))
@@ -52,10 +51,10 @@ function EventRate(q)
                     * v * v * ( maxwell_boltzmann(v-ve,v0) &
                             - maxwell_boltzmann(v+ve,v0) ) 
     end do
+
 !$OMP end parallel do
 !$OMP barrier
 
-    print*,'Calling quadrature routine.'
     if (quadrature_type == 1) then    
         call boole(lattice_points,EventRate_integrand,dv,EventRate)
     else

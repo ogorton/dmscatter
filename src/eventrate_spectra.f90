@@ -38,8 +38,8 @@ subroutine eventrate_spectra
     num_calc = int((ER_stop - ER_start) / ER_step) + 1
     print*,'Number of event rates to compute:',num_calc
     allocate(event_rate_spectra(num_calc))
-
-!!!$OMP parallel do private(recoil_energy, momentum_transfer)
+    
+    print*,'E_recoil       q_transfer        ER'
     do calc_num = 1, num_calc
         if (usemomentum) then
             momentum_transfer = ER_start + (calc_num - 1) * ER_step
@@ -49,15 +49,19 @@ subroutine eventrate_spectra
             momentum_transfer = sqrt(2d0 * mtarget * recoil_energy * kev)
         end if
         event_rate_spectra(calc_num) = EventRate(momentum_transfer)
-        print*,'E_recoil = ',recoil_energy, 'q=',momentum_transfer,'ER=',event_rate_spectra(calc_num)
+        print*,recoil_energy,momentum_transfer,event_rate_spectra(calc_num)
     end do
-!!!$OMP end parallel do
-!!!$OMP barrier
 
-    open(unit=157, file='eventrate_spectra.dat')
-    write(157,*)'#Recoil energy (kev)    Event rate (Events/second/)'
+    open(unit=157, file='eventrate_spectra_e.dat')
+    write(157,*)'# Recoil energy (kev)    Event rate (Events/second/)'
     do calc_num = 1, num_calc
-        recoil_energy = ER_start + (calc_num - 1) * ER_step
+        if (usemomentum) then
+            momentum_transfer = ER_start + (calc_num - 1) * ER_step
+            recoil_energy = momentum_transfer**2d0 / (2d0*mtarget)
+        else
+            recoil_energy = ER_start + (calc_num - 1) * ER_step
+            momentum_transfer = sqrt(2d0 * mtarget * recoil_energy * kev)
+        end if        
         write(157,*)recoil_energy,event_rate_spectra(calc_num)
     end do
 
