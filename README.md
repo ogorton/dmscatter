@@ -22,7 +22,8 @@ to run the sample input file.
 More extensive documentation can be found in the manual document.
 
 ### Version 1.1 update (Nov. 20, 2020)
-* Now supports computing event rate spectra (event rate versus recoil energy in kev). Energy range is entered as a linear grid by specifying Emin, Emax, Estep.
+* Now supports computing event rate spectra (event rate versus recoil energy in kev). 
+* Energy range is entered either (a) as a linear grid by specifying Emin, Emax, Estep, or (b) from a file specifying energies
 * Now takes advantage of multi-core systems using openMP.
 
 
