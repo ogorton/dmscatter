@@ -1,5 +1,5 @@
 subroutine readheaderv2(resfile)
-   use targetinfo
+   use stateinfo
 !   use op_info,only:pndens,pnops
    implicit none
    integer resfile
@@ -160,7 +160,7 @@ end subroutine read2state
 
 
 subroutine read2Jtrans(resfile,found)
-   use targetinfo
+   use stateinfo
 !   use op_info,only:pndens
    implicit none
    integer resfile
@@ -197,7 +197,7 @@ end subroutine read2Jtrans
 
 
 subroutine readdensity(resfile,success)
-   use targetinfo
+   use stateinfo
 !   use op_info
    implicit none
    integer resfile
@@ -270,7 +270,7 @@ end subroutine readdensity
 subroutine readalldensities(resfile)
 !   use op_info
 !   use spspace
-   use targetinfo
+   use stateinfo
    implicit none
    integer resfile
    integer istate,fstate

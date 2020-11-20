@@ -9,7 +9,7 @@
 function nucResponse(tau1,tau2,ioption,y)
     use kinds
     use spspace
-    use targetinfo
+    use stateinfo
     implicit none
 
     integer :: tau1, tau2

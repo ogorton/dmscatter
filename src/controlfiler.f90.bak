@@ -143,7 +143,7 @@ subroutine setkeyword(keyword, keyvalue)
         bfm = (41.467/(45.*(num_n+num_p)**(-1./3) - 25.*(num_n+num_p)**(-2./3)))**0.5 * femtometer
         print*,'bfm updated.'
 
-    case('wimpmass')
+    case('dmmass')
         mchi = keyvalue
         print*,keyword,': Set dark matter particle mass to',mchi
         muT = mchi * mtarget * mN / (mchi+mtarget*mN)
@@ -164,7 +164,7 @@ subroutine setkeyword(keyword, keyvalue)
         mV = keyvalue
         print*,keyword,': Set standard-model weak interaction mass scale to',mv
 
-    case('maxwellv0')
+    case('vscale')
         v0 = keyvalue
         print*,keyword,': Set velocity distribution scaling to',v0
 
@@ -179,13 +179,6 @@ subroutine setkeyword(keyword, keyvalue)
     case('dmspin')
         jchi = keyvalue
         print*,keyword,': Set dark matter particle spin to',jchi
-
-    case('usemomentum')
-        if (keyvalue==1) then
-            usemomentum = .true.
-            print*,'Set usemomentum to true; using momentum transfer instead& 
-                    & of recoil energy'
-        end if
 
     case default
         print*,'Invalid keyword "',trim(keyword),'". Ignoring.'

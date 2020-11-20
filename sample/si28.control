@@ -4,8 +4,11 @@
 # i = 1,...,16
 # t = 0 protons, 1 neutrons
 #control name	 t	i	c_i^t
-coefnonrel      1       5       3.1
-fakekeyword   3.141
+coefnonrel      1       1       1.0
+wimpmass 50.0
 vearth 232.0
-dmdens 1.0
-intpoints 500
+maxwellv0 220.0
+vescape 10000.
+dmdens 0.3
+intpoints 10000
+usemomentum 0

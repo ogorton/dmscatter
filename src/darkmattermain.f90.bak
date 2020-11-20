@@ -1,7 +1,7 @@
 program darkmattermain
     use response
     use spspace
-    use targetinfo
+    use stateinfo
     use masses
     use kinds
     use constants

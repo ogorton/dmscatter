@@ -1,6 +1,6 @@
 !===================================================================
 subroutine openresults(resfile)
-   use targetinfo
+   use stateinfo
    implicit none
    integer resfile
 
@@ -33,7 +33,7 @@ end subroutine openresults
 subroutine setupdensities
 
     use spspace
-    use targetinfo
+    use stateinfo
 !    use op_info
     implicit none
 
@@ -55,7 +55,7 @@ end subroutine setupdensities
 subroutine coredensity
 
   use spspace
-  use targetinfo
+  use stateinfo
 
   integer :: i
 
@@ -71,7 +71,7 @@ end subroutine coredensity
 !===================================================================
 
 subroutine printdensities
-    use targetinfo
+    use stateinfo
     use spspace
     implicit none
     integer J,a, b

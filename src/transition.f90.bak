@@ -3,7 +3,7 @@ function transition_probability(q,v)
     use masses
     use dmresponse
     use dmparticles
-    use targetinfo 
+    use stateinfo 
     use spspace
     implicit none
     interface 
