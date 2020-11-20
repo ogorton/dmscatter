@@ -5,3 +5,11 @@ src/*.bak
 src/*.swp
 sample/fort*
 .DS_store
+manual/*.aux
+manual/*.fls
+manual/*.log
+manual/*.gz
+manual/*.texit
+manual/*.toc
+manual/*.mk
+manual/*.out
