@@ -21,11 +21,11 @@ to run the sample input file.
 
 More extensive documentation can be found in the manual document.
 
-## Version 1.1 update (Nov. 20, 2020)
+### Version 1.1 update (Nov. 20, 2020)
 * Now supports computing event rate spectra (event rate versus recoil energy in kev). Energy range is entered as a linear grid by specifying Emin, Emax, Estep.
 * Now takes advantage of multi-core systems using openMP.
 
 
-## Developer contacts
+### Developer contacts
 * Calvin Johnson (PI) cjohnson@sdsu.edu
 * Oliver Gorton (Grad. student) ogorton@sdsu.edu
