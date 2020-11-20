@@ -187,6 +187,13 @@ subroutine setkeyword(keyword, keyvalue)
                     & of recoil energy'
         end if
 
+    case('useenergyfile')
+        if (keyvalue==1) then
+            useenergyfile = .true.
+            print*,'Set useenergyfile to true; using recoil energies in file&
+                    & instead of linear grid specification.'
+        end if
+
     case default
         print*,'Invalid keyword "',trim(keyword),'". Ignoring.'
 

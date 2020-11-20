@@ -12,3 +12,4 @@ maxwellv0 220.0
 dmdens 0.3
 intpoints 1000
 usemomentum 0
+useenergyfile 0
