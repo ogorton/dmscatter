@@ -1,50 +1,70 @@
-function transition_probability(q,v)
+function transition_probability(q,v,wimp,nucl,eft)
     use kinds
-    use masses
-    use dmresponse
-    use dmparticles
-    use targetinfo 
-    use spspace
+    use constants
+    use parameters
+    use spspace, only: bfm
     implicit none
     interface 
-        function nucResponse(tau1,tau2,ioption,y)
+        function nucResponse(tau1,tau2,ioption,y,densmat,Tiso,Mtiso)
             use kinds
+            use parameters
             integer :: tau1, tau2
             integer :: ioption
             real(doublep) :: y
+            integer :: Mtiso, Tiso
+            real(doublep), allocatable :: densmat(:,:,:,:)
             REAL(doublep) :: nucResponse
         end function
-        function dmresponsecoef(ifunc, tau1, tau2, q, v, jchi)
+        function dmresponsecoef(eft, term, tau1, tau2, q, v, jchi, muT)
             use kinds
-            integer :: ifunc
+            use parameters
+            real(doublep), allocatable, intent(in) :: eft(:,:)
+            integer :: term
             integer :: tau1, tau2
-            real(doublep) :: q, v, jchi
+            real(doublep) :: q, v, jchi, muT
             REAL(doublep) :: dmresponsecoef
         end function
     end interface
     REAL(doublep) :: q
     REAL(doublep) :: v
+    type(particle) :: wimp
+    type(nucleus) :: nucl
+    real(kind=8), allocatable, intent(in) :: eft(:,:)
+    !
     REAL(doublep) :: y
+    REAL(doublep) :: mchi, jchi, mtarget, jtarget
+    REAL(doublep) :: muT
     REAL(doublep) :: transition_probability
-    real(doublep) :: pi = 3.14159265358979, tmp, tmp2
 
-    integer :: tau1, tau2, ifunc
+    integer :: tau1, tau2, term
+    integer :: Mtiso, Tiso
 
+    bfm = (41.467/(45.*(nucl%mass)**(-1./3) &
+                - 25.*(nucl%mass)**(-2./3)))**0.5 * femtometer
     y = (q*bfm/2d0)**2d0
+
+    mchi = wimp%mass
+    jchi = wimp%j
+    mtarget = nucl%mass
+    Tiso = nucl%groundstate%Tx2
+    Mtiso = nucl%Mt
+    jtarget = nucl%groundstate%jx2
+
+    muT = mchi * mtarget * mN / (mchi+mtarget*mN)
 
     transition_probability = 0.0
 
     do tau1 = 0, 1
         do tau2 = 0, 1
-            do ifunc = 1, 8
+            do term = 1, 8
                 transition_probability = transition_probability &
-                    + dmresponsecoef(ifunc, tau1, tau2, q, v, jchi) &
-                    * nucResponse(tau1,tau2,ifunc,y)
-            end do ! ifunc
+                    + dmresponsecoef(eft, term, tau1, tau2, q, v, jchi, muT)&
+                    * nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
+            end do ! term
         end do ! tau2
     end do ! tau1
 
-!    print*,'denom',(4.0*mN*mchi)**2.0
-    transition_probability = transition_probability * (4.0*pi/(Jiso+1)) / ((4.0*mN*mchi)**2.0)
+    transition_probability = transition_probability &
+        * (4.0*pi/(jtarget+1)) / ((4.0*mN*mchi)**2.0)
     
 end function transition_probability

@@ -1,0 +1,14 @@
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Welcome to our FORTAN 90 implementation of the WIMP-nucleon scattering code.
+ Based on the Mathematica script described in arXiv:1308.6288 (2003).
+   VERSION 1.1 UPDATED: 2020.05.23 @ SDSU
+   Dev. contact: cjohnson@sdsu.edu
+                  ogorton@sdsu.edu
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+ Select an option:
+ [1] Event rate per detector per target nucleus per unit recoil energy spectra
+ [2] Scattering probability
+ [3] Differential cross section per recoil energy
+ [4] (Future feature) Total cross section
+ [5] (Future feature) Total scattering rate per detector

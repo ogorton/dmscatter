@@ -1,54 +1,21 @@
-subroutine readheaderv2(resfile)
-   use targetinfo
+subroutine readheaderv2(nuc_target, resfile)
+   use parameters
 !   use op_info,only:pndens,pnops
    implicit none
+   type(nucleus) :: nuc_target
    integer resfile
 !   character(1) :: ctrlchar
    character(23) :: tmpline
    integer i,j,n
-   real e,ex,xj,xt
-!   real etol
-!   real, pointer :: ee(:)
+   real(kind=8) e,ex,xj,xt
+!   real(kind=8) etol
+!   real(kind=8), pointer :: ee(:)
 !   integer, pointer :: jx2(:),tx2(:)
 !   integer nmax
    integer np,zp
    integer closest2J   ! function to convert poorly converged values
 !   logical askfortshift
 
-!   askfortshift=.false.
-!
-!   print*,' reading file ',ctrlchar
-!   tshift = 0.0
-!   select case (ctrlchar)
-!     case ('f')
-!        ee => energy
-!        Jx2 => Jx2state
-!        Tx2 => Tx2state
-!        nmax = nlocalstates
-!                tshift = 0.0
-!                if(askfortshift)then
-!        print*,' Enter any shift for isospin ( x T(T+1) for all states )'
-!        print*,' (Typical value = 0, no shift )'
-!        read*,tshift
-!            end if
-!     case ('p')
-!        ee => energy_parent
-!        Jx2 => Jx2state_parent
-!        Tx2 => Tx2state_parent
-!        nmax = nparent_ref
-!     case ('d')
-!        ee => energy_daughter
-!        Jx2 => Jx2state_daughter
-!        Tx2 => Tx2state_daughter
-!        nmax = ndaughter_ref
-!
-!     case default
-!
-!   end select
-!
-!   etol = 1.0e-3
-!
-!   rewind(resfile)
 !............ check whether EVEN or ODD..............
 !   if(ctrlchar=='p')then
       read(resfile,'(a)')tmpline
@@ -103,8 +70,8 @@ subroutine readheaderv2(resfile)
 
 3           continue
 
-           Jiso = closest2J(evenA,xj)
-           Tiso = closest2J(evenA,xt)
+           nuc_target%groundstate%Jx2 = closest2J(evenA,xj)
+           nuc_target%groundstate%Tx2 = closest2J(evenA,xt)
          backspace(resfile)
          return
       end if
@@ -160,7 +127,7 @@ end subroutine read2state
 
 
 subroutine read2Jtrans(resfile,found)
-   use targetinfo
+   use parameters
 !   use op_info,only:pndens
    implicit none
    integer resfile
@@ -196,64 +163,51 @@ subroutine read2Jtrans(resfile,found)
 end subroutine read2Jtrans
 
 
-subroutine readdensity(resfile,success)
-   use targetinfo
+subroutine readdensity(nuc_target, resfile,success)
+   use parameters
+   use spspace
 !   use op_info
    implicit none
+   type(nucleus) :: nuc_target
    integer resfile
    !integer istate,fstate
    integer a,b,i
-   real ops,opv
-   !real fact0t,fact1t  ! isospin factors
+   real(kind=8) ops,opv
+   !real(kind=8) fact0t,fact1t  ! isospin factors
    logical :: success
-   !real cleb !       ! function from LIBRA.f
+   !real(kind=8) cleb !       ! function from LIBRA.f
 
    success=.false.
 
 !   fact0t = cleb(Tx2state_parent(istate),Mzi,0,0,Tx2state_daughter(fstate),Mzf)*sqrt(2.)/sqrt(Tx2state_daughter(fstate)+1.)
 !   fact1t = cleb(Tx2state_parent(istate),Mzi,2,0,Tx2state_daughter(fstate),Mzf)*sqrt(6.)/sqrt(Tx2state_daughter(fstate)+1.)
 
-    do i = 1,nsporb*nsporb
+    do i = 1,norb(1)*norb(1)!nsporb*nsporb
         read(resfile,*,err=1,end=1)a,b,ops,opv
 
 !          if(j==jt .and. istate >0 .and. fstate > 0)then
-!             if(densitymats(istate,fstate)%good)then
+!             if(nuc_target%densitymats(istate,fstate)%good)then
         if(pndens)then
             if(ops/=0.0)then
-              densitymats%rhop(jt,a,b)= ops
+              nuc_target%densitymats%rhop(jt,a,b)= ops
               success=.true.
             end if
             if(opv/=0.0)then
-              densitymats%rhon(jt,a,b)= opv
+              nuc_target%densitymats%rhon(jt,a,b)= opv
               success=.true.
             end if
         else
 
              if(ops /= 0.0)then
-               densitymats%rho(jt,0,a,b)= ops
+               nuc_target%densitymats%rho(jt,0,a,b)= ops
                success=.true.
              end if
 
              if(opv /= 0.0)then
-               densitymats%rho(jt,1,a,b) = opv
+               nuc_target%densitymats%rho(jt,1,a,b) = opv
                success=.true.
              end if
 
-!.......... CONVERT DENSITIES FROM ISOSPIN TO PROTON-NEUTRON......................
-!                       if(success)then
-!                                                densitymats(istate,fstate)%rhop(a,b) = 0.5*(fact0t*ops+fact1t*opv)
-!                                                densitymats(istate,fstate)%rhon(a,b) = 0.5*(fact0t*ops-fact1t*opv)
-!                                          end if                                
-!                                  else  ! MUST CONVERT
-!                                          if(ops/=0.0 .or. opv /=0.0)then
-!                                                  success=.true.
-!                                                densitymats(istate,fstate)%rhop(a,b) = 0.5*(fact0t*ops+fact1t*opv)
-!                                                densitymats(istate,fstate)%rhon(a,b) = 0.5*(fact0t*ops-fact1t*opv)                                            
-!  
-!                                          end if
-!                                        
-!                                  end if        
-!                                
         end if
 !             end if
 !          end if
@@ -267,15 +221,14 @@ subroutine readdensity(resfile,success)
 end subroutine readdensity
 
 
-subroutine readalldensities(resfile)
+subroutine readalldensities(nuc_target,resfile)
 !   use op_info
 !   use spspace
-   use targetinfo
+   use parameters
    implicit none
+   type(nucleus) :: nuc_target
    integer resfile
    integer istate,fstate
-   !integer a,b,i,j
-   !real ops,opv
    logical foundi,foundf,foundjt
    logical endoffile,endoflist
    logical finished,success
@@ -310,11 +263,8 @@ subroutine readalldensities(resfile)
               backspace(resfile)
               exit
           end if
-!          print *, endoflist, jt
-!          if(map2parent(istate) > 0 .and. map2daughter(fstate) > 0)then
-!                         print*,' states ',istate,map2parent(istate),fstate,map2daughter(fstate)
 
-          call readdensity(resfile,success)
+          call readdensity(nuc_target, resfile,success)
           if(success)nodensities=.false.
 !          end if
       end do ! endoflist
@@ -327,14 +277,7 @@ subroutine readalldensities(resfile)
           print*,' Wait! That density file held no densities ! '
    end if
 
-!  fill the one-body density matrix of the core
-
-!   call coredensity
-
    return
 end subroutine readalldensities
-
-
-
 
 

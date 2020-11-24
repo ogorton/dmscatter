@@ -21,10 +21,21 @@ to run the sample input file.
 
 More extensive documentation can be found in the manual document.
 
+### Version 1.2 update (Nov. 24, 2020)
+* Data reorganized to support future extension to multiple target species.
+
+* Added python script which easily compares event rate spectra for different dark
+  matter masses. To run the example, cd to sample/ and run:
+
+        python ../../masscompare.py
+
+  Script is general and can be used to compare runs for any variable which can 
+  be modified in the control file.
+
 ### Version 1.1 update (Nov. 20, 2020)
-* Now supports computing event rate spectra (event rate versus recoil energy in kev). 
+* Now supports computing event rate spectra (event rate versus recoil energy in kev)
 * Energy range is entered either (a) as a linear grid by specifying Emin, Emax, Estep, or (b) from a file specifying energies
-* Now takes advantage of multi-core systems using openMP.
+* Now takes advantage of multi-core systems using openMP
 
 
 ### Developer contacts

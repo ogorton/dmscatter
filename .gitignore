@@ -4,7 +4,7 @@ src/*.x
 src/*.bak
 src/*.swp
 sample/fort*
-.DS_store
+.DS_Store
 manual/*.aux
 manual/*.fls
 manual/*.log
@@ -13,3 +13,4 @@ manual/*.texit
 manual/*.toc
 manual/*.mk
 manual/*.out
+python/__pycache__/

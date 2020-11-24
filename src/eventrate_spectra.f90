@@ -11,23 +11,49 @@ module espectra
 
 contains        
 
-subroutine eventrate_spectra
-    use masses
+subroutine eventrate_spectra(wimp, nuc_target, eft, detector_t)
     use constants
     use momenta
+    use parameters
+
     implicit none
+
     interface
-        function eventrate(q)
+        function EventRate(q, wimp, nuc_target, eft, detector_t)
             use kinds
+            use parameters
             implicit none
             real(doublep) :: q
+            type(particle) :: wimp
+            type(nucleus) :: nuc_target
+            type(eftheory) :: eft
+            type(detector) :: detector_t
             real(doublep) :: eventrate
         end function eventrate
     end interface
+
+    type(particle) :: wimp
+    type(nucleus) :: nuc_target
+    type(eftheory) :: eft
+    type(detector) :: detector_t
+    
     integer :: calc_num, num_calc
     real(doublep) :: recoil_energy, momentum_transfer
     real(doublep), allocatable :: event_rate_spectra(:)
     character(len=40) :: filename
+
+    real(doublep) :: mchi, jchi
+    real(doublep) :: mtarget, jtarget
+    real(doublep) :: Nt
+    real(doublep) :: rhochi 
+
+    ! Get parameters
+    mchi = wimp%mass
+    jchi = wimp%j
+    rhochi = wimp%localdensity
+    mtarget = nuc_target%mass
+    jtarget = nuc_target%groundstate%jx2
+    nt = nuc_target%nt
 
     ! Get recoil energy grid from user or from file
     if (useenergyfile) then
@@ -44,8 +70,11 @@ subroutine eventrate_spectra
         end if
 
         read*,ER_start, ER_stop, ER_step
+
         energy_grid_size = int((ER_stop - ER_start) / ER_step) + 1
+
         allocate(energy_grid(energy_grid_size))
+
         do calc_num = 1, energy_grid_size
             energy_grid(calc_num) = ER_start + (calc_num - 1) * ER_step
         end do
@@ -65,10 +94,12 @@ subroutine eventrate_spectra
             recoil_energy = energy_grid(calc_num)
             momentum_transfer = sqrt(2d0 * mtarget * recoil_energy * kev)
         end if
-        event_rate_spectra(calc_num) = EventRate(momentum_transfer)
+        event_rate_spectra(calc_num) = EventRate(momentum_transfer,&
+                wimp, nuc_target, eft, detector_t)
         print*,recoil_energy,momentum_transfer,event_rate_spectra(calc_num)
     end do
 
+    ! Write results to file
     open(unit=157, file='eventrate_spectra.dat')
     write(157,*)'# Recoil energy (kev)    Event rate (Events/second/)'
     do calc_num = 1, energy_grid_size

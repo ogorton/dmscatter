@@ -6,9 +6,10 @@ module kinds
 
 end module kinds
 
-
 !===============================================================================
-module response
+module parameters
+
+    use kinds
 
     implicit none
 
@@ -19,54 +20,65 @@ module response
         real(kind=8), dimension(:), allocatable :: c
     end type coeff
  
-    ! 0 = protons, 1 = neutrons
-    type(coeff) :: pncvec(0:1) 
+    type eftheory
+        type(coeff) :: isoc(0:1) !c0 = (cp+cn)/2   c1 = (cp-cn)/2
+        type(coeff) :: xpnc(0:1) !0 = protons, 1 = neutrons
+    end type eftheory
+    
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    ! Dark matter particles
+    type particle
+        real(doublep) :: j = 0.5! darkmatter spin
+        real(doublep) :: mass = 50.0
+        real(doublep) :: localdensity = 0.3
+    end type particle
 
-    ! c0 = (cp+cn)/2   c1 = (cp-cn)/2
-    type(coeff) :: cvec(0:1)
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    ! Detector
+    type detector
+        real(doublep) :: Nt = 1.0! number of target nuclei
+        real(doublep) :: mass = 1.0
+    end type detector
 
-end module response
-
-!===============================================================================
-module dmparticles
-
-    use kinds
-    implicit none
-
-    real(doublep) :: jchi ! darkmatter spin
-    real(doublep) :: rhochi ! local dark matter density 
-
-end module dmparticles
-
-
-!===============================================================================
-module targetinfo
-   use kinds
-   implicit none
+   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   ! Target nucleus
    logical :: evenA
    integer nlocalstates !,maxlocalstates
    integer nsporb   ! # of single-particle orbits
    integer jt, tt   ! spin, isospin of transition operator
-   integer Jiso, Tiso   ! ang, isospin of ground state times 2
-   integer Mtiso ! iso spin projection
    logical ::  pndens
+
    type onebdenmat
-   logical good
-   real, allocatable :: rho(:,:,:,:)
-   real, allocatable :: rhop(:,:,:),rhon(:,:,:)  ! added in version 9
+       logical good
+       real(doublep), allocatable :: rho(:,:,:,:)
+       real(doublep), allocatable :: rhop(:,:,:),rhon(:,:,:)  ! added in version 9
    end type onebdenmat
-   type (onebdenmat) :: densitymats
+   !type (onebdenmat) :: densitymats
 
-   real(doublep) :: Nt ! Number of target nuclei
+   type state
+       integer Jx2 ! spin times 2
+       integer Tx2 ! isospin times 2
+   end type state
 
-end module targetinfo
+   type nucleus
+       integer :: Z
+       integer :: N
+       integer :: Mt
+       real(doublep) :: mass
+       real(doublep) :: Nt ! Number of target nuclei
+       type(state) :: groundstate
 
+       type (onebdenmat) :: densitymats
+       logical :: evenA
+   end type nucleus
+
+end module parameters
 
 !===============================================================================
 module spspace
     implicit none
     ! Harmonic oscillator parameter
-    real(kind=8) :: bfm
+    real(kind=8) :: bfm = 0.0
     !------------------SINGLE-PARTICLE STATES---------------------------   
 
     integer norb(2)                ! # of single-particle j-orbits
@@ -86,57 +98,33 @@ module spspace
 end module spspace
 
 !===============================================================================
-module masses
-
-    implicit none
-
-    ! Mass neutron and mass proton in GeV
-    REAL(kind=8) :: mN
-    ! 
-    REAL(kind=8) :: mV
-    ! Mass dark matter particle
-    REAL(kind=8) :: mchi
-    ! Mass isotope (number of nucleons)
-    REAL(kind=8) :: mtarget
-    ! Number of protons and neutron in target nucleus
-    integer :: num_p, num_n
-    ! Reduced mass of the target
-    REAL(kind=8) :: muT
-    ! Dark matter density
-    real(kind=8) :: rhoDM
-
-end module masses
-
-!===============================================================================
 module momenta
     use kinds
     implicit none
 
-    real(doublep) :: q ! three-momentum transfer of the dm-nucleus scattering
-    real(doublep) :: y ! y^2 is the rescaled q
     logical :: usemomentum = .false.
     logical :: useenergyfile = .false.
 
 end module momenta
 
-!===============================================================================
-module velocities
-
-    use kinds
-    implicit none
-    real(doublep) :: ve !km/s
-    REAL(kind=8) :: vesc ! km/s
-    REAL(kind=8) :: v0 ! km/s 
-
-end module velocities
 
 !===============================================================================
 module constants
+    use kinds
     implicit none
-    real(kind=8) :: pi = 3.14159265358979323846264338327950288419716939937510
-    real(kind=8) :: GeV = 1d0
-    real(kind=8) :: kev = 10d0**(-6)
-    real(kind=8) :: femtometer
+    real(doublep) :: pi = 3.14159265358979323846264338327950288419716939937510
+    real(doublep) :: GeV = 1d0
+    real(doublep) :: kev = 10d0**(-6)
+    real(doublep) :: femtometer = 5.0677d0
+    real(doublep) :: mn = 0.938272d0
+    real(doublep) :: mv = 246.2d0
+    type vdist
+        real(doublep) :: vearth !km/s
+        REAL(kind=8) :: vescape ! km/s
+        REAL(kind=8) :: vscale ! km/s 
+    end type vdist
+    type(vdist) :: vdist_t
+            
 end module constants
 
 !===============================================================================

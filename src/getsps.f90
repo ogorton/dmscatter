@@ -246,6 +246,7 @@ subroutine GetSPS
 
       enddo
 
+
 !!-------- FILL IN WEO ARRAYS
 !
 !      allocate(orb_qn(norb(1)+norb(2),3))
