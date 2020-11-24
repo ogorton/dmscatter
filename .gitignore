@@ -13,4 +13,4 @@ manual/*.texit
 manual/*.toc
 manual/*.mk
 manual/*.out
-ptyhon/__pycache__
+python/__pycache__/
