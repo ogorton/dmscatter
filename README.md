@@ -22,9 +22,10 @@ to run the sample input file.
 More extensive documentation can be found in the manual document.
 
 ### Version 1.2 update (Nov. 24, 2020)
-* Data reorganized to support future extension to multiple target species.
+* Data reorganized to support future extension to multiple target species. To
+  run the example, cd to sample/ and run:
   
-    python ../../masscompare.py
+        python ../../masscompare.py
 
 * Added python script which easily compares event rate spectra for different dark
   matter masses. Script is general and can be used to compare runs for any
