@@ -1,10 +1,12 @@
 # A Fortran Program for Experimental WIMP Analysis
 *Oliver Gorton, Changfeng Jiao, and Calvin Johnson*
 
-Computes the differential event rate for WIMP-nucleon scattering events. This code 
-is based on the Mathematica package described in [this arXiv link](https://arxiv.org/abs/1308.6288).
+Computes the differential event rate per recoil energy for WIMP-nucleon 
+scattering events. This code based on the Mathematica package described 
+in [this arXiv link](https://arxiv.org/abs/1308.6288).
 
-Source code is located in src directory. To compile run from the src directory:
+Source code is located in src directory. To compile the program, you must have
+the gfortran compiler. From the /src/ directory, run:
 
     make darkmatter.x
     
@@ -12,13 +14,12 @@ This places the darkmatter.x executable in the src directory. Move it to your bi
 directory if desired.
 
 
-An example is provided in the "sample" directory. cd to this directory
-and run:
+An example is provided in the "sample" directory. To run this example, move to
+the /sample/ directory directory and run:
 
     ../src/darkmatter.x < input.si28
-    
-to run the sample input file.
 
+This computes the event rate spectra for a Si28 target. 
 More extensive documentation can be found in the manual document.
 
 ### Version 1.2 update (Nov. 24, 2020)
