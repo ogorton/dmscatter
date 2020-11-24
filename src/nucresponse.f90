@@ -6,7 +6,8 @@
 
 !================================================
 
-function nucResponse(tau1,tau2,ioption,y,nuc)
+function nucResponse(tau1,tau2,ioption,y,nuc_target)
+
     use kinds
     use spspace
     use parameters
@@ -16,7 +17,7 @@ function nucResponse(tau1,tau2,ioption,y,nuc)
     integer :: tau1, tau2
     integer :: ioption
     real(doublep) :: y
-    type(nucleus) :: nuc
+    type(nucleus) :: nuc_target
 
     integer :: j,a,b!,ap,an
     integer :: jmin, jmax
@@ -67,8 +68,6 @@ function nucResponse(tau1,tau2,ioption,y,nuc)
         jmin = 1; jmax = 5
     end if
 
-    !print*,'operators: ',op1, op2
- 
     DRME1(0:jmax) = 0.d0
     DRME2(0:jmax) = 0.d0
 
@@ -77,16 +76,16 @@ function nucResponse(tau1,tau2,ioption,y,nuc)
     Do j = jmin,jmax,2
         Do a = 1, ntotal(1)
             Do b = 1, ntotal(1)
-                If (abs(nuc%densitymats%rho(j,tau1,a,b)) .ge. 1.0e-9 &
-                        .or. abs(nuc%densitymats%rho(j,tau2,a,b)) .ge. 1.0e-9) then
+                If (abs(nuc_target%densitymats%rho(j,tau1,a,b)) .ge. 1.0e-9 &
+                        .or. abs(nuc_target%densitymats%rho(j,tau2,a,b)) .ge. 1.0e-9) then
 
                     ! Operator 1 with tau2 <j| op1,tau1 |j>
                     call OperME(op1,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME1)
-                    DRME1(j) = DRME1(j) + nuc%densitymats%rho(j,tau1,a,b) * spOME1 
+                    DRME1(j) = DRME1(j) + nuc_target%densitymats%rho(j,tau1,a,b) * spOME1 
 
                     ! Operator 2 with tau2 <j| op2,tau2 |j>
                     call OperME(op2,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME2)
-                    DRME2(j) = DRME2(j) + nuc%densitymats%rho(j,tau2,a,b) * spOME2 
+                    DRME2(j) = DRME2(j) + nuc_target%densitymats%rho(j,tau2,a,b) * spOME2 
 
                 end if
             end do
@@ -95,8 +94,8 @@ function nucResponse(tau1,tau2,ioption,y,nuc)
 
     end do
 
-    Tiso = nuc%groundstate%Tx2
-    Mtiso = nuc%Mt
+    Tiso = nuc_target%groundstate%Tx2
+    Mtiso = nuc_target%Mt
 
     nucResponse = nucResponse &
                       * sqrt(2.d0) *sqrt(2*dble(tau1)+1.0) &

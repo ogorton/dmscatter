@@ -49,12 +49,12 @@ function EventRate(q, wimp, nuc_target, eft, detector_t)
     muT = wimp%mass * nuc_target%mass * mN / (wimp%mass + nuc_target%mass * mN)
     vdist_min = q/(2d0*muT)
 
-    print*,'Integrating dv from',vdist_min,'to',vdist_max
+!    print*,'Integrating dv from',vdist_min,'to',vdist_max
     dv = (vdist_max-vdist_min)/lattice_points
 
     allocate(EventRate_integrand(lattice_points))
    
-!$OMP parallel do private(v) 
+!$OMP parallel do private(v) shared(wimp, nuc_target, eft)
     do i = 1, lattice_points
  
         v = vdist_min + (i-1) * dv

@@ -5,11 +5,13 @@ function transition_probability(q,v,wimp,nucl,eft)
     use spspace, only: bfm
     implicit none
     interface 
-        function nucResponse(tau1,tau2,ioption,y)
+        function nucResponse(tau1,tau2,ioption,y,nuc)
             use kinds
+            use parameters
             integer :: tau1, tau2
             integer :: ioption
             real(doublep) :: y
+            type(nucleus) :: nuc
             REAL(doublep) :: nucResponse
         end function
         function dmresponsecoef(eft, ifunc, tau1, tau2, q, v, jchi, muT)
@@ -51,10 +53,9 @@ function transition_probability(q,v,wimp,nucl,eft)
     do tau1 = 0, 1
         do tau2 = 0, 1
             do ifunc = 1, 8
-                print*,tau1,tau2,ifunc
                 transition_probability = transition_probability &
                     + dmresponsecoef(eft, ifunc, tau1, tau2, q, v, jchi, muT) &
-                    * nucResponse(tau1,tau2,ifunc,y)
+                    * nucResponse(tau1,tau2,ifunc,y,nucl)
             end do ! ifunc
         end do ! tau2
     end do ! tau1

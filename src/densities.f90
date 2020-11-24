@@ -44,6 +44,7 @@ subroutine setupdensities(nuc_target)
 !                 nuc_target%densitymats%good = .true.
     ! densities(J,iso,a,b)
     allocate(nuc_target%densitymats%rho( 0:10,0:1,1:ntotal(1),1:ntotal(1)) )
+    print*,'Density matrix allocated, size:',size(nuc_target%densitymats%rho)
     nuc_target%densitymats%rho(:,:,:,:) = 0.0
     allocate(nuc_target%densitymats%rhop(0:10,1:ntotal(1),1:ntotal(1)))
     allocate(nuc_target%densitymats%rhon(0:10,1:ntotal(1),1:ntotal(1)))
@@ -59,9 +60,14 @@ subroutine coredensity(nuc_target)
   use spspace
   use parameters
 
-  integer :: i
+  implicit none
 
   type(nucleus) :: nuc_target
+  integer :: i
+  integer :: Jiso, Tiso
+
+  Jiso = nuc_target%groundstate%Jx2
+  Tiso = nuc_target%groundstate%Tx2
 
   print*,'Filling core orbitals.'
 
