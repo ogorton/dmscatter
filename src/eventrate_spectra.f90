@@ -71,7 +71,7 @@ subroutine eventrate_spectra
 
     open(unit=157, file='eventrate_spectra.dat')
     write(157,*)'# Recoil energy (kev)    Event rate (Events/second/)'
-    do calc_num = 1, num_calc
+    do calc_num = 1, energy_grid_size
         if (usemomentum) then
             momentum_transfer = ER_start + (calc_num - 1) * ER_step
             recoil_energy = momentum_transfer**2d0 / (2d0*mtarget)
