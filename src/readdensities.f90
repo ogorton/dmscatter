@@ -7,9 +7,9 @@ subroutine readheaderv2(nuc_target, resfile)
 !   character(1) :: ctrlchar
    character(23) :: tmpline
    integer i,j,n
-   real e,ex,xj,xt
-!   real etol
-!   real, pointer :: ee(:)
+   real(kind=8) e,ex,xj,xt
+!   real(kind=8) etol
+!   real(kind=8), pointer :: ee(:)
 !   integer, pointer :: jx2(:),tx2(:)
 !   integer nmax
    integer np,zp
@@ -172,10 +172,10 @@ subroutine readdensity(nuc_target, resfile,success)
    integer resfile
    !integer istate,fstate
    integer a,b,i
-   real ops,opv
-   !real fact0t,fact1t  ! isospin factors
+   real(kind=8) ops,opv
+   !real(kind=8) fact0t,fact1t  ! isospin factors
    logical :: success
-   !real cleb !       ! function from LIBRA.f
+   !real(kind=8) cleb !       ! function from LIBRA.f
 
    success=.false.
 

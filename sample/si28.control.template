@@ -5,7 +5,7 @@
 # t = 0 protons, 1 neutrons
 #control name	 t	i	c_i^t
 coefnonrel      1       1       1.0
-wimpmass 500.0
+wimpmass MASS_KEYWORD
 vearth 232.0
 maxwellv0 220.0
 #vescape 544.

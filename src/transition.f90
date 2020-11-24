@@ -5,19 +5,20 @@ function transition_probability(q,v,wimp,nucl,eft)
     use spspace, only: bfm
     implicit none
     interface 
-        function nucResponse(tau1,tau2,ioption,y,nuc)
+        function nucResponse(tau1,tau2,ioption,y,densmat,Tiso,Mtiso)
             use kinds
             use parameters
             integer :: tau1, tau2
             integer :: ioption
             real(doublep) :: y
-            type(nucleus) :: nuc
+            integer :: Mtiso, Tiso
+            real(doublep), allocatable :: densmat(:,:,:,:)
             REAL(doublep) :: nucResponse
         end function
         function dmresponsecoef(eft, term, tau1, tau2, q, v, jchi, muT)
             use kinds
             use parameters
-            type(eftheory), intent(in) :: eft
+            real(doublep), allocatable, intent(in) :: eft(:,:)
             integer :: term
             integer :: tau1, tau2
             real(doublep) :: q, v, jchi, muT
@@ -28,7 +29,7 @@ function transition_probability(q,v,wimp,nucl,eft)
     REAL(doublep) :: v
     type(particle) :: wimp
     type(nucleus) :: nucl
-    type(eftheory) :: eft
+    real(kind=8), allocatable, intent(in) :: eft(:,:)
     !
     REAL(doublep) :: y
     REAL(doublep) :: mchi, jchi, mtarget, jtarget
@@ -36,6 +37,7 @@ function transition_probability(q,v,wimp,nucl,eft)
     REAL(doublep) :: transition_probability
 
     integer :: tau1, tau2, term
+    integer :: Mtiso, Tiso
 
     bfm = (41.467/(45.*(nucl%mass)**(-1./3) &
                 - 25.*(nucl%mass)**(-2./3)))**0.5 * femtometer
@@ -44,6 +46,8 @@ function transition_probability(q,v,wimp,nucl,eft)
     mchi = wimp%mass
     jchi = wimp%j
     mtarget = nucl%mass
+    Tiso = nucl%groundstate%Tx2
+    Mtiso = nucl%Mt
     jtarget = nucl%groundstate%jx2
 
     muT = mchi * mtarget * mN / (mchi+mtarget*mN)
@@ -55,7 +59,7 @@ function transition_probability(q,v,wimp,nucl,eft)
             do term = 1, 8
                 transition_probability = transition_probability &
                     + dmresponsecoef(eft, term, tau1, tau2, q, v, jchi, muT)&
-                    * nucResponse(tau1,tau2,term,y,nucl)
+                    * nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
             end do ! term
         end do ! tau2
     end do ! tau1

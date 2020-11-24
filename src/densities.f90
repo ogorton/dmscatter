@@ -112,7 +112,7 @@ end subroutine printdensities
 
   implicit none
   integer closest2J
-  real xj
+  real(kind=8) xj
   logical evenA
 
   if(evenA)then

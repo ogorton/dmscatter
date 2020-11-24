@@ -50,8 +50,8 @@ module parameters
 
    type onebdenmat
        logical good
-       real, allocatable :: rho(:,:,:,:)
-       real, allocatable :: rhop(:,:,:),rhon(:,:,:)  ! added in version 9
+       real(doublep), allocatable :: rho(:,:,:,:)
+       real(doublep), allocatable :: rhop(:,:,:),rhon(:,:,:)  ! added in version 9
    end type onebdenmat
    !type (onebdenmat) :: densitymats
 

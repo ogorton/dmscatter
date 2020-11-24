@@ -13,13 +13,13 @@ function diffCrossSection(v, q, wimp, nucl, eft)
             REAL(doublep), INTENT(IN) :: v
             type(particle) :: wimp
             type(nucleus) :: nucl
-            type(eftheory) :: eft
+            real(kind=8), allocatable, intent(in) :: eft(:,:)
             real(doublep) :: transition_probability
         end function
     end interface
     type(particle) :: wimp
     type(nucleus) :: nucl
-    type(eftheory) :: eft
+    real(kind=8), allocatable, intent(in) :: eft(:,:)
 
     real(doublep) :: diffCrossSection
     real(doublep) :: v ! velocity of DM particle in lab frame

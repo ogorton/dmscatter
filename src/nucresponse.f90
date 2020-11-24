@@ -1,12 +1,6 @@
-
-!  ctrlchar = 'c'  count up # of states
-!  ctrlchar = 'f'  fill up info on states
-!  ctrlchar = 'p'  fill up parent reference states
-!  ctrlchar = 'd'  fill up daughter reference states
-
 !================================================
 
-function nucResponse(tau1,tau2,term,y,nuc_target)
+function nucResponse(tau1,tau2,term,y,densmat,Tiso,Mtiso)
 
     use kinds
     use spspace
@@ -17,7 +11,7 @@ function nucResponse(tau1,tau2,term,y,nuc_target)
     integer :: tau1, tau2
     integer :: term
     real(doublep) :: y
-    type(nucleus) :: nuc_target
+    real(doublep), allocatable, intent(in) :: densmat(:,:,:,:)
 
     integer :: j,a,b!,ap,an
     integer :: jmin, jmax
@@ -76,19 +70,19 @@ function nucResponse(tau1,tau2,term,y,nuc_target)
     do j = jmin,jmax,2
       do a = 1, ntotal(1)
         do b = 1, ntotal(1)
-          if (abs(nuc_target%densitymats%rho(j,tau1,a,b)) .ge. 1.0e-9 &
-                .or. abs(nuc_target%densitymats%rho(j,tau2,a,b)) .ge. 1.0e-9) then
+          if (abs(densmat(j,tau1,a,b)) .ge. 1.0e-9 &
+                .or. abs(densmat(j,tau2,a,b)) .ge. 1.0e-9) then
 
             ! Operator 1 with tau2 <j| op1,tau1 |j>
             call OperME(op1,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),&
                     jorb(b),j,spOME1)
-            DRME1(j) = DRME1(j) + nuc_target%densitymats%rho(j,tau1,a,b) &
+            DRME1(j) = DRME1(j) + densmat(j,tau1,a,b) &
                     * spOME1 
 
             ! Operator 2 with tau2 <j| op2,tau2 |j>
             call OperME(op2,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),&
                     jorb(b),j,spOME2)
-            DRME2(j) = DRME2(j) + nuc_target%densitymats%rho(j,tau2,a,b) &
+            DRME2(j) = DRME2(j) + densmat(j,tau2,a,b) &
                     * spOME2 
 
           end if
@@ -97,9 +91,6 @@ function nucResponse(tau1,tau2,term,y,nuc_target)
       nucResponse = nucResponse + DRME1(j) * DRME2(j)
 
     end do
-
-    Tiso = nuc_target%groundstate%Tx2
-    Mtiso = nuc_target%Mt
 
     nucResponse = nucResponse &
         * sqrt(2.d0) *sqrt(2*dble(tau1)+1.0) &
