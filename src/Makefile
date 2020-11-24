@@ -1,5 +1,5 @@
 COMP =  gfortran
-OPTIONS = -O2 -Wall -fopenmp#-fbounds-check -Wall
+OPTIONS = -O2 -Wall -fopenmp -fbounds-check
 
 OBJ1 = \
 norm.o\
@@ -28,6 +28,7 @@ quadrature.o\
 eventrate.o\
 eventrate_spectra.o\
 cg.o\
+setup_nuclearinputs.o\
 darkmattermain.o
 
 %.o : %.f90

@@ -1,35 +1,37 @@
 
-subroutine setupcoef
-    use response
+subroutine setupcoef(eft)
+    use parameters
+
+    implicit none
+    type(eftheory) :: eft
 
     num_response_coef = 17
 
     ! Explicit proton-neutron coefficients
-    allocate(pncvec(0)%c(num_response_coef))
-    allocate(pncvec(1)%c(num_response_coef))
+    allocate(eft%xpnc(0)%c(num_response_coef))
+    allocate(eft%xpnc(1)%c(num_response_coef))
     ! Isospin formalism coefficients
-    allocate(cvec(0)%c(num_response_coef))
-    allocate(cvec(1)%c(num_response_coef))
+    allocate(eft%isoc(0)%c(num_response_coef))
+    allocate(eft%isoc(1)%c(num_response_coef))
 
-    pncvec(0)%c = 0.0
-    pncvec(1)%c = 0.0
-    cvec(0)%c = 0.0
-    cvec(1)%c = 0.0
+    eft%xpnc(0)%c = 0.0
+    eft%xpnc(1)%c = 0.0
+    eft%isoc(0)%c = 0.0
+    eft%isoc(1)%c = 0.0
 
 end subroutine setupcoef
 
-subroutine setpncoeffsnonrel(op, coeffdimless, nucleon)
-    use response
-    use masses
+subroutine setpncoeffsnonrel(eft, op, coeffdimless, nucleon)
+    use parameters
     implicit none
+    type(eftheory) :: eft
     integer, intent(in) :: op
     real(kind=8), intent(in) :: coeffdimless
     integer, intent(in) :: nucleon 
 
     ! nucleon = 0 : proton, 1 : neutron
-    pncvec(nucleon)%c(op) = coeffdimless
+    eft%xpnc(nucleon)%c(op) = coeffdimless
 !    print*,"p/n coef set:",nucleon,op,coeffdimless 
-    
 
 end subroutine
 
@@ -53,13 +55,13 @@ subroutine opencoeffmatrix(resfile)
         return
 2       continue
         print*,filename(1:ilast),'.res does not exist '
-
     end do    
-
 end subroutine opencoeffmatrix
 
-subroutine readcoeffmatrix(resfile)
+subroutine readcoeffmatrix(eft, resfile)
+    use parameters  
     implicit none
+    type(eftheory) :: eft
     integer, intent(in) :: resfile
     character(20) :: line
     integer :: op
@@ -86,7 +88,7 @@ subroutine readcoeffmatrix(resfile)
         do while(.not.EOF)
 
             read(resfile,*,end=111) nucleon, op, coef
-            call setpncoeffsnonrel(op, coef, nucleon)
+            call setpncoeffsnonrel(eft, op, coef, nucleon)
 
         end do
 
@@ -100,13 +102,16 @@ subroutine readcoeffmatrix(resfile)
 
 end subroutine readcoeffmatrix
 
-subroutine convertisospinform
-    use response
+subroutine convertisospinform(eft)
+    use parameters
+    type(eftheory) :: eft
 
-    cvec(0)%c = (pncvec(0)%c + pncvec(1)%c)/2
-    cvec(1)%c = (pncvec(0)%c - pncvec(1)%c)/2
+    print*,'Converting EFT coefficients to isospin formalism.'
 
-!    print*,'iso cvec 0',cvec(0)%c(:)
+    eft%isoc(0)%c = (eft%xpnc(0)%c + eft%xpnc(1)%c)/2
+    eft%isoc(1)%c = (eft%xpnc(0)%c - eft%xpnc(1)%c)/2
+
+!    print*,'iso eft 0',eft%isoc(0)%c(:)
 
 end subroutine
 
@@ -126,25 +131,33 @@ end subroutine
 !!  If[Op==14, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN;];
 !!  If[Op==15, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN^2;];
 !!  
-subroutine normalizecoeffs
-    use masses
-    use response
+subroutine normalizecoeffs(eft, wimp)
+    use parameters
+    use constants
+    use kinds
     implicit none
+    type(particle) :: wimp
+    type(eftheory) :: eft
+    real(doublep) :: mchi
     integer :: i, j, op, mNdenomOps(7), mNmNdenomOps(2)
+
+    print*,'Normalizing EFT coefficients.'
+
+    mchi = wimp%mass
 
     mNdenomOps = [3, 5, 9, 10, 11, 13, 14]
     mNmNdenomOps = [6, 15]
 
     do i=0,1
-        pncvec(i)%c = pncvec(i)%c * (4.0*mN*mchi)/(mV*mV)
+        eft%xpnc(i)%c(:) = eft%xpnc(i)%c(:) * (4.0*mN*mchi)/(mV*mV)
 
         do j = 1, 2
             op = mNmNdenomOps(j)
-            pncvec(i)%c(op) = pncvec(i)%c(op)/(mN*mN)
+            eft%xpnc(i)%c(op) = eft%xpnc(i)%c(op)/(mN*mN)
         enddo
         do j = 1, 7
             op = mNdenomOps(j)
-            pncvec(i)%c(op) = pncvec(i)%c(op)/(mN)
+            eft%xpnc(i)%c(op) = eft%xpnc(i)%c(op)/(mN)
         enddo
     enddo
 

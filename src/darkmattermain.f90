@@ -1,22 +1,17 @@
 program darkmattermain
-    use response
-    use spspace
-    use targetinfo
-    use masses
+
+    use parameters
     use kinds
-    use constants
-    use dmparticles
-    use velocities
-    use momenta
-    use quadrature
     use espectra
+
     implicit none
 
-    integer :: resfile = 100
-    real(kind=8) :: output, v
-    real(doublep) :: diffCrossSection
-    real(doublep) :: transition_probability
-    character :: yn
+    type(nucleus) :: nuc_target
+    type(eftheory) :: eft
+    type(particle) :: wimp
+    type(detector) :: detector_t
+
+    real(kind=8) :: v
     integer :: computeoption
 
     print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
@@ -33,7 +28,6 @@ program darkmattermain
     print*,'[3] Differential cross section per recoil energy'
     print*,'[4] (Future feature) Total cross section'
     print*,'[5] (Future feature) Total scattering rate per detector'
-    print*,'[6] (Future feature) '
     read*,computeoption
 
     if (computeoption==2.or.computeoption==3) then
@@ -43,49 +37,37 @@ program darkmattermain
 
     print*,' '
     print*,'Enter the target neutron number '
-    read(5,*)num_n
+    read(5,*) nuc_target%N
     print*,' '
     print*,'Enter the target proton number '
-    read(5,*)num_p
+    read(5,*) nuc_target%Z
 
-    call setparameters
-    call setupcoef
+    call setparameters(nuc_target)
+    call setupcoef(eft)
 
     call opencontrolfile(2)
-    call readcontrolfile(2)
-    call normalizecoeffs
-    call convertisospinform
+    call readcontrolfile(2, eft, wimp, detector_t)
+    call normalizecoeffs(eft, wimp)
+    call convertisospinform(eft)
 
-    call GetSPS
+    call setup_nuclearinputs(nuc_target)
 
-    nsporb = norb(1)
-
-    call openresults(resfile)
-    call setupdensities
-    call readheaderv2(resfile)
-    call readalldensities(resfile)
-
-    print*,'Fill core? [y/n]'
-    read*,yn
-    if (yn=='y') then
-        call coredensity
-    end if
-  
-!    call printdensities
-    call printparameters
+    call printparameters(wimp,nuc_target,eft,detector_t)
 
     if (computeoption == 1) then
-        call eventrate_spectra
+        call eventrate_spectra(wimp, nuc_target, eft, detector_t)
     else if (computeoption == 2) then
-        output = transition_probability(q,v,jchi,y)
-        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-        print*,'Scattering probability = ',output
-        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+        stop 'Not implemented'
+        !output = transition_probability(q,v,jchi,y)
+        !print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+        !print*,'Scattering probability = ',output
+        !print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     else if (computeoption == 3) then
-        output = diffCrossSection(v, q, jchi, y, Mtiso)
-        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-        print*,'Differential cross section = ',output
-        print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+        stop 'Not implemented'    
+        !output = diffCrossSection(v, q, jchi, y, Mtiso)
+        !print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+        !print*,'Differential cross section = ',output
+        !print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     endif
 
 end program  

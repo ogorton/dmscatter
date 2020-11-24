@@ -1,4 +1,3 @@
-
 subroutine opencontrolfile(resfile)
     implicit none
     integer, intent(in) :: resfile
@@ -24,9 +23,13 @@ subroutine opencontrolfile(resfile)
 
 end subroutine opencontrolfile
 
-subroutine readcontrolfile(resfile)
+subroutine readcontrolfile(resfile, eft, wimp, detector_t)
     use keywords
+    use parameters
     implicit none
+    type(particle) :: wimp
+    type(detector) :: detector_t
+    type(eftheory) :: eft
     integer, intent(in) :: resfile
     character(20) :: line
     character(20) :: keyword
@@ -72,10 +75,10 @@ subroutine readcontrolfile(resfile)
                 ! Go back to read them.
                 backspace(resfile)
                 read(resfile,*,end=111)keyword, nucleon, op, coef
-                call setpncoeffsnonrel(op, coef, nucleon)
+                call setpncoeffsnonrel(eft, op, coef, nucleon)
                 print*,'Set non-relativistic coefficient: op',op,'p/n',nucleon,'c',coef
             else
-                call setkeyword(keyword,keyvalue)
+                call setkeyword(keyword,keyvalue, wimp, detector_t)
             endif
 
         end do
@@ -94,20 +97,20 @@ subroutine readcontrolfile(resfile)
     end do
 
 end subroutine readcontrolfile
-subroutine setkeyword(keyword, keyvalue)
+subroutine setkeyword(keyword, keyvalue, wimp, detector_t)
 
     use kinds
     use keywords
-    use masses
-    use velocities
     use constants
-    use targetinfo
     use momenta
-    use dmparticles
     use quadrature
     use spspace
+    use parameters
 
     implicit none
+
+    type(particle) :: wimp
+    type(detector) :: detector_t
 
     character (len=20) :: keyword
     real(doublep) :: keyvalue
@@ -115,12 +118,12 @@ subroutine setkeyword(keyword, keyvalue)
     select case (keyword)
 
     case('vearth')
-        ve = keyvalue
-        print*,trim(keyword),": Set velocity of earth in galactic frame set to",ve
+        vdist_t%vearth = keyvalue
+        print*,trim(keyword),": Set velocity of earth in galactic frame set to",vdist_t%vearth
 
     case('dmdens')
-        rhochi = keyvalue
-        print*,trim(keyword),": Set local dark matter density to",rhochi
+        wimp%localdensity = keyvalue
+        print*,trim(keyword),": Set local dark matter density to",keyvalue
 
     case('quadtype')
         print*,keyword,': not implemented.'
@@ -134,51 +137,39 @@ subroutine setkeyword(keyword, keyvalue)
         print*,keyword,': Set GeV units to',gev
         femtometer = 5.0677/GeV
         print*,'femtometer updated'
-        bfm = (41.467/(45.*(num_n+num_p)**(-1./3) - 25.*(num_n+num_p)**(-2./3)))**0.5 * femtometer
-        print*,'bfm updated.'
 
     case('femtometer')
         femtometer = keyvalue
         print*,keyword,': Set femtometer units to',femtometer
-        bfm = (41.467/(45.*(num_n+num_p)**(-1./3) - 25.*(num_n+num_p)**(-2./3)))**0.5 * femtometer
-        print*,'bfm updated.'
 
     case('wimpmass')
-        mchi = keyvalue
-        print*,keyword,': Set dark matter particle mass to',mchi
-        muT = mchi * mtarget * mN / (mchi+mtarget*mN)
-        print*,'muT reduced mass updated.'
-        vdist_min = q/(2.0*muT)
-        print*,'vmin updated.'
+        wimp%mass = keyvalue
+        print*,keyword,': Set dark matter particle mass to',keyvalue
 
     case('vescape')
-        vesc = keyvalue
-        print*,keyword,': Set escape velocity to', vesc
-        vdist_max = vesc
+        vdist_t%vescape = keyvalue
+        print*,keyword,': Set escape velocity to', vdist_t%vescape
+        vdist_max = vdist_t%vescape
 
     case('ntarget')
-        Nt = keyvalue
-        print*,keyword,': Set number of target nuclei to', Nt
+        detector_t%nt = keyvalue
+        print*,keyword,': Set number of target nuclei to', keyvalue
 
     case('weakmscale')
         mV = keyvalue
         print*,keyword,': Set standard-model weak interaction mass scale to',mv
 
     case('maxwellv0')
-        v0 = keyvalue
-        print*,keyword,': Set velocity distribution scaling to',v0
+        vdist_t%vscale = keyvalue
+        print*,keyword,': Set velocity distribution scaling to',vdist_t%vscale
 
     case('mnucleon')
         mn = keyvalue
         print*,keyword,': Set nucleon mass to',mn
-        muT = mchi * mtarget * mN / (mchi+mtarget*mN)
-        print*,'muT reduced mass udpated.'
-        vdist_min = q/(2.0*muT)
-        print*,'vmin updated'
 
     case('dmspin')
-        jchi = keyvalue
-        print*,keyword,': Set dark matter particle spin to',jchi
+        wimp%j = keyvalue
+        print*,keyword,': Set dark matter particle spin to',keyvalue
 
     case('usemomentum')
         if (keyvalue==1) then
@@ -198,7 +189,6 @@ subroutine setkeyword(keyword, keyvalue)
         print*,'Invalid keyword "',trim(keyword),'". Ignoring.'
 
     end select
-
 
 end subroutine setkeyword
 
