@@ -115,9 +115,9 @@ module constants
     real(doublep) :: pi = 3.14159265358979323846264338327950288419716939937510
     real(doublep) :: GeV = 1d0
     real(doublep) :: kev = 10d0**(-6)
-    real(doublep) :: femtometer = 5.0677
-    real(doublep) :: mn = 0.938272
-    real(doublep) :: mv = 246.2
+    real(doublep) :: femtometer = 5.0677d0
+    real(doublep) :: mn = 0.938272d0
+    real(doublep) :: mv = 246.2d0
     type vdist
         real(doublep) :: vearth !km/s
         REAL(kind=8) :: vescape ! km/s

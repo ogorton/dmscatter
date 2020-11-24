@@ -14,11 +14,11 @@ function transition_probability(q,v,wimp,nucl,eft)
             type(nucleus) :: nuc
             REAL(doublep) :: nucResponse
         end function
-        function dmresponsecoef(eft, ifunc, tau1, tau2, q, v, jchi, muT)
+        function dmresponsecoef(eft, term, tau1, tau2, q, v, jchi, muT)
             use kinds
             use parameters
             type(eftheory), intent(in) :: eft
-            integer :: ifunc
+            integer :: term
             integer :: tau1, tau2
             real(doublep) :: q, v, jchi, muT
             REAL(doublep) :: dmresponsecoef
@@ -35,7 +35,7 @@ function transition_probability(q,v,wimp,nucl,eft)
     REAL(doublep) :: muT
     REAL(doublep) :: transition_probability
 
-    integer :: tau1, tau2, ifunc
+    integer :: tau1, tau2, term
 
     bfm = (41.467/(45.*(nucl%mass)**(-1./3) &
                 - 25.*(nucl%mass)**(-2./3)))**0.5 * femtometer
@@ -52,14 +52,15 @@ function transition_probability(q,v,wimp,nucl,eft)
 
     do tau1 = 0, 1
         do tau2 = 0, 1
-            do ifunc = 1, 8
+            do term = 1, 8
                 transition_probability = transition_probability &
-                    + dmresponsecoef(eft, ifunc, tau1, tau2, q, v, jchi, muT) &
-                    * nucResponse(tau1,tau2,ifunc,y,nucl)
-            end do ! ifunc
+                    + dmresponsecoef(eft, term, tau1, tau2, q, v, jchi, muT)&
+                    * nucResponse(tau1,tau2,term,y,nucl)
+            end do ! term
         end do ! tau2
     end do ! tau1
 
-    transition_probability = transition_probability * (4.0*pi/(jtarget+1)) / ((4.0*mN*mchi)**2.0)
+    transition_probability = transition_probability &
+        * (4.0*pi/(jtarget+1)) / ((4.0*mN*mchi)**2.0)
     
 end function transition_probability

@@ -32,7 +32,7 @@ subroutine setparameters(nuc_target)
     vdist_t%vscale = 220.0 !km/s velocity distribution scaling
     vdist_t%vescape = 12.0 * vdist_t%vscale !km/s ! infinity
 
-    bfm = (41.467/(45.*(nuc_target%mass)**(-1./3) - 25.*(nuc_target%mass)**(-2./3)))**0.5 * femtometer 
+    bfm = (41.467/(45d0*(nuc_target%mass)**(-1./3) - 25.*(nuc_target%mass)**(-2./3)))**0.5 * femtometer 
 
     ! Quadrature
     quadrature_type = 1

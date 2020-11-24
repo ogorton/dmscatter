@@ -1,5 +1,5 @@
 COMP =  gfortran
-OPTIONS = -O2 -Wall -fopenmp -fbounds-check
+OPTIONS = -O2 -Wall -fopenmp #-fbounds-check
 
 OBJ1 = \
 norm.o\
