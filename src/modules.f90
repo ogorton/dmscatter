@@ -28,16 +28,16 @@ module parameters
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! Dark matter particles
     type particle
-        real(doublep) :: j = 0.5! darkmatter spin
-        real(doublep) :: mass = 50.0
-        real(doublep) :: localdensity = 0.3
+        real(doublep) :: j = 0.5d0! darkmatter spin
+        real(doublep) :: mass = 50.0d0
+        real(doublep) :: localdensity = 0.3d0
     end type particle
 
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! Detector
     type detector
-        real(doublep) :: Nt = 1.0! number of target nuclei
-        real(doublep) :: mass = 1.0
+        real(doublep) :: Nt = 1.0d0! number of target nuclei
+        real(doublep) :: mass = 1.0d0
     end type detector
 
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

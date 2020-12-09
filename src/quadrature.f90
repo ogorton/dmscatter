@@ -64,15 +64,15 @@ end subroutine
            
       do i = 1, m-1, 1 
         x0 = 4*i                       
-        dboole = ( 7.*arr(x0+4) &
-                   + 32.*arr(x0+3) &
-                   + 12.*arr(x0+2) &
-                   + 32.*arr(x0+1) &
-                   + 7.*arr(x0) )        
+        dboole = ( 7d0*arr(x0+4) &
+                   + 32d0*arr(x0+3) &
+                   + 12d0*arr(x0+2) &
+                   + 32d0*arr(x0+1) &
+                   + 7d0*arr(x0) )        
         boole_out = boole_out + dboole
       enddo  
                  
-      ans=dx*(2./45)*boole_out
+      ans=dx*(2d0/45d0)*boole_out
          
       end subroutine  
 
