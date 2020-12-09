@@ -28,7 +28,7 @@ More extensive documentation can be found in the manual document.
 * Added python script which easily compares event rate spectra for different dark
   matter masses. To run the example, cd to sample/ and run:
 
-        python ../../masscompare.py
+        python ../python/masscompare.py
 
   Script is general and can be used to compare runs for any variable which can 
   be modified in the control file.
