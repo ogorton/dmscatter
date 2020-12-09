@@ -13,31 +13,32 @@ subroutine setparameters(nuc_target)
     print*,'Setting default parameter values.'
 
     ! Constants
-    GeV = 1.0
-    femtometer = 5.0677/GeV
+    GeV = 1.0d0
+    femtometer = 5.0677d0/GeV
 
     ! Masses
-    mV = 246.2
-    mN = 0.938272 
+    mV = 246.2d0
+    mN = 0.938272d0 
 
     !Mtiso = num_p-num_n
     nuc_target%Mt = nuc_target%Z - nuc_target%N
     !mtarget = num_p+num_n
     nuc_target%mass = nuc_target%Z + nuc_target%N
-    nuc_target%nt = 1.0
+    nuc_target%nt = 1.0d0
     !muT = mchi * mtarget * mN / (mchi+mtarget*mN)
 
     ! Velocities
-    vdist_t%vearth = 232.0 !km/s earths velocity in the galactic rest frame.
-    vdist_t%vscale = 220.0 !km/s velocity distribution scaling
-    vdist_t%vescape = 12.0 * vdist_t%vscale !km/s ! infinity
+    vdist_t%vearth = 232.0d0 !km/s earths velocity in the galactic rest frame.
+    vdist_t%vscale = 220.0d0 !km/s velocity distribution scaling
+    vdist_t%vescape = 12.0d0 * vdist_t%vscale !km/s ! infinity
 
-    bfm = (41.467/(45d0*(nuc_target%mass)**(-1./3) - 25.*(nuc_target%mass)**(-2./3)))**0.5 * femtometer 
+    bfm = (41.467d0/(45d0*(nuc_target%mass)**(-1.d0/3) &
+            - 25.d0*(nuc_target%mass)**(-2.d0/3)))**0.5d0 * femtometer 
 
     ! Quadrature
     quadrature_type = 1
     lattice_points = 1000
-    vdist_max = 12*vdist_t%vscale
+    vdist_max = 12d0*vdist_t%vscale
 
 end subroutine setparameters
 
@@ -68,7 +69,7 @@ subroutine printparameters(wimp,nuc_target,eft,detector_t)
     print*,'mchi',wimp%mass
     print*,'J_target=',nuc_target%groundstate%Jx2
     print*,'T_target=',nuc_target%groundstate%Tx2
-    print*,'Mt_targe=',nuc_target%Mt
+    print*,'Mt_target=',nuc_target%Mt
     print*,'Target Z,N',nuc_target%Z, nuc_target%N
     print*,'mtarget=',nuc_target%mass
     print*,'muT=',wimp%mass * nuc_target%mass * mN/(wimp%mass+nuc_target%mass*mn)!mchi * mtarget * mN / (mchi+mtarget*mN)

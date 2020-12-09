@@ -13,7 +13,7 @@ BeginPackage["dmformfactor`"]
 
 (*Provide GeV as a unit for the user to check dimensions.*)
 
-GeV=1;
+GeV;
 Femtometer=5.0677/GeV;
 KilometerPerSecond=3.3356*10^-6;
 KilogramDay=7.3634*10^55
@@ -164,8 +164,6 @@ HALO=halomodel;
 
 
 (*Library of default density matrices*)
-
-(* rho, Jt, Tt , nbra, 2jbra, nket, 2jket *)
 sHe4[1]={sHe00x0101=2.0000000,0,0,0,1,0,1};
 sHe4length=1;
 
@@ -1005,8 +1003,6 @@ If[jjj==6,Operator1=DeltaJ;];
 If[jjj==7,Operator1=MJ; Operator2=PhiPPJ;];
 If[jjj==8,Operator1=SigmaPJ; Operator2=DeltaJ;];
 
-
-
 If[1<=jjj<=6,
 If[tau1==0&&tau2==0,Return[E^(-2y)*(2JIso+1)/(4Pi)*1/4(FF[DensityMatrix,Operator1,JIso,TIso][[2,2]]+FF[DensityMatrix,Operator1,JIso,TIso][[1,1]]+FF[DensityMatrix,Operator1,JIso,TIso][[1,2]]+FF[DensityMatrix,Operator1,JIso,TIso][[2,1]])/.y->yyy/.FormalReplace//Simplify//MyChop]
 ];
@@ -1327,12 +1323,6 @@ because they have old c's instead of new c's, resulting in an overall factor of
 FF by before printing out StrucFunction, TransitionProbability, and 
 ResponseNucl *)
 ResponseCoeff[MJ]=Table[1/4 Cl[jchi]((cvector[iiFF][[5]]cvector[jjFF][[5]] q^2+cvector[iiFF][[8]]cvector[jjFF][[8]])(v^2-q^2/(4(\[Mu]T[mchi,M])^2))+cvector[iiFF][[11]]cvector[jjFF][[11]]q^2)+(cvector[iiFF][[2]](v^2-q^2/(4(\[Mu]T[mchi,M])^2))+cvector[iiFF][[1]])(cvector[jjFF][[2]](v^2-q^2/(4(\[Mu]T[mchi,M])^2))+cvector[jjFF][[1]]),{iiFF,2},{jjFF,2}];
-
-(*
-Print["mj coef"]
-Print[ ResponseCoeff[MJ]]
-*)
-
 ResponseCoeff[SigmaPPJ]=Table[1/16 Cl[jchi](cvector[iiFF][[6]]cvector[jjFF][[6]]q^4+(cvector[iiFF][[13]]cvector[jjFF][[13]]q^2+cvector[iiFF][[12]]cvector[jjFF][[12]])(v^2-q^2/(4(\[Mu]T[mchi,M])^2))+2cvector[iiFF][[4]]cvector[jjFF][[6]]q^2+cvector[iiFF][[4]]cvector[jjFF][[4]])+1/4 cvector[iiFF][[10]]cvector[jjFF][[10]]q^2,{iiFF,2},{jjFF,2}];
 ResponseCoeff[SigmaPJ]=Table[1/32 Cl[jchi](2cvector[iiFF][[9]]cvector[jjFF][[9]]q^2+(cvector[iiFF][[15]]cvector[jjFF][[15]]q^4+cvector[iiFF][[14]]cvector[jjFF][[14]]q^2-2cvector[iiFF][[12]]cvector[jjFF][[15]]q^2+cvector[iiFF][[12]]cvector[jjFF][[12]])(v^2-q^2/(4(\[Mu]T[mchi,M])^2))+2cvector[iiFF][[4]]cvector[jjFF][[4]])+1/8 (cvector[iiFF][[3]]cvector[jjFF][[3]]q^2+cvector[iiFF][[7]]cvector[jjFF][[7]])(v^2-q^2/(4(\[Mu]T[mchi,M])^2)),{iiFF,2},{jjFF,2}];
 ResponseCoeff[DeltaJ]=Table[q^2/(4mN^2) Cl[jchi](cvector[iiFF][[5]]cvector[jjFF][[5]]q^2+cvector[iiFF][[8]]cvector[jjFF][[8]])+2 q^2/mN^2 cvector[iiFF][[2]]cvector[jjFF][[2]](v^2-q^2/(4(\[Mu]T[mchi,M])^2)),{iiFF,2},{jjFF,2}];
@@ -1401,6 +1391,7 @@ If[ifOutFile==1,
 Print["Writing to TeX file..."];
 TeXForm[1/(4mN mchi)^2*myFF/.y->(q bHO/2)^2/.q->qqdimless*GeV/.v->vv/.b->bHO//Expand//MyChop//Simplify]>>"myFormFactor.tex";
 ];];
+
 TransitionProbability[vv_,qqdimless_,IfRel_:False]:=Block[{ii, myFF,ANonrelToRel},
 
 ANonrelToRel=1;
@@ -1410,8 +1401,6 @@ PrintLag[];
 
 
 (* The factor of 1/(4mN mchi)^2 is necessary to convert the c coefficients to a coefficients *)
-
-
 Print["Your transition probability is"];
 myFF=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.FormalReplace;
 Return[ANonrelToRel/(4mN mchi)^2*myFF/.y->(q bHO/2)^2/.q->qqdimless*GeV/.v->vv/.b->bHO//Expand//MyChop//Simplify];
@@ -1422,7 +1411,7 @@ DiffCrossSection[ERkeV_,vv_]:=Block[{FFTemp,ER,bb,qq},
 bb=bHO;
 ER=ERkeV*10^(-6)*GeV;
 qq=Sqrt[2M*(mN/GeV)*ERkeV]*10^(-3)GeV;
-qq=1;
+
 PrintLag[];
 
 
@@ -1465,34 +1454,12 @@ PrintLag[];
 
 
 FFTemp=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.q->qq/.y->((qq bb)/2)^2/.b->bb;
-Print["vmin="]
-Print[qq/(2\[Mu]T[mchi,M])]
-Print["ve="]
-Print[vve]
-Print["v0="]
-Print[vv0]
-Print["q="]
-Print[qq]
-Print["y="]
-Print[((qq bb)/2)^2]
-Print["miso="]
-Print[M]
-Print["mchi="]
-Print[mchi]
-Print["Jiso="]
-Print[Jiso]
-Print["Tiso="]
-Print[Tiso]
+
 (*FFTemp=FormFactor[((qq bb)/2)^2,bb,v];*)
 If[(HALO!="MB")&&(HALO!="MBcutoff"),Print["Warning: Halo option not recognized.  Setting to Maxwell-Boltzmann."]; HALO="MB";];
-If[
-	HALO=="MB",
-	ERTemp = Coefficient[FFTemp,v,0] Fv0MB[vve/vv0,vmin/vv0]/vv0
-		+ Coefficient[FFTemp,v,2]FvsqMB[vve/vv0,vmin/vv0]*vv0
-];
+If[HALO=="MB",ERTemp=Coefficient[FFTemp,v,0] Fv0MB[vve/vv0,vmin/vv0]/vv0+Coefficient[FFTemp,v,2]FvsqMB[vve/vv0,vmin/vv0]*vv0];
 If[HALO=="MBcutoff",ERTemp=Coefficient[FFTemp,v,0] Fv0MBcutoff[vve/vv0,vmin/vv0,vvesc/vv0]/vv0+Coefficient[FFTemp,v,2]FvsqMBcutoff[vve/vv0,vmin/vv0,vvesc/vv0]*vv0];
 Print["Your event rate is"];
-
 Return[NT \[Rho]chi M/(32\[Pi] mchi^3 mN) ERTemp/.vmin->qq/(2\[Mu]T[mchi,M])+\[Delta]\[Delta]/qq]/.FormalReplace
 ];
 
