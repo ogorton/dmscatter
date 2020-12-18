@@ -13,4 +13,10 @@ manual/*.texit
 manual/*.toc
 manual/*.mk
 manual/*.out
+*/*.lcoef
+*/*.wfn
+*/*.log
+*/*.bigstick
+*/*.out
+*.
 python/__pycache__/

@@ -19,6 +19,7 @@ resultfile = "eventrate_spectra.dat"
 plt.figure()
 
 for wimp_mass in (5., 50., 500.):
+
     param_dict = { "MASS_KEYWORD" : wimp_mass }
     runCustomControl.runCustomControl(exec_name, inputfile, control_template, param_dict,
         workdir, label)

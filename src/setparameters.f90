@@ -21,7 +21,7 @@ subroutine setparameters(nuc_target)
     mN = 0.938272d0 
 
     !Mtiso = num_p-num_n
-    nuc_target%Mt = nuc_target%Z - nuc_target%N
+    nuc_target%Mt = nuc_target%N - nuc_target%Z
     !mtarget = num_p+num_n
     nuc_target%mass = nuc_target%Z + nuc_target%N
     nuc_target%nt = 1.0d0

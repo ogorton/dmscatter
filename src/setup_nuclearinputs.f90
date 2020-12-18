@@ -20,6 +20,8 @@ subroutine setup_nuclearinputs(nuc_target)
     if (yn=='y') then
         call coredensity(nuc_target)
     end if
+ 
+    call printdensities(nuc_target)
 
     bfm = (41.467/(45.*(nuc_target%mass)**(-1./3) &
                 - 25.*(nuc_target%mass)**(-2./3)))**0.5 * femtometer

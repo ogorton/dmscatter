@@ -36,11 +36,11 @@ program darkmattermain
     endif
 
     print*,' '
-    print*,'Enter the target neutron number '
-    read(5,*) nuc_target%N
-    print*,' '
     print*,'Enter the target proton number '
     read(5,*) nuc_target%Z
+    print*,' '
+    print*,'Enter the target neutron number '
+    read(5,*) nuc_target%N
 
     call setparameters(nuc_target)
     call setupcoef(eft)

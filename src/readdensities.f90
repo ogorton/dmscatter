@@ -166,27 +166,19 @@ end subroutine read2Jtrans
 subroutine readdensity(nuc_target, resfile,success)
    use parameters
    use spspace
-!   use op_info
    implicit none
    type(nucleus) :: nuc_target
    integer resfile
-   !integer istate,fstate
    integer a,b,i
    real(kind=8) ops,opv
-   !real(kind=8) fact0t,fact1t  ! isospin factors
    logical :: success
-   !real(kind=8) cleb !       ! function from LIBRA.f
 
    success=.false.
 
-!   fact0t = cleb(Tx2state_parent(istate),Mzi,0,0,Tx2state_daughter(fstate),Mzf)*sqrt(2.)/sqrt(Tx2state_daughter(fstate)+1.)
-!   fact1t = cleb(Tx2state_parent(istate),Mzi,2,0,Tx2state_daughter(fstate),Mzf)*sqrt(6.)/sqrt(Tx2state_daughter(fstate)+1.)
-
     do i = 1,norb(1)*norb(1)!nsporb*nsporb
         read(resfile,*,err=1,end=1)a,b,ops,opv
+        print*,a,b,ops,opv
 
-!          if(j==jt .and. istate >0 .and. fstate > 0)then
-!             if(nuc_target%densitymats(istate,fstate)%good)then
         if(pndens)then
             if(ops/=0.0)then
               nuc_target%densitymats%rhop(jt,a,b)= ops
@@ -209,8 +201,6 @@ subroutine readdensity(nuc_target, resfile,success)
              end if
 
         end if
-!             end if
-!          end if
    end do
 
    return
