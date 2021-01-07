@@ -61,7 +61,6 @@ function EventRate(q, wimp, nuc_target, eft, detector_t)
    
 !$OMP parallel do private(v) shared(wimp, nuc_target, eft)
     do i = 1, lattice_points
- 
         v = vdist_min + (i-1) * dv
         EventRate_integrand(i) = diffCrossSection(v, q, wimp, nuc_target, eftsmall) &
                     * v * v * ( maxwell_boltzmann(v-ve,v0) &

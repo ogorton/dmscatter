@@ -1,3 +1,4 @@
+dev/
 src/*.o
 src/*.mod
 src/*.x

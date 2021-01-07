@@ -15,14 +15,14 @@ function transition_probability(q,v,wimp,nucl,eft)
             real(doublep), allocatable :: densmat(:,:,:,:)
             REAL(doublep) :: nucResponse
         end function
-        function dmresponsecoef(eft, term, tau1, tau2, q, v, jchi, muT)
+        function dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT)
             use kinds
             use parameters
             real(doublep), allocatable, intent(in) :: eft(:,:)
             integer :: term
             integer :: tau1, tau2
             real(doublep) :: q, v, jchi, muT
-            REAL(doublep) :: dmresponsecoef
+            REAL(doublep) :: dmresponsefun
         end function
     end interface
     REAL(doublep) :: q
@@ -58,7 +58,7 @@ function transition_probability(q,v,wimp,nucl,eft)
         do tau2 = 0, 1
             do term = 1, 8
                 transition_probability = transition_probability &
-                    + dmresponsecoef(eft, term, tau1, tau2, q, v, jchi, muT)&
+                    + dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT)&
                     * nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
             end do ! term
         end do ! tau2

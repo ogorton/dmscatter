@@ -17,35 +17,18 @@ subroutine readheaderv2(nuc_target, resfile)
 !   logical askfortshift
 
 !............ check whether EVEN or ODD..............
-!   if(ctrlchar=='p')then
       read(resfile,'(a)')tmpline
-      read(resfile,'(a)')tmpline
+      !read(resfile,'(a)')tmpline
       read(resfile,*)zp,np
-!      print*,zp,np
-!          if(.not.readinZN)then
-!                  Z0 = zp
-!                  N0 = np
-!          else
-!                  if(Z0/=zp .or. N0/=np)then
-!                          print*,' Mismatch in valence particles '
-!                          print*,' Expect Z,N = ',Z0,N0
-!                          print*,' Found ',zp,np
-!                          stop
-!                  end if
-!          end if
       if( mod(np+zp,2) == 1)then
          evenA = .false.
       else
          evenA = .true.
       end if
       rewind(resfile)
-!   end if
    do i = 1,20
       read(resfile,'(a)')tmpline
       if(tmpline(3:7)=='State')then
-
-!         select case (ctrlchar)
-!         case ('c')
 
             nlocalstates = 0
             do j = 1,50000
@@ -55,15 +38,12 @@ subroutine readheaderv2(nuc_target, resfile)
                if(n==1)then
                  backspace(resfile)
                  read(resfile,*,err=3)n,e,ex,xj,xt
-         !      print*, n,e,ex,xj,xt
 
                end if
 
               if(n==j)then
                    nlocalstates = nlocalstates +1
-!                   print*, n,j
                else
-!                   print*, n,j
                    exit
                end if
             end do
@@ -152,6 +132,7 @@ subroutine read2Jtrans(resfile,found)
 
    if(tmpchar=='pro')then
            pndens=.true.
+           print*,'Density matrix is in explicit proton-neutron format.'
    else
            pndens=.false.
    end if
@@ -179,16 +160,16 @@ subroutine readdensity(nuc_target, resfile,success)
         read(resfile,*,err=1,end=1)a,b,ops,opv
         print*,a,b,ops,opv
 
-        if(pndens)then
-            if(ops/=0.0)then
-              nuc_target%densitymats%rhop(jt,a,b)= ops
-              success=.true.
-            end if
-            if(opv/=0.0)then
-              nuc_target%densitymats%rhon(jt,a,b)= opv
-              success=.true.
-            end if
-        else
+        !if(pndens)then
+        !    if(ops/=0.0)then
+        !      nuc_target%densitymats%rhop(jt,a,b)= ops
+        !      success=.true.
+        !    end if
+        !    if(opv/=0.0)then
+        !      nuc_target%densitymats%rhon(jt,a,b)= opv
+        !      success=.true.
+        !    end if
+        !else
 
              if(ops /= 0.0)then
                nuc_target%densitymats%rho(jt,0,a,b)= ops
@@ -200,7 +181,7 @@ subroutine readdensity(nuc_target, resfile,success)
                success=.true.
              end if
 
-        end if
+        !end if
    end do
 
    return

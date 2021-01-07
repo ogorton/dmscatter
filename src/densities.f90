@@ -13,11 +13,11 @@ subroutine openresults(resfile)
    print*,' '
    do while(.not.success)
 
-       print*,' Enter name of one-body density file (.res) '
+       print*,' Enter name of one-body density file (.dres) '
 
        read(5,'(a)')filename
        ilast = index(filename,' ')-1
-       open(unit=resfile,file=filename(1:ilast)//'.res',status='old',err=2)
+       open(unit=resfile,file=filename(1:ilast)//'.dres',status='old',err=2)
        success = .true.
        return
 2      continue
@@ -41,15 +41,10 @@ subroutine setupdensities(nuc_target)
 
     print*, ntotal(1)
 
-!                 nuc_target%densitymats%good = .true.
     ! densities(J,iso,a,b)
     allocate(nuc_target%densitymats%rho( 0:10,0:1,1:ntotal(1),1:ntotal(1)) )
     print*,'Density matrix allocated, size:',size(nuc_target%densitymats%rho)
     nuc_target%densitymats%rho(:,:,:,:) = 0.0
-    allocate(nuc_target%densitymats%rhop(0:10,1:ntotal(1),1:ntotal(1)))
-    allocate(nuc_target%densitymats%rhon(0:10,1:ntotal(1),1:ntotal(1)))
-    nuc_target%densitymats%rhop(:,:,:) = 0.0
-    nuc_target%densitymats%rhon(:,:,:) = 0.0
 
 end subroutine setupdensities
 
@@ -71,10 +66,17 @@ subroutine coredensity(nuc_target)
 
   print*,'Filling core orbitals.'
 
-  do i = norb(1)+1, ntotal(1) ! core comes after valence. ntotal = ncore+nval.
-     nuc_target%densitymats%rho(0,0,i,i) = sqrt(2.0*(jorb(i)+1.0)*(Jiso+1.0)*(Tiso+1.0))
-     nuc_target%densitymats%rho(0,1,i,i) = sqrt(2.0*(jorb(i)+1.0)*(Jiso+1.0)*(Tiso+1.0))
-  end do
+  if (pndens) then
+      do i = norb(1)+1, ntotal(1)
+          nuc_target%densitymats%rho(0,0,i,i) = sqrt((jorb(i)+1.0) * (Jiso+1.0)*(Tiso+1.0))
+          nuc_target%densitymats%rho(0,1,i,i) = sqrt((jorb(i)+1.0) * (Jiso+1.0)*(Tiso+1.0))
+      end do
+  else
+      do i = norb(1)+1, ntotal(1) ! core comes after valence. ntotal = ncore+nval.
+         nuc_target%densitymats%rho(0,0,i,i) = sqrt(2.0*(jorb(i)+1.0)*(Jiso+1.0)*(Tiso+1.0))
+         nuc_target%densitymats%rho(0,1,i,i) = 0.0
+      end do
+  end if
 
 end subroutine coredensity
 

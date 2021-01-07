@@ -9,8 +9,8 @@
     2   -133.92904   1.93168     2.000   0.000
     3   -131.25354   4.60718     4.000   0.000
   
-  Total time to run :    32.013000000035390     
-  Time in 2-body (pp)(backwards) :   0.57600000000093132     
+  Total time to run :    34.406000000075437     
+  Time in 2-body (pp)(backwards) :   0.57499999972060323     
   
   -- END OF RUN REPORT -- END OF RUN REPORT -- END OF RUN REPORT -- 
   
