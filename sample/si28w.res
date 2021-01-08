@@ -1,5 +1,4 @@
   BIGSTICK Version 7.9.1 Feb  2019
-  single-particle file = sd
            6           6
            0 +
          100  iterations 

@@ -10,6 +10,6 @@ vearth 232.0
 maxwellv0 220.0
 #vescape 544.
 dmdens 0.3
-intpoints 500
-usemomentum 0
+intpoints 1000
+usemomentum 1
 useenergyfile 0

@@ -1,5 +1,5 @@
-COMP =  gfortran
-OPTIONS = -O2 -Wall -fopenmp #-fbounds-check
+COMP =  gfortran -pg
+OPTIONS = -O2 -Wall -fopenmp 
 
 OBJ1 = \
 norm.o\
@@ -17,8 +17,10 @@ mjl.o\
 sigma.o\
 zhangjin.o\
 operme.o\
-dmresponse.o\
-dmresponse2.o\
+dmresponsefun.o\
+dmresponse_lib.o\
+dmresponse_iso.o\
+dmresponse_pn.o\
 nucresponse.o\
 test_nucresponse.o\
 transition.o\
@@ -37,6 +39,7 @@ darkmattermain.o
 
 darkmatter.x: $(OBJ1) 
 	$(COMP) -o darkmatter.x  $(OPTIONS) $(OBJ1) 
+	cp darkmatter.x ~/bin/
 
 clean:
 	rm *.o *.x *.mod

@@ -13,9 +13,9 @@
  [4] (Future feature) Total cross section
  [5] (Future feature) Total scattering rate per detector
   
- Enter the target neutron number 
-  
  Enter the target proton number 
+  
+ Enter the target neutron number 
  Setting default parameter values.
   
  Enter name of control file (.control):
@@ -66,8 +66,30 @@
   Enter name of one-body density file (.res) 
            6
  Density matrix allocated, size:         792
+           1           1  0.47571000000000002        0.0000000000000000     
+           2           2   2.6693400000000000        0.0000000000000000     
+           3           3  0.70381000000000005        0.0000000000000000     
  Fill core? [y/n]
  Filling core orbitals.
+ Printing density matrix.
+ # spo =           6
+ J=           0
+           1           1  0.47571000000000002        0.0000000000000000     
+           2           2   2.6693400000000000        0.0000000000000000     
+           3           3  0.70381000000000005        0.0000000000000000     
+           4           4   2.0000000000000000        2.0000000000000000     
+           5           5   2.8284270763397217        2.8284270763397217     
+           6           6   2.0000000000000000        2.0000000000000000     
+ J=           1
+ J=           2
+ J=           3
+ J=           4
+ J=           5
+ J=           6
+ J=           7
+ J=           8
+ J=           9
+ J=          10
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  Parameters used in this calculation:
  femtometer =   5.0677000000000003     

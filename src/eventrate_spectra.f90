@@ -115,7 +115,7 @@ subroutine eventrate_spectra(wimp, nuc_target, eft, detector_t)
 
     close(157)
 
-    print*,"Event rate spectra written to evenrate_spectra.dat"
+    print*,"Event rate spectra written to eventrate_spectra.dat"
 
 end subroutine eventrate_spectra
 
