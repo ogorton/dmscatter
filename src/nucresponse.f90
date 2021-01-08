@@ -90,6 +90,7 @@ function nucResponse(tau1,tau2,term,y,densmat,Tiso,Mtiso)
             call OperME(op2,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),&
                     jorb(b),j,spOME2)
             DRME2(j) = DRME2(j) + densmat(j,tau2,a,b) * spOME2 
+!            print*,j,a,b,densmat(j,tau1,a,b), spOME1
 
           end if
         end do

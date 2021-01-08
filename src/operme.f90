@@ -25,6 +25,7 @@ subroutine OperME(i,y,np,lp,jp,n,l,j,bigJ,operatorME)
     ! i = 2, for operator SigmaJ
     else if (i .eq. 2) then
         operatorME = SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ)
+
     ! i = 3, for operator PhiPPJ
     else if (i .eq. 3) then
         operatorMe = Qnorm(dble(bigJ)+1.0)*SQRT(dble(bigJ)+1.0)*(PhiPPsummand1(y,np,lp,jp,n,l,j,bigJ) &
@@ -34,7 +35,6 @@ subroutine OperME(i,y,np,lp,jp,n,l,j,bigJ,operatorME)
                  & *(PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)    &
                  & +PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ))
         end if
-    
         operatorME = operatorME * PhiPPoverall(lp,jp,l,j)
     
     ! i = 4, for operator PhiTPJ
@@ -47,7 +47,6 @@ subroutine OperME(i,y,np,lp,jp,n,l,j,bigJ,operatorME)
                  & *(PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)    &
                  & +PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ))
         end if
-
         operatorME = operatorME * PhiPPoverall(lp,jp,l,j)
         operatorME = operatorME + SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ)/2.0
 

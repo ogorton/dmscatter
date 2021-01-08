@@ -11,5 +11,5 @@ maxwellv0 220.0
 #vescape 544.
 dmdens 0.3
 intpoints 1000
-usemomentum 0
+usemomentum 1
 useenergyfile 0

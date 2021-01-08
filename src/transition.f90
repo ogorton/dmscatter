@@ -60,6 +60,8 @@ function transition_probability(q,v,wimp,nucl,eft)
                 transition_probability = transition_probability &
                     + dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT)&
                     * nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
+!    print*,tau1,tau2,term,dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT),&
+!            nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
             end do ! term
         end do ! tau2
     end do ! tau1
