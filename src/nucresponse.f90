@@ -78,8 +78,8 @@ function nucResponse(tau1,tau2,term,y,densmat,Tiso,Mtiso)
     do j = jmin,jmax,2
       do a = 1, ntotal(1)
         do b = 1, ntotal(1)
-          if (abs(densmat(j,tau1,a,b)) .ge. 1.0e-9 &
-                .or. abs(densmat(j,tau2,a,b)) .ge. 1.0e-9) then
+          if (abs(densmat(j,tau1,a,b)) .ge. 1.0e-5 &
+                .or. abs(densmat(j,tau2,a,b)) .ge. 1.0e-5) then
 
             ! Operator 1 with tau2 <j| op1,tau1 |j>
             call OperME(op1,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),&

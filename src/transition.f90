@@ -34,7 +34,7 @@ function transition_probability(q,v,wimp,nucl,eft)
     REAL(doublep) :: y
     REAL(doublep) :: mchi, jchi, mtarget, jtarget
     REAL(doublep) :: muT
-    REAL(doublep) :: transition_probability
+    REAL(doublep) :: transition_probability, tmpprod
 
     integer :: tau1, tau2, term
     integer :: Mtiso, Tiso
@@ -57,9 +57,10 @@ function transition_probability(q,v,wimp,nucl,eft)
     do tau1 = 0, 1
         do tau2 = 0, 1
             do term = 1, 8
-                transition_probability = transition_probability &
-                    + dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT)&
-                    * nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
+                tmpprod = dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT)
+                if (tmpprod.ne.0) tmpprod = tmpprod * &
+                    nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
+                transition_probability = transition_probability + tmpprod
 !    print*,tau1,tau2,term,dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT),&
 !            nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
             end do ! term

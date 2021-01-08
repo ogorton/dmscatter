@@ -1,5 +1,5 @@
 COMP =  gfortran -pg
-OPTIONS = -O2 -Wall -fopenmp 
+OPTIONS = -O2 -Wall -fopenmp -pg
 
 OBJ1 = \
 norm.o\

@@ -1,0 +1,433 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 50.01      0.03     0.03  3472000     0.00     0.00  faclog_
+ 16.67      0.04     0.01   178000     0.00     0.00  summand1_
+ 16.67      0.05     0.01    60000     0.00     0.00  mj_
+ 16.67      0.06     0.01     1000     0.01     0.06  transition_probability_
+  0.00      0.06     0.00   356000     0.00     0.00  chgm_
+  0.00      0.06     0.00   300000     0.00     0.00  jnorm_
+  0.00      0.06     0.00   240000     0.00     0.00  triangle_
+  0.00      0.06     0.00   178000     0.00     0.00  summand2_
+  0.00      0.06     0.00   178000     0.00     0.00  summand3_
+  0.00      0.06     0.00   128000     0.00     0.00  dmresponse_iso_
+  0.00      0.06     0.00    60000     0.00     0.00  besselelement_
+  0.00      0.06     0.00    60000     0.00     0.00  besself1_
+  0.00      0.06     0.00    60000     0.00     0.00  besself2_
+  0.00      0.06     0.00    60000     0.00     0.00  besself3_
+  0.00      0.06     0.00    60000     0.00     0.00  cg_
+  0.00      0.06     0.00    60000     0.00     0.00  dblefaclog_
+  0.00      0.06     0.00    60000     0.00     0.00  operme_
+  0.00      0.06     0.00    60000     0.00     0.00  wigner_3j_
+  0.00      0.06     0.00    60000     0.00     0.00  wigner_6j_
+  0.00      0.06     0.00    32000     0.00     0.00  dmresponse_pn_
+  0.00      0.06     0.00    32000     0.00     0.00  dmresponsefun_
+  0.00      0.06     0.00    16000     0.00     0.00  __dmresponse_MOD_dmrdeltaj
+  0.00      0.06     0.00    16000     0.00     0.00  __dmresponse_MOD_dmrmj
+  0.00      0.06     0.00    16000     0.00     0.00  __dmresponse_MOD_dmrphippj
+  0.00      0.06     0.00    16000     0.00     0.00  __dmresponse_MOD_dmrphippjmj
+  0.00      0.06     0.00    16000     0.00     0.00  __dmresponse_MOD_dmrphitpj
+  0.00      0.06     0.00    16000     0.00     0.00  __dmresponse_MOD_dmrsigmapj
+  0.00      0.06     0.00    16000     0.00     0.00  __dmresponse_MOD_dmrsigmapjdeltaj
+  0.00      0.06     0.00    16000     0.00     0.00  __dmresponse_MOD_dmrsigmappj
+  0.00      0.06     0.00     2000     0.00     0.00  maxwell_boltzmann_
+  0.00      0.06     0.00     1000     0.00     0.06  diffcrosssection_
+  0.00      0.06     0.00     1000     0.00     0.05  nucresponse_
+  0.00      0.06     0.00        8     0.00     0.00  setkeyword_
+  0.00      0.06     0.00        5     0.00     0.00  read2jtrans_
+  0.00      0.06     0.00        4     0.00     0.00  readdensity_
+  0.00      0.06     0.00        2     0.00     0.00  closest2j_
+  0.00      0.06     0.00        2     0.00     0.00  read2state_
+  0.00      0.06     0.00        1     0.00    60.01  boole_
+  0.00      0.06     0.00        1     0.00     0.00  convertisospinform_
+  0.00      0.06     0.00        1     0.00     0.00  coredensity_
+  0.00      0.06     0.00        1     0.00    60.01  eventrate_
+  0.00      0.06     0.00        1     0.00     0.00  getsps_
+  0.00      0.06     0.00        1     0.00     0.00  normalizecoeffs_
+  0.00      0.06     0.00        1     0.00     0.00  opencontrolfile_
+  0.00      0.06     0.00        1     0.00     0.00  openresults_
+  0.00      0.06     0.00        1     0.00     0.00  printdensities_
+  0.00      0.06     0.00        1     0.00     0.00  printparameters_
+  0.00      0.06     0.00        1     0.00     0.00  readalldensities_
+  0.00      0.06     0.00        1     0.00     0.00  readcontrolfile_
+  0.00      0.06     0.00        1     0.00     0.00  readheaderv2_
+  0.00      0.06     0.00        1     0.00     0.00  setparameters_
+  0.00      0.06     0.00        1     0.00     0.00  setpncoeffsnonrel_
+  0.00      0.06     0.00        1     0.00     0.00  setup_nuclearinputs_
+  0.00      0.06     0.00        1     0.00     0.00  setupcoef_
+  0.00      0.06     0.00        1     0.00     0.00  setupdensities_
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 16.66% of 0.06 seconds
+
+index % time    self  children    called     name
+                0.00    0.06    1000/1000        boole_ [3]
+[1]    100.0    0.00    0.06    1000         diffcrosssection_ [1]
+                0.01    0.05    1000/1000        transition_probability_ [2]
+-----------------------------------------------
+                0.01    0.05    1000/1000        diffcrosssection_ [1]
+[2]    100.0    0.01    0.05    1000         transition_probability_ [2]
+                0.00    0.05    1000/1000        nucresponse_ [8]
+                0.00    0.00   32000/32000       dmresponse_pn_ [25]
+                0.00    0.00   32000/32000       dmresponsefun_ [26]
+-----------------------------------------------
+                0.00    0.06       1/1           eventrate_ [4]
+[3]    100.0    0.00    0.06       1         boole_ [3]
+                0.00    0.06    1000/1000        diffcrosssection_ [1]
+                0.00    0.00    2000/2000        maxwell_boltzmann_ [27]
+-----------------------------------------------
+                0.00    0.06       1/1           __espectra_MOD_eventrate_spectra [5]
+[4]    100.0    0.00    0.06       1         eventrate_ [4]
+                0.00    0.06       1/1           boole_ [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]    100.0    0.00    0.06                 __espectra_MOD_eventrate_spectra [5]
+                0.00    0.06       1/1           eventrate_ [4]
+-----------------------------------------------
+                0.01    0.04   60000/60000       operme_ [7]
+[6]     83.3    0.01    0.04   60000         mj_ [6]
+                0.00    0.02   60000/60000       besselelement_ [10]
+                0.00    0.01   60000/60000       wigner_6j_ [13]
+                0.00    0.01   60000/60000       wigner_3j_ [15]
+                0.00    0.00  300000/300000      jnorm_ [19]
+-----------------------------------------------
+                0.00    0.05   60000/60000       nucresponse_ [8]
+[7]     83.3    0.00    0.05   60000         operme_ [7]
+                0.01    0.04   60000/60000       mj_ [6]
+-----------------------------------------------
+                0.00    0.05    1000/1000        transition_probability_ [2]
+[8]     83.3    0.00    0.05    1000         nucresponse_ [8]
+                0.00    0.05   60000/60000       operme_ [7]
+-----------------------------------------------
+                0.00    0.00  120000/3472000     besself1_ [17]
+                0.00    0.00  480000/3472000     wigner_6j_ [13]
+                0.01    0.00  712000/3472000     summand1_ [11]
+                0.01    0.00  960000/3472000     triangle_ [16]
+                0.01    0.00 1200000/3472000     cg_ [14]
+[9]     50.0    0.03    0.00 3472000         faclog_ [9]
+-----------------------------------------------
+                0.00    0.02   60000/60000       mj_ [6]
+[10]    28.6    0.00    0.02   60000         besselelement_ [10]
+                0.00    0.02   60000/60000       besself3_ [12]
+                0.00    0.00   60000/60000       besself1_ [17]
+                0.00    0.00   60000/60000       besself2_ [23]
+-----------------------------------------------
+                0.01    0.01  178000/178000      besself3_ [12]
+[11]    26.9    0.01    0.01  178000         summand1_ [11]
+                0.01    0.00  712000/3472000     faclog_ [9]
+-----------------------------------------------
+                0.00    0.02   60000/60000       besselelement_ [10]
+[12]    26.9    0.00    0.02   60000         besself3_ [12]
+                0.01    0.01  178000/178000      summand1_ [11]
+                0.00    0.00  178000/178000      summand2_ [20]
+                0.00    0.00  178000/178000      summand3_ [21]
+-----------------------------------------------
+                0.00    0.01   60000/60000       mj_ [6]
+[13]    20.7    0.00    0.01   60000         wigner_6j_ [13]
+                0.00    0.01  240000/240000      triangle_ [16]
+                0.00    0.00  480000/3472000     faclog_ [9]
+-----------------------------------------------
+                0.00    0.01   60000/60000       wigner_3j_ [15]
+[14]    17.3    0.00    0.01   60000         cg_ [14]
+                0.01    0.00 1200000/3472000     faclog_ [9]
+-----------------------------------------------
+                0.00    0.01   60000/60000       mj_ [6]
+[15]    17.3    0.00    0.01   60000         wigner_3j_ [15]
+                0.00    0.01   60000/60000       cg_ [14]
+-----------------------------------------------
+                0.00    0.01  240000/240000      wigner_6j_ [13]
+[16]    13.8    0.00    0.01  240000         triangle_ [16]
+                0.01    0.00  960000/3472000     faclog_ [9]
+-----------------------------------------------
+                0.00    0.00   60000/60000       besselelement_ [10]
+[17]     1.7    0.00    0.00   60000         besself1_ [17]
+                0.00    0.00  120000/3472000     faclog_ [9]
+                0.00    0.00   60000/60000       dblefaclog_ [24]
+-----------------------------------------------
+                0.00    0.00  356000/356000      summand3_ [21]
+[18]     0.0    0.00    0.00  356000         chgm_ [18]
+-----------------------------------------------
+                0.00    0.00  300000/300000      mj_ [6]
+[19]     0.0    0.00    0.00  300000         jnorm_ [19]
+-----------------------------------------------
+                0.00    0.00  178000/178000      besself3_ [12]
+[20]     0.0    0.00    0.00  178000         summand2_ [20]
+-----------------------------------------------
+                0.00    0.00  178000/178000      besself3_ [12]
+[21]     0.0    0.00    0.00  178000         summand3_ [21]
+                0.00    0.00  356000/356000      chgm_ [18]
+-----------------------------------------------
+                0.00    0.00  128000/128000      dmresponse_pn_ [25]
+[22]     0.0    0.00    0.00  128000         dmresponse_iso_ [22]
+-----------------------------------------------
+                0.00    0.00   60000/60000       besselelement_ [10]
+[23]     0.0    0.00    0.00   60000         besself2_ [23]
+-----------------------------------------------
+                0.00    0.00   60000/60000       besself1_ [17]
+[24]     0.0    0.00    0.00   60000         dblefaclog_ [24]
+-----------------------------------------------
+                0.00    0.00   32000/32000       transition_probability_ [2]
+[25]     0.0    0.00    0.00   32000         dmresponse_pn_ [25]
+                0.00    0.00  128000/128000      dmresponse_iso_ [22]
+                0.00    0.00   16000/16000       __dmresponse_MOD_dmrsigmapjdeltaj [90]
+                0.00    0.00   16000/16000       __dmresponse_MOD_dmrphippjmj [87]
+                0.00    0.00   16000/16000       __dmresponse_MOD_dmrsigmappj [91]
+                0.00    0.00   16000/16000       __dmresponse_MOD_dmrsigmapj [89]
+                0.00    0.00   16000/16000       __dmresponse_MOD_dmrdeltaj [84]
+                0.00    0.00   16000/16000       __dmresponse_MOD_dmrphitpj [88]
+                0.00    0.00   16000/16000       __dmresponse_MOD_dmrphippj [86]
+                0.00    0.00   16000/16000       __dmresponse_MOD_dmrmj [85]
+-----------------------------------------------
+                0.00    0.00   32000/32000       transition_probability_ [2]
+[26]     0.0    0.00    0.00   32000         dmresponsefun_ [26]
+-----------------------------------------------
+                0.00    0.00    2000/2000        boole_ [3]
+[27]     0.0    0.00    0.00    2000         maxwell_boltzmann_ [27]
+-----------------------------------------------
+                0.00    0.00       8/8           readcontrolfile_ [42]
+[28]     0.0    0.00    0.00       8         setkeyword_ [28]
+-----------------------------------------------
+                0.00    0.00       5/5           readalldensities_ [41]
+[29]     0.0    0.00    0.00       5         read2jtrans_ [29]
+-----------------------------------------------
+                0.00    0.00       4/4           readalldensities_ [41]
+[30]     0.0    0.00    0.00       4         readdensity_ [30]
+-----------------------------------------------
+                0.00    0.00       2/2           readheaderv2_ [43]
+[31]     0.0    0.00    0.00       2         closest2j_ [31]
+-----------------------------------------------
+                0.00    0.00       2/2           readalldensities_ [41]
+[32]     0.0    0.00    0.00       2         read2state_ [32]
+-----------------------------------------------
+                0.00    0.00       1/1           MAIN__ [49]
+[33]     0.0    0.00    0.00       1         convertisospinform_ [33]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_nuclearinputs_ [46]
+[34]     0.0    0.00    0.00       1         coredensity_ [34]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_nuclearinputs_ [46]
+[35]     0.0    0.00    0.00       1         getsps_ [35]
+-----------------------------------------------
+                0.00    0.00       1/1           MAIN__ [49]
+[36]     0.0    0.00    0.00       1         normalizecoeffs_ [36]
+-----------------------------------------------
+                0.00    0.00       1/1           MAIN__ [49]
+[37]     0.0    0.00    0.00       1         opencontrolfile_ [37]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_nuclearinputs_ [46]
+[38]     0.0    0.00    0.00       1         openresults_ [38]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_nuclearinputs_ [46]
+[39]     0.0    0.00    0.00       1         printdensities_ [39]
+-----------------------------------------------
+                0.00    0.00       1/1           MAIN__ [49]
+[40]     0.0    0.00    0.00       1         printparameters_ [40]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_nuclearinputs_ [46]
+[41]     0.0    0.00    0.00       1         readalldensities_ [41]
+                0.00    0.00       5/5           read2jtrans_ [29]
+                0.00    0.00       4/4           readdensity_ [30]
+                0.00    0.00       2/2           read2state_ [32]
+-----------------------------------------------
+                0.00    0.00       1/1           MAIN__ [49]
+[42]     0.0    0.00    0.00       1         readcontrolfile_ [42]
+                0.00    0.00       8/8           setkeyword_ [28]
+                0.00    0.00       1/1           setpncoeffsnonrel_ [45]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_nuclearinputs_ [46]
+[43]     0.0    0.00    0.00       1         readheaderv2_ [43]
+                0.00    0.00       2/2           closest2j_ [31]
+-----------------------------------------------
+                0.00    0.00       1/1           MAIN__ [49]
+[44]     0.0    0.00    0.00       1         setparameters_ [44]
+-----------------------------------------------
+                0.00    0.00       1/1           readcontrolfile_ [42]
+[45]     0.0    0.00    0.00       1         setpncoeffsnonrel_ [45]
+-----------------------------------------------
+                0.00    0.00       1/1           MAIN__ [49]
+[46]     0.0    0.00    0.00       1         setup_nuclearinputs_ [46]
+                0.00    0.00       1/1           getsps_ [35]
+                0.00    0.00       1/1           openresults_ [38]
+                0.00    0.00       1/1           setupdensities_ [48]
+                0.00    0.00       1/1           readheaderv2_ [43]
+                0.00    0.00       1/1           readalldensities_ [41]
+                0.00    0.00       1/1           printdensities_ [39]
+                0.00    0.00       1/1           coredensity_ [34]
+-----------------------------------------------
+                0.00    0.00       1/1           MAIN__ [49]
+[47]     0.0    0.00    0.00       1         setupcoef_ [47]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_nuclearinputs_ [46]
+[48]     0.0    0.00    0.00       1         setupdensities_ [48]
+-----------------------------------------------
+                0.00    0.00   16000/16000       dmresponse_pn_ [25]
+[84]     0.0    0.00    0.00   16000         __dmresponse_MOD_dmrdeltaj [84]
+-----------------------------------------------
+                0.00    0.00   16000/16000       dmresponse_pn_ [25]
+[85]     0.0    0.00    0.00   16000         __dmresponse_MOD_dmrmj [85]
+-----------------------------------------------
+                0.00    0.00   16000/16000       dmresponse_pn_ [25]
+[86]     0.0    0.00    0.00   16000         __dmresponse_MOD_dmrphippj [86]
+-----------------------------------------------
+                0.00    0.00   16000/16000       dmresponse_pn_ [25]
+[87]     0.0    0.00    0.00   16000         __dmresponse_MOD_dmrphippjmj [87]
+-----------------------------------------------
+                0.00    0.00   16000/16000       dmresponse_pn_ [25]
+[88]     0.0    0.00    0.00   16000         __dmresponse_MOD_dmrphitpj [88]
+-----------------------------------------------
+                0.00    0.00   16000/16000       dmresponse_pn_ [25]
+[89]     0.0    0.00    0.00   16000         __dmresponse_MOD_dmrsigmapj [89]
+-----------------------------------------------
+                0.00    0.00   16000/16000       dmresponse_pn_ [25]
+[90]     0.0    0.00    0.00   16000         __dmresponse_MOD_dmrsigmapjdeltaj [90]
+-----------------------------------------------
+                0.00    0.00   16000/16000       dmresponse_pn_ [25]
+[91]     0.0    0.00    0.00   16000         __dmresponse_MOD_dmrsigmappj [91]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [84] __dmresponse_MOD_dmrdeltaj [1] diffcrosssection_   [41] readalldensities_
+  [85] __dmresponse_MOD_dmrmj [22] dmresponse_iso_        [42] readcontrolfile_
+  [86] __dmresponse_MOD_dmrphippj [25] dmresponse_pn_     [30] readdensity_
+  [87] __dmresponse_MOD_dmrphippjmj [26] dmresponsefun_   [43] readheaderv2_
+  [88] __dmresponse_MOD_dmrphitpj [4] eventrate_          [28] setkeyword_
+  [89] __dmresponse_MOD_dmrsigmapj [9] faclog_            [44] setparameters_
+  [90] __dmresponse_MOD_dmrsigmapjdeltaj [35] getsps_     [45] setpncoeffsnonrel_
+  [91] __dmresponse_MOD_dmrsigmappj [19] jnorm_           [46] setup_nuclearinputs_
+  [10] besselelement_         [27] maxwell_boltzmann_     [47] setupcoef_
+  [17] besself1_               [6] mj_                    [48] setupdensities_
+  [23] besself2_              [36] normalizecoeffs_       [11] summand1_
+  [12] besself3_               [8] nucresponse_           [20] summand2_
+   [3] boole_                 [37] opencontrolfile_       [21] summand3_
+  [14] cg_                    [38] openresults_            [2] transition_probability_
+  [18] chgm_                   [7] operme_                [16] triangle_
+  [31] closest2j_             [39] printdensities_        [15] wigner_3j_
+  [33] convertisospinform_    [40] printparameters_       [13] wigner_6j_
+  [34] coredensity_           [29] read2jtrans_
+  [24] dblefaclog_            [32] read2state_
