@@ -22,6 +22,11 @@ the /sample/ directory directory and run:
 This computes the event rate spectra for a Si28 target. 
 More extensive documentation can be found in the manual document.
 
+### Version 1.3 update (Jan. 13, 2021)
+* Now supports nuclear density matrix files in either isospin or proton-neutron
+  formalism
+* Inputs and outputs now carry specified units
+
 ### Version 1.2 update (Nov. 24, 2020)
 * Data reorganized to support future extension to multiple target species.
 
@@ -35,7 +40,8 @@ More extensive documentation can be found in the manual document.
 
 ### Version 1.1 update (Nov. 20, 2020)
 * Now supports computing event rate spectra (event rate versus recoil energy in kev)
-* Energy range is entered either (a) as a linear grid by specifying Emin, Emax, Estep, or (b) from a file specifying energies
+* Energy range is entered either (a) as a linear grid by specifying Emin, Emax, 
+  Estep, or (b) from a file specifying energies
 * Now takes advantage of multi-core systems using openMP
 
 
