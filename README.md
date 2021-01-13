@@ -26,6 +26,9 @@ More extensive documentation can be found in the manual document.
 * Now supports nuclear density matrix files in either isospin or proton-neutron
   formalism
 * Inputs and outputs now carry specified units
+Bugfixes:
+* Fixed bug involving illegal sqrt() evaluations
+* Updated numerical quadrature routine to library (instead of 'homebrew')
 
 ### Version 1.2 update (Nov. 24, 2020)
 * Data reorganized to support future extension to multiple target species.
