@@ -12,3 +12,4 @@ dmdens 0.3
 intpoints 500
 usemomentum 0
 useenergyfile 0
+fillnuclearcore 1

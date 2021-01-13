@@ -35,6 +35,7 @@ module parameters
 
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
    ! Target nucleus
+   logical :: fillcore = .true.
    logical :: evenA
    integer nlocalstates !,maxlocalstates
    integer nsporb   ! # of single-particle orbits
@@ -142,9 +143,9 @@ module keywords
 
     ! Do not change the order of these keywords!!! Their order determines which
     ! parameters are modified when the string is found in the control file.
-    character(len=20), dimension(17) :: keyword_array = [character(20) :: &
+    character(len=20), dimension(18) :: keyword_array = [character(20) :: &
         "coefnonrel","vearth","dmdens","quadtype","intpoints","gev","femtometer",&
         "wimpmass","vescape","ntarget","weakmscale","vscale","mnucleon","dmspin",&
-        "usemomentum","maxwellv0","useenergyfile"]
+        "usemomentum","maxwellv0","useenergyfile","fillnuclearcore"]
 
 end module keywords

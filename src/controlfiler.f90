@@ -49,7 +49,7 @@ subroutine readcontrolfile(resfile, eft, wimp)
 
     print*,'Possible keywords:'
     do i =1,14
-        print*,keyword_array(i)
+        print*,trim(keyword_array(i))
     enddo
     print*,''
 
@@ -124,7 +124,7 @@ subroutine setkeyword(keyword, keyvalue, wimp)
         print*,trim(keyword),": Set local dark matter density to",keyvalue
 
     case('quadtype')
-        print*,keyword,': not implemented.'
+        print*,trim(keyword),': not implemented.'
 
     case('intpoints')
         lattice_points = int( keyvalue )
@@ -132,51 +132,62 @@ subroutine setkeyword(keyword, keyvalue, wimp)
 
     case('gev')
         gev = keyvalue
-        print*,keyword,': Set GeV units to',gev
+        print*,trim(keyword),': Set GeV units to',gev
         femtometer = 5.0677/GeV
         print*,'femtometer updated'
 
     case('femtometer')
         femtometer = keyvalue
-        print*,keyword,': Set femtometer units to',femtometer
+        print*,trim(keyword),': Set femtometer units to',femtometer
 
     case('wimpmass')
         wimp%mass = keyvalue
-        print*,keyword,': Set dark matter particle mass to',keyvalue
+        print*,trim(keyword),': Set dark matter particle mass to',keyvalue
 
     case('vescape')
         vdist_t%vescape = keyvalue
-        print*,keyword,': Set escape velocity to', vdist_t%vescape
+        print*,trim(keyword),': Set escape velocity to', vdist_t%vescape
         vdist_max = vdist_t%vescape
 
     case('weakmscale')
         mV = keyvalue
-        print*,keyword,': Set standard-model weak interaction mass scale to',mv
+        print*,trim(keyword),': Set standard-model weak interaction mass scale to',mv
 
     case('maxwellv0')
         vdist_t%vscale = keyvalue
-        print*,keyword,': Set velocity distribution scaling to',vdist_t%vscale
+        print*,trim(keyword),': Set velocity distribution scaling to',vdist_t%vscale
 
     case('mnucleon')
         mn = keyvalue
-        print*,keyword,': Set nucleon mass to',mn
+        print*,trim(keyword),': Set nucleon mass to',mn
 
     case('dmspin')
         wimp%j = keyvalue
-        print*,keyword,': Set dark matter particle spin to',keyvalue
+        print*,trim(keyword),': Set dark matter particle spin to',keyvalue
 
     case('usemomentum')
         if (keyvalue==1) then
             usemomentum = .true.
-            print*,'Set usemomentum to true; using momentum transfer instead& 
+            print*,trim(keyword),': Set to use momentum transfer instead& 
                     & of recoil energy'
+        else
+            usemomentum = .false.
         end if
 
     case('useenergyfile')
         if (keyvalue==1) then
             useenergyfile = .true.
-            print*,'Set useenergyfile to true; using recoil energies in file&
+            print*,trim(keyword),': Set to use recoil energies in file&
                     & instead of linear grid specification.'
+        end if
+
+    case('fillnuclearcore')
+        if (keyvalue==1) then
+            fillcore = .true.
+            print*,trim(keyword),': Set to fill density matrix core orbitals.'
+        else
+            fillcore = .false.
+            print*,trim(keyword),': Set to leave denisty matrix core orbitals unfilled.'
         end if
 
     case default
