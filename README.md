@@ -23,9 +23,11 @@ This computes the event rate spectra for a Si28 target.
 More extensive documentation can be found in the manual document.
 
 ### Version 1.3 update (Jan. 13, 2021)
+New features:
 * Now supports nuclear density matrix files in either isospin or proton-neutron
   formalism
 * Inputs and outputs now carry specified units
+
 Bugfixes:
 * Fixed bug involving illegal sqrt() evaluations
 * Updated numerical quadrature routine to library (instead of 'homebrew')
