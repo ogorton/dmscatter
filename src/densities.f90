@@ -67,8 +67,8 @@ subroutine coredensity(nuc_target)
 
   if (pndens) then
       do i = norb(1)+1, ntotal(1)
-          nuc_target%densitymats%rho(0,0,i,i) = sqrt((jorb(i)+1.0) * (Jiso+1.0)*(Tiso+1.0))
-          nuc_target%densitymats%rho(0,1,i,i) = sqrt((jorb(i)+1.0) * (Jiso+1.0)*(Tiso+1.0))
+          nuc_target%densitymats%rho(0,0,i,i) = sqrt((jorb(i)+1.0) * (Jiso+1.0))
+          nuc_target%densitymats%rho(0,1,i,i) = sqrt((jorb(i)+1.0) * (Jiso+1.0))
       end do
   else
       do i = norb(1)+1, ntotal(1) ! core comes after valence. ntotal = ncore+nval.
