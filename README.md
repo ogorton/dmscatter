@@ -31,6 +31,7 @@ New features:
 Bugfixes:
 * Fixed bug involving illegal sqrt() evaluations
 * Updated numerical quadrature routine to library (instead of 'homebrew')
+* Fixed error in denisty-matrix core-filler
 
 ### Version 1.2 update (Nov. 24, 2020)
 * Data reorganized to support future extension to multiple target species.
