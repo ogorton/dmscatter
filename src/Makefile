@@ -2,6 +2,7 @@ COMP =  gfortran
 OPTIONS = -O2 -Wall -fopenmp 
 
 OBJ1 = \
+intlib.o\
 norm.o\
 modules.o\
 setparameters.o\
@@ -28,7 +29,7 @@ diffcrosssection.o\
 velocitydist.o\
 quadrature.o\
 eventrate.o\
-eventrate_spectra.o\
+spectra.o\
 cg.o\
 setup_nuclearinputs.o\
 darkmattermain.o

@@ -5,11 +5,11 @@
 # t = 0 protons, 1 neutrons
 #control name	 t	i	c_i^t
 coefnonrel      1       1       1.0
-wimpmass 50.0
+wimpmass 150.0
 vearth 232.0
 maxwellv0 220.0
-#vescape 544.
+#vescape 550.
 dmdens 0.3
 intpoints 1000
-usemomentum 1
+usemomentum 0
 useenergyfile 0

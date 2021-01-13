@@ -158,7 +158,6 @@ subroutine readdensity(nuc_target, resfile,success)
 
     do i = 1,norb(1)*norb(1)!nsporb*nsporb
         read(resfile,*,err=1,end=1)a,b,ops,opv
-        print*,a,b,ops,opv
 
         !if(pndens)then
         !    if(ops/=0.0)then

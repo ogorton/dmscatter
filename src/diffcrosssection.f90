@@ -25,6 +25,6 @@ function diffCrossSection(v, q, wimp, nucl, eft)
     real(doublep) :: v ! velocity of DM particle in lab frame
     real(doublep) :: q
 
-    diffCrossSection = (nucl%mass*mN/(2.0*pi*v*v)) * transition_probability(q,v,wimp,nucl,eft)
+    diffCrossSection = (nucl%mass*mN/(2d0*pi*v*v)) * transition_probability(q,v,wimp,nucl,eft)
 
 end function diffCrossSection

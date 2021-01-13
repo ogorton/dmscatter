@@ -39,7 +39,6 @@ subroutine setupdensities(nuc_target)
 
     type(nucleus) :: nuc_target
 
-    print*, ntotal(1)
 
     ! densities(J,iso,a,b)
     allocate(nuc_target%densitymats%rho( 0:10,0:1,1:ntotal(1),1:ntotal(1)) )

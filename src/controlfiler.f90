@@ -23,12 +23,11 @@ subroutine opencontrolfile(resfile)
 
 end subroutine opencontrolfile
 
-subroutine readcontrolfile(resfile, eft, wimp, detector_t)
+subroutine readcontrolfile(resfile, eft, wimp)
     use keywords
     use parameters
     implicit none
     type(particle) :: wimp
-    type(detector) :: detector_t
     type(eftheory) :: eft
     integer, intent(in) :: resfile
     character(20) :: line
@@ -78,7 +77,7 @@ subroutine readcontrolfile(resfile, eft, wimp, detector_t)
                 call setpncoeffsnonrel(eft, op, coef, nucleon)
                 print*,'Set non-relativistic coefficient: op',op,'p/n',nucleon,'c',coef
             else
-                call setkeyword(keyword,keyvalue, wimp, detector_t)
+                call setkeyword(keyword,keyvalue, wimp)
             endif
 
         end do
@@ -97,7 +96,7 @@ subroutine readcontrolfile(resfile, eft, wimp, detector_t)
     end do
 
 end subroutine readcontrolfile
-subroutine setkeyword(keyword, keyvalue, wimp, detector_t)
+subroutine setkeyword(keyword, keyvalue, wimp)
 
     use kinds
     use keywords
@@ -110,7 +109,6 @@ subroutine setkeyword(keyword, keyvalue, wimp, detector_t)
     implicit none
 
     type(particle) :: wimp
-    type(detector) :: detector_t
 
     character (len=20) :: keyword
     real(doublep) :: keyvalue
@@ -150,10 +148,6 @@ subroutine setkeyword(keyword, keyvalue, wimp, detector_t)
         vdist_t%vescape = keyvalue
         print*,keyword,': Set escape velocity to', vdist_t%vescape
         vdist_max = vdist_t%vescape
-
-    case('ntarget')
-        detector_t%nt = keyvalue
-        print*,keyword,': Set number of target nuclei to', keyvalue
 
     case('weakmscale')
         mV = keyvalue

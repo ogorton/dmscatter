@@ -39,8 +39,8 @@ function transition_probability(q,v,wimp,nucl,eft)
     integer :: tau1, tau2, term
     integer :: Mtiso, Tiso
 
-    bfm = (41.467/(45.*(nucl%mass)**(-1./3) &
-                - 25.*(nucl%mass)**(-2./3)))**0.5 * femtometer
+    bfm = (41.467d0/(45d0*(nucl%mass)**(-1d0/3d0) &
+                - 25d0*(nucl%mass)**(-2d0/3d0)))**0.5d0 * femtometer
     y = (q*bfm/2d0)**2d0
 
     mchi = wimp%mass
@@ -61,8 +61,6 @@ function transition_probability(q,v,wimp,nucl,eft)
                 if (tmpprod.ne.0) tmpprod = tmpprod * &
                     nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
                 transition_probability = transition_probability + tmpprod
-!    print*,tau1,tau2,term,dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT),&
-!            nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
             end do ! term
         end do ! tau2
     end do ! tau1

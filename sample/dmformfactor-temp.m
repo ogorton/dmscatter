@@ -1379,7 +1379,6 @@ in the Users/username directory*)
 StrucFunction[vv_,qqdimless_,ifOutFile_:0]:=Block[{ii, myFF},
 
 
-PrintLag[];
 
 
 Print["Your structure function is"];
@@ -1397,7 +1396,6 @@ TransitionProbability[vv_,qqdimless_,IfRel_:False]:=Block[{ii, myFF,ANonrelToRel
 ANonrelToRel=1;
 If[IfRel,ANonrelToRel=(4mchi*M*mN)^2];
 
-PrintLag[];
 
 
 (* The factor of 1/(4mN mchi)^2 is necessary to convert the c coefficients to a coefficients *)
@@ -1412,7 +1410,6 @@ bb=bHO;
 ER=ERkeV*10^(-6)*GeV;
 qq=Sqrt[2M*(mN/GeV)*ERkeV]*10^(-3)GeV;
 
-PrintLag[];
 
 
 FFTemp=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.q->qq/.y->((qq bb)/2)^2/.b->bb/.v->vv;
@@ -1427,7 +1424,6 @@ ApproxTotalCrossSection[vv_]:=Block[{FFTempNoExp,FFTempNoExp2,ER,qqmax,bb,qq},
 bb=bHO;
 qqmax=2\[Mu]T[mchi,M]*vv;
 
-PrintLag[];
 
 
 FFTempNoExp=FFfinal[DensityMatrix,JIso,TIso]/.q->qq/.y->((qq bb)/2)^2/.b->bb/.v->vv;
@@ -1449,7 +1445,6 @@ EventRateInelastic[NT_,\[Rho]chi_,\[Delta]\[Delta]_,qqGeV_,vve_,vv0_,vvesc_]:=Bl
 
 bb=bHO;
 qq=qqGeV*GeV;
-PrintLag[];
 
 
 
@@ -1459,7 +1454,6 @@ FFTemp=E^(-2y) FFfinal[DensityMatrix,JIso,TIso]/.q->qq/.y->((qq bb)/2)^2/.b->bb;
 If[(HALO!="MB")&&(HALO!="MBcutoff"),Print["Warning: Halo option not recognized.  Setting to Maxwell-Boltzmann."]; HALO="MB";];
 If[HALO=="MB",ERTemp=Coefficient[FFTemp,v,0] Fv0MB[vve/vv0,vmin/vv0]/vv0+Coefficient[FFTemp,v,2]FvsqMB[vve/vv0,vmin/vv0]*vv0];
 If[HALO=="MBcutoff",ERTemp=Coefficient[FFTemp,v,0] Fv0MBcutoff[vve/vv0,vmin/vv0,vvesc/vv0]/vv0+Coefficient[FFTemp,v,2]FvsqMBcutoff[vve/vv0,vmin/vv0,vvesc/vv0]*vv0];
-Print["Your event rate is"];
 Return[NT \[Rho]chi M/(32\[Pi] mchi^3 mN) ERTemp/.vmin->qq/(2\[Mu]T[mchi,M])+\[Delta]\[Delta]/qq]/.FormalReplace
 ];
 

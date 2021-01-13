@@ -9,10 +9,12 @@ program darkmattermain
     type(nucleus) :: nuc_target
     type(eftheory) :: eft
     type(particle) :: wimp
-    type(detector) :: detector_t
 
     real(kind=8) :: v
     integer :: computeoption
+    integer(kind=8) :: clock_rate, tstart, tstop
+
+    call system_clock(count_rate = clock_rate)
 
     print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     print*,'Welcome to our FORTAN 90 implementation of the WIMP-nucleon scattering code.'
@@ -46,16 +48,20 @@ program darkmattermain
     call setupcoef(eft)
 
     call opencontrolfile(2)
-    call readcontrolfile(2, eft, wimp, detector_t)
+    call readcontrolfile(2, eft, wimp)
     call normalizecoeffs(eft, wimp)
     call convertisospinform(eft)
 
     call setup_nuclearinputs(nuc_target)
 
-    call printparameters(wimp,nuc_target,eft,detector_t)
+    call printparameters(wimp,nuc_target,eft)
 
     if (computeoption == 1) then
-        call eventrate_spectra(wimp, nuc_target, eft, detector_t)
+        call system_clock(tstart)
+        call eventrate_spectra(wimp, nuc_target, eft)
+        call system_clock(tstop)
+        print*,'Compute time (s)',real(tstop-tstart)/real(clock_rate)
+
     else if (computeoption == 2) then
         stop 'Not implemented'
         !output = transition_probability(q,v,jchi,y)

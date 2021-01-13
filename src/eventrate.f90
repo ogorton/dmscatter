@@ -1,4 +1,4 @@
-function EventRate(q, wimp, nuc_target, eft, detector_t)
+function EventRate(q, wimp, nuc_target, eft)
     ! Computes the differential cross section per recoil energy ds/dEr
     use quadrature
     use kinds
@@ -31,37 +31,37 @@ function EventRate(q, wimp, nuc_target, eft, detector_t)
     type(particle) :: wimp
     type(nucleus) :: nuc_target
     type(eftheory) :: eft
-    type(detector) :: detector_t
 
     real(doublep) :: mchi, muT
-    real(doublep) :: Nt
+    real(doublep) :: Nt, units
     real(doublep) :: rhochi
     real(doublep), allocatable :: eftsmall(:,:)
 
     real(doublep) :: v  ! DM velocity variable
     real(doublep) :: dv ! DM differential velocity / lattive spacing
-    real(doublep), allocatable :: EventRate_integrand(:)
+    real(doublep), allocatable :: EventRate_integrand(:), xtab(:)
     integer :: i
-    real(doublep) :: ve, v0
+    real(doublep) :: ve, v0, vesc, intscale, error
 
     allocate(eftsmall(0:1,num_response_coef))
     eftsmall(0,:) = eft%isoc(0)%c
     eftsmall(1,:) = eft%isoc(1)%c
 
-    ve = vdist_t%vearth
-    v0 = vdist_t%vscale
-
     muT = wimp%mass * nuc_target%mass * mN / (wimp%mass + nuc_target%mass * mN)
+
+    ve = vdist_t%vearth * kilometerpersecond
+    v0 = vdist_t%vscale * kilometerpersecond
+    vesc = vdist_t%vescape * kilometerpersecond
     vdist_min = q/(2d0*muT)
-!    print*,'Integrating dv from',vdist_min,'to',vdist_max
-    dv = (vdist_max-vdist_min)/lattice_points
+    dv = (vesc-vdist_min)/lattice_points 
 
     allocate(EventRate_integrand(lattice_points))
-
+    allocate(xtab(lattice_points))
    
 !$OMP parallel do private(v) shared(wimp, nuc_target, eft)
     do i = 1, lattice_points
-        v = vdist_min + (i-1) * dv
+        v = (vdist_min + (i-1) * dv)
+        xtab(i) = v
         EventRate_integrand(i) = diffCrossSection(v, q, wimp, nuc_target, eftsmall) &
                     * v * v * ( maxwell_boltzmann(v-ve,v0) &
                             - maxwell_boltzmann(v+ve,v0) ) 
@@ -70,15 +70,15 @@ function EventRate(q, wimp, nuc_target, eft, detector_t)
 !$OMP barrier
 
     if (quadrature_type == 1) then    
-        call boole(lattice_points,EventRate_integrand,dv,EventRate)
+        call cubint ( lattice_points, xtab, EventRate_integrand, 1, &
+                lattice_points, EventRate, error )
     else
         EventRate = -1
     end if
 
-    Nt = detector_t%Nt
-    rhochi = wimp%localdensity
+    Nt = nuc_target%Nt
+    rhochi = wimp%localdensity / centimeter**3d0
     Mchi = wimp%mass
-
-    EventRate = Nt * (rhochi/Mchi) * EventRate *  (pi*v0**2/(ve))
+    EventRate = kilogramday * Nt * (rhochi/Mchi) * EventRate *  (pi*v0**2/ve)
   
 end function EventRate

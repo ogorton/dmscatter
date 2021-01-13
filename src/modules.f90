@@ -33,13 +33,6 @@ module parameters
         real(doublep) :: localdensity = 0.3d0
     end type particle
 
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    ! Detector
-    type detector
-        real(doublep) :: Nt = 1.0d0! number of target nuclei
-        real(doublep) :: mass = 1.0d0
-    end type detector
-
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
    ! Target nucleus
    logical :: evenA
@@ -116,7 +109,10 @@ module constants
     real(doublep) :: pi = 3.14159265358979323846264338327950288419716939937510
     real(doublep) :: GeV = 1d0
     real(doublep) :: kev = 10d0**(-6)
-    real(doublep) :: femtometer = 5.0677d0
+    real(doublep) :: femtometer = 5.0677d0 ! /GeV
+    real(doublep) :: centimeter = 5.0677d0*10d0**13d0
+    real(doublep) :: kilometerpersecond = 3.33564d0 * 10d0**(-6d0)
+    real(doublep) :: kilogramday = 7.3634d0*10d0**55d0
     real(doublep) :: mn = 0.938272d0
     real(doublep) :: mv = 246.2d0
     type vdist
