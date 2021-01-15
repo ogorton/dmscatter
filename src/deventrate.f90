@@ -1,5 +1,4 @@
-function EventRate(q, wimp, nuc_target, eft)
-    ! Computes the differential cross section per recoil energy ds/dEr
+function deventrate(q, wimp, nuc_target, eft)
     use quadrature
     use kinds
     use constants
@@ -26,7 +25,7 @@ function EventRate(q, wimp, nuc_target, eft)
             real(doublep) :: maxwell_boltzmann            
         end function
     end interface
-    real(doublep) :: EventRate
+    real(doublep) :: dEventRate
     real(doublep) :: q
     type(particle) :: wimp
     type(nucleus) :: nuc_target
@@ -41,11 +40,11 @@ function EventRate(q, wimp, nuc_target, eft)
     real(doublep) :: dv ! DM differential velocity / lattive spacing
     real(doublep), allocatable :: EventRate_integrand(:), xtab(:)
     integer :: i
-    real(doublep) :: ve, v0, vesc, intscale, error
+    real(doublep) :: ve, v0, vesc, error
 
     allocate(eftsmall(0:1,num_response_coef))
-    eftsmall(0,:) = eft%isoc(0)%c
-    eftsmall(1,:) = eft%isoc(1)%c
+    eftsmall(0,:) = eft%xpnc(0)%c
+    eftsmall(1,:) = eft%xpnc(1)%c
 
     muT = wimp%mass * nuc_target%mass * mN / (wimp%mass + nuc_target%mass * mN)
 
@@ -71,14 +70,14 @@ function EventRate(q, wimp, nuc_target, eft)
 
     if (quadrature_type == 1) then    
         call cubint ( lattice_points, xtab, EventRate_integrand, 1, &
-                lattice_points, EventRate, error )
+                lattice_points, dEventRate, error )
     else
-        EventRate = -1
+        dEventRate = -1
     end if
 
     Nt = nuc_target%Nt
     rhochi = wimp%localdensity / centimeter**3d0
     Mchi = wimp%mass
-    EventRate = kilogramday * Nt * (rhochi/Mchi) * EventRate *  (pi*v0**2/ve)
+    dEventRate = ntscale * kilogramday * Nt * (rhochi/Mchi) * dEventRate *  (pi*v0**2/ve)
   
-end function EventRate
+end function deventrate

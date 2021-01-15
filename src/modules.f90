@@ -13,9 +13,9 @@ module parameters
 
     implicit none
 
-    integer :: num_response_coef
     
     ! Nonrelativistic operator coefficients
+    integer :: num_response_coef = 17
     type coeff
         real(kind=8), dimension(:), allocatable :: c
     end type coeff
@@ -25,7 +25,6 @@ module parameters
         type(coeff) :: xpnc(0:1) !0 = protons, 1 = neutrons
     end type eftheory
     
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! Dark matter particles
     type particle
         real(doublep) :: j = 0.5d0! darkmatter spin
@@ -33,8 +32,8 @@ module parameters
         real(doublep) :: localdensity = 0.3d0
     end type particle
 
-   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
    ! Target nucleus
+   real(doublep) :: ntscale = 1d0
    logical :: fillcore = .true.
    logical :: evenA
    integer nlocalstates !,maxlocalstates
@@ -60,7 +59,8 @@ module parameters
        integer :: N
        integer :: Mt
        real(doublep) :: mass
-       real(doublep) :: Nt ! Number of target nuclei
+       real(doublep) :: Nt ! mass density of target nuclei
+       real(doublep) ::kgday
        type(state) :: groundstate
 
        type (onebdenmat) :: densitymats

@@ -1,9 +1,9 @@
-function dmresponse_iso(eft, ifunc, tau1, tau2, q, v, jchi, muT) 
+function dmresponse_pn(eft, ifunc, tau1, tau2, q, v, jchi, muT) 
     use parameters
     use dmresponse
     implicit none
     ! output
-    real(kind=8) :: dmresponse_iso
+    real(kind=8) :: dmresponse_pn
     ! inputs 
     integer, intent(in) :: ifunc ! integer indicating response function
     ! ifunc	nuclear operator combination which coef belongs to
@@ -25,24 +25,24 @@ function dmresponse_iso(eft, ifunc, tau1, tau2, q, v, jchi, muT)
 
     select case (ifunc)
       case(1)
-         dmresponse_iso = dmrMJ(eft, tau1, tau2, q, v, jchi, muT)
+         dmresponse_pn = dmrMJ(eft, tau1, tau2, q, v, jchi, muT)
       case(2)
-         dmresponse_iso = dmrPhiPPJ(eft, tau1, tau2, q, v, jchi, muT)
+         dmresponse_pn = dmrPhiPPJ(eft, tau1, tau2, q, v, jchi, muT)
       case(3)
-         dmresponse_iso = dmrPhiTPJ(eft, tau1, tau2, q, v, jchi, muT)
+         dmresponse_pn = dmrPhiTPJ(eft, tau1, tau2, q, v, jchi, muT)
       case(4)
-         dmresponse_iso = dmrDeltaJ(eft, tau1, tau2, q, v, jchi, muT)
+         dmresponse_pn = dmrDeltaJ(eft, tau1, tau2, q, v, jchi, muT)
       case(5)
-         dmresponse_iso = dmrSigmaPJ(eft, tau1, tau2, q, v, jchi, muT)
+         dmresponse_pn = dmrSigmaPJ(eft, tau1, tau2, q, v, jchi, muT)
       case(6)
-         dmresponse_iso = dmrSigmaPPJ(eft, tau1, tau2, q, v, jchi, muT)
+         dmresponse_pn = dmrSigmaPPJ(eft, tau1, tau2, q, v, jchi, muT)
       case(7)
-         dmresponse_iso = dmrPhiPPJMJ(eft, tau1, tau2, q, v, jchi, muT)
+         dmresponse_pn = dmrPhiPPJMJ(eft, tau1, tau2, q, v, jchi, muT)
       case(8)
-        dmresponse_iso = dmrSigmaPJDeltaJ(eft, tau1, tau2, q, v, jchi, muT)
+        dmresponse_pn = dmrSigmaPJDeltaJ(eft, tau1, tau2, q, v, jchi, muT)
       case default
         print*,"No dark matter response coefficient was set!"
         STOP -1
     end select        
 
-end function dmresponse_iso
+end function dmresponse_pn

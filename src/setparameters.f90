@@ -51,7 +51,7 @@ subroutine printparameters(wimp,nuc_target,eft)
     use parameters
 
     implicit none
-
+    integer i
     type(nucleus) :: nuc_target
     type(eftheory) :: eft
     type(particle) :: wimp
@@ -72,13 +72,24 @@ subroutine printparameters(wimp,nuc_target,eft)
     print*,'Target Z,N',nuc_target%Z, nuc_target%N
     print*,'Target atomic mass',nuc_target%mass
     print*,'System reduced mass',wimp%mass * nuc_target%mass * mN/(wimp%mass+nuc_target%mass*mn)!mchi * mtarget * mN / (mchi+mtarget*mN)
-    print*,'vdist_max = ',vdist_max
     print*,'Target mass density (1/GeV)',nuc_target%nt
     print*,'Local WIMP density (GeV/cm^3)',wimp%localdensity
     print*,'v0 (km/s)',vdist_t%vscale
     print*,'ve (km/s)',vdist_t%vearth
-    print*,'V escape (km/s)',vdist_t%vescape
+    print*,'v escape (km/s)',vdist_t%vescape
     print*,'Integral lattice size = ',lattice_points
+    print*,'EFT coupling coefficients:'
+    print*,'i    p    n    s    v'
+    write(6,"(A,T12,A,T24,A,T36,A,T48,A)")'i','p','n','s','v'
+    do i = 1, num_response_coef
+        if ((eft%xpnc(0)%c(i).ne.0) &
+            .or. (eft%xpnc(1)%c(i).ne.0) &
+            .or. (eft%isoc(0)%c(i).ne.0) &
+            .or. (eft%isoc(1)%c(i).ne.0)) then
+                write(6,"(I2,x2e11.4,e11.4,e11.4,e11.4)")i,&
+                        eft%xpnc(0)%c(i),eft%xpnc(1)%c(i),eft%isoc(0)%c(i),eft%isoc(1)%c(i)
+        end if
+    end do
     print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
 
 end subroutine printparameters

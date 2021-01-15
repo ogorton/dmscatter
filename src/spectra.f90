@@ -6,10 +6,42 @@ module espectra
     real(doublep) :: ER_start
     real(doublep) :: ER_stop
     real(doublep) :: ER_step
-    real(doublep), allocatable :: energy_grid(:)
+    real(doublep), allocatable :: energy_grid(:), momentum_grid(:)
     integer :: energy_grid_size
 
 contains        
+
+function spectra(momenta, wimp, nuc_target, eft)
+    use parameters
+    implicit none
+    interface
+        function dEventRate(q, wimp, nuc_target, eft)
+            use kinds
+            use parameters
+            implicit none
+            real(doublep) :: q
+            type(particle) :: wimp
+            type(nucleus) :: nuc_target
+            type(eftheory) :: eft
+            real(doublep) :: deventrate
+        end function deventrate
+    end interface
+    real(doublep), dimension(:) :: momenta
+    type(particle) :: wimp
+    type(nucleus) :: nuc_target
+    type(eftheory) :: eft
+    real(doublep), dimension(size(momenta)) :: spectra
+
+    integer :: i, N
+    real(doublep) :: q
+
+    N = size(momenta)
+    do i = 1, N
+        q = momenta(i)
+        spectra(i) = dEventRate(q, wimp, nuc_target, eft)
+    end do
+
+end function spectra
 
 subroutine eventrate_spectra(wimp, nuc_target, eft)
     use constants
@@ -18,40 +50,71 @@ subroutine eventrate_spectra(wimp, nuc_target, eft)
 
     implicit none
 
-    interface
-        function EventRate(q, wimp, nuc_target, eft)
-            use kinds
-            use parameters
-            implicit none
-            real(doublep) :: q
-            type(particle) :: wimp
-            type(nucleus) :: nuc_target
-            type(eftheory) :: eft
-            real(doublep) :: eventrate
-        end function eventrate
-    end interface
-
     type(particle) :: wimp
     type(nucleus) :: nuc_target
     type(eftheory) :: eft
     
-    integer :: calc_num, num_calc
+    integer :: calc_num
     real(doublep) :: recoil_energy, momentum_transfer
     real(doublep), allocatable :: event_rate_spectra(:)
     character(len=40) :: filename
 
-    real(doublep) :: mchi, jchi
-    real(doublep) :: mtarget, jtarget
-    real(doublep) :: Nt
-    real(doublep) :: rhochi 
+    real(doublep) :: mtarget, totaleventrate, error
 
     ! Get parameters
-    mchi = wimp%mass
-    jchi = wimp%j
-    rhochi = wimp%localdensity
     mtarget = nuc_target%mass
-    jtarget = nuc_target%groundstate%jx2
-    nt = nuc_target%nt
+
+    ! Get domain
+    call get_energy_grid
+    allocate(momentum_grid(energy_grid_size))
+    do calc_num = 1, energy_grid_size
+        if (usemomentum) then
+            momentum_transfer = ER_start + (calc_num - 1) * ER_step
+            recoil_energy = momentum_transfer**2d0 / (2d0*mtarget*mN*kev)
+            momentum_grid(calc_num) = momentum_transfer
+            energy_grid(calc_num) = recoil_energy
+        else
+            recoil_energy = energy_grid(calc_num)
+            momentum_grid(calc_num) = sqrt(2d0*mtarget*mN*recoil_energy*kev)
+        end if
+    end do    
+
+    ! Setup calculation and compute
+    print*,'Number of event rates to compute:',energy_grid_size
+    allocate(event_rate_spectra(energy_grid_size))
+
+    event_rate_spectra = spectra(momentum_grid, wimp, nuc_target, eft)
+
+    call cubint ( energy_grid_size, momentum_grid, momentum_grid*Event_rate_spectra/(mn*mtarget), 1, &
+                energy_grid_size, totaleventrate, error )
+
+    write(6,"(A,T30,A,T56,A)")" E-recoil (kev)","q-transfer (gev/c)","Eventrate (events/gev)"
+    do calc_num = 1, energy_grid_size
+        momentum_transfer = momentum_grid(calc_num)
+        recoil_energy = energy_grid(calc_num)
+        print*,recoil_energy,momentum_transfer,event_rate_spectra(calc_num)
+    end do
+
+    print*,'Total integrated eventrate (events)',totaleventrate,'pm',error
+
+    ! Write results to file
+    open(unit=157, file='eventrate_spectra.dat')
+    write(157,"(A,T30,A)")"# Recoil energy (kev)","Event rate (events/gev)"
+    do calc_num = 1, energy_grid_size
+        recoil_energy = energy_grid(calc_num)
+        write(157,*)recoil_energy,event_rate_spectra(calc_num)
+    end do
+
+    close(157)
+    print*,"Event rate spectra written to eventrate_spectra.dat"
+
+end subroutine eventrate_spectra
+
+subroutine get_energy_grid
+    use momenta
+    implicit none
+    integer :: calc_num
+    character(len=40) :: filename
 
     ! Get recoil energy grid from user or from file
     if (useenergyfile) then
@@ -71,46 +134,13 @@ subroutine eventrate_spectra(wimp, nuc_target, eft)
 
         energy_grid_size = int((ER_stop - ER_start) / ER_step) + 1
 
-        allocate(energy_grid(energy_grid_size))
 
+        allocate(energy_grid(energy_grid_size))
         do calc_num = 1, energy_grid_size
             energy_grid(calc_num) = ER_start + (calc_num - 1) * ER_step
         end do
-            
-    end if
-
-    ! Setup calculation and compute
-    print*,'Number of event rates to compute:',energy_grid_size
-    allocate(event_rate_spectra(energy_grid_size))
-    
-    write(6,"(A,T30,A,T56,A)")" E-recoil (kev)","q-transfer (gev/c)","Eventrate (events/gev)"
-    do calc_num = 1, energy_grid_size
-        if (usemomentum) then
-            momentum_transfer = ER_start + (calc_num - 1) * ER_step
-            recoil_energy = momentum_transfer**2d0 / (2d0*mtarget*mN*kev)
-            energy_grid(calc_num) = recoil_energy
-        else
-            recoil_energy = energy_grid(calc_num)
-            momentum_transfer = sqrt(2d0 * mtarget*mN * recoil_energy * kev)
-        end if
-        event_rate_spectra(calc_num) = EventRate(momentum_transfer,&
-                wimp, nuc_target, eft)
-        print*,recoil_energy,momentum_transfer,event_rate_spectra(calc_num)
-    end do
-
-    ! Write results to file
-    open(unit=157, file='eventrate_spectra.dat')
-    write(157,"(A,T30,A)")"# Recoil energy (kev)","Event rate (events/gev)"
-    do calc_num = 1, energy_grid_size
-        recoil_energy = energy_grid(calc_num)
-        write(157,*)recoil_energy,event_rate_spectra(calc_num)
-    end do
-
-    close(157)
-
-    print*,"Event rate spectra written to eventrate_spectra.dat"
-
-end subroutine eventrate_spectra
+    end if    
+end subroutine
 
 subroutine read_energy_grid(filename)
 
@@ -120,7 +150,6 @@ subroutine read_energy_grid(filename)
     integer :: i, io
 
     open(unit=159,file=trim(filename))
-
     do 
         read(159,*,iostat=io)
         if (io/=0) exit
@@ -128,15 +157,12 @@ subroutine read_energy_grid(filename)
     end do
 
     allocate(energy_grid(energy_grid_size))
-
     rewind(159)
 
     do i = 1, energy_grid_size
         read(159,*) energy_grid(i)
     end do
-
     close(159)
-
 end subroutine read_energy_grid
 
 end module espectra
