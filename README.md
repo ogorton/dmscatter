@@ -22,8 +22,14 @@ the /sample/ directory directory and run:
 This computes the event rate spectra for a Si28 target. 
 More extensive documentation can be found in the manual document.
 
+### To-do:
+* Update the manual
+* Provide python API for returning runs to calling-environment
+
 ### Version 1.4 update (Jan. 14, 2021)
 New features:
+* Compute integrated event rate spectra (total events) using adaptive
+  integration routine
 * Computing an event rate spectra will also report the total integrated event
   rate
 * EFT coefficients can now be provided as either proton/neutron couplings, or as
