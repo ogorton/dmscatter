@@ -30,7 +30,7 @@ subroutine readcontrolfile(resfile, eft, wimp)
     type(particle) :: wimp
     type(eftheory) :: eft
     integer, intent(in) :: resfile
-    character(20) :: line
+    character(100) :: line
     character(20) :: keyword
     integer :: op
     real(kind=8) :: coef,keyvalue
@@ -56,10 +56,10 @@ subroutine readcontrolfile(resfile, eft, wimp)
     do while (.not. EOF)
 
         ! Read past comments
-        read(resfile,'(a20)',end=111) line
+        read(resfile,'(a100)',end=111) line
 
         if (line(1:1).eq.'#' .or. line(1:1).eq.'!') then 
-            print*,line
+            print*,trim(line)
             cycle
         end if
 

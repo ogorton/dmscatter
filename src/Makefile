@@ -1,5 +1,5 @@
 COMP =  gfortran 
-OPTIONS = -O2 -Wall -fopenmp 
+OPTIONS = -O2 -Wall -fopenmp
 
 OBJ1 = \
 intlib.o\
@@ -30,9 +30,11 @@ velocitydist.o\
 quadrature.o\
 deventrate.o\
 spectra.o\
+main.o\
+totaleventrate.o\
 cg.o\
 nucinputs.o\
-darkmattermain.o
+darkmatter.o
 
 %.o : %.f90
 	$(COMP) -c $(OPTIONS) $(<F)

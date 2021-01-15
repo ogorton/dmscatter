@@ -57,9 +57,10 @@ subroutine eventrate_spectra(wimp, nuc_target, eft)
     integer :: calc_num
     real(doublep) :: recoil_energy, momentum_transfer
     real(doublep), allocatable :: event_rate_spectra(:)
-    character(len=40) :: filename
 
     real(doublep) :: mtarget, totaleventrate, error
+
+    print*,"Computing differential event rate spectra"
 
     ! Get parameters
     mtarget = nuc_target%mass
@@ -132,8 +133,17 @@ subroutine get_energy_grid
 
         read*,ER_start, ER_stop, ER_step
 
-        energy_grid_size = int((ER_stop - ER_start) / ER_step) + 1
+        if (usemomentum) then
+            print*,"q min  (gec/c)",ER_start
+            print*,"q max  (gev/c)",ER_stop
+            print*,"q step (gev/c)",ER_step
+        else
+            print*,"E min  (kev)",ER_start
+            print*,"E max  (kev)",ER_stop
+            print*,"E step (kev)",ER_step
+        end if        
 
+        energy_grid_size = int((ER_stop - ER_start) / ER_step) + 1
 
         allocate(energy_grid(energy_grid_size))
         do calc_num = 1, energy_grid_size

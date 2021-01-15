@@ -50,7 +50,7 @@ subroutine convertisospinform(eft)
     type(eftheory) :: eft
     integer :: i
 
-    print*,'Converting EFT coefficients to isospin formalism.'
+    print*,'Converting EFT coefficients isospin <=> proton-neutron formalism.'
 
     do i = 1, num_response_coef
         if (eft%xpnc(0)%c(i) .ne. 0 .or. eft%xpnc(1)%c(i).ne.0) then
