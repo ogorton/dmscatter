@@ -28,10 +28,10 @@ transition.o\
 diffcrosssection.o\
 velocitydist.o\
 quadrature.o\
-eventrate.o\
+deventrate.o\
 spectra.o\
 cg.o\
-setup_nuclearinputs.o\
+nucinputs.o\
 darkmattermain.o
 
 %.o : %.f90

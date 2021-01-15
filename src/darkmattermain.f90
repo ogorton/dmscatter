@@ -49,8 +49,9 @@ program darkmattermain
 
     call opencontrolfile(2)
     call readcontrolfile(2, eft, wimp)
-    call normalizecoeffs(eft, wimp)
     call convertisospinform(eft)
+
+    call normalizecoeffs(eft, wimp)
 
     call setup_nuclearinputs(nuc_target)
 

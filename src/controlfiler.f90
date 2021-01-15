@@ -34,7 +34,7 @@ subroutine readcontrolfile(resfile, eft, wimp)
     character(20) :: keyword
     integer :: op
     real(kind=8) :: coef,keyvalue
-    integer :: nucleon
+    character(1) :: coupling
     character(20) :: coefkey
 
     integer :: i
@@ -73,9 +73,8 @@ subroutine readcontrolfile(resfile, eft, wimp)
                 ! Coefficients have more arguments.
                 ! Go back to read them.
                 backspace(resfile)
-                read(resfile,*,end=111)keyword, nucleon, op, coef
-                call setpncoeffsnonrel(eft, op, coef, nucleon)
-                print*,'Set non-relativistic coefficient: op',op,'p/n',nucleon,'c',coef
+                read(resfile,*,end=111)keyword, op, coupling, coef
+                call setpncoeffsnonrel(eft, coupling, op, coef)
             else
                 call setkeyword(keyword,keyvalue, wimp)
             endif
@@ -189,6 +188,9 @@ subroutine setkeyword(keyword, keyvalue, wimp)
             fillcore = .false.
             print*,trim(keyword),': Set to leave denisty matrix core orbitals unfilled.'
         end if
+    case('ntscale')
+        ntscale = keyvalue
+        print*,trim(keyword),': Set target nuclei mass density scaling to',keyvalue
 
     case default
         print*,'Invalid keyword "',trim(keyword),'". Ignoring.'

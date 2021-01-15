@@ -22,6 +22,16 @@ the /sample/ directory directory and run:
 This computes the event rate spectra for a Si28 target. 
 More extensive documentation can be found in the manual document.
 
+### Version 1.4 update (Jan. 14, 2021)
+New features:
+* Computing an event rate spectra will also report the total integrated event
+  rate
+* EFT coefficients can now be provided as either proton/neutron couplings, or as
+  scaler/vector isospin couplings
+
+Bugfixes:
+* Updated definition of proton-neutron to isospin transformation to be
+  consistent with Mathematica script definition (script, not paper)
 ### Version 1.3 update (Jan. 13, 2021)
 New features:
 * Now supports nuclear density matrix files in either isospin or proton-neutron
