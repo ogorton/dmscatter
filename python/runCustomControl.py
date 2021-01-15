@@ -1,8 +1,9 @@
 import os
 import subprocess
+import numpy as np
 
 def runCustomControl(exec_name, inputfile, control_template, param_dict, 
-    workdir='', label='runCustom'):
+    workdir='', label='runCustom',resultfile='eventrate_spectra.dat'):
 
     """
      Author: Oliver Gorton, 2020
@@ -41,6 +42,8 @@ def runCustomControl(exec_name, inputfile, control_template, param_dict,
     print(command)
     returned = subprocess.call(command,shell=True)
 
+    RecoilE, EventRate = np.loadtxt(resultfile, unpack=True, skiprows=1)
+
     os.chdir(path)
 
-    return
+    return RecoilE, EventRate

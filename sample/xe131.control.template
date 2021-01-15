@@ -5,7 +5,7 @@
 # t: p=proton n=neutron s=scaler v=vector
 #control name	 i	coupling	c_i^t
 coefnonrel       1      n               0.00048
-wimpmass 500.0
+wimpmass MASS_KEYWORD
 vearth 232.0
 maxwellv0 220.0
 vescape 550.
