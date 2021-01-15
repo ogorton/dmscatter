@@ -42,6 +42,7 @@
 \maketitle
 
 {
+
 \centering
 
 Model-Independent WIMP Scattering Responses and Event Rates
@@ -51,6 +52,141 @@ Model-Independent WIMP Scattering Responses and Event Rates
 \tableofcontents
 
 This is the manual for the FORTRAN version of the model-independent WIMP scattering response and event rate code, which was originally written in Mathematica and described in \href{http://arxiv.org/abs/1308.6288v1}{arXiv:1308.6288}.
+
+\clearpage
+
+\section{Quickstart guide}
+This program primarily computes two quantities. The first is the WIMP-nucleus
+differential event rate spectra:
+\begin{equation}
+\begin{split}
+        \frac{dR_D}{dE_R} = \frac{dR_D}{d\vec{q}^2}(q)
+	= N_T\frac{\rho_\chi}{m_\chi}\int_{v_{min}}^\infty \frac{2m_T}{4\pi v^2}\frac{1}{2j_\chi+1}\frac{1}{2j_T+1}\sum_{spins}|\mathcal{M}(v,q)|^2  \tilde{f}(\vec{v})vd^3v
+\end{split}
+\end{equation}
+This quantity has units of events/GeV and is implicitly multiplied by
+an effective exposure of 1 Kilogram-Day of target nuclei. This is done by
+taking $N_t = 1\ kilogram\cdot day / m_T$, where $m_T$ is the mass of the target
+nucleus in $GeV$. Recoil energies $E_R$ are given in keV.
+
+The cross section is determined using a user-defined WIMP-nucleus interaction
+within a non-relativistic effective field theory (EFT) framework. The
+interaction is specified by 16 coupling coefficients defining an interaction:
+
+\begin{equation}
+	\sum_{x=p,n}\sum_{i=1}^{16} c_i^x \mathcal{O}_i
+\end{equation}
+
+The second is the integral of the first over either energy or momentum-transfer,
+for a range specified by the user. 
+
+\subsection{Event rate spectra (events per GeV)}
+The program will prompt the user for 
+the minimum necessary inputs to run a calculation with default parameter 
+values, including the name of a control file which contains the EFT
+coefficients, and optionally, additional customizations to the calculation
+parameters.
+
+After selecting the option to compute an event rate spectra, there are six
+further lines of input. These will be explained by an example:
+
+\begin{verbatim}
+ Enter the target proton number
+54
+ Enter the target neutron number 
+77 
+ Enter name of control file (.control):
+xe131
+...
+  Enter shell-model space file name (.sps)
+GCN5082
+...
+  Enter name of one-body density file (.dres)
+xe131gcn
+...
+ What is the range of recoil energies in kev?
+ Enter starting energy, stoping energy, step size:
+0.0001 250. 1.0
+\end{verbatim}
+
+The first two entries are self-evident: we specifiy the number of protons and
+neutrons in the target nucleus. In this case, 54 and 74, respectively, for
+$^{131}$Xe.
+
+Third is the name of the control file containing the EFT coefficients and other,
+optional, settings. The '.control' file extension is omitted. This contents of
+this file will be explained in more detail later.
+
+Fourth is a file which gives context for the Shell Model used to describe the
+nuclear wave functions. Future releases of this code will infer this
+information, but for now the user must provide the filename containing the
+single-particle space quantum numbers. The '.sps' file extension is omitted. 
+
+Fifth is the file containing the nuclear wave functions in the form of one-body
+density matrices. Only the ground-state need be included. The '.dres' file
+extension is omitted. 
+
+Sixth and finally are three numbers specifying the range of recoil energies
+$E_R$ that the differential scattering rate should be computed for.
+
+The event rate spectra will be written to a file, and as a side effect of the
+calculation, the total event rate for the energy range requested will be
+estimatted by numerical integration. Note that the accuracy of this result will
+depend on the choice of the step size.
+
+\subsection{Control file}
+
+Each EFT parameter is written on its own line in [mycontrolfile].control, with
+four values: the keyword "coefnonrel", the operator number (integer 1..16), the
+coupling type ("p"=proton, "n"=neutron, "s"=scalar, "v"=vecctor), and the
+coefficient value. For example, 
+\begin{verbatim}
+coefnonrel    1    s     3.1
+\end{verbatim}
+would set $c_1^0 = 3.1$. We take the isospin convention:
+\begin{equation}
+	\begin{split}
+		c^0 = c^p + c^n\\
+		c^1 = c^p - c^n
+	\end{split}
+\end{equation}
+Thus, the previous example is equivalent to:
+\begin{verbatim}
+coefnonrel    1    p     1.55
+coefnonrel    1    n     1.55
+\end{verbatim}
+
+The control file also serves a more general but optional function: to set any 
+parameter in the program to a custom value.  
+Simply add an entry to the control file with two values: the first 
+should be the keyword for the parameter and the 
+second should be the value to set that parameter to. For example, to set the 
+velocity of the earth in the galactic frame to $240\ km/s$, you should add the line:
+\begin{verbatim}
+vearth  240.0
+\end{verbatim}
+
+\subsection{Total integrated events}
+Inputs 2 - 6 for this calculation will be almost identical to those required for
+the event rate spectra calculation. The main difference is in the sixth and
+final input:
+\begin{verbatim}
+ Using adaptive numerical integration to determine  total integrated event rate.
+ What are the limits of integration for recoil energies in kev?
+ Enter starting energy, stoping energy, relative error:
+0.0 250.0 0.001
+\end{verbatim}
+Here, we have again been asked for a starting and stopping recoil energy, but
+this time the third value is the desired relative error of the integrated
+spectra. In this example, 0.001 corresponds to a desired uncertainty of 0.1\%. 
+
+An important difference between this calculation and the event rate spectra
+calculation is that in this evaluation, the spectra is not written to file. This
+is because an adaptive integration routine is used to keep the number of
+function evaluations to a minimum. As a result, this calculation will be much
+faster than computing the entire spectra.
+
+\clearpage
 
 \section{Primary functions}
 \subsection{Differential event rate}
@@ -267,20 +403,6 @@ W_{\Phi''M}^{\tau\tau'}(y) &= \sum_{even\ J}
 \subsection{Nuclear operators and their matrix elements}
 of which there are six, are nuclear operators constructed from Bessel spherical harmonics and vector spherical harmonics, and are evaluated here on the ground state of the target nucleus.
 
-\section{Inputs and control file usage}
-This code has a twofold user-interface scheme. This first is through the interactive command-line interface. The program will prompt the user for the minimum necessary inputs to run a calculation with default parameter values. In the case of a differential event rate calculation, these would be the momentum transfer $q$, information about the target nucleus including the density matrices, and finally the coefficient of the WIMP-nucleus interaction. The coefficients are read in from the second user-interface scheme: the control file. 
-
-The simplest and necessary use case of the control file is to read in the coefficients of the WIMP-nucleon interaction. Each coefficient is stored on its one line in a file which ends in .control, with 4 entries each: the keyword "coefnonrel", a 0 or 1 indicating proton or neutron coupling, the index of the coefficient to set, and finally the value of the coefficient. These entries can be separated by tabs or spaces. For example, to set $c_5^{(n)}=3.1$, the corresponding line in the control file would be:
-\begin{verbatim}
-coefnonrel    1    5     3.1
-\end{verbatim}
-
-The control file also serves a more general but optional function: to set any parameter in the program to a custom value. To use this functionality is simple: simply add an entry to the control file with two values: the first should be the keyword for the parameter (see section \ref{keywords}) and the second should be the value to set that parameter to. For example, to set the velocity of the earth in the galactic frame to $240\ km/s$, you should add the line:
-\begin{verbatim}
-vearth  240.0
-\end{verbatim}
-
-\section{Keywords}\label{keywords}
 
 \section{Example: si28 differential scattering rate}
 \small
