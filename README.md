@@ -24,7 +24,6 @@ More extensive documentation can be found in the manual document.
 
 ### To-do:
 * Update the manual
-* Provide python API for returning runs to calling-environment
 
 ### Version 1.4 update (Jan. 14, 2021)
 New features:
