@@ -11,6 +11,6 @@ maxwellv0 220.0
 vescape 550.
 dmdens 0.3
 intpoints 1000
-usemomentum 1
+usemomentum 0
 useenergyfile 0
 ntscale  2500.

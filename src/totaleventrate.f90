@@ -1,19 +1,21 @@
-subroutine totaleventrate
+subroutine totaleventrate(nuc_target)
     use kinds
     use parameters
     implicit none
-    real(doublep) :: ER_start, ER_stop, error, relerror, result, abserror
-    integer :: ind
-    real(doublep) :: fspectra, tmp
+    type(nucleus) :: nuc_target
+    real(doublep) :: q_start, q_stop, error, relerror, result, abserror
+    real(doublep) :: fspectra, mtarget
+
+    mtarget = nuc_target%mass
 
     print*,"Using adaptive numerical integration to determine &
-         total integrated event rate."
-    call get_energy_limits(ER_start, ER_stop, relerror)
+         & total integrated event rate."
+    call get_q_limits(mtarget, q_start, q_stop, relerror)
 
     print*,"Computing integral..."
-    abserror=fspectra(ER_stop) ! This line prevents a segfault... idk why
+    abserror=fspectra(q_stop) ! This line prevents a segfault... idk why
 
-    call chinsp ( fspectra, ER_start, ER_stop, relerror, error, result )
+    call chinsp ( fspectra, q_start, q_stop, relerror, error, result )
 
     print*,"Error estimate:"
     print*,error
@@ -53,33 +55,37 @@ function fspectra(q)
 
 end function 
 
-subroutine get_energy_limits(ER_start, ER_stop, error)
+subroutine get_q_limits(mtarget,q_start, q_stop, error)
     use kinds
     use momenta
+    use constants
     implicit none
-    real(doublep) :: ER_start, ER_stop, error
-    character(len=40) :: filename
+    real(doublep) :: mtarget, E_start, E_stop, error
+    real(doublep) :: q_start, q_stop
 
     ! Get recoil energy grid from user or from file
-        if (usemomentum) then
-            print*,'What are the limits of integration for transfer momenta?'
-            print*,'Enter starting momentum, stopping momentum, relative error:'
-        else
-            print*,'What are the limits of integration for recoil energies in kev?'
-            print*,'Enter starting energy, stoping energy, relative error:'
-        end if
+    if (usemomentum) then
+        print*,'What are the limits of integration for transfer momenta?'
+        print*,'Enter starting momentum, stopping momentum, relative error:'
+        read*,q_start, q_stop, error        
+    else
+        print*,'What are the limits of integration for recoil energies in kev?'
+        print*,'Enter starting energy, stoping energy, relative error:'
+        read*,E_start, E_stop, error
+    end if
 
-        read*,ER_start, ER_stop, error
+    E_start = E_start + 1e-12
+    q_start = q_start + 1e-12
 
-        ER_start = ER_start + 1E-12
+    if (.not.usemomentum) then
+        q_start = sqrt(2d0*mtarget*mN*E_start*kev)
+        q_stop =sqrt(2d0*mtarget*mN*E_stop*kev)
+    end if
 
-        if (usemomentum) then
-            print*,"q min  (gev/c)",ER_start
-            print*,"q max  (gev/c)",ER_stop
-        else
-            print*,"E min  (kev)",ER_start
-            print*,"E max  (kev)",ER_stop
-        end if
-        print*,"Rel. error tolerance",error
+    print*,"q min  (gev/c)",q_start
+    print*,"q max  (gev/c)",q_stop
+    print*,"E min  (kev)",e_start
+    print*,"E max  (kev)",e_stop
+    print*,"Rel. error tolerance",error
 
 end subroutine

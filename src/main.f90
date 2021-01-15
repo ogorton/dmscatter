@@ -44,7 +44,7 @@ subroutine computefunction(computeoption)
     select case(computeoption)
       case(5)
         call system_clock(tstart)
-        call totaleventrate
+        call totaleventrate(nuc_target)
         call system_clock(tstop)
 
       case(1)
