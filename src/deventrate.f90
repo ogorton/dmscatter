@@ -52,6 +52,10 @@ function deventrate(q, wimp, nuc_target, eft)
     v0 = vdist_t%vscale * kilometerpersecond
     vesc = vdist_t%vescape * kilometerpersecond
     vdist_min = q/(2d0*muT)
+    if (vdist_min > vesc) then
+        dEventRate = 0d0
+        return
+    end if
     dv = (vesc-vdist_min)/lattice_points 
 
     allocate(EventRate_integrand(lattice_points))
