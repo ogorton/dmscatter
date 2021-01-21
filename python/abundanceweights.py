@@ -15,6 +15,7 @@ for i,isotope in enumerate([129, 130, 131, 132, 134, 136]):
     neutrons = isotope - Z
     label = "xe"+str(isotope)
     param_dict = { "NEUTRONS" : neutrons, "AAA" : isotope }
+
     RecoilE, EventRate = runCustomInput.runCustomInput(exec_name, 
             input_template, param_dict, workdir, label)
 
@@ -22,7 +23,6 @@ for i,isotope in enumerate([129, 130, 131, 132, 134, 136]):
         weightedsum = EventRate * weights[i]
     else:
         weightedsum += EventRate * weights[i]
-
     plt.plot(RecoilE, EventRate, label="$^{%s}$Xe"%isotope)
 
 plt.xlabel("Recoil energy [kev]")
@@ -31,7 +31,6 @@ plt.yscale('log')
 plt.xscale('log')
 plt.legend()
 plt.savefig("isotopecompare.pdf")
-
 plt.figure()
 plt.title("Differential event rate spectra by natural abundances m$_{chi}$=500GeV")
 plt.plot(RecoilE, weightedsum)

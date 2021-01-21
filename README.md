@@ -15,11 +15,18 @@ directory if desired.
 
 
 An example is provided in the "sample" directory. To run this example, move to
-the /sample/ directory directory and run:
+the /sample/ directory and run:
 
     ../src/darkmatter.x < input.si28
 
 This computes the event rate spectra for a Si28 target. 
+
+Two example python script for running multiple jobs with different settings can
+be found in the /python/ directory. For example, from within the /sample/
+directory, try running:
+
+    python3 ../python/masscompare.py
+
 More extensive documentation can be found in the manual document.
 
 ### To-do:
