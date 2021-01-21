@@ -28,6 +28,11 @@ def runCustomInput(exec_name, input_template, param_dict,
     path = os.getcwd()
     os.chdir(workdir)
 
+    # File does not exist error trap
+    if (not os.path.exists(input_template)):
+        print("File %s does not exist."%input_template)
+        exit()
+
     findandreplace = "sed '"
     for keyword in param_dict.keys():
         findandreplace += "s/%s/%s/g;"%(keyword,param_dict[keyword])

@@ -32,6 +32,13 @@ def runCustomControl(exec_name, inputfile, control_template, param_dict,
     path = os.getcwd()
     os.chdir(workdir)
 
+    if (not os.path.exists(inputfile)):
+        print("File %s does not exist."%inputfile)
+        exit()    
+    if (not os.path.exists("%s.template"%control_template)):
+        print("File %s.template does not exist."%control_template)
+        exit()        
+
     findandreplace = "sed '"
     for keyword in param_dict.keys():
         findandreplace += "s/%s/%s/g;"%(keyword,param_dict[keyword])
