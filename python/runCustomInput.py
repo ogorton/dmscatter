@@ -42,6 +42,7 @@ def runCustomInput(exec_name, input_template, param_dict,
     command = "%s < %s.input > %s.output"%(exec_name,label,label)
     print(command)
     returned = subprocess.call(command,shell=True)
+    print("Return code: %s"%returned)
 
     RecoilE, EventRate = np.loadtxt(resultfile, unpack=True, skiprows=1)
 

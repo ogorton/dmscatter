@@ -18,6 +18,7 @@ subroutine opencontrolfile(resfile)
         return
 2       continue
         print*,filename(1:ilast),'.control does not exist '
+        stop "Missing control file."
 
     end do    
 
