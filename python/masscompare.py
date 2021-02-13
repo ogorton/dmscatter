@@ -1,10 +1,8 @@
 import os
-import subprocess
-import numpy as np
 import matplotlib.pyplot as plt
 import runCustomControl
 
-exec_name = "../src/darkmatter.x"
+exec_name = "dmf90factor.x"
 
 # This script works by replacing MASS_KEYWORD with the desired value of the
 # WIMP mass, then running the code with a control file "<>.control".
@@ -16,7 +14,7 @@ label = "xe131"
 
 plt.figure()
 
-for wimp_mass in (7., 50., 500.):
+for wimp_mass in (50.,150.0, 500.,5000.):
 
     param_dict = { "MASS_KEYWORD" : wimp_mass }
     RecoilE, EventRate = runCustomControl.runCustomControl(exec_name, 

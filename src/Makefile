@@ -34,15 +34,15 @@ main.o\
 totaleventrate.o\
 cg.o\
 nucinputs.o\
-darkmatter.o
+dmf90factor.o
 
 %.o : %.f90
 	$(COMP) -c $(OPTIONS) $(<F)
 .f.o:;  ($(COMP) -c $(OPTIONS) $(<F)) 
 
 darkmatter.x: $(OBJ1) 
-	$(COMP) -o darkmatter.x  $(OPTIONS) $(OBJ1) 
-	cp darkmatter.x ~/bin/
+	$(COMP) -o dmf90factor.x  $(OPTIONS) $(OBJ1) 
+	cp dmf90factor.x ~/bin/
 
 clean:
 	rm *.o *.x *.mod

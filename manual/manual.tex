@@ -1,5 +1,5 @@
-\documentclass[11pt]{amsart}
-\usepackage[margin=.5in]{geometry}
+\documentclass[12pt]{article}
+\usepackage[margin=1.in]{geometry}
 \geometry{letterpaper}
 \usepackage{graphicx}
 \usepackage{amssymb}
@@ -10,33 +10,37 @@
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{multicol}
+\usepackage{longtable}
+
+%New colors defined below
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
 \lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=b,
-    keepspaces=true,
-    numbers=left,
-    numbersep=5pt,
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2
+  backgroundcolor=\color{backcolour},   commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
 }
+
 \lstset{style=mystyle}
 
-\title{A FORTRAN Program for Experimental WIMP Analysis}
+\title{DMf90Factor: A FORTRAN Program for Experimental WIMP Analysis}
 \author{Oliver Gorton, Changfeng Jiao and Calvin Johnson}
-%\date{}                                           % Activate to display a given date or no date
 
 \begin{document}
 \maketitle
@@ -51,17 +55,22 @@ Model-Independent WIMP Scattering Responses and Event Rates
 
 \tableofcontents
 
-This is the manual for the FORTRAN version of the model-independent WIMP scattering response and event rate code, which was originally written in Mathematica and described in \href{http://arxiv.org/abs/1308.6288v1}{arXiv:1308.6288}.
+This is the manual for the FORTRAN version of the model-independent WIMP 
+scattering response and event rate code, which was originally written in 
+Mathematica and described in 
+\href{http://arxiv.org/abs/1308.6288v1}{arXiv:1308.6288}.
 
 \clearpage
 
-\section{Quickstart guide}
+\section{Quickstart guide: Fortran interface}
 This program primarily computes two quantities. The first is the WIMP-nucleus
 differential event rate spectra:
 \begin{equation}
 \begin{split}
         \frac{dR_D}{dE_R} = \frac{dR_D}{d\vec{q}^2}(q)
-	= N_T\frac{\rho_\chi}{m_\chi}\int_{v_{min}}^{v_{escape}} \frac{2m_T}{4\pi v^2}\frac{1}{2j_\chi+1}\frac{1}{2j_T+1}\sum_{spins}|\mathcal{M}(v,q)|^2  \tilde{f}(\vec{v})vd^3v
+	= N_T\frac{\rho_\chi}{m_\chi}\int_{v_{min}}^{v_{escape}} 
+	\frac{2m_T}{4\pi v^2}\frac{1}{2j_\chi+1}\frac{1}{2j_T+1}
+	\sum_{spins}|\mathcal{M}(v,q)|^2  \tilde{f}(\vec{v})vd^3v
 \end{split}
 \end{equation}
 This quantity has units of events/GeV and is implicitly multiplied by
@@ -79,6 +88,14 @@ interaction is specified by 16 coupling coefficients defining an interaction:
 
 The second is the integral of the first over either energy or momentum-transfer,
 for a range specified by the user. 
+
+\subsection{Required files}
+\begin{enumerate}
+    \item Input file OR interactive inputs from user
+    \item Control file (.control)
+    \item Nuclear density matrix file (.dres)
+    \item Model space file (.sps) (Will not be required in future release)	    
+\end{enumerate}
 
 \subsection{Event rate spectra (events per GeV)}
 The program will prompt the user for 
@@ -188,7 +205,232 @@ faster than computing the entire spectra.
 
 \clearpage
 
-\section{Primary functions}
+\section{Quickstart Guide: Python interface}
+
+We provide two generic API's for interacting with the Fortran program through a
+python interface. They are: \textbf{runCustomControl} and
+\textbf{runCustomInput}. The former runs the Fortran code with a control file
+which has been programatically modified by the API then returns the results to
+the calling environment. The latter does the same, except with a custom input
+file, rather than a custom control file.
+
+\subsection{Example: using runCustomInput to generate a weighted sum of
+event-rate spectra}
+
+In this example we will construct a simple python script using the 
+runCustomInput API to compute the differential
+event rate spectra for several isotopes of Xe, and compute the weighted sum
+according to the natural abundances of each isotope.
+
+Firt, examining the API for runCustomInput:
+
+\begin{lstlisting}[language=python]
+def runCustomInput(exec_name, input_template, param_dict,
+    workdir='', label='runCustom',resultfile='eventrate_spectra.dat'):
+
+    """
+     Author: Oliver Gorton, 2020
+
+     This is a function for running an executable program with a custom
+     input file by replacing keywords in a template used by the executed
+     code.
+
+     exec_name: (string) containing the path to and name of the
+         executable you want to run
+     input_template: (string) this is an input or control file used by the 
+         executable and which will be edited by this function
+     param_dict: (dictionary) of keywords and the values to which those 
+         keywords will be changed. The keywords are strings which should 
+         appear in the input_template file. 
+     workdir: (string) name of the working directory where you want to 
+         call the executable and send the output.
+     label: (string) name for this job, to label the input and output 
+         files generated by this function.
+
+    """
+\end{lstlisting}
+The first three inputs are mandatory while the last three are optional, having
+default values defined in the function.
+We begin constructing our script by creating the generic inputs for the
+executatble name and the directory where the calculations will be done (this is
+where the required files for the calculation should be). We also specify the 
+atomic number and natural abundances for Xenon isotopes:
+\begin{lstlisting}[language=python]
+import os
+import matplotlib.pyplot as plt
+import runCustomInput
+
+exec_name = "dmf90factor.x"
+workdir = os.getcwd()
+
+Z = 54
+isotopes = [128, 129, 130, 131, 132, 134, 136]
+weights = [.01910, .26401, .04071, .21232, .26909, .10436, .08857]
+weightedsum = 0.0
+\end{lstlisting}
+Now, we will need the input-file template. Having created the template file, for
+example:
+\begin{verbatim}
+1
+54
+NEUTRONS
+xe
+GCN5082
+xeAAAgcn
+1. 1000. 1.0
+\end{verbatim}
+with our arbitrary choice of keywords "NEUTRONS" and "AAA", 
+let's loop over our isotopes, and for each assemble the dictionary of
+keywords which the API will replace with values:
+\begin{lstlisting}[language=python]
+input_template = "input.xeAAA"
+for i,isotope in enumerate(isotopes):
+    N = isotope - Z
+    label = "xe"+str(isotope)
+    param_dict = { "NEUTRONS" : N, "AAA" : isotope }
+\end{lstlisting}
+We now have all of the required arguments: exec\_name, input\_template,
+param\_dict, workdir, and label. We are ready to call runCustomInput, which
+returns the event rate spectra vs recoil energy arrays. All-together now:
+\begin{lstlisting}[language=python]
+import os
+import matplotlib.pyplot as plt
+import runCustomInput
+
+exec_name = "dmf90factor.x"
+workdir = os.getcwd()
+
+Z = 54
+isotopes = [128, 129, 130, 131, 132, 134, 136]
+weights = [.01910, .26401, .04071, .21232, .26909, .10436, .08857]
+weightedsum = 0.0
+input_template = "input.xeAAA"
+for i,isotope in enumerate(isotopes):
+    N = isotope - Z
+    label = "xe"+str(isotope)
+    param_dict = { "NEUTRONS" : N, "AAA" : isotope }
+
+    RecoilE, EventRate = runCustomInput.runCustomInput(exec_name,
+            input_template, param_dict, workdir, label)
+
+    weightedsum += EventRate * weights[i]    
+\end{lstlisting}
+We now have the weighted sum of event rates stored in the variable weightedsum.
+Using matplotlib, we could produce the following plot:
+
+{
+	\centering
+\includegraphics[width=\textwidth]{weightedspectra.pdf}
+
+}
+
+\subsection{Example: using runCustomControl to compare event-rate spectra for
+calculations with different WIMP masses}
+
+In this example we will construct a simple python script using the 
+runCustomControl API to compute the differential event rate spectra for several
+values of the WIMP particle mass. This is very similar in implementation to the
+previous example, with the main difference being that the WIMP mass is edited by
+the user through the control file, rather than through the interactive input or
+input file. The appropriate API for this task is therefore \textbf{
+runCustomControl}:
+\begin{lstlisting}[language=python]
+def runCustomControl(exec_name, inputfile, control_template, param_dict,
+    workdir='', label='runCustom',resultfile='eventrate_spectra.dat'):
+
+    """
+     Author: Oliver Gorton, 2020
+
+     This is a function for running an executable program with a custom
+     control file by replacing keywords in a template used by the executed
+     code. The control file is one which is used indirectly (not a by a 
+     command line pipe). For example, an interaction file for bigstick.
+
+     exec_name: 
+         (string) containing the path to and name of the
+         executable you want to run
+     inputfile: 
+         (string) this is an input file used by the executable
+     control_template: 
+         (string) the base-name of a file ending in 
+         '.control'. "<control_template>.template" is the template 
+         file which the function will edit and copy into 
+         <control_template>.
+     param_dict: 
+         (dictionary) of keywords and the values to which those 
+         keywords will be changed. The keywords are strings which should 
+         appear in the input_template file. 
+     workdir: 
+         (string) name of the working directory where you want to call
+         the executable and send the output.
+     label: 
+         (string) name for this job, to label the input and output files 
+         generated by this function.
+
+    """
+\end{lstlisting}
+This API has the same inputs as runCustomInput, with `inputfile' intead of
+`input\_template', and one additional argument: `control\_template'.
+
+We again start by constructing the necessary arguments:
+\begin{lstlisting}[language=python]
+import os
+import matplotlib.pyplot as plt
+import runCustomControl
+
+exec_name = "dmf90factor.x"
+inputfile = 'input.xe131'
+control_template = "xe131.control"
+workdir = os.getcwd()
+\end{lstlisting}
+As in the previous example, inputfile is a standard input file we have placed in
+the current working directory. This time, it is a complete input file with no
+replaceable keywords:
+\begin{verbatim}
+1
+54
+77
+xe131
+GCN5082
+xe131gcn
+1. 1000. 10.0
+\end{verbatim}
+Alongside this standard input file, we also create a template control file
+called ``xe131.control.template''. When the API replaces the keywords in this
+file, it will strip the .template filename extension, creating a file called
+``xe131.control'', which is referenced in the fourth line of the above input
+file. Within this template file, we find the line (along with other necessary
+and/or optional control commands not listed for brevity):
+\begin{verbatim}
+wimpmass MASS_KEYWORD
+\end{verbatim}
+`wimpmass' is the keyword for setting the WIMP mass, and `MASS\_KEYWORD' is our
+arbitrary keyword for the Python API to replace.
+
+We complete the script by looping over different WIMP masses, creating the
+dictionary or keywords to replace and their values, and finally call the
+runCustomControl API:
+\begin{lstlisting}[language=python]
+import os
+import matplotlib.pyplot as plt
+import runCustomControl
+
+exec_name = "dmf90factor.x"
+inputfile = 'input.xe131'
+control_template = "xe131.control"
+workdir = os.getcwd()
+for wimp_mass in (50.,150.0, 500.,5000.):
+    param_dict = { "MASS_KEYWORD" : wimp_mass }
+    RecoilE, EventRate = runCustomControl.runCustomControl(exec_name,
+            inputfile, control_template, param_dict, workdir)
+\end{lstlisting}
+We could, for example, plot the result at each iteration and construct the
+following plot:
+\includegraphics[width=\textwidth]{xe131.WIMPmassCompare.pdf}
+
+\clearpage
+
+\section{Equations found in the code}
 \subsection{Differential event rate}
 \begin{equation}\label{ER}
 \begin{split}
@@ -196,14 +438,19 @@ faster than computing the entire spectra.
 	 = N_T n_\chi \int_{v_{min}}^\infty \frac{d\sigma(v,q)}{d\vec{q}^2} \tilde{f}(\vec{v})vd^3v
 \end{split}
 \end{equation}
-where $q$ is the WIMP-nucleon momentum transfer, $N_T$ is the number of target nuclei, $n_\chi = \rho_\chi/m_\chi$ is the local dark matter density, $\sigma$ is the WIMP-nucleon cross section, and $\tilde{f}$ is dark matter velocity distribution in the lab-frame. $\tilde{f}(\vec{v})$ is obtained by boosting the Galactic-frame distribution $f(\vec{v})$, 
+where $q$ is the WIMP-nucleon momentum transfer, $N_T$ is the number of target 
+nuclei, $n_\chi = \rho_\chi/m_\chi$ is the local dark matter number density, $\sigma$ 
+is the WIMP-nucleon cross section, and $\tilde{f}$ is dark matter velocity 
+distribution in the lab-frame. $\tilde{f}(\vec{v})$ is obtained by boosting 
+the Galactic-frame distribution $f(\vec{v})$, 
 
 \begin{equation}\label{boost}
 \begin{split}
 	\tilde{f}(\vec{v}) = f(\vec{v} + \vec{v}_{earth}),
 \end{split}
 \end{equation}
-where $\vec{v}_{earth}$ is the velocity of the earth in the galactic rest frame. The simplest model is a three-dimensional Maxwell distribution:
+where $\vec{v}_{earth}$ is the velocity of the earth in the galactic rest 
+frame. The simplest model is a three-dimensional Maxwell distribution:
 
 \begin{equation}
 \begin{split}
@@ -212,16 +459,21 @@ where $\vec{v}_{earth}$ is the velocity of the earth in the galactic rest frame.
 \end{equation}
 where $v_0$ is some scaling factor (typically taken to be around $220\ km/s$).
 
-In order to evaluate the integral in (\ref{ER}), we make the conversion to spherical coordinates, and take special care to deal with the velocity boost in (\ref{boost}). Assuming a $1/v^2$ velocity dependence of the cross section term (see section \ref{crosssection}), we need to evaluate an integral of the form
-
+In order to evaluate the integral in (\ref{ER}), we make the conversion to 
+spherical coordinates, and take special care to deal with the velocity boost 
+in (\ref{boost}). Assuming a $1/v^2$ velocity dependence of the cross section 
+term (see section \ref{crosssection}), we need to evaluate an integral of the 
+form
 \begin{equation}
 \begin{split}
 	I = \int_{v_{min}}^{v_{max}} d^3v \frac{f(\vec{v} + \vec{v}_{earth})}{v} =
     	\int_{v_{min}}^{v_{max}} d^3v \frac{1}{v} e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2}
 \end{split}
 \end{equation}
-Noting that $(\vec{v}+\vec{v}_{earth})^2 = \vec{v}^2 + \vec{v}^2_{earth} + 2vv_{earth}\cos(\theta)$, with $|\vec{v}|\equiv v$ and $\theta$ defining the angle between the two vectors, it's convenient to make the substitution $d^3v = d\phi d(\cos \theta) v^2 dv$:
-
+Noting that $(\vec{v}+\vec{v}_{earth})^2 = \vec{v}^2 + \vec{v}^2_{earth} + 
+2vv_{earth}\cos(\theta)$, with $|\vec{v}|\equiv v$ and $\theta$ defining 
+the angle between the two vectors, it's convenient to make the substitution 
+$d^3v = d\phi d(\cos \theta) v^2 dv$:
 \begin{equation}
 \begin{split}
 	I &=  \int_0^{2\pi} d\phi \int_{v_{min}}^{v_{max}} dv \int_{-1}^1 d(\cos \theta) e^{-2vv_{earth}\cos\theta/v_0^2} v^2 \frac{1}{v} e^{-(\vec{v}^2+\vec{v}^2_{earth})/v_0^2}\\
@@ -241,14 +493,23 @@ where in the last equality, we have defined a one-dimensional Gaussian form
 \end{split}
 \end{equation}
 
-The final expression for $I$ can be trivially generalized to other spherically-symmetric velocity-dependent forms of the differential cross section. What's important is the reduction of the velocity-boosted $d^3v$ integral to a radial integral which can be carried out with one-dimensional quadrature:
+The final expression for $I$ can be trivially generalized to other spherically-
+symmetric velocity-dependent forms of the differential cross section. What's 
+important is the reduction of the velocity-boosted $d^3v$ integral to a radial 
+integral which can be carried out with one-dimensional quadrature:
 \begin{equation}\label{integral}
 \begin{split}
 \int_{v_{min}}^{v_{max}} d^3v \sigma(v) e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2} 
 	= \frac{\pi v_0^2}{v_{earth} }\int_{v_{min}}^{v_{max}} dv \sigma(v) v^2\left( g(v-v_{earth}) - g(v+v_{earth}) \right).
 \end{split}
 \end{equation}
-The FORTRAN code uses equation (\ref{integral}) to evaluate the event rate integral in equation (\ref{ER}) with quadrature. Analytic solutions of  (\ref{integral}) exist in the form of error functions; we use the above form since it makes easy to later modify the velocity distribution (as long as it remains spherically symmetric). For example, adding a velocity cut-off is as easy as changing the limit on the quadrature, with no need to write a whole new subroutine for the analytic forms found in the Mathematica script.
+The FORTRAN code uses equation (\ref{integral}) to evaluate the event rate 
+integral in equation (\ref{ER}) with quadrature. Analytic solutions of  
+(\ref{integral}) exist in the form of error functions; we use the above form 
+since it makes easy to later modify the velocity distribution (as long as it 
+remains spherically symmetric). For example, adding a velocity cut-off is as 
+easy as changing the limit on the quadrature, with no need to write a whole 
+new subroutine for the analytic forms found in the Mathematica script.
 
 \subsection{Differential cross section}\label{crosssection}
 \begin{equation}
@@ -268,84 +529,84 @@ The scattering probability is
 T(v,q) &= \frac{1}{2j_\chi+1}\frac{1}{2j_T+1}\sum_{spins}|\mathcal{M}(v,q)|^2 
 \end{split}
 \end{equation}
-where $j_\chi$ is the spin of the WIMP, $j_T$ is the spin angular momentum of the target nucleus, and $\mathcal{M}$ Galilean invariant amplitude:
+where $j_\chi$ is the spin of the WIMP, $j_T$ is the spin angular momentum of the target nucleus, and $\mathcal{M}$ Galilean invariant amplitude, which is defined by
 \begin{align}
 	T(v,q) = \frac{4\pi}{2j_T+1}\frac{1}{(4m_\chi)^2}
-		\sum_{\tau=0}^1\sum_{\tau'=0}^1\sum_{i=1}^8 R_i^{\tau\tau'}(v^2,q^2)
-		W_i^{\tau\tau'}(q)
-%		\left < \mathcal{O}_{j_T,\tau}^{(i)}(y)\right >
-%		\left < \mathcal{O'}_{j_T,\tau'}^{(i)}(y)\right >
+		\sum_{x=p,n}\sum_{x'=p,n}^1\sum_{i=1}^8 R_i^{xx'}(v^2,q^2)
+		W_i^{xx'}(q)
+%		\left < \mathcal{O}_{j_T,x}^{(i)}(y)\right >
+%		\left < \mathcal{O'}_{j_T,x'}^{(i)}(y)\right >
 \end{align}
-where $m_\chi$ is the mass of the dark matter particle and $\tau$ is an index used to sum over isospin couplings. The coefficients $R_i^{\tau,\tau'}$ are dark matter particle response functions, to be define in another section. The operators $W_i^{\tau\tau'}(q)$ are nuclear response functions, which are sums over matrix elements of nuclear operators constructed from Bessel spherical harmonics and vector spherical harmonics.
+where $m_\chi$ is the mass of the dark matter particle and $x$ is an index used to sum over isospin couplings. The coefficients $R_i^{x,x'}$ are dark matter particle response functions, to be define in another section. The operators $W_i^{xx'}(q)$ are nuclear response functions, which are sums over matrix elements of nuclear operators constructed from Bessel spherical harmonics and vector spherical harmonics.
 \subsection{Dark matter response functions}
-There are 8 dark matter response functions which group 15 operator coefficients $c_i^\tau$ according the pair of nuclear response functions which they multiply.
+There are 8 dark matter response functions which group 15 operator coefficients $c_i^x$ according the pair of nuclear response functions which they multiply.
 
 \begin{align}
-R_{M}^{\tau\tau'}(v,q) &= 
+R_{M}^{xx'}(v,q) &= 
 \frac{1}{4}cl(j_\chi) \left(
-	(v^2-(\frac{q}{2\mu_t})^2)(c_5^{\tau}c_5^{\tau'}q^2 + c_8^{\tau}c_8^{\tau'})
-	+ c_{11}^{\tau}c_{11}^{\tau'}q^2
+	(v^2-(\frac{q}{2\mu_t})^2)(c_5^{x}c_5^{x'}q^2 + c_8^{x}c_8^{x'})
+	+ c_{11}^{x}c_{11}^{x'}q^2
 \right)\\
-& + (c_1^{\tau} + c_2^{\tau}(v^2-(\frac{q}{2\mu_t})^2) )(c_1^{\tau'} + c_2^{\tau'}(v^2-(\frac{q}{2\mu_t})^2) )
+& + (c_1^{x} + c_2^{x}(v^2-(\frac{q}{2\mu_t})^2) )(c_1^{x'} + c_2^{x'}(v^2-(\frac{q}{2\mu_t})^2) )
 \\
-R_{\Sigma''}^{\tau\tau'}(v,q) &= 
+R_{\Sigma''}^{xx'}(v,q) &= 
 \frac{1}{16}cl(j_\chi) \left(
-	c_6^{\tau}c_6^{\tau'}q^4 + (c_{13}^{\tau}c_{13}^{\tau'}q^2 +c_{12}^{\tau} c_{12}^{\tau'} )
-	(v^2-q^2/(2\mu_T)^2) + 2c_4^\tau c_6^{\tau'} q^2 + c_4^\tau c_4^{\tau '}
+	c_6^{x}c_6^{x'}q^4 + (c_{13}^{x}c_{13}^{x'}q^2 +c_{12}^{x} c_{12}^{x'} )
+	(v^2-q^2/(2\mu_T)^2) + 2c_4^x c_6^{x'} q^2 + c_4^x c_4^{x '}
 \right )
-+ \frac{1}{4} c_{10}^\tau c_{10}^{\tau '} q^2
++ \frac{1}{4} c_{10}^x c_{10}^{x '} q^2
 \\
-R_{\Sigma'}^{\tau\tau'}(v,q) &= 
+R_{\Sigma'}^{xx'}(v,q) &= 
 \frac{1}{32} cl(j_\chi) \left (
-	2c_{9}^{\tau}c_{9}^{\tau'}q^2
+	2c_{9}^{x}c_{9}^{x'}q^2
 	+ (
-		c_{15}^{\tau}c_{15}^{\tau'}q^4
-		+ c_{14}^{\tau}c_{14}^{\tau'}q^2
-		-2 c_{12}^{\tau}c_{15}^{\tau'} q^2
-		+c_{12}^{\tau}c_{12}^{\tau'}
+		c_{15}^{x}c_{15}^{x'}q^4
+		+ c_{14}^{x}c_{14}^{x'}q^2
+		-2 c_{12}^{x}c_{15}^{x'} q^2
+		+c_{12}^{x}c_{12}^{x'}
 	) (v^2-q^2/(2\mu_T)^2)
-	+2 c_{4}^{\tau}c_{4}^{\tau'}
+	+2 c_{4}^{x}c_{4}^{x'}
 \right)\\
 &+\frac{1}{8} \left(
-	c_{3}^{\tau}c_3^{\tau'}q^2
-	+ c_{7}^{\tau}c_{7}^{\tau'}
+	c_{3}^{x}c_3^{x'}q^2
+	+ c_{7}^{x}c_{7}^{x'}
 \right) (v^2-q^2/(2\mu_T)^2)
 \\
-R_{\Phi''}^{\tau\tau'}(v,q) &= 
+R_{\Phi''}^{xx'}(v,q) &= 
 \frac{q^2}{(4m_N)^2}cl(j_\chi) \left(
-	c_{12}^\tau - c_{15}^{\tau} q^2
+	c_{12}^x - c_{15}^{x} q^2
 \right ) \left(
-	c_{12}^{\tau '}-c_{15}^{\tau '}q^2
+	c_{12}^{x '}-c_{15}^{x '}q^2
 \right )
-+ \frac{q^2}{(4m_N)^2}q^2c_3^\tau c_3^{\tau'}
++ \frac{q^2}{(4m_N)^2}q^2c_3^x c_3^{x'}
 \\
-R_{\tilde{\Phi}'}^{\tau\tau'}(v,q) &= 
+R_{\tilde{\Phi}'}^{xx'}(v,q) &= 
 \frac{q^2}{(4m_N)^2}cl(j_\chi) \left(
-	c_{12}^\tau c_{12}^{\tau'} q^2
-	+ c_{12}^\tau c_{12}^{\tau'} 
+	c_{12}^x c_{12}^{x'} q^2
+	+ c_{12}^x c_{12}^{x'} 
 \right)
 \\
-R_{\Delta}^{\tau\tau'}(v,q) &= 
+R_{\Delta}^{xx'}(v,q) &= 
 \frac{q^2}{(2m_N)^2}cl(j_\chi) \left(
-	c_{5}^{\tau}c_{5}^{\tau'}q^2
-	+ c_{8}^{\tau}c_{8}^{\tau'}
+	c_{5}^{x}c_{5}^{x'}q^2
+	+ c_{8}^{x}c_{8}^{x'}
 \right)
-+2\frac{q^2}{m_N^2} c_{2}^{\tau}c_{2}^{\tau'}
++2\frac{q^2}{m_N^2} c_{2}^{x}c_{2}^{x'}
 (v^2-q^2/(2\mu_T)^2)
 \\
-R_{\Delta \Sigma'}^{\tau\tau'}(v,q) &= 
+R_{\Delta \Sigma'}^{xx'}(v,q) &= 
 \frac{q^2}{(2m_N)^2}cl(j_\chi) \left(
-c_{4}^{\tau}c_{5}^{\tau'} - c_{8}^{\tau}c_{9}^{\tau'}
+c_{4}^{x}c_{5}^{x'} - c_{8}^{x}c_{9}^{x'}
 \right)
-- \frac{q^2}{m_N}c_{2}^{\tau}c_{3}^{\tau'} (v^2-q^2/(2\mu_T)^2)
+- \frac{q^2}{m_N}c_{2}^{x}c_{3}^{x'} (v^2-q^2/(2\mu_T)^2)
 \\
-R_{\Phi''M}^{\tau\tau'}(v,q) &= 
-\frac{q^2}{4m_N} cl(j_\chi) c_{11}^{\tau} 
+R_{\Phi''M}^{xx'}(v,q) &= 
+\frac{q^2}{4m_N} cl(j_\chi) c_{11}^{x} 
 \left(
-c_{12}^{\tau'} - c_{12}^{\tau'} q^2
+c_{12}^{x'} - c_{12}^{x'} q^2
 \right)
-+ \frac{q^2}{m_N} c_{3}^{\tau'} \left(
-	c_{1}^{\tau} + c_{2}^{\tau} (v^2-q^2/(2\mu_T)^2)
++ \frac{q^2}{m_N} c_{3}^{x'} \left(
+	c_{1}^{x} + c_{2}^{x} (v^2-q^2/(2\mu_T)^2)
 \right)
 \end{align}
 As a shorthand we have introduced the notation 
@@ -355,7 +616,8 @@ As a shorthand we have introduced the notation
 
 
 \subsection{Nuclear response functions}
-There are eight nuclear response functions $W_i^{\tau\tau'}(y)$ considered here. The unit-less variable $y$ is defined 
+There are eight nuclear response functions $W_i^{xx'}(y)$ considered 
+here. The unit-less variable $y$ is defined 
 \begin{align}
  y = \left ( \frac{qb}{2} \right) ^2,
  \end{align}
@@ -366,177 +628,97 @@ b^2 = 41.467/(45A^{-1./3} - 25A^{-2/3})\ fm^2.
 
  
 \begin{align}
-W_M^{\tau\tau'}(y) &= \sum_{even\ J} 
-\bra{j_T}M_{J\tau}(y)\ket{j_T}
-\bra{j_T}M_{J\tau'}(y)\ket{j_T}
+W_M^{xx'}(y) &= \sum_{even\ J} 
+\bra{j_T}M_{Jx}(y)\ket{j_T}
+\bra{j_T}M_{Jx'}(y)\ket{j_T}
 \\
-W_{\Sigma''}^{\tau\tau'}(y) &= \sum_{odd\ J} 
-\bra{j_T}{\Sigma''}_{J\tau}(y)\ket{j_T}
-\bra{j_T}{\Sigma''}_{J\tau'}(y)\ket{j_T}
+W_{\Sigma''}^{xx'}(y) &= \sum_{odd\ J} 
+\bra{j_T}{\Sigma''}_{Jx}(y)\ket{j_T}
+\bra{j_T}{\Sigma''}_{Jx'}(y)\ket{j_T}
 \\
-W_{\Sigma'}^{\tau\tau'}(y) &= \sum_{odd\ J} 
-\bra{j_T}{\Sigma'}_{J\tau}(y)\ket{j_T}
-\bra{j_T}{\Sigma'}_{J\tau'}(y)\ket{j_T}
+W_{\Sigma'}^{xx'}(y) &= \sum_{odd\ J} 
+\bra{j_T}{\Sigma'}_{Jx}(y)\ket{j_T}
+\bra{j_T}{\Sigma'}_{Jx'}(y)\ket{j_T}
 \\
-W_{\Phi''}^{\tau\tau'}(y) &= \sum_{even\ J} 
-\bra{j_T}{\Phi''}_{J\tau}(y)\ket{j_T}
-\bra{j_T}{\Phi''}_{J\tau'}(y)\ket{j_T}
+W_{\Phi''}^{xx'}(y) &= \sum_{even\ J} 
+\bra{j_T}{\Phi''}_{Jx}(y)\ket{j_T}
+\bra{j_T}{\Phi''}_{Jx'}(y)\ket{j_T}
 \\
-W_{\tilde{\Phi}'}^{\tau\tau'}(y) &= \sum_{even\ J} 
-\bra{j_T}{\tilde{\Phi}'}_{J\tau}(y)\ket{j_T}
-\bra{j_T}{\tilde{\Phi}'}_{J\tau'}(y)\ket{j_T}
+W_{\tilde{\Phi}'}^{xx'}(y) &= \sum_{even\ J} 
+\bra{j_T}{\tilde{\Phi}'}_{Jx}(y)\ket{j_T}
+\bra{j_T}{\tilde{\Phi}'}_{Jx'}(y)\ket{j_T}
 \\
-W_{\Delta}^{\tau\tau'}(y) &= \sum_{odd\ J} 
-\bra{j_T}{\Delta}_{J\tau}(y)\ket{j_T}
-\bra{j_T}{\Delta}_{J\tau'}(y)\ket{j_T}
+W_{\Delta}^{xx'}(y) &= \sum_{odd\ J} 
+\bra{j_T}{\Delta}_{Jx}(y)\ket{j_T}
+\bra{j_T}{\Delta}_{Jx'}(y)\ket{j_T}
 \\
-W_{\Delta\Sigma'}^{\tau\tau'}(y) &= \sum_{odd\ J} 
-\bra{j_T}{\Delta}_{J\tau}(y)\ket{j_T}
-\bra{j_T}{\Sigma'}_{J\tau'}(y)\ket{j_T}
+W_{\Delta\Sigma'}^{xx'}(y) &= \sum_{odd\ J} 
+\bra{j_T}{\Delta}_{Jx}(y)\ket{j_T}
+\bra{j_T}{\Sigma'}_{Jx'}(y)\ket{j_T}
 \\
-W_{\Phi''M}^{\tau\tau'}(y) &= \sum_{even\ J} 
-\bra{j_T}{\Phi''}_{J\tau}(y)\ket{j_T}
-\bra{j_T}{M}_{J\tau'}(y)\ket{j_T}
+W_{\Phi''M}^{xx'}(y) &= \sum_{even\ J} 
+\bra{j_T}{\Phi''}_{Jx}(y)\ket{j_T}
+\bra{j_T}{M}_{Jx'}(y)\ket{j_T}
 \end{align}
 
 
 \subsection{Nuclear operators and their matrix elements}
-of which there are six, are nuclear operators constructed from Bessel spherical harmonics and vector spherical harmonics, and are evaluated here on the ground state of the target nucleus.
+of which there are six, are nuclear operators constructed from Bessel 
+spherical harmonics and vector spherical harmonics, and are evaluated here on 
+the ground state of the target nucleus.
 
+\section{Control file keywords}
 
-\section{Example: si28 differential scattering rate}
-\small
-\begin{verbatim}
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- Welcome to our FORTAN 90 implementation of the WIMP-nucleon scattering code.
- Based on the Mathematica script described in arXiv:1308.6288 (2003).
-   VERSION 1.1 UPDATED: 2020.05.23 @ SDSU
-   Dev. contact: cjohnson@sdsu.edu
-                  ogorton@sdsu.edu
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
- Select an option:
- [1] Differential scattering rate per detector per unit recoil energy.
- [2] Scattering probability.
- [3] Differential cross section per recoil energy.
- [4] (Future feature) Total cross section.
- [5] (Future feature) Total scattering rate per detector.
- [6] (Future featuer) 
-1
- Enter q, the three-momentum transfer of the scattering reaction:
-1
-  
- Enter the neutron number 
-14
-  
- Enter the proton number 
-14
- Setting default parameter values.
-  
- Enter name of control file (.control):
-../si28
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- Reading control file.
- Possible keywords:
- coefnonrel          
- vearth              
- dmdens              
- quadtype            
- intpoints           
- gev                 
- femtometer          
- dmmass              
- vescape             
- ntarget             
- weakmscale          
- vscale              
- mnucleon            
- dmspin              
- 
- # Coefficient matrix
- # Ommitted values ar
- # c_i^t             
- # i = 1,...,16      
- # t = 0 protons, 1 n
- #control name	 t	i	c
- Set non-relativistic coefficient: op           1 p/n           1 c   3.1000000000000001     
- Set non-relativistic coefficient: op           3 p/n           1 c   3.1000000000000001     
- Set non-relativistic coefficient: op           4 p/n           1 c   3.1000000000000001     
- Set non-relativistic coefficient: op           5 p/n           1 c   3.1000000000000001     
- Set non-relativistic coefficient: op           6 p/n           1 c   3.1000000000000001     
- Set non-relativistic coefficient: op           7 p/n           1 c   3.1000000000000001     
- Set non-relativistic coefficient: op           8 p/n           1 c   3.1000000000000001     
- Invalid keyword "fakekeyword". Ignoring.
- vearth: Set velocity of earth in galactic frame set to   232.00000000000000     
- dmdens: Set local dark matter density to   1.0000000000000000     
- intpoints: Set number of integral lattice points to        1000
- End of control file.
- 
-  Enter shell-model space file name (.sps)
-../sd
- Shell-Model space file name ../sd          
-           1           0           3           2
-           2           0           5           2
-           3           1           1           0
-           4           0           1           1
-           5           0           3           1
-           6           0           1           0
-  
-  Enter name of one-body density file (.res) 
-../si28w
-           6
- Fill core? [y/n]
-y
- Filling core orbitals.
- Printing density matrix.
- # spo =           6
- J=           0
-           1           1  0.475710005       0.00000000    
-           2           2   2.66933990       0.00000000    
-           3           3  0.703809977       0.00000000    
-           4           4   2.00000000       2.00000000    
-           5           5   2.82842708       2.82842708    
-           6           6   2.00000000       2.00000000    
- J=           1
- J=           2
- J=           3
- J=           4
- J=           5
- J=           6
- J=           7
- J=           8
- J=           9
- J=          10
- b[dimless]=   1.8506094217300415     
- b[fm]=   9.3783331984848814     
- y=   21.988283395450917     
- mN  0.93827199935913086     
- jchi  0.50000000000000000     
- mchi   50.000000000000000     
- Jiso=           0
- Tiso=           0
- Mtiso=           0
- ap,an          14          14
- Miso=   28.000000000000000     
- muT=   17.222406817915434     
- q=   1.0000000000000000     
- vdist_min =    2.9031946886766143E-002
- vdist_max =    2640.0000000000000     
- nt   1.0000000000000000     
- rhochi   1.0000000000000000     
- mchi   50.000000000000000     
- v0=   220.00000000000000     
- ve=   232.00000000000000     
- Integral lattice size =         1000
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- Event rate =    1.3425254633130306E-021
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{verbatim}
+\begin{longtable}{| l | c | p{2.5in} | c | l | }
+  \hline
+  Keyword & Symbol & Meaning & Units & Default \\
+  \hline
+  dmdens & $\rho_\chi$ & Local dark matter density. & GeV/cm$^3$ & 0.3\\
 
-\end{document}  
+  dmspin & $j_\chi$ & Instrinsic spin of WIMP particles. & $\hbar$ &
+  $\frac{1}{2}$ \\
 
+  fillnuclearcore & & Logical flag (enter 0 for False, 1 for True) to fill the
+  inert-core single-particle orbitals in the nuclear level densities.
+  Phenomenological shell model calculations typically provide only the density
+  matrices for the active valence-space orbitals, leaving it to the user to
+  infer the core-orbital densities. This option automatically assigns these
+  empty matrix elements assuming a totally filled core. & & 1 (true)\\
 
-\begin{equation}
-\begin{split}
-\end{split}
-\end{equation}
+  intpoints & & Number of lattice points in the numerical quadrature. More lattice
+  points results in a more accurate integral, at the cost of runtime. & &
+  1000\\
+
+  maxwellv0 & $v_0$ & Maxwell-Boltzman velocity distribution scaling factor. &
+  km/s & 220.0 \\
+
+  mnucleon & $m_N$ & Mass of a nucleon. It's assumed that $m_p\approx m_n$. &
+  GeV & 0.938272 \\
+
+  ntscale & $N_t$ & Effective number of target nuclei scaling factor. The
+  differential event rate is multiplied by this constant in units of
+  kilogram-days. For example, if the detector had a total effective exposure of
+  2500 kg days, one might enter 2500 for this value. & kg days & 1.0 \\
+
+  useenergyfile & & Logical flag (enter 0 for False, 1 for True) to read energy
+  grid used for calculation from a user-provided file intead of specifying a
+  range. & & 0 (false) \\
+
+  usemomentum & & Logical flag (enter 0 for False, 1 for True) to use momentum
+  transfer intead of recoil energy as the independent variable. & &0 (false) \\
+
+  vearth & $v_{earth}$ & Speed of the earth in the galactic frame. & km/s & 
+  232.0\\
+
+  vescape & $v_{escape}$ & Galactic escape velocity. Particles moving faster than
+  this speed will escape the galaxy, thus setting an upper limit on the WIMP
+  velocity distribution. & km/s & 12 $\times\ v_{scale}$ \\
+
+  weakmscale & $m_v$ & Weak interaction mass scale. User defined EFT coefficients
+  are divided by $m_v^2$. & GeV & 246.2 \\
+
+  wimpmass & $m_\chi$ & WIMP particle mass. & GeV & 50.0\\
+  \hline
+\end{longtable}
+
+\end{document}
