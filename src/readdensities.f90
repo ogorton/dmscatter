@@ -1,24 +1,15 @@
 subroutine readheaderv2(nuc_target, resfile)
    use parameters
-!   use op_info,only:pndens,pnops
    implicit none
    type(nucleus) :: nuc_target
    integer resfile
-!   character(1) :: ctrlchar
    character(23) :: tmpline
    integer i,j,n
    real(kind=8) e,ex,xj,xt
-!   real(kind=8) etol
-!   real(kind=8), pointer :: ee(:)
-!   integer, pointer :: jx2(:),tx2(:)
-!   integer nmax
    integer np,zp
    integer closest2J   ! function to convert poorly converged values
-!   logical askfortshift
-
-!............ check whether EVEN or ODD..............
+      rewind(resfile)
       read(resfile,'(a)')tmpline
-      !read(resfile,'(a)')tmpline
       read(resfile,*)zp,np
       if( mod(np+zp,2) == 1)then
          evenA = .false.
@@ -159,17 +150,6 @@ subroutine readdensity(nuc_target, resfile,success)
     do i = 1,norb(1)*norb(1)!nsporb*nsporb
         read(resfile,*,err=1,end=1)a,b,ops,opv
 
-        !if(pndens)then
-        !    if(ops/=0.0)then
-        !      nuc_target%densitymats%rhop(jt,a,b)= ops
-        !      success=.true.
-        !    end if
-        !    if(opv/=0.0)then
-        !      nuc_target%densitymats%rhon(jt,a,b)= opv
-        !      success=.true.
-        !    end if
-        !else
-
              if(ops /= 0.0)then
                nuc_target%densitymats%rho(jt,0,a,b)= ops
                success=.true.
@@ -214,7 +194,6 @@ subroutine readalldensities(nuc_target,resfile)
            endoffile = .true.
            exit
       end if
-!      print *, 'foundi= ', foundi, 'finishedi = ',finished
       call read2state(resfile,'f',fstate,foundf,finished)
 
       if(.not.foundf)then
@@ -238,7 +217,6 @@ subroutine readalldensities(nuc_target,resfile)
           if(success)nodensities=.false.
 !          end if
       end do ! endoflist
-!CFJIAO
       exit
 
    end do  ! endoffile
@@ -249,5 +227,3 @@ subroutine readalldensities(nuc_target,resfile)
 
    return
 end subroutine readalldensities
-
-

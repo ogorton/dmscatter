@@ -17,6 +17,7 @@ subroutine openresults(resfile)
 
        read(5,'(a)')filename
        ilast = index(filename,' ')-1
+       print*,filename(1:ilast)//'.dres'
        open(unit=resfile,file=filename(1:ilast)//'.dres',status='old',err=2)
        success = .true.
        return
@@ -34,11 +35,9 @@ subroutine setupdensities(nuc_target)
 
     use spspace
     use parameters
-!    use op_info
     implicit none
 
     type(nucleus) :: nuc_target
-
 
     ! densities(J,iso,a,b)
     allocate(nuc_target%densitymats%rho( 0:10,0:1,1:ntotal(1),1:ntotal(1)) )
@@ -93,15 +92,15 @@ subroutine printdensities(nuc_target)
         print*,'J=',J
         do a=1,ntotal(1)
             do b=1,ntotal(1)
-                if (nuc_target%densitymats%rho(J,0,a,b)+nuc_target%densitymats%rho(J,1,a,b) .eq. 0) cycle
-                print*,a,b,nuc_target%densitymats%rho(J,0,a,b),nuc_target%densitymats%rho(J,1,a,b)
+                if (nuc_target%densitymats%rho(J,0,a,b)&
+                    +nuc_target%densitymats%rho(J,1,a,b) .eq. 0) cycle
+                print*,a,b,nuc_target%densitymats%rho(J,0,a,b),&
+                    nuc_target%densitymats%rho(J,1,a,b)
             enddo
         enddo
     enddo
 
 end subroutine printdensities
-
-!===================================================================
 
 
 !================================================
@@ -126,4 +125,3 @@ end subroutine printdensities
 
   return
   end function closest2J
-!================================================

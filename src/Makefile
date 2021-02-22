@@ -42,7 +42,7 @@ dmf90factor.o
 
 darkmatter.x: $(OBJ1) 
 	$(COMP) -o dmf90factor.x  $(OPTIONS) $(OBJ1) 
-	cp dmf90factor.x ~/bin/
+	mv ./dmf90factor.x ~/bin/
 
 clean:
 	rm *.o *.x *.mod
