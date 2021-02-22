@@ -94,7 +94,6 @@ for a range specified by the user.
     \item Input file OR interactive inputs from user
     \item Control file (.control)
     \item Nuclear density matrix file (.dres)
-    \item Model space file (.sps) (Will not be required in future release)	    
 \end{enumerate}
 
 \subsection{Event rate spectra (events per GeV)}
@@ -115,9 +114,6 @@ further lines of input. These will be explained by an example:
  Enter name of control file (.control):
 xe131
 ...
-  Enter shell-model space file name (.sps)
-GCN5082
-...
   Enter name of one-body density file (.dres)
 xe131gcn
 ...
@@ -134,16 +130,11 @@ Third is the name of the control file containing the EFT coefficients and other,
 optional, settings. The '.control' file extension is omitted. This contents of
 this file will be explained in more detail later.
 
-Fourth is a file which gives context for the Shell Model used to describe the
-nuclear wave functions. Future releases of this code will infer this
-information, but for now the user must provide the filename containing the
-single-particle space quantum numbers. The '.sps' file extension is omitted. 
-
-Fifth is the file containing the nuclear wave functions in the form of one-body
+Fourth is the file containing the nuclear wave functions in the form of one-body
 density matrices. Only the ground-state need be included. The '.dres' file
 extension is omitted. 
 
-Sixth and finally are three numbers specifying the range of recoil energies
+Fifth and finally are three numbers specifying the range of recoil energies
 $E_R$ that the differential scattering rate should be computed for.
 
 The event rate spectra will be written to a file, and as a side effect of the
@@ -275,7 +266,6 @@ example:
 54
 NEUTRONS
 xe
-GCN5082
 xeAAAgcn
 1. 1000. 1.0
 \end{verbatim}
@@ -391,7 +381,6 @@ replaceable keywords:
 54
 77
 xe131
-GCN5082
 xe131gcn
 1. 1000. 10.0
 \end{verbatim}

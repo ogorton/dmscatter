@@ -29,8 +29,10 @@ directory, try running:
 
 More extensive documentation can be found in the manual document.
 
-### To-do:
-* Update the manual
+### Version 1.5 update (Feb. 22, 2021)
+* Renamed executable to dmf90factor.x (previously darkmatter.x)
+* A ".sps" file is no longer required; the code now deduces this information
+  using data provided by the (still required) ".dres" file.
 
 ### Version 1.4 update (Jan. 14, 2021)
 New features:
