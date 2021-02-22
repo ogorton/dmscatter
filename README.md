@@ -33,6 +33,7 @@ More extensive documentation can be found in the manual document.
 * Renamed executable to dmf90factor.x (previously darkmatter.x)
 * A ".sps" file is no longer required; the code now deduces this information
   using data provided by the (still required) ".dres" file.
+* Manual now has quick-start guides for the Fortran and Python interfaces
 
 ### Version 1.4 update (Jan. 14, 2021)
 New features:
