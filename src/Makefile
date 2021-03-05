@@ -40,7 +40,7 @@ dmf90factor.o
 	$(COMP) -c $(OPTIONS) $(<F)
 .f.o:;  ($(COMP) -c $(OPTIONS) $(<F)) 
 
-darkmatter.x: $(OBJ1) 
+dmf90factor: $(OBJ1) 
 	$(COMP) -o dmf90factor.x  $(OPTIONS) $(OBJ1) 
 	mv ./dmf90factor.x ~/bin/
 

@@ -8,24 +8,24 @@ in [this arXiv link](https://arxiv.org/abs/1308.6288).
 Source code is located in src directory. To compile the program, you must have
 the gfortran compiler. From the /src/ directory, run:
 
-    make darkmatter.x
+    make dmf90factor.x
     
-This places the darkmatter.x executable in the src directory. Move it to your bin
+This places the dmf90factor.x executable in the src directory. Move it to your bin
 directory if desired.
 
 
 An example is provided in the "sample" directory. To run this example, move to
-the /sample/ directory and run:
+the /sample/si directory and run:
 
-    ../src/darkmatter.x < input.si28
+    ../../src/dmf90factor.x < input.si28
 
 This computes the event rate spectra for a Si28 target. 
 
 Two example python scripts for running multiple jobs with different settings can
-be found in the /python/ directory. For example, from within the /sample/
+be found in the /python/ directory. For example, from within the /sample/xe/
 directory, try running:
 
-    python ../python/masscompare.py
+    python ../../python/masscompare.py
 
 More extensive documentation can be found in the manual document.
 
