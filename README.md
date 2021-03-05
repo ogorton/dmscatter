@@ -25,7 +25,7 @@ Two example python scripts for running multiple jobs with different settings can
 be found in the /python/ directory. For example, from within the /sample/
 directory, try running:
 
-    python3 ../python/masscompare.py
+    python ../python/masscompare.py
 
 More extensive documentation can be found in the manual document.
 

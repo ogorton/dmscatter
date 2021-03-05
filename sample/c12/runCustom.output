@@ -1,0 +1,199 @@
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Welcome to our FORTAN 90 implementation of the WIMP-nucleon scattering code.
+ Based on the Mathematica script described in arXiv:1308.6288 (2003).
+   VERSION 1.4 UPDATED: 2021.01.15 @ SDSU
+   Dev. contact: cjohnson@sdsu.edu
+                  ogorton@sdsu.edu
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+ Select an option:
+ [1] Event rate per unit recoil energy (spectra)
+ [2] (*) Scattering probability
+ [3] (*) Differential cross section per recoil energy
+ [4] (*) Total cross section
+ [5] Total scattering events per detector (does not produce spectra data)
+  
+ (*) Not available in this release.
+  
+ Enter the target proton number 
+  
+ Enter the target neutron number 
+ Setting default parameter values.
+  
+ Enter name of control file (.control):
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Reading control file.
+ Possible keywords:
+ coefnonrel
+ vearth
+ dmdens
+ quadtype
+ intpoints
+ gev
+ femtometer
+ wimpmass
+ vescape
+ ntarget
+ weakmscale
+ vscale
+ mnucleon
+ dmspin
+ 
+ # Coefficient matrix (non-relativistic)
+ # Ommitted values are assumed to be 0.0.
+ # c_i^t
+ # i = 1,...,16
+ # t: p=proton n=neutron s=scaler v=vector
+ #control name	 i	coupling	c_i^t
+ n          14   4.8000000000000001E-004
+ wimpmass: Set dark matter particle mass to   500.00000000000000     
+ vearth: Set velocity of earth in galactic frame set to   232.00000000000000     
+ maxwellv0: Set velocity distribution scaling to   220.00000000000000     
+ vescape: Set escape velocity to   550.00000000000000     
+ dmdens: Set local dark matter density to  0.29999999999999999     
+ intpoints: Set number of integral lattice points to        1000
+ ntscale: Set target nuclei mass density scaling to   2500.0000000000000     
+ End of control file.
+ 
+ Converting EFT coefficients isospin <=> proton-neutron formalism.
+ s          14   4.8000000000000001E-004
+ v          14  -4.8000000000000001E-004
+ p          14   0.0000000000000000     
+ n          14   4.8000000000000001E-004
+ Normalizing EFT coefficients.
+  
+  Enter name of one-body density file (.dres) 
+ c12Nmax6DAEhw22.5.dres
+ Valence Z, N:
+           6           6
+ Looking for orbitals.
+ Found single particle state quantum numbers.
+ Valence orbitals:
+ ORBIT      N      L      2 x J
+           1           0           0           1
+           2           0           1           1
+           3           0           1           3
+           4           1           0           1
+           5           0           2           3
+           6           0           2           5
+           7           1           1           1
+           8           1           1           3
+           9           0           3           5
+          10           0           3           7
+          11           2           0           1
+          12           1           2           3
+          13           1           2           5
+          14           0           4           7
+          15           0           4           9
+          16           2           1           1
+          17           2           1           3
+          18           1           3           5
+          19           1           3           7
+          20           0           5           9
+          21           0           5          11
+          22           3           0           1
+          23           2           2           3
+          24           2           2           5
+          25           1           4           7
+          26           1           4           9
+          27           0           6          11
+          28           0           6          13
+          29           3           1           1
+          30           3           1           3
+          31           2           3           5
+          32           2           3           7
+          33           1           5           9
+          34           1           5          11
+          35           0           7          13
+          36           0           7          15
+          37           4           0           1
+          38           3           2           3
+          39           3           2           5
+          40           2           4           7
+          41           2           4           9
+          42           1           6          11
+          43           1           6          13
+          44           0           8          15
+          45           0           8          17
+          46           4           1           1
+          47           4           1           3
+          48           3           3           5
+          49           3           3           7
+          50           2           5           9
+          51           2           5          11
+          52           1           7          13
+          53           1           7          15
+          54           0           9          17
+          55           0           9          19
+          56           5           0           1
+          57           4           2           3
+          58           4           2           5
+          59           3           4           7
+          60           3           4           9
+          61           2           6          11
+          62           2           6          13
+          63           1           8          15
+          64           1           8          17
+          65           0          10          19
+          66           0          10          21
+          67           5           1           1
+          68           5           1           3
+          69           4           3           5
+          70           4           3           7
+          71           3           5           9
+          72           3           5          11
+          73           2           7          13
+          74           2           7          15
+          75           1           9          17
+          76           1           9          19
+          77           0          11          21
+          78           0          11          23
+          79           6           0           1
+          80           5           2           3
+          81           5           2           5
+          82           4           4           7
+          83           4           4           9
+          84           3           6          11
+          85           3           6          13
+          86           2           8          15
+          87           2           8          17
+          88           1          10          19
+          89           1          10          21
+          90           0          12          23
+          91           0          12          25
+          92           6           1           1
+          93           6           1           3
+          94           5           3           5
+          95           5           3           7
+          96           4           5           9
+          97           4           5          11
+          98           3           7          13
+          99           3           7          15
+         100           2           9          17
+         101           2           9          19
+         102           1          11          21
+         103           1          11          23
+         104           0          13          25
+         105           0          13          27
+ Number of valence orbitals:
+         105
+ Max. valence occupancy:
+        1120
+ Inert core inferred from valence particles:
+ No core.
+ Number of core orbitals:
+           0
+ Core orbitals:
+ ORBIT      N      L      2 x J
+ Density matrix allocated, size:      242550
+ Density matrix is in explicit proton-neutron format.
+ Filling core orbitals.
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Parameters used in this calculation:
+ femtometer =   5.0677000000000003     
+ GeV =    1.0000000000000000     
+ kev =    9.9999999999999995E-007
+ b (dimless)   1.6690275306058171     
+ b (fm)   8.4581308168510994     
+ Nucleon mass (GeV)  0.93827199999999999     
+ WIMP spin  0.50000000000000000     

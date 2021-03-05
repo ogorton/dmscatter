@@ -90,11 +90,13 @@ The second is the integral of the first over either energy or momentum-transfer,
 for a range specified by the user. 
 
 \subsection{Required files}
+There are two files required for any calculation:
 \begin{enumerate}
-    \item Input file OR interactive inputs from user
     \item Control file (.control)
     \item Nuclear density matrix file (.dres)
 \end{enumerate}
+Additionally, if the user enables the option ``usenergyfile'', then a file
+containing the input energies or momentum will also be required.
 
 \subsection{Event rate spectra (events per GeV)}
 The program will prompt the user for 

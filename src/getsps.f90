@@ -14,7 +14,7 @@ subroutine getorbitals(resfile, A)
     integer :: Zval, Nval
     integer :: maxvalence, ncoreorb
 
-    maxorbits = 100
+    maxorbits = 1000
     allocate(orbiti(maxorbits))
     allocate(qnN(maxorbits))
     allocate(qnL(maxorbits))
@@ -104,6 +104,9 @@ subroutine infercore(A, zval, nval, maxvalence, Acore, ncoreorb)
         case(0)
             print*,'No core.'
             ncoreorb = 0
+        case(4)
+            print*,'He-4 core.'
+            ncoreorb = 1
         case(16)
             print*,'O-16 core.'
             ncoreorb = 3
@@ -117,7 +120,7 @@ subroutine infercore(A, zval, nval, maxvalence, Acore, ncoreorb)
             print*,'Sn-100 core.'
             ncoreorb = 11
         case default
-            print*,'Non-standard core: A=',Acore
+            print*,'Non-standard core: A-core=',Acore
             ncoreorb = -1
     end select
 

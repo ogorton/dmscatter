@@ -1,0 +1,82 @@
+  = = = = = = BIGSTICK run log file = = = = = = 
+  Code and run information 
+  BIGSTICK Version 7.9.9 Oct  2020
+  Run date: 2021-01-06
+  Menu choice: d  
+
+ Running on NERSC_HOST: none
+ scratch_dir (*.wfn,...): .
+ Number of MPI processors =           1 , with # OpenMP threads =            4
+  Flag wantUseVec2Thread =  F  (set in module localvectors )
+  Flag useHZSomp =  F  (set in module localvectors )
+  
+  Information on defaults/flags (found in module flagger in file bmodules_flags.f90):
+  Limits on storage (found in module flagger in file bmodules_flags.f90):
+  maxjumpmemory_default =    64.0000000      Gb 
+  maxlanczosstorage1 =    16.0000000      Gb 
+  flag iffulluseph (if full, use particle-hole transformation ) =  T
+  
+  
+  Many-body system information 
+  Single particle space found in sd                                      
+  Isospin formalism for single-particle space
+  Proton-neutron formalism is not yet fully implemented...is it?
+ Valence Z =            6 , valence N =            6
+  M =            0 , parity = +
+  
+  Total basis dimension:                 93710
+  # Slater determinants: proton                   924 , neutron                   924
+  # sectors: protons           15 , neutrons           15
+  Time to compute jumps :    1.1999999987892807E-002
+  avg storage per operation available    1507.5401505052710       bytes
+ opfragstat(           1 ,            1 )%nnodes =            1
+  frags            1 ->           1  on procs            0           0
+ RAM for 2 lanczos vectors in storage         :        0.750 Mb 
+ RAM for jumps in storage    (total)          :           2.938 Mb 
+ RAM for uncoupled two-body matrix elements   :        0.014 Mb 
+  total # operations              42453264  ~ ops/jump =    338.964447    
+  Effective storage per operation =    6.9195244916857274E-002  bytes 
+ Total nonzero matrix (including indices, assuming hermitian) would require   0.1698     Gb storage 
+  
+  Interactions read in: 
+  opening OXBASH/NuSHELL-style isospin formatted file usdb.int
+ ! depmas=  0.30 lincom=  56 icntrl= 1 fgserr=  1.00                   
+ ! 1=d3/2 2=d5/2 3=s1/2                                                
+ ! the first line has the three single-particle energies               
+ ! the - sign tells oxbash that the tbme have a mass dependence of the 
+ ! [18/(16+n)]^0.3 where n is the number of valence particles          
+  Scaling: spe    1.00000000      TBMEs by (   18.0000000     /   28.0000000     )^  0.300000012      =   0.875859261    
+          63  two-body matrix elements in this file 
+  As a check, first two-body matrix element in list is   -1.37960005    
+  No one-body potential beyond single-particle energies 
+  Time to compute jumps :    1.2999999977182597E-002
+
+         100  iterations 
+  Average time per processor is    7.4390000002458692       max    7.4390000002458692     
+  Time to run after lanczos:    34.548999999999069     
+  Time to run after lanczos:    34.559000000008382     
+  Total time to run :    34.559000000008382     
+  Time to compute basis :    2.0000000367872417E-003
+  Time to count up jumps :    1.0000000009313226E-002
+  Time to create descendents :    2.9999999678693712E-003
+  Time to setup for matrix elements :    0.0000000000000000     
+  Time to decouple matrix elements :    9.9999998928979039E-004
+  Time to compute jumps :    1.2999999977182597E-002
+  Time to sort 1b-jumps :    7.1999999985564500E-002
+  Time to set up pivot :    0.0000000000000000     
+  Time to compute lanczos :    8.0329999999958090     
+  Time total in H mat-vec multiply  :    7.4400000002933666     
+  Time to apply sp energies :    0.0000000000000000     
+  Time in pn :    3.2070000001695007     
+  Time in pn(back) :    2.2170000001206063     
+  Time in 2-body (pp) :   0.55000000010477379     
+  Time in 2-body (nn) :   0.93399999977555126     
+  Time in reorthogonalization :   0.56399999960558489     
+  Time in reduce (in applyh only) :    1.0000000474974513E-003
+  Time spent diagonalizing. :    6.0000000521540642E-003
+  Time to build eigenvectors. :    3.2999999995809048E-002
+  Time to compute J^2, T^2 :    6.3000000023748726E-002
+  Time to compute 1b densities:    1.0000000009313226E-002
+  Time to write 1b densities :    0.0000000000000000     
+  
+  *** END OF LOG *** END OF LOG *** END OF LOG *** 

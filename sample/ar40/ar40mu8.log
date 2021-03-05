@@ -1,0 +1,117 @@
+  = = = = = = BIGSTICK run log file = = = = = = 
+  Code and run information 
+  BIGSTICK Version 7.9.11 Feb 2021
+  Run date: 2021-02-24
+  Menu choice: d  
+ 
+ Running on NERSC_HOST: none
+ scratch_dir (*.wfn,...): .
+ Number of MPI processors =          32 , with # OpenMP threads =            1
+  
+  Information on defaults/flags (found in module flagger in file bmodules_flags.
+ f90):
+  Limits on storage (found in module flagger in file bmodules_flags.f90):
+  maxjumpmemory_default =    32.50000      Gb 
+  maxlanczosstorage1 =    16.00000      Gb 
+  flag iffulluseph (if full, use particle-hole transformation ) =  T
+  
+  ........................... 
+  No jumpstart file found     
+  ........................... 
+  
+  Many-body system information 
+  Single particle space found in sdpf                                    
+  Isospin formalism for single-particle space
+  Proton-neutron formalism is not yet fully implemented...is it?
+ Valence Z =           10 , valence N =           14
+  M =            0 , parity = +
+  Max W excitations =            8
+  
+ there are          278  sectors            1
+ there are          278  sectors            2
+  Total basis dimension:              502175110
+  # Slater determinants: proton                1265350 , neutron 
+               5723076
+  # sectors: protons          278 , neutrons          278
+  # fragments =            2
+  Fragment size min =              251074728 , max =              251100382
+  Average fragment size =              251087555  +/-                  12826
+  Note: after fragmentation there are          279 
+  proton sectors (neutrons do not fragment)
+   1 max # 2-body jumps in a sector jump         8111504 =>     0.203 Gb storage
+   2 max # 2-body jumps in a sector jump        78827699 =>     1.971 Gb storage
+   1 max # 1-body jumps in a sector jump          801204 =>     0.017 Gb storage
+   2 max # 1-body jumps in a sector jump         6446284 =>     0.135 Gb storage
+  Time to compute jumps :    409.445189714432     
+ WEIGHTS for PP, NN, PN    1.510000       2.800000       3.260000    
+  avg storage per operation available    1.43340087190054       bytes
+  avg storage per weighted operation avail:   0.398353402776653       bytes/ns
+  Total amount of greedy opbundle memory =    46.5164070044261       Gb
+          10  greedy opbundles 
+  Note there should be about    1040.000      Gb total across all processes 
+  # of fragments            2
+  fragment label     /       dim 
+           1             251074728
+           2             251100382
+ opfragstat(           1 ,            1 )%nnodes =           12
+  frags            1 ->           1  on procs            0          11
+ opfragstat(           1 ,            2 )%nnodes =            5
+  frags            1 ->           2  on procs           12          16
+ opfragstat(           2 ,            1 )%nnodes =            3
+  frags            2 ->           1  on procs           17          19
+ opfragstat(           2 ,            2 )%nnodes =           12
+  frags            2 ->           2  on procs           20          31
+  max local storage of jumps =    16344.86      Mb, on process            7
+  avg storage of jumps is    3332.873      Mb 
+ RAM for 2 lanczos vector fragments (max)         :     2008.803 Mb 
+ Note: if using block lanczos, must multiply by # vectors/block 
+ RAM for jumps in storage    (total)          :       61161.547 Mb 
+ Max RAM for local storage of jumps           :       16344.860 Mb 
+ RAM for uncoupled two-body matrix elements   :        0.309 Mb 
+  total # operations           725547224760  ~ ops/jump =    286.8561    
+  Effective storage per operation =   8.429712624044743E-002  bytes 
+ Total nonzero matrix (including indices, assuming hermitian) would require    2902.     Gb storage 
+  
+  Interactions read in: 
+  opening OXBASH/NuSHELL-style isospin formatted file sdpfmu-db.int
+  Autoscaling  TBMEs by (   42.00000     /   64.00000     )^  0.3000000      = 
+  0.8812940    
+         768  two-body matrix elements in this file 
+  As a check, first two-body matrix element in list is   -1.647720    
+  No one-body potential beyond single-particle energies 
+  Time to compute jumps :    324.138947486877     
+ 
+          70  iterations 
+  ( total =          170  ) 
+  Average time per processor is    12756.9102757573       max 
+   14232.2103707790     
+  Overall efficiency is   0.896340761091422     
+  Time to run after lanczos:    17328.5470526218     
+  Time to run after lanczos:    17471.2389457226     
+  Total time to run :    17471.2413642406     
+  Time to compute basis :   0.303287029266357     
+  Time to count up jumps :    265.338369131088     
+  Time to create descendents :    300.757829427719     
+  Time to setup for matrix elements :   6.155967712402344E-004
+  Time to decouple matrix elements :   2.591657638549805E-002
+  Time to compute jumps :    324.138947486877     
+  Time to calculate distribution :   0.000000000000000E+000
+  Time to sort 1b-jumps :    7.18227624893188     
+  Time to compute and delete unused jump storage :    28.4334390163422     
+  Time to set up pivot :   0.000000000000000E+000
+  Time to compute lanczos :    15569.5853083134     
+  Time total in H mat-vec multiply  :    13404.9547345638     
+  Time to apply sp energies :   0.000000000000000E+000
+  Time in pn :   1.631021499633789E-003
+  Time in pn(back) :   7.600784301757812E-004
+  Time in 2-body (pp) :    6716.94063854218     
+  Time in 2-body (nn) :    6688.00189256668     
+  Time in reorthogonalization :    883.206296920776     
+  Time in reduce (in applyh only) :    435.601394414902     
+  Time spent diagonalizing. :   3.954648971557617E-003
+  Time to build eigenvectors. :    9.54759788513184     
+  Time to compute J^2, T^2 :    187.286136627197     
+  Time to compute 1b densities:    142.691841125488     
+  Time to write 1b densities :   1.909732818603516E-003
+  
+  *** END OF LOG *** END OF LOG *** END OF LOG *** 
