@@ -45,7 +45,7 @@
  # i = 1,...,16
  # t: p=proton n=neutron s=scaler v=vector
  #control name	 i	coupling	c_i^t
- n          14   4.8000000000000001E-004
+ n          15   4.8000000000000001E-004
  wimpmass: Set dark matter particle mass to   500.00000000000000     
  vearth: Set velocity of earth in galactic frame set to   232.00000000000000     
  maxwellv0: Set velocity distribution scaling to   220.00000000000000     
@@ -56,14 +56,14 @@
  End of control file.
  
  Converting EFT coefficients isospin <=> proton-neutron formalism.
- s          14   4.8000000000000001E-004
- v          14  -4.8000000000000001E-004
- p          14   0.0000000000000000     
- n          14   4.8000000000000001E-004
+ s          15   4.8000000000000001E-004
+ v          15  -4.8000000000000001E-004
+ p          15   0.0000000000000000     
+ n          15   4.8000000000000001E-004
  Normalizing EFT coefficients.
   
   Enter name of one-body density file (.dres) 
- c12Nmax6DAEhw22.5.dres
+ c12Nmax8chi20hw.dres
  Valence Z, N:
            6           6
  Looking for orbitals.
@@ -161,31 +161,17 @@
           89           1          10          21
           90           0          12          23
           91           0          12          25
-          92           6           1           1
-          93           6           1           3
-          94           5           3           5
-          95           5           3           7
-          96           4           5           9
-          97           4           5          11
-          98           3           7          13
-          99           3           7          15
-         100           2           9          17
-         101           2           9          19
-         102           1          11          21
-         103           1          11          23
-         104           0          13          25
-         105           0          13          27
  Number of valence orbitals:
-         105
+          91
  Max. valence occupancy:
-        1120
+         910
  Inert core inferred from valence particles:
  No core.
  Number of core orbitals:
            0
  Core orbitals:
  ORBIT      N      L      2 x J
- Density matrix allocated, size:      242550
+ Density matrix allocated, size:      182182
  Density matrix is in explicit proton-neutron format.
  Filling core orbitals.
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -197,3 +183,21 @@
  b (fm)   8.4581308168510994     
  Nucleon mass (GeV)  0.93827199999999999     
  WIMP spin  0.50000000000000000     
+ WIMP mass (GeV)   500.00000000000000     
+ Target J           0
+ Target T           0
+ Target Mt           0
+ Target Z,N           6           6
+ Target atomic mass   12.000000000000000     
+ System reduced mass   11.011305606386038     
+ Target mass density (1/GeV)   8.8815752077578067E-002
+ Local WIMP density (GeV/cm^3)  0.29999999999999999     
+ v0 (km/s)   220.00000000000000     
+ ve (km/s)   232.00000000000000     
+ v escape (km/s)   550.00000000000000     
+ Integral lattice size =         1000
+ EFT coupling coefficients:
+ i    p    n    s    v
+i          p           n           s           v
+15  0.0000E+00 0.1688E-04 0.1688E-04-0.1688E-04
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
