@@ -193,6 +193,18 @@ subroutine setkeyword(keyword, keyvalue, wimp)
         ntscale = keyvalue
         print*,trim(keyword),': Set target nuclei mass density scaling to',keyvalue
 
+    case('hofrequency')
+        bfm = keyvalue * femtometer
+        print*,trim(keyword),': Set harmonic oscillator parameter to',keyvalue,'and b(fm) to',bfm
+    case('printdensities')
+        if (keyvalue==1) then
+            printdens = .true.
+            print*,trim(keyword),': Set to print density matrix.'
+        else
+            printdens = .false.
+            print*,trim(keyword),': Set to not print density matrix.'
+        end if        
+
     case default
         print*,'Invalid keyword "',trim(keyword),'". Ignoring.'
 

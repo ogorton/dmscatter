@@ -7,6 +7,14 @@
     3   -329.61560   0.53467     1.500   0.000
     4   -329.58804   0.56223     2.500   0.000
     5   -329.31491   0.83536     3.500   0.000
+
+  Single particle state quantum numbers
+ORBIT      N     L   2 x J
+     1     0     4     7
+     2     1     2     5
+     3     1     2     3
+     4     2     0     1
+     5     0     5    11        
   
  Initial state #   1 E = -330.15027 2xJ, 2xT =    3  23
  Final state   #   1 E = -330.15027 2xJ, 2xT =    3  23

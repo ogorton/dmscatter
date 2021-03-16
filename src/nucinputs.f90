@@ -21,6 +21,6 @@ subroutine setup_nuclearinputs(nuc_target)
         call coredensity(nuc_target)
     end if
  
-    !call printdensities(nuc_target)
+    if (printdens) call printdensities(nuc_target)
 
 end subroutine

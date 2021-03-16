@@ -57,7 +57,13 @@ subroutine getorbitals(resfile, A)
     print*,'Max. valence occupancy:'
     print*,maxvalence
 
-    call infercore(A, zval, nval, maxvalence, Acore, ncoreorb)
+    print*,"Corrected valence particles Z, N:"
+    if (zval < 0) zval = maxvalence + zval
+    if (nval < 0) nval = maxvalence + nval
+    print*,Zval, Nval
+
+
+    call infercore(A, zval, nval, Acore, ncoreorb)
 
     print*,'Number of core orbitals:'
     print*,ncoreorb
@@ -90,13 +96,10 @@ subroutine getorbitals(resfile, A)
 
 end subroutine getorbitals
 
-subroutine infercore(A, zval, nval, maxvalence, Acore, ncoreorb)
+subroutine infercore(A, zval, nval, Acore, ncoreorb)
 
     integer :: A, zval, nval, maxvalence
     integer :: Acore, ncoreorb
-
-    if (zval < 0) zval = maxvalence + zval
-    if (nval < 0) nval = maxvalence + nval
 
     Acore = A - zval - nval
     print*,'Inert core inferred from valence particles:'

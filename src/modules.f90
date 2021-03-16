@@ -35,6 +35,7 @@ module parameters
    ! Target nucleus
    real(doublep) :: ntscale = 1d0
    logical :: fillcore = .true.
+   logical :: printdens = .false.
    logical :: evenA
    integer nlocalstates !,maxlocalstates
    integer nsporb   ! # of single-particle orbits
