@@ -194,8 +194,13 @@ subroutine setkeyword(keyword, keyvalue, wimp)
         print*,trim(keyword),': Set target nuclei mass density scaling to',keyvalue
 
     case('hofrequency')
+        bfm = 6.43d0/sqrt(keyvalue) * femtometer
+        print*,trim(keyword),': Set harmonic oscillator frequency to',keyvalue,'and b(1/GeV) to',bfm
+
+    case('hoparameter')
         bfm = keyvalue * femtometer
-        print*,trim(keyword),': Set harmonic oscillator parameter to',keyvalue,'and b(fm) to',bfm
+        print*,trim(keyword),': Set harmonic oscillator parameter to',keyvalue,'and b(1/GeV) to',bfm
+
     case('printdensities')
         if (keyvalue==1) then
             printdens = .true.

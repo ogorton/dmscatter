@@ -1,73 +1,85 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  5 MAR 2021 16:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.16)  16 MAR 2021 18:57
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
 **xe131allops.tex
 (./xe131allops.tex
-LaTeX2e <2020-02-02> patch level 5
-L3 programming layer <2020-03-06> (/usr/local/texlive/2020/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-02-18>
+(/usr/local/texlive/2020/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
 (/usr/local/texlive/2020/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 )
-\c@part=\count167
-\c@section=\count168
-\c@subsection=\count169
-\c@subsubsection=\count170
-\c@paragraph=\count171
-\c@subparagraph=\count172
-\c@figure=\count173
-\c@table=\count174
+\c@part=\count179
+\c@section=\count180
+\c@subsection=\count181
+\c@subsubsection=\count182
+\c@paragraph=\count183
+\c@subparagraph=\count184
+\c@figure=\count185
+\c@table=\count186
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
-\bibindent=\dimen134
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2018/08/11 v1.3c Input encoding file
+\bibindent=\dimen138
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2020/08/01 v1.3d Input encoding file
 \inpenc@prehook=\toks15
 \inpenc@posthook=\toks16
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/geometry/geometry.sty
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
- (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
-) (/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/ifvtex.sty
+)
+(/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
- (/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty
+
+(/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
-\Gm@cnth=\count175
-\Gm@cntv=\count176
-\c@Gm@tempcnt=\count177
-\Gm@bindingoffset=\dimen135
-\Gm@wd@mp=\dimen136
-\Gm@odd@mp=\dimen137
-\Gm@even@mp=\dimen138
-\Gm@layoutwidth=\dimen139
-\Gm@layoutheight=\dimen140
-\Gm@layouthoffset=\dimen141
-\Gm@layoutvoffset=\dimen142
+\Gm@cnth=\count187
+\Gm@cntv=\count188
+\c@Gm@tempcnt=\count189
+\Gm@bindingoffset=\dimen139
+\Gm@wd@mp=\dimen140
+\Gm@odd@mp=\dimen141
+\Gm@even@mp=\dimen142
+\Gm@layoutwidth=\dimen143
+\Gm@layoutheight=\dimen144
+\Gm@layouthoffset=\dimen145
+\Gm@layoutvoffset=\dimen146
 \Gm@dimlist=\toks18
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
- (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/trig.sty
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 105.
- (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen143
-\Gin@req@width=\dimen144
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
-File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count178
-\l__pdf_internal_box=\box45
-) (./xe131allops.aux)
+\Gin@req@height=\dimen147
+\Gin@req@width=\dimen148
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-03-02 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count190
+\l__pdf_internal_box=\box47
+)
+(./xe131allops.aux)
 \openout1 = `xe131allops.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
@@ -121,78 +133,81 @@ LaTeX Font Info:    ... okay on input line 9.
 
 (/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count179
-\scratchdimen=\dimen145
-\scratchbox=\box46
-\nofMPsegments=\count180
-\nofMParguments=\count181
+\scratchcounter=\count191
+\scratchdimen=\dimen149
+\scratchbox=\box48
+\nofMPsegments=\count192
+\nofMParguments=\count193
 \everyMPshowfont=\toks19
-\MPscratchCnt=\count182
-\MPscratchDim=\dimen146
-\MPnumerator=\count183
-\makeMPintoPDFobject=\count184
+\MPscratchCnt=\count194
+\MPscratchDim=\dimen150
+\MPnumerator=\count195
+\makeMPintoPDFobject=\count196
 \everyMPtoPDFconversion=\toks20
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (/usr/local/texlive/2020/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
 ))
-<xe131-o1.pdf, id=1, 578.16pt x 433.62pt>
+<xe131-o1.pdf, id=1, 462.52798pt x 346.89601pt>
 File: xe131-o1.pdf Graphic file (type pdf)
 <use xe131-o1.pdf>
 Package pdftex.def Info: xe131-o1.pdf  used on input line 11.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o1-relerr.pdf, id=2, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o1-relerr.pdf, id=2, 462.52798pt x 346.89601pt>
 File: xe131-o1-relerr.pdf Graphic file (type pdf)
 <use xe131-o1-relerr.pdf>
 Package pdftex.def Info: xe131-o1-relerr.pdf  used on input line 12.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 11--13
 [][] [] 
  []
 
-<xe131-o3.pdf, id=3, 578.16pt x 433.62pt>
+<xe131-o3.pdf, id=3, 462.52798pt x 346.89601pt>
 File: xe131-o3.pdf Graphic file (type pdf)
 <use xe131-o3.pdf>
 Package pdftex.def Info: xe131-o3.pdf  used on input line 14.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o3-relerr.pdf, id=4, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o3-relerr.pdf, id=4, 462.52798pt x 346.89601pt>
 File: xe131-o3-relerr.pdf Graphic file (type pdf)
 <use xe131-o3-relerr.pdf>
 Package pdftex.def Info: xe131-o3-relerr.pdf  used on input line 15.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 14--16
 [][] [] 
  []
 
-<xe131-o4.pdf, id=5, 578.16pt x 433.62pt>
+<xe131-o4.pdf, id=5, 462.52798pt x 346.89601pt>
 File: xe131-o4.pdf Graphic file (type pdf)
 <use xe131-o4.pdf>
 Package pdftex.def Info: xe131-o4.pdf  used on input line 17.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o4-relerr.pdf, id=6, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o4-relerr.pdf, id=6, 462.52798pt x 346.89601pt>
 File: xe131-o4-relerr.pdf Graphic file (type pdf)
 <use xe131-o4-relerr.pdf>
 Package pdftex.def Info: xe131-o4-relerr.pdf  used on input line 18.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 17--19
 [][] [] 
  []
 
-<xe131-o5.pdf, id=7, 578.16pt x 433.62pt>
+<xe131-o5.pdf, id=7, 462.52798pt x 346.89601pt>
 File: xe131-o5.pdf Graphic file (type pdf)
 <use xe131-o5.pdf>
 Package pdftex.def Info: xe131-o5.pdf  used on input line 20.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o5-relerr.pdf, id=8, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o5-relerr.pdf, id=8, 462.52798pt x 346.89601pt>
 File: xe131-o5-relerr.pdf Graphic file (type pdf)
 <use xe131-o5-relerr.pdf>
 Package pdftex.def Info: xe131-o5-relerr.pdf  used on input line 21.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 20--22
 [][] [] 
@@ -200,62 +215,68 @@ Overfull \hbox (17.2222pt too wide) in paragraph at lines 20--22
 
 [1
 
-{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./xe131-o1.pdf> <./xe131-o1-relerr.pdf
+{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./xe131
+-o1.pdf> <./xe131-o1-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o1-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o1-relerr.pdf): PDF inclusion: multiple 
+pdfs with page group included in a single page
 > <./xe131-o3.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o3.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o3.pdf): PDF inclusion: multiple pdfs wi
+th page group included in a single page
 > <./xe131-o3-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o3-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o3-relerr.pdf): PDF inclusion: multiple 
+pdfs with page group included in a single page
 > <./xe131-o4.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o4.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o4.pdf): PDF inclusion: multiple pdfs wi
+th page group included in a single page
 > <./xe131-o4-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o4-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o4-relerr.pdf): PDF inclusion: multiple 
+pdfs with page group included in a single page
 >]
-<xe131-o6.pdf, id=367, 578.16pt x 433.62pt>
+<xe131-o6.pdf, id=372, 462.52798pt x 346.89601pt>
 File: xe131-o6.pdf Graphic file (type pdf)
 <use xe131-o6.pdf>
 Package pdftex.def Info: xe131-o6.pdf  used on input line 23.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o6-relerr.pdf, id=368, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o6-relerr.pdf, id=373, 462.52798pt x 346.89601pt>
 File: xe131-o6-relerr.pdf Graphic file (type pdf)
 <use xe131-o6-relerr.pdf>
 Package pdftex.def Info: xe131-o6-relerr.pdf  used on input line 24.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 23--25
 [][] [] 
  []
 
-<xe131-o7.pdf, id=369, 578.16pt x 433.62pt>
+<xe131-o7.pdf, id=374, 462.52798pt x 346.89601pt>
 File: xe131-o7.pdf Graphic file (type pdf)
 <use xe131-o7.pdf>
 Package pdftex.def Info: xe131-o7.pdf  used on input line 26.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o7-relerr.pdf, id=370, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o7-relerr.pdf, id=375, 462.52798pt x 346.89601pt>
 File: xe131-o7-relerr.pdf Graphic file (type pdf)
 <use xe131-o7-relerr.pdf>
 Package pdftex.def Info: xe131-o7-relerr.pdf  used on input line 27.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 26--28
 [][] [] 
  []
 
-<xe131-o8.pdf, id=371, 578.16pt x 433.62pt>
+<xe131-o8.pdf, id=376, 462.52798pt x 346.89601pt>
 File: xe131-o8.pdf Graphic file (type pdf)
 <use xe131-o8.pdf>
 Package pdftex.def Info: xe131-o8.pdf  used on input line 29.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o8-relerr.pdf, id=372, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o8-relerr.pdf, id=377, 462.52798pt x 346.89601pt>
 File: xe131-o8-relerr.pdf Graphic file (type pdf)
 <use xe131-o8-relerr.pdf>
 Package pdftex.def Info: xe131-o8-relerr.pdf  used on input line 30.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 29--31
 [][] [] 
@@ -263,60 +284,65 @@ Overfull \hbox (17.2222pt too wide) in paragraph at lines 29--31
 
 [2 <./xe131-o5.pdf> <./xe131-o5-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o5-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o5-relerr.pdf): PDF inclusion: multiple 
+pdfs with page group included in a single page
 > <./xe131-o6.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o6.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o6.pdf): PDF inclusion: multiple pdfs wi
+th page group included in a single page
 > <./xe131-o6-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o6-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o6-relerr.pdf): PDF inclusion: multiple 
+pdfs with page group included in a single page
 > <./xe131-o7.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o7.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o7.pdf): PDF inclusion: multiple pdfs wi
+th page group included in a single page
 > <./xe131-o7-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o7-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o7-relerr.pdf): PDF inclusion: multiple 
+pdfs with page group included in a single page
 >]
-<xe131-o9.pdf, id=733, 578.16pt x 433.62pt>
+<xe131-o9.pdf, id=744, 462.52798pt x 346.89601pt>
 File: xe131-o9.pdf Graphic file (type pdf)
 <use xe131-o9.pdf>
 Package pdftex.def Info: xe131-o9.pdf  used on input line 32.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o9-relerr.pdf, id=734, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o9-relerr.pdf, id=745, 462.52798pt x 346.89601pt>
 File: xe131-o9-relerr.pdf Graphic file (type pdf)
 <use xe131-o9-relerr.pdf>
 Package pdftex.def Info: xe131-o9-relerr.pdf  used on input line 33.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 32--34
 [][] [] 
  []
 
-<xe131-o10.pdf, id=735, 578.16pt x 433.62pt>
+<xe131-o10.pdf, id=746, 462.52798pt x 346.89601pt>
 File: xe131-o10.pdf Graphic file (type pdf)
 <use xe131-o10.pdf>
 Package pdftex.def Info: xe131-o10.pdf  used on input line 35.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o10-relerr.pdf, id=736, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o10-relerr.pdf, id=747, 462.52798pt x 346.89601pt>
 File: xe131-o10-relerr.pdf Graphic file (type pdf)
 <use xe131-o10-relerr.pdf>
 Package pdftex.def Info: xe131-o10-relerr.pdf  used on input line 36.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 35--37
 [][] [] 
  []
 
-<xe131-o11.pdf, id=737, 578.16pt x 433.62pt>
+<xe131-o11.pdf, id=748, 462.52798pt x 346.89601pt>
 File: xe131-o11.pdf Graphic file (type pdf)
 <use xe131-o11.pdf>
 Package pdftex.def Info: xe131-o11.pdf  used on input line 38.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o11-relerr.pdf, id=738, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o11-relerr.pdf, id=749, 462.52798pt x 346.89601pt>
 File: xe131-o11-relerr.pdf Graphic file (type pdf)
 <use xe131-o11-relerr.pdf>
 Package pdftex.def Info: xe131-o11-relerr.pdf  used on input line 39.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 38--40
 [][] [] 
@@ -324,60 +350,65 @@ Overfull \hbox (17.2222pt too wide) in paragraph at lines 38--40
 
 [3 <./xe131-o8.pdf> <./xe131-o8-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o8-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o8-relerr.pdf): PDF inclusion: multiple 
+pdfs with page group included in a single page
 > <./xe131-o9.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o9.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o9.pdf): PDF inclusion: multiple pdfs wi
+th page group included in a single page
 > <./xe131-o9-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o9-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o9-relerr.pdf): PDF inclusion: multiple 
+pdfs with page group included in a single page
 > <./xe131-o10.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o10.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o10.pdf): PDF inclusion: multiple pdfs w
+ith page group included in a single page
 > <./xe131-o10-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o10-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o10-relerr.pdf): PDF inclusion: multiple
+ pdfs with page group included in a single page
 >]
-<xe131-o12.pdf, id=1096, 578.16pt x 433.62pt>
+<xe131-o12.pdf, id=1113, 462.52798pt x 346.89601pt>
 File: xe131-o12.pdf Graphic file (type pdf)
 <use xe131-o12.pdf>
 Package pdftex.def Info: xe131-o12.pdf  used on input line 41.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o12-relerr.pdf, id=1097, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o12-relerr.pdf, id=1114, 462.52798pt x 346.89601pt>
 File: xe131-o12-relerr.pdf Graphic file (type pdf)
 <use xe131-o12-relerr.pdf>
 Package pdftex.def Info: xe131-o12-relerr.pdf  used on input line 42.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 41--43
 [][] [] 
  []
 
-<xe131-o13.pdf, id=1098, 578.16pt x 433.62pt>
+<xe131-o13.pdf, id=1115, 462.52798pt x 346.89601pt>
 File: xe131-o13.pdf Graphic file (type pdf)
 <use xe131-o13.pdf>
 Package pdftex.def Info: xe131-o13.pdf  used on input line 44.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o13-relerr.pdf, id=1099, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o13-relerr.pdf, id=1116, 462.52798pt x 346.89601pt>
 File: xe131-o13-relerr.pdf Graphic file (type pdf)
 <use xe131-o13-relerr.pdf>
 Package pdftex.def Info: xe131-o13-relerr.pdf  used on input line 45.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 44--46
 [][] [] 
  []
 
-<xe131-o14.pdf, id=1100, 578.16pt x 433.62pt>
+<xe131-o14.pdf, id=1117, 462.52798pt x 346.89601pt>
 File: xe131-o14.pdf Graphic file (type pdf)
 <use xe131-o14.pdf>
 Package pdftex.def Info: xe131-o14.pdf  used on input line 47.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o14-relerr.pdf, id=1101, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o14-relerr.pdf, id=1118, 462.52798pt x 346.89601pt>
 File: xe131-o14-relerr.pdf Graphic file (type pdf)
 <use xe131-o14-relerr.pdf>
 Package pdftex.def Info: xe131-o14-relerr.pdf  used on input line 48.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 47--49
 [][] [] 
@@ -385,30 +416,35 @@ Overfull \hbox (17.2222pt too wide) in paragraph at lines 47--49
 
 [4 <./xe131-o11.pdf> <./xe131-o11-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o11-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o11-relerr.pdf): PDF inclusion: multiple
+ pdfs with page group included in a single page
 > <./xe131-o12.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o12.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o12.pdf): PDF inclusion: multiple pdfs w
+ith page group included in a single page
 > <./xe131-o12-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o12-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o12-relerr.pdf): PDF inclusion: multiple
+ pdfs with page group included in a single page
 > <./xe131-o13.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o13.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o13.pdf): PDF inclusion: multiple pdfs w
+ith page group included in a single page
 > <./xe131-o13-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o13-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o13-relerr.pdf): PDF inclusion: multiple
+ pdfs with page group included in a single page
 >]
-<xe131-o15.pdf, id=1458, 578.16pt x 433.62pt>
+<xe131-o15.pdf, id=1479, 462.52798pt x 346.89601pt>
 File: xe131-o15.pdf Graphic file (type pdf)
 <use xe131-o15.pdf>
 Package pdftex.def Info: xe131-o15.pdf  used on input line 50.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
-<xe131-o15-relerr.pdf, id=1459, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
+<xe131-o15-relerr.pdf, id=1480, 462.52798pt x 346.89601pt>
 File: xe131-o15-relerr.pdf Graphic file (type pdf)
 <use xe131-o15-relerr.pdf>
 Package pdftex.def Info: xe131-o15-relerr.pdf  used on input line 51.
-(pdftex.def)             Requested size: 271.0125pt x 203.25887pt.
+(pdftex.def)             Requested size: 271.0125pt x 203.26945pt.
 
 Overfull \hbox (17.2222pt too wide) in paragraph at lines 50--52
 [][] [] 
@@ -416,26 +452,30 @@ Overfull \hbox (17.2222pt too wide) in paragraph at lines 50--52
 
 [5 <./xe131-o14.pdf> <./xe131-o14-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o14-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o14-relerr.pdf): PDF inclusion: multiple
+ pdfs with page group included in a single page
 > <./xe131-o15.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o15.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o15.pdf): PDF inclusion: multiple pdfs w
+ith page group included in a single page
 > <./xe131-o15-relerr.pdf
 
-pdfTeX warning: pdflatex (file ./xe131-o15-relerr.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+pdfTeX warning: pdflatex (file ./xe131-o15-relerr.pdf): PDF inclusion: multiple
+ pdfs with page group included in a single page
 >] (./xe131allops.aux) ) 
 Here is how much of TeX's memory you used:
- 1825 strings out of 480608
- 28419 string characters out of 5903631
- 266049 words of memory out of 5000000
- 17752 multiletter control sequences out of 15000+600000
- 532338 words of font info for 24 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 30i,5n,34p,188b,117s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on xe131allops.pdf (5 pages, 547311 bytes).
+ 1867 strings out of 480970
+ 29514 string characters out of 5907540
+ 315250 words of memory out of 5000000
+ 19123 multiletter control sequences out of 15000+600000
+ 403430 words of font info for 27 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 68i,5n,74p,188b,117s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2020/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr10.pfb>
+Output written on xe131allops.pdf (5 pages, 494292 bytes).
 PDF statistics:
- 1704 PDF objects out of 1728 (max. 8388607)
+ 1728 PDF objects out of 1728 (max. 8388607)
  272 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  141 words of extra memory for PDF output out of 10000 (max. 10000000)
