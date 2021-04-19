@@ -1,30 +1,20 @@
-module main
-
-    use parameters
-    implicit none
-
-    type(nucleus) :: nuc_target
-    type(eftheory) :: eft
-    type(particle) :: wimp
-
-    real(kind=8) :: v    
-
-contains
-
 subroutine computefunction(computeoption)
+    use main
     use parameters
     use kinds
     use espectra
+    use sj2iref
+    use spspace, only: bfm
+    use constants, only: kev, mN, kilometerpersecond
+
+    use Mtransition_probability
+    use Mdiffcrosssection
     implicit none
     integer, intent(in) :: computeoption
     integer(kind=8) :: clock_rate, tstart, tstop    
+    real(kind=8) :: e, q, v, output
 
     call system_clock(count_rate = clock_rate)
-    if (computeoption==2.or.computeoption==3) then
-        print*,"Enter darkmatter velocity:"
-        read*,v
-    endif
-
     print*,' '
     print*,'Enter the target proton number '
     read(5,*) nuc_target%Z
@@ -43,33 +33,24 @@ subroutine computefunction(computeoption)
     call setup_nuclearinputs(nuc_target)
     call printparameters(wimp,nuc_target,eft)    
 
+    call sj2itable
+
+    call system_clock(tstart)
     select case(computeoption)
       case(5)
-        call system_clock(tstart)
         call totaleventrate(nuc_target)
-        call system_clock(tstop)
 
       case(1)
-        call system_clock(tstart)
         call eventrate_spectra(wimp, nuc_target, eft)
-        call system_clock(tstop)
       case(2)
-        stop 'Not implemented'
-        !output = transition_probability(q,v,jchi,y)
-        !print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-        !print*,'Scattering probability = ',output
-        !print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+          call velocity_curve(wimp, nuc_target, eft,2)
       case(3)
-        stop 'Not implemented'
-        !output = diffCrossSection(v, q, jchi, y, Mtiso)
-        !print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-        !print*,'Differential cross section = ',output
-        !print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+          call velocity_curve(wimp, nuc_target, eft,3)
       case default
         print*,"Invalid compute option."
     end select    
-
+    call system_clock(tstop)
     print*,'Compute time (s)',real(tstop-tstart)/real(clock_rate)
+    print*,"6-J Table Lookup min/max requested:",tableJmin, tableJmax
 
 end subroutine computefunction
-end module main

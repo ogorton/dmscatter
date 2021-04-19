@@ -1,3 +1,5 @@
+module mtransition_probability
+    contains
 function transition_probability(q,v,wimp,nucl,eft)
     use kinds
     use constants
@@ -29,43 +31,38 @@ function transition_probability(q,v,wimp,nucl,eft)
     REAL(doublep) :: v
     type(particle) :: wimp
     type(nucleus) :: nucl
-    real(kind=8), allocatable, intent(in) :: eft(:,:)
+    type(eftheory) :: eft
+    real(kind=8), allocatable :: eftsmall(:,:)
     !
     REAL(doublep) :: y
-    REAL(doublep) :: mchi, jchi, mtarget, jtarget
     REAL(doublep) :: muT
     REAL(doublep) :: transition_probability, tmpprod
 
     integer :: tau1, tau2, term
-    integer :: Mtiso, Tiso
 
-    bfm = (41.467d0/(45d0*(nucl%mass)**(-1d0/3d0) &
-                - 25d0*(nucl%mass)**(-2d0/3d0)))**0.5d0 * femtometer
+    allocate(eftsmall(0:1,num_response_coef))
+    eftsmall(0,:) = eft%xpnc(0)%c
+    eftsmall(1,:) = eft%xpnc(1)%c    
+
     y = (q*bfm/2d0)**2d0
-
-    mchi = wimp%mass
-    jchi = wimp%j
-    mtarget = nucl%mass
-    Tiso = nucl%groundstate%Tx2
-    Mtiso = nucl%Mt
-    jtarget = nucl%groundstate%jx2
-
-    muT = mchi * mtarget * mN / (mchi+mtarget*mN)
+    muT = wimp%mass * mN * nucl%mass / (wimp%mass + mN * nucl%mass)
 
     transition_probability = 0.0
+    if (v <  q/(2d0*muT)) return
 
     do tau1 = 0, 1
         do tau2 = 0, 1
             do term = 1, 8
-                tmpprod = dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT)
+                tmpprod = dmresponsefun(eftsmall, term, tau1, tau2, q, v, wimp%j, muT)
                 if (tmpprod.ne.0) tmpprod = tmpprod * &
-                    nucResponse(tau1,tau2,term,y,nucl%densitymats%rho,Tiso,Mtiso)
+                    nucResponse(tau1, tau2, term, y, nucl%densitymats%rho, nucl%groundstate%Tx2, nucl%Mt)
                 transition_probability = transition_probability + tmpprod
             end do ! term
         end do ! tau2
     end do ! tau1
 
     transition_probability = transition_probability &
-        * (4.0*pi/(jtarget+1)) / ((4.0*mN*mchi)**2.0)
+        * (4.0*pi/(nucl%groundstate%jx2+1)) / ((4.0*mN*wimp%mass)**2.0)
     
 end function transition_probability
+end module

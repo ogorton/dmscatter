@@ -1,0 +1,15 @@
+$\mathcal{O} _1 = 1_\chi 1_N$
+$\mathcal{O} _2 = (v^\perp)^2$
+$\mathcal{O} _3 = i\vec{S}_N \cdot \left(\frac{\vec{q}}{m_N}\times\vec{v}^\perp\right)$
+$\mathcal{O} _4 = \vec{S}_\chi \cdot \vec{S}_N$
+$\mathcal{O} _5 = i\vec{S}_\chi \cdot \left(\frac{\vec{q}}{m_N}\times\vec{v}^\perp\right)$
+$\mathcal{O} _6 = \left(\vec{S}_\chi \cdot \frac{\vec{q}}{m_N} \right)\left(\vec{S}_N \cdot \frac{\vec{q}}{m_N} \right) $
+$\mathcal{O} _7 = \vec{S}_N\cdot \vec{v}^\perp $
+$\mathcal{O} _8 = \vec{S}_\chi\cdot \vec{v}^\perp $
+$\mathcal{O} _9 = i\vec{S}_\chi \cdot \left(\vec{S}_N \times\frac{\vec{q}}{m_N}\right)$
+$\mathcal{O} _{10} = i\vec{S}_N \cdot \frac{\vec{q}}{m_N}$
+$\mathcal{O} _{11} = i\vec{S}_\chi \cdot \frac{\vec{q}}{m_N}$
+$\mathcal{O} _{12} = \vec{S}_\chi \cdot \left( \vec{S}_N\times\vec{v}^\perp\right)$
+$\mathcal{O} _{13} = i\left( \vec{S}_\chi \cdot \vec{v}^\perp \right)\left(\vec{S}_N\cdot \frac{\vec{q}}{m_N}\right )$
+$\mathcal{O} _{14} = i\left( \vec{S}_\chi \cdot \frac{\vec{q}}{m_N} \right) \left(\vec{S}_N\cdot \vec{v}^\perp \right )$
+$\mathcal{O} _{15} = -\left(\vec{S}_\chi \cdot \frac{\vec{q}}{m_N} \right)\left( \left( \vec{S}_N\times \vec{v}^\perp\right)\cdot\frac{\vec{q}}{m_N}\right)$

@@ -8,13 +8,13 @@ in [this arXiv link](https://arxiv.org/abs/1308.6288).
 Source code is located in src directory. To compile the program, you must have
 the gfortran compiler. From the /src/ directory, run:
 
-    make dmf90factor.x
+    make dmf90factor
     
 This places the dmf90factor.x executable in the src directory. Move it to your bin
 directory if desired.
 
 
-An example is provided in the "sample" directory. To run this example, move to
+An example is provided in the "sample/si" directory. To run this example, move to
 the /sample/si directory and run:
 
     ../../src/dmf90factor.x < input.si28
@@ -29,6 +29,14 @@ directory, try running:
 
 More extensive documentation can be found in the manual document.
 
+### Version 1.6 update (Apr. 19, 2021)
+* Improved speed by caching Wigner coefficients in memory
+* Added options to compute transition probabilities and differential cross
+  sections. (For fixed recoil energy, for a range of velocities.)
+* More options in the Makefile
+* Previous versions claimed compatibility with isospin-formalism density
+  matrices. This turns out not to be the case. An appropriate error trap has
+been added.
 ### Version 1.5 update (Feb. 22, 2021)
 * Renamed executable to dmf90factor.x (previously darkmatter.x)
 * A ".sps" file is no longer required; the code now deduces this information
@@ -49,8 +57,8 @@ Bugfixes:
   consistent with Mathematica script definition (script, not paper)
 ### Version 1.3 update (Jan. 13, 2021)
 New features:
-* Now supports nuclear density matrix files in either isospin or proton-neutron
-  formalism
+* ~~Now supports nuclear density matrix files in either isospin or proton-neutron
+  formalism~~ _see Version 1.6 notes._
 * Inputs and outputs now carry specified units
 
 Bugfixes:

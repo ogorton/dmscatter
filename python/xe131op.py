@@ -10,8 +10,9 @@ dresfiles = [
     'pnism.xe131.dres']
 control_template = "xe131.control.template"
 operators = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+with open("operators.txt") as f: operatorsymbols = f.readlines()
 
-for operator in operators:
+for opi, operator in enumerate(operators):
     print("Operator-%i"%operator)
     control_dict = {"OPERATOR" : operator}
     first=True
@@ -33,7 +34,8 @@ for operator in operators:
         plt.figure(2)
         plt.plot(E,abs(R - R0)/R0,label=dresfile[:-5])
     plt.figure(1) 
-    plt.title("Op: %s, Xe-131, 150 GeV WIMP neutron 4.8E-4"%operator) 
+    plt.title("%s Xe-131, 500 GeV WIMP, $c^n_%s=$4.8E-4"%(operatorsymbols[opi],
+        operator)) 
     plt.xlabel('$E_{recoil}$ (keV)')
     plt.ylabel('Events/MeV')
     plt.legend(loc=1)

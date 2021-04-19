@@ -14,3 +14,4 @@ intpoints 1000
 usemomentum 0
 useenergyfile 0
 ntscale  2500.0
+hofrequency HOFREQUENCY

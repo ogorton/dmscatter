@@ -3557,9 +3557,11 @@ subroutine monte_carlo ( func, a, b, n, result )
   x(1:n) = a + ( b - a ) * x(1:n)
 
   result = 0.0D+00
+  !$OMP parallel do reduction(+:result)
   do i = 1, n
     result = result + func ( x(i) )
   end do
+  !$OMP barrier
 
   result = result / real ( n, kind = 8 )
 

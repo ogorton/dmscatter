@@ -125,6 +125,9 @@ subroutine read2Jtrans(resfile,found)
            pndens=.true.
            print*,'Density matrix is in explicit proton-neutron format.'
    else
+           print*,"Density matrix is in isospin format."
+           print*,"This format is not currently supported."
+           STOP "Incompatible density matrix format."
            pndens=.false.
    end if
 

@@ -1,15 +1,17 @@
-function maxwell_boltzmann(v,v0)
+module Mmaxbolt
+    contains
+function maxbolt(v,v0)
     use kinds
     use constants
     implicit none
 
     real(doublep), intent(in) :: v 
     real(doublep), intent(in) :: v0
-    real(doublep) :: maxwell_boltzmann
+    real(doublep) :: maxbolt
 
-    maxwell_boltzmann = exp(-(v/v0)**2.0d0) / ((pi)**1.5d0 * v0**3.0d0)
+    maxbolt = exp(-(v/v0)**2.0d0) / ((pi)**1.5d0 * v0**3.0d0)
 
-end function maxwell_boltzmann
+end function maxbolt
 
-
+end module
 

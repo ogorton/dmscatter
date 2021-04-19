@@ -35,21 +35,10 @@ function fspectra(q)
     use main ! This is the only function allowed to use main.
     use kinds
     use constants
+    use integral
     implicit none
     real(doublep), intent(in) :: q
     real(doublep) :: fspectra
-    interface
-        function dEventRate(q, wimp, nuc_target, eft)
-            use kinds
-            use parameters
-            implicit none
-            real(doublep) :: q
-            type(particle) :: wimp
-            type(nucleus) :: nuc_target
-            type(eftheory) :: eft
-            real(doublep) :: deventrate
-        end function deventrate
-    end interface        
 
     fspectra = q * dEventRate(q, wimp, nuc_target, eft) /(mn*nuc_target%mass)
 

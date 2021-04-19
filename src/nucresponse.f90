@@ -5,6 +5,7 @@ function nucResponse(tau1,tau2,term,y,densmat,Tiso,Mtiso)
     use kinds
     use spspace
     use parameters
+    use sj2iref
 
     implicit none
 
@@ -20,19 +21,10 @@ function nucResponse(tau1,tau2,term,y,densmat,Tiso,Mtiso)
 
     integer :: Mtiso, Tiso
 
-    REAL(doublep) :: Wigner_3j
     REAL(doublep) :: spOME1,spOME2
-    REAL(doublep), dimension (0:50) :: DRME1, DRME2
+    REAL(doublep) :: DRME1, DRME2
     REAL(doublep)  :: nucResponse
 
-    integer :: coupsign
-
-    if (pndens) then
-        coupsign = -1
-    else
-        coupsign = +1
-    end if
-   
     jmin = -1
     jmax = -1
 
@@ -70,12 +62,11 @@ function nucResponse(tau1,tau2,term,y,densmat,Tiso,Mtiso)
         jmin = 1; jmax = 5
     end if
 
-    DRME1(0:jmax) = 0.d0
-    DRME2(0:jmax) = 0.d0
-
     nucResponse = 0.d0
 
     do j = jmin,jmax,2
+       DRME1 = 0.d0
+       DRME2 = 0.d0
       do a = 1, ntotal(1)
         do b = 1, ntotal(1)
           if (abs(densmat(j,tau1,a,b)) .ge. 1.0e-5 &
@@ -84,25 +75,24 @@ function nucResponse(tau1,tau2,term,y,densmat,Tiso,Mtiso)
             ! Operator 1 with tau2 <j| op1,tau1 |j>
             call OperME(op1,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),&
                     jorb(b),j,spOME1)
-            DRME1(j) = DRME1(j) + densmat(j,tau1,a,b) * spOME1 
+            DRME1 = DRME1 + densmat(j,tau1,a,b) * spOME1 
 
             ! Operator 2 with tau2 <j| op2,tau2 |j>
             call OperME(op2,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),&
                     jorb(b),j,spOME2)
-            DRME2(j) = DRME2(j) + densmat(j,tau2,a,b) * spOME2 
-!            print*,j,a,b,densmat(j,tau1,a,b), spOME1
+            DRME2 = DRME2 + densmat(j,tau2,a,b) * spOME2 
 
           end if
         end do
       end do
-      nucResponse = nucResponse + DRME1(j) * DRME2(j)
+      nucResponse = nucResponse + DRME1 * DRME2
 
     end do
 
     if (.not.pndens) then
         nucResponse = nucResponse * sqrt(2*dble(tau1)+1.0) * sqrt(2*dble(tau2)+1.0) &
-            * Wigner_3j(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
-            * Wigner_3j(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso) &
+            * tj2i_lookup(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
+            * tj2i_lookup(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso) &
             * 2.0
     end if
 

@@ -38,7 +38,6 @@ subroutine setparameters(nuc_target)
     ! Quadrature
     quadrature_type = 1
     lattice_points = 1000
-    vdist_max = 12d0*vdist_t%vscale
 
 end subroutine setparameters
 
@@ -61,8 +60,8 @@ subroutine printparameters(wimp,nuc_target,eft)
     print*,'femtometer =',femtometer
     print*,'GeV = ',gev
     print*,'kev = ',kev
-    print*,'b (dimless)',bfm/femtometer
-    print*,'b (fm)',bfm
+    print*,'b (fm)',bfm/femtometer
+    print*,'b (1/GeV)',bfm
     print*,'Nucleon mass (GeV)',mN
     print*,'WIMP spin',wimp%j
     print*,'WIMP mass (GeV)',wimp%mass

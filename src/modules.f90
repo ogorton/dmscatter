@@ -70,6 +70,17 @@ module parameters
    end type nucleus
 
 end module parameters
+!===============================================================================
+module main
+
+    use parameters
+    implicit none
+
+    type(nucleus) :: nuc_target
+    type(eftheory) :: eft
+    type(particle) :: wimp
+
+end module
 
 !===============================================================================
 module spspace
@@ -105,6 +116,7 @@ module spspace
     type(orbit) :: fpcore(4)
     type(orbit) :: gcore(1)
 
+    ! n principal = n radial + l + 1
     data spcore(1)%nradial/0/, spcore(1)%l/0/, spcore(1)%jx2/1/, spcore(1)%nodal/1/ 
     data spcore(2)%nradial/0/, spcore(2)%l/1/, spcore(2)%jx2/3/, spcore(2)%nodal/1/
     data spcore(3)%nradial/0/, spcore(3)%l/1/, spcore(3)%jx2/1/, spcore(3)%nodal/1/
@@ -118,7 +130,7 @@ module spspace
     data gcore(1)%nradial/0/, gcore(1)%l/4/, gcore(1)%jx2/9/, gcore(1)%nodal/1/
 
     type(orbit) :: cores(11)
-
+    ! nodal = nradial + 1:
     data cores(1)%nradial/0/, cores(1)%l/0/, cores(1)%jx2/1/, cores(1)%nodal/1/
     data cores(2)%nradial/0/, cores(2)%l/1/, cores(2)%jx2/3/, cores(2)%nodal/1/
     data cores(3)%nradial/0/, cores(3)%l/1/, cores(3)%jx2/1/, cores(3)%nodal/1/
@@ -174,7 +186,6 @@ module quadrature
     integer :: quadrature_type
     integer :: lattice_points
     real(doublep) :: vdist_min
-    real(doublep) :: vdist_max
 
 end module quadrature
 

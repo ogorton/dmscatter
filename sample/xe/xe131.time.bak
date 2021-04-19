@@ -1,0 +1,38 @@
+# INPUT FILE
+#    1
+#    54
+#    77
+#    xe
+#    xe131gcn
+#    1. 1000. 1.0
+
+# CONTROL FILE
+#    # Coefficient matrix (non-relativistic)
+#    # Ommitted values are assumed to be 0.0.
+#    # c_i^t
+#    # i = 1,...,16
+#    # t: p=proton n=neutron s=scaler v=vector
+#    #control name	 i	coupling	c_i^t
+#    coefnonrel       1      n               0.00048
+#    wimpmass 150.0
+#    vearth 232.0
+#    maxwellv0 220.0
+#    vescape 550.
+#    dmdens 0.3
+#    intpoints 1000
+#    usemomentum 0
+#    useenergyfile 0
+#    ntscale  2500.0
+
+# RUNTIMES (SINGLE-THREADED)
+4.503
+4.773
+4.554
+4.593
+4.835
+4.531
+
+# AVERAGE RUNTIME (SINGLE-THREADED)
+4.632
+
+# RUNTIMES (MULTI-THREADED (2))

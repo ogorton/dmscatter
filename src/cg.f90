@@ -344,6 +344,7 @@ END FUNCTION Wigner_6j
 
 FUNCTION Wigner_9j(j1,j2,j3,j4,j5,j6,j7,j8,j9)
 
+  use sj2iref
   IMPLICIT NONE
 
 ! j1/2 j2/2 j3/2 !
@@ -384,12 +385,15 @@ FUNCTION Wigner_9j(j1,j2,j3,j4,j5,j6,j7,j8,j9)
   DO x = x_min, x_max
 
      Wigner_9j = Wigner_9j + (-1)**(x) * (x + 1.0D0) * &
-          & Wigner_6j(j1,j4,j7,j8,j9, x)  * &
-          & Wigner_6j(j2,j5,j8,j4, x,j6) * &
-          & Wigner_6j(j3,j6,j9, x,j1,j2)
-     
+          & sj2i_lookup(j1,j4,j7,j8,j9, x) *&
+          & sj2i_lookup(j2,j5,j8,j4, x,j6) *&
+          & sj2i_lookup(j3,j6,j9, x,j1,j2)
+          !& Wigner_6j(j1,j4,j7,j8,j9, x)  * &
+          !& Wigner_6j(j2,j5,j8,j4, x,j6) * &
+          !& Wigner_6j(j3,j6,j9, x,j1,j2)
+
   END DO
-  
+
   RETURN
 
 END FUNCTION Wigner_9j

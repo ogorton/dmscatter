@@ -35,6 +35,7 @@ subroutine getorbitals(resfile, A)
         if (tmpline(1:5)=='ORBIT') then
             print*,'Found single particle state quantum numbers.'
             do i = 1, maxorbits
+                                     ! orbit, n radial, l, 2J
                 read(resfile,*,err=1)orbiti(i), qnN(i), qnL(i), qn2J(i)
             end do
         end if
@@ -80,7 +81,7 @@ subroutine getorbitals(resfile, A)
     nrorb(1:norb(1)) = qnN(1:norb(1))
     lorb(1:norb(1)) = qnL(1:norb(1))
     jorb(1:norb(1)) = qn2J(1:norb(1))
-    nodal(1:norb(1)) = qnN(1:norb(1)) + 1    
+    nodal(1:norb(1)) = qnN(1:norb(1)) + 1
 
     ! Assign core orbital quantum numbers
     nrorb(norb(1)+1:ntotal(1)) = cores(1:ncoreorb)%nradial

@@ -1,6 +1,6 @@
 !-------------------------------------------------------------------------------
 function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
-
+    use sj2iref
     implicit none
     INTERFACE
 
@@ -24,15 +24,16 @@ function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
     REAL(kind=8), INTENT(IN) :: y
     REAL(kind=8) :: xjp,xj
     REAL(kind=8) :: Pi = 3.14159265358979323
-    REAL(kind=8) :: Wigner_3j, Wigner_9j
+    REAL(kind=8) :: Wigner_9j
     REAL(kind=8) :: SigmaJ
 
     xjp = dble(jp)/2.0
     xj  = dble(j )/2.0
 
     SigmaJ = (-1.0)**lp * SQRT(Jnorm(xj)*Jnorm(xjp)*Jnorm(dble(l))*Jnorm(dble(lp))  &
-         & *Jnorm(dble(bigJ))*Jnorm(dble(bigL))/(4*Pi))                       &
-         & * SQRT(6.0) * Wigner_3j(2*lp,2*bigL,2*l,0,0,0) * Wigner_9j(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ) &
+         & *Jnorm(dble(bigJ))*Jnorm(dble(bigL))/(4*Pi))     &
+         & * SQRT(6.0) * tj2i_lookup(2*lp,2*bigL,2*l,0,0,0) &
+         & * Wigner_9j(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ) &
          & * BesselElement(y,np,lp,n,l,bigL)
 
 end function SigmaJ

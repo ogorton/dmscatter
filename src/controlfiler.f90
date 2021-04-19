@@ -68,8 +68,9 @@ subroutine readcontrolfile(resfile, eft, wimp)
     
         ! Read in coefficient matrix
         do while(.not.EOF)
-
-            read(resfile,*,end=111)keyword, keyvalue
+            read(resfile,'(a100)',end=111) line
+            backspace(resfile)
+            read(resfile,*,err=110)keyword, keyvalue
             if (keyword == coefkey) then
                 ! Coefficients have more arguments.
                 ! Go back to read them.
@@ -92,6 +93,10 @@ subroutine readcontrolfile(resfile, eft, wimp)
         print*,'End of control file.'
         print*,''
         return
+
+110     continue
+        print*,"Problem reading in control command. This command will be ignored:"
+        print*,line
 
     end do
 
@@ -147,7 +152,6 @@ subroutine setkeyword(keyword, keyvalue, wimp)
     case('vescape')
         vdist_t%vescape = keyvalue
         print*,trim(keyword),': Set escape velocity to', vdist_t%vescape
-        vdist_max = vdist_t%vescape
 
     case('weakmscale')
         mV = keyvalue

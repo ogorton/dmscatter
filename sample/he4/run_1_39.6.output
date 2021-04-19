@@ -1,0 +1,147 @@
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Welcome to our FORTAN 90 implementation of the WIMP-nucleon scattering code.
+ Based on the Mathematica script described in arXiv:1308.6288 (2003).
+   VERSION 1.4 UPDATED: 2021.01.15 @ SDSU
+   Dev. contact: cjohnson@sdsu.edu
+                  ogorton@sdsu.edu
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+ Select an option:
+ [1] Event rate per unit recoil energy (spectra)
+ [2] (*) Scattering probability
+ [3] (*) Differential cross section per recoil energy
+ [4] (*) Total cross section
+ [5] Total scattering events per detector (does not produce spectra data)
+  
+ (*) Not available in this release.
+  
+ Enter the target proton number 
+  
+ Enter the target neutron number 
+ Setting default parameter values.
+  
+ Enter name of control file (.control):
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Reading control file.
+ Possible keywords:
+ coefnonrel
+ vearth
+ dmdens
+ quadtype
+ intpoints
+ gev
+ femtometer
+ wimpmass
+ vescape
+ ntarget
+ weakmscale
+ vscale
+ mnucleon
+ dmspin
+ 
+ # Coefficient matrix (non-relativistic)
+ # Ommitted values are assumed to be 0.0.
+ # c_i^t
+ # i = 1,...,16
+ # t: p=proton n=neutron s=scaler v=vector
+ #control name	 i	coupling	c_i^t
+ n           1   4.8000000000000001E-004
+ wimpmass: Set dark matter particle mass to   5000.0000000000000     
+ vearth: Set velocity of earth in galactic frame set to   232.00000000000000     
+ maxwellv0: Set velocity distribution scaling to   220.00000000000000     
+ vescape: Set escape velocity to   550.00000000000000     
+ dmdens: Set local dark matter density to  0.29999999999999999     
+ intpoints: Set number of integral lattice points to        1000
+ ntscale: Set target nuclei mass density scaling to   2500.0000000000000     
+ printdensities: Set to print density matrix.
+ hofrequency: Set harmonic oscillator frequency to   2.6365230588699998E-002 and b(1/GeV) to   200.68092000005879     
+ End of control file.
+ 
+ Converting EFT coefficients isospin <=> proton-neutron formalism.
+ s           1   4.8000000000000001E-004
+ v           1  -4.8000000000000001E-004
+ p           1   0.0000000000000000     
+ n           1   4.8000000000000001E-004
+ Normalizing EFT coefficients.
+  
+  Enter name of one-body density file (.dres) 
+ he4-handmade.dres
+ Valence Z, N:
+           0           0
+ Looking for orbitals.
+ Found single particle state quantum numbers.
+ Valence orbitals:
+ ORBIT      N      L      2 x J
+           1           1           1           3
+ Number of valence orbitals:
+           1
+ Max. valence occupancy:
+           4
+ Corrected valence particles Z, N:
+           0           0
+ Inert core inferred from valence particles:
+ He-4 core.
+ Number of core orbitals:
+           1
+ Core orbitals:
+ ORBIT      N      L      2 x J
+           2           0           0           1
+ Density matrix allocated, size:          88
+ Density matrix is in explicit proton-neutron format.
+  Wait! That density file held no densities ! 
+ Filling core orbitals.
+ Orbital           2   1.41421354    
+ Printing density matrix.
+ # spo =           2
+ J=           0
+           2           2   1.4142135381698608        1.4142135381698608     
+ J=           1
+ J=           2
+ J=           3
+ J=           4
+ J=           5
+ J=           6
+ J=           7
+ J=           8
+ J=           9
+ J=          10
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Parameters used in this calculation:
+ femtometer =   5.0677000000000003     
+ GeV =    1.0000000000000000     
+ kev =    9.9999999999999995E-007
+ b (fm)   39.600000000011597     
+ b (1/GeV)   200.68092000005879     
+ Nucleon mass (GeV)  0.93827199999999999     
+ WIMP spin  0.50000000000000000     
+ WIMP mass (GeV)   5000.0000000000000     
+ Target J           0
+ Target T           0
+ Target Mt           0
+ Target Z,N           2           2
+ Target atomic mass   4.0000000000000000     
+ System reduced mass   3.7502729790970846     
+ Target mass density (1/GeV)  0.26644725623273424     
+ Local WIMP density (GeV/cm^3)  0.29999999999999999     
+ v0 (km/s)   220.00000000000000     
+ ve (km/s)   232.00000000000000     
+ v escape (km/s)   550.00000000000000     
+ Integral lattice size =         1000
+ EFT coupling coefficients:
+ i    p    n    s    v
+i          p           n           s           v
+ 1  0.0000E+00 0.1486E-03 0.1486E-03-0.1486E-03
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Computing differential event rate spectra
+ What is the range of recoil energies in kev?
+ Enter starting energy, stoping energy, step size:
+ E min  (kev)   25.000000000000000     
+ E max  (kev)   25.000000000000000     
+ E step (kev)   1.0000000000000000     
+ Number of event rates to compute:           1
+100.0% complete. 
+ E-recoil (kev)              q-transfer (gev/c)        Eventrate (events/gev)
+   25.000000000000000        1.3698700668311576E-002   7.9665688570584547E-005
+ Total integrated eventrate (events)   0.0000000000000000      pm   0.0000000000000000     
+ Event rate spectra written to eventrate_spectra.dat
+ Compute time (s)   4.93999978E-04

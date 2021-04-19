@@ -35,26 +35,35 @@ function dmresponse_iso(eft, ifunc, tau1, tau2, q, v, jchi, muT)
     REAL(kind=8), INTENT(IN) :: muT    
     dmresponse_iso = -1000
 
+    ! Determine isospin coupling by recombining the proton and neutron
+    ! couplings. Recall that for p/n coupling:
+    !   0 = proton
+    !   1 = neutron
+
     if (tau1==0 .and. tau2==0) then
-        dmresponse_iso = dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
+        dmresponse_iso = &
+                     dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 0, 1, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 1, 0, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 1, 1, q, v, jchi, muT)
     end if
     if (tau1==0 .and. tau2==1) then
-        dmresponse_iso = dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
+        dmresponse_iso = &
+                     dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 0, 1, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 1, 0, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 1, 1, q, v, jchi, muT)
     end if
     if (tau1==1 .and. tau2==0) then
-        dmresponse_iso = dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
+        dmresponse_iso = &
+                     dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 0, 1, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 1, 0, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 1, 1, q, v, jchi, muT)
     end if
     if (tau1==1 .and. tau2==1) then
-        dmresponse_iso = dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
+        dmresponse_iso = &
+                     dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 0, 1, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 1, 0, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 1, 1, q, v, jchi, muT)

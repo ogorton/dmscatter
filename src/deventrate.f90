@@ -1,30 +1,16 @@
+module integral
+    implicit none
+    real (kind=8) :: globalq
+    contains
 function deventrate(q, wimp, nuc_target, eft)
     use quadrature
     use kinds
     use constants
     use parameters
-    
+   
+    use Mdiffcrosssection
+    use Mmaxbolt
     implicit none
-    interface
-        function diffCrossSection(v, q, wimp, nucl, eft)
-            use kinds
-            use constants
-            use parameters
-            implicit none
-            type(particle) :: wimp
-            type(nucleus) :: nucl
-            real(doublep), allocatable :: eft(:,:)
-            real(doublep) :: diffCrossSection
-            real(doublep) :: v ! velocity of DM particle in lab frame
-            real(doublep) :: q
-        end function diffcrossSection    
-        function maxwell_boltzmann(v,v0)
-            use kinds
-            real(doublep), intent(in) :: v
-            real(doublep), intent(in) :: v0
-            real(doublep) :: maxwell_boltzmann            
-        end function
-    end interface
     real(doublep) :: dEventRate
     real(doublep) :: q
     type(particle) :: wimp
@@ -39,19 +25,22 @@ function deventrate(q, wimp, nuc_target, eft)
     real(doublep) :: v  ! DM velocity variable
     real(doublep) :: dv ! DM differential velocity / lattive spacing
     real(doublep), allocatable :: EventRate_integrand(:), xtab(:)
-    integer :: i
+    integer, allocatable :: indx(:)
+    integer :: i, j, itmp, ind
     real(doublep) :: ve, v0, vesc, error
 
-    allocate(eftsmall(0:1,num_response_coef))
-    eftsmall(0,:) = eft%xpnc(0)%c
-    eftsmall(1,:) = eft%xpnc(1)%c
+    real(doublep) :: abserror, relerror
 
+    logical :: adaptive = .true.
+
+    globalq = q
     muT = wimp%mass * nuc_target%mass * mN / (wimp%mass + nuc_target%mass * mN)
 
     ve = vdist_t%vearth * kilometerpersecond
     v0 = vdist_t%vscale * kilometerpersecond
     vesc = vdist_t%vescape * kilometerpersecond
     vdist_min = q/(2d0*muT)
+
     if (vdist_min > vesc) then
         dEventRate = 0d0
         return
@@ -60,28 +49,69 @@ function deventrate(q, wimp, nuc_target, eft)
 
     allocate(EventRate_integrand(lattice_points))
     allocate(xtab(lattice_points))
-   
-!$OMP parallel do private(v) shared(wimp, nuc_target, eft)
-    do i = 1, lattice_points
-        v = (vdist_min + (i-1) * dv)
-        xtab(i) = v
-        EventRate_integrand(i) = diffCrossSection(v, q, wimp, nuc_target, eftsmall) &
-                    * v * v * ( maxwell_boltzmann(v-ve,v0) &
-                            - maxwell_boltzmann(v+ve,v0) ) 
-    end do
-!$OMP end parallel do
-!$OMP barrier
 
-    if (quadrature_type == 1) then    
-        call cubint ( lattice_points, xtab, EventRate_integrand, 1, &
-                lattice_points, dEventRate, error )
+    abserror=dspectra(vesc) ! This line prevents a segfault... idk why
+    relerror = 1e-12
+    abserror = 1e-12
+
+
+    if (adaptive) then
+        call gaus8 ( dspectra, vdist_min, vesc, abserror, deventrate, ind )
+        !call monte_carlo ( dspectra, vdist_min, vesc, lattice_points, deventrate )
     else
-        dEventRate = -1
+        !$OMP parallel do private(v) shared(wimp, nuc_target, eftsmall) &
+        !$OMP schedule(dynamic,10)
+            do i = 1, lattice_points
+                v = (vdist_min + (i-1) * dv)
+                xtab(i) = v
+                EventRate_integrand(i) = diffCrossSection(v, q, wimp, nuc_target, eft) &
+                            * v * v * ( maxbolt(v-ve,v0) - maxbolt(v+ve,v0) ) 
+            end do
+        !$OMP end parallel do
+        !$OMP barrier
+            do i = 1, lattice_points
+                write(1099,*)xtab(i)/kilometerpersecond,EventRate_integrand(i)
+            end do
+        
+            if (quadrature_type == 1) then    
+                if (all(EventRate_integrand == 0)) then
+                    dEventrate = 0.0
+                else
+                    call cubint ( lattice_points, xtab, EventRate_integrand, 1, &
+                        lattice_points, dEventRate, error )
+                end if
+            else
+                dEventRate = -1
+            end if
     end if
-
     Nt = nuc_target%Nt
     rhochi = wimp%localdensity / centimeter**3d0
     Mchi = wimp%mass
     dEventRate = ntscale * kilogramday * Nt * (rhochi/Mchi) * dEventRate *  (pi*v0**2/ve)
   
 end function deventrate
+
+function dspectra(vv)
+    ! The purpose of this function is to create a callable func for the
+    ! adaptive integral routine. Other functions in this program use
+    ! (the good practice of) explicit data dependency. An exception
+    ! was made for this fuction for compatibility with the adaptive
+    ! integration routine used to integrate the event rate spectra.
+
+    use main ! This is the only function allowed to use main.
+    use kinds
+    use constants
+    use mdiffcrosssection
+    use mmaxbolt
+    implicit none
+    real(doublep) :: vv
+    real(doublep) :: dspectra, ve, v0
+    ve = vdist_t%vearth * kilometerpersecond
+    v0 = vdist_t%vscale * kilometerpersecond
+
+    dspectra = diffCrossSection(vv, globalq, wimp, nuc_target, eft) &
+        * vv * vv * ( maxbolt(vv-ve,v0) - maxbolt(vv+ve,v0) )
+
+end function
+
+end module

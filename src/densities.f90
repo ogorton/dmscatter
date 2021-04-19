@@ -66,7 +66,7 @@ subroutine coredensity(nuc_target)
 
   if (pndens) then
       do i = norb(1)+1, ntotal(1)
-          print*,"Orbital",i
+          print*,"Orbital",i,sqrt((jorb(i)+1.0) * (Jiso+1.0))
           nuc_target%densitymats%rho(0,0,i,i) = sqrt((jorb(i)+1.0) * (Jiso+1.0))
           nuc_target%densitymats%rho(0,1,i,i) = sqrt((jorb(i)+1.0) * (Jiso+1.0))
       end do

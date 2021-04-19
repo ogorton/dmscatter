@@ -1,0 +1,29 @@
+  = = = = = = BIGSTICK run log file = = = = = = 
+  Code and run information 
+  BIGSTICK Version 7.9.9 Oct  2020
+  Run date: 2021-03-19
+  Menu choice: d  
+
+ Running on NERSC_HOST: none
+ scratch_dir (*.wfn,...): .
+ Number of MPI processors =           1 , with # OpenMP threads =            8
+  Flag wantUseVec2Thread =  F  (set in module localvectors )
+  Flag useHZSomp =  F  (set in module localvectors )
+  
+  Information on defaults/flags (found in module flagger in file bmodules_flags.f90):
+  Limits on storage (found in module flagger in file bmodules_flags.f90):
+  maxjumpmemory_default =    64.0000000      Gb 
+  maxlanczosstorage1 =    16.0000000      Gb 
+  flag iffulluseph (if full, use particle-hole transformation ) =  T
+  
+  
+  Many-body system information 
+  Single particle space h.o. with max Nprincipal =            4
+  Isospin formalism for single-particle space
+  Proton-neutron formalism is not yet fully implemented...is it?
+ Valence Z =            2 , valence N =            2
+  M =            0 , parity = +
+  
+  Total basis dimension:                313601
+  # Slater determinants: proton                  2415 , neutron                  2415
+  # sectors: protons           34 , neutrons           34

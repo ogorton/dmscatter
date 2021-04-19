@@ -9,23 +9,117 @@ module espectra
     real(doublep), allocatable :: energy_grid(:), momentum_grid(:)
     integer :: energy_grid_size
 
-contains        
+contains
+
+function velocitycurve(vlist, q, wimp, nuc_target, eft, option)
+    use mdiffcrosssection
+    use mtransition_probability
+    use parameters
+    implicit none
+    real(doublep) :: q, v
+    real(doublep), dimension(:) :: vlist
+    type(particle) :: wimp
+    type(nucleus) :: nuc_target
+    type(eftheory) :: eft
+    integer :: option
+
+    real(doublep), dimension(size(vlist)) :: velocitycurve
+
+    integer :: i
+
+    select case(option)
+    case(2)
+        do i = 1, size(vlist)
+            v = vlist(i)
+            velocitycurve(i) = transition_probability(q, v, wimp, nuc_target, eft)
+            call progressmessage(100*real(i)/real(size(vlist)))
+        end do
+    case(3)
+        do i = 1, size(vlist)
+            v = vlist(i)
+            velocitycurve(i) = diffCrossSection(v, q, wimp, nuc_target, eft)
+            call progressmessage(100*real(i)/real(size(vlist)))
+        end do        
+    case default
+        stop "Not a velocity curve option."
+    end select
+end function velocitycurve
+
+
+subroutine velocity_curve(wimp, nuc_target, eft, option)
+    use folium
+    use parameters
+    use constants, only: kev, mN, kilometerpersecond
+    implicit none
+
+    type(particle) :: wimp
+    type(nucleus) :: nuc_target
+    type(eftheory) :: eft    
+    real(doublep) :: Er, Qr, vstart, vstop, vstep
+    integer :: sizevlist, i
+    real(doublep), allocatable :: vlist(:), cslist(:)
+    type(foli) :: outputfile
+    integer :: option
+
+    print*,"Enter recoil E (keV):"
+    read*,Er
+    print '("Er = ",F8.4," (keV)")',Er
+    Qr = sqrt(2d0*nuc_target%mass*mN*er*kev)
+    print '("Qr = ",F8.4,"(GeV/c)")',qr
+
+    print*,"Enter start v (km/s):"
+    read*,vstart
+    print '("v start = ",F8.4," (km/s)")',vstart
+    vstart = vstart * kilometerpersecond
+    print '("v start = ",ES12.4," (c)")',vstart
+
+    print*,"Enter stop v (km/s):"
+    read*,vstop
+    print '("v stop = ",F12.4," (km/s)")',vstop
+    vstop = vstop * kilometerpersecond
+    print '("v stop = ",ES12.4," (c)")',vstop
+
+    print*,"Enter step v (km/s):"
+    read*,vstep
+    print '("v step = ",F8.4," (km/s)")',vstep
+    vstep = vstep * kilometerpersecond
+    print '("v step = ",ES12.4," (c)")',vstep
+
+    sizevlist = int(abs(vstop - vstart)/vstep)
+    allocate(vlist(sizevlist))
+    allocate(cslist(sizevlist))
+    do i = 1, sizevlist
+        vlist(i) = vstart + (i-1) * vstep
+    end do
+
+
+    cslist = velocitycurve(vlist, qr, wimp, nuc_target, eft, option)
+
+    select case(option)
+    case(2)
+        outputfile = foli("transition_probability.dat")
+        call sopennew(outputfile)
+        do i = 1, sizevlist
+            write(outputfile%iunit,*) vlist(i)/kilometerpersecond, cslist(i)
+        end do
+        call sclose(outputfile)
+    case(3)
+        outputfile = foli("crosssection.dat")
+        call sopennew(outputfile)
+        do i = 1, sizevlist
+            write(outputfile%iunit,*) vlist(i)/kilometerpersecond, cslist(i)
+        end do
+        call sclose(outputfile)
+    case default
+        STOP "Not a velocity curve option."
+    end select        
+    
+end subroutine
 
 function spectra(momenta, wimp, nuc_target, eft)
     use parameters
+    use integral
     implicit none
-    interface
-        function dEventRate(q, wimp, nuc_target, eft)
-            use kinds
-            use parameters
-            implicit none
-            real(doublep) :: q
-            type(particle) :: wimp
-            type(nucleus) :: nuc_target
-            type(eftheory) :: eft
-            real(doublep) :: deventrate
-        end function deventrate
-    end interface
     real(doublep), dimension(:) :: momenta
     type(particle) :: wimp
     type(nucleus) :: nuc_target
@@ -39,6 +133,7 @@ function spectra(momenta, wimp, nuc_target, eft)
     do i = 1, N
         q = momenta(i)
         spectra(i) = dEventRate(q, wimp, nuc_target, eft)
+        call progressmessage(100*real(i)/real(N))
     end do
 
 end function spectra

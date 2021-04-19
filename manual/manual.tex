@@ -1,6 +1,6 @@
-\documentclass[12pt]{article}
-\usepackage[margin=1.in]{geometry}
-\geometry{letterpaper}
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\geometry{margin=1.5in}
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{epstopdf}
@@ -11,6 +11,7 @@
 \usepackage{hyperref}
 \usepackage{multicol}
 \usepackage{longtable}
+\usepackage{breqn}
 
 %New colors defined below
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -55,7 +56,7 @@ Model-Independent WIMP Scattering Responses and Event Rates
 
 \tableofcontents
 
-This is the manual for the FORTRAN version of the model-independent WIMP 
+This is the manual for the FORTRAN version of the model- independent WIMP 
 scattering response and event rate code, which was originally written in 
 Mathematica and described in 
 \href{http://arxiv.org/abs/1308.6288v1}{arXiv:1308.6288}.
@@ -65,14 +66,12 @@ Mathematica and described in
 \section{Quickstart guide: Fortran interface}
 This program primarily computes two quantities. The first is the WIMP-nucleus
 differential event rate spectra:
-\begin{equation}
-\begin{split}
-        \frac{dR_D}{dE_R} = \frac{dR_D}{d\vec{q}^2}(q)
-	= N_T\frac{\rho_\chi}{m_\chi}\int_{v_{min}}^{v_{escape}} 
+\begin{dmath}
+\frac{dR_D}{dE_R} = \frac{dR_D}{d\vec{q}^2}(q)
+	\\= N_T\frac{\rho_\chi}{m_\chi}\int_{v_{min}}^{v_{escape}} 
 	\frac{2m_T}{4\pi v^2}\frac{1}{2j_\chi+1}\frac{1}{2j_T+1}
 	\sum_{spins}|\mathcal{M}(v,q)|^2  \tilde{f}(\vec{v})vd^3v
-\end{split}
-\end{equation}
+\end{dmath}
 This quantity has units of events/GeV and is implicitly multiplied by
 an effective exposure of 1 Kilogram-Day of target nuclei. This is done by
 taking $N_t = 1\ kilogram\cdot day / m_T$, where $m_T$ is the mass of the target
@@ -181,9 +180,10 @@ Inputs 2 - 6 for this calculation will be almost identical to those required for
 the event rate spectra calculation. The main difference is in the sixth and
 final input:
 \begin{verbatim}
- Using adaptive numerical integration to determine  total integrated event rate.
- What are the limits of integration for recoil energies in kev?
- Enter starting energy, stoping energy, relative error:
+ Using adaptive numerical integration to determine total 
+ integrated event rate. What are the limits of integration 
+ for recoil energies in kev? Enter starting energy, 
+ stoping energy, relative error:
 0.0 250.0 0.001
 \end{verbatim}
 Here, we have again been asked for a starting and stopping recoil energy, but
@@ -208,7 +208,7 @@ the calling environment. The latter does the same, except with a custom input
 file, rather than a custom control file.
 
 \subsection{Example: using runCustomInput to generate a weighted sum of
-event-rate spectra}
+event rate spectra}
 
 In this example we will construct a simple python script using the 
 runCustomInput API to compute the differential
@@ -417,7 +417,8 @@ for wimp_mass in (50.,150.0, 500.,5000.):
 \end{lstlisting}
 We could, for example, plot the result at each iteration and construct the
 following plot:
-\includegraphics[width=\textwidth]{xe131.WIMPmassCompare.pdf}
+
+\includegraphics[width=.8 \textwidth]{xe131.WIMPmassCompare.pdf}
 
 \clearpage
 
@@ -484,13 +485,14 @@ where in the last equality, we have defined a one-dimensional Gaussian form
 \end{split}
 \end{equation}
 
-The final expression for $I$ can be trivially generalized to other spherically-
+The final expression for $I$ can be trivially generalized to other spherically
 symmetric velocity-dependent forms of the differential cross section. What's 
 important is the reduction of the velocity-boosted $d^3v$ integral to a radial 
 integral which can be carried out with one-dimensional quadrature:
 \begin{equation}\label{integral}
 \begin{split}
-\int_{v_{min}}^{v_{max}} d^3v \sigma(v) e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2} 
+\int_{v_{min}}^{v_{max}} d^3v \sigma(v) e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2}
+\\
 	= \frac{\pi v_0^2}{v_{earth} }\int_{v_{min}}^{v_{max}} dv \sigma(v) v^2\left( g(v-v_{earth}) - g(v+v_{earth}) \right).
 \end{split}
 \end{equation}
@@ -532,74 +534,63 @@ where $m_\chi$ is the mass of the dark matter particle and $x$ is an index used 
 \subsection{Dark matter response functions}
 There are 8 dark matter response functions which group 15 operator coefficients $c_i^x$ according the pair of nuclear response functions which they multiply.
 
-\begin{align}
-R_{M}^{xx'}(v,q) &= 
-\frac{1}{4}cl(j_\chi) \left(
-	(v^2-(\frac{q}{2\mu_t})^2)(c_5^{x}c_5^{x'}q^2 + c_8^{x}c_8^{x'})
-	+ c_{11}^{x}c_{11}^{x'}q^2
-\right)\\
-& + (c_1^{x} + c_2^{x}(v^2-(\frac{q}{2\mu_t})^2) )(c_1^{x'} + c_2^{x'}(v^2-(\frac{q}{2\mu_t})^2) )
-\\
-R_{\Sigma''}^{xx'}(v,q) &= 
-\frac{1}{16}cl(j_\chi) \left(
-	c_6^{x}c_6^{x'}q^4 + (c_{13}^{x}c_{13}^{x'}q^2 +c_{12}^{x} c_{12}^{x'} )
-	(v^2-q^2/(2\mu_T)^2) + 2c_4^x c_6^{x'} q^2 + c_4^x c_4^{x '}
-\right )
-+ \frac{1}{4} c_{10}^x c_{10}^{x '} q^2
-\\
-R_{\Sigma'}^{xx'}(v,q) &= 
-\frac{1}{32} cl(j_\chi) \left (
-	2c_{9}^{x}c_{9}^{x'}q^2
-	+ (
-		c_{15}^{x}c_{15}^{x'}q^4
-		+ c_{14}^{x}c_{14}^{x'}q^2
-		-2 c_{12}^{x}c_{15}^{x'} q^2
-		+c_{12}^{x}c_{12}^{x'}
-	) (v^2-q^2/(2\mu_T)^2)
-	+2 c_{4}^{x}c_{4}^{x'}
-\right)\\
-&+\frac{1}{8} \left(
-	c_{3}^{x}c_3^{x'}q^2
-	+ c_{7}^{x}c_{7}^{x'}
-\right) (v^2-q^2/(2\mu_T)^2)
-\\
-R_{\Phi''}^{xx'}(v,q) &= 
-\frac{q^2}{(4m_N)^2}cl(j_\chi) \left(
-	c_{12}^x - c_{15}^{x} q^2
-\right ) \left(
-	c_{12}^{x '}-c_{15}^{x '}q^2
-\right )
-+ \frac{q^2}{(4m_N)^2}q^2c_3^x c_3^{x'}
-\\
-R_{\tilde{\Phi}'}^{xx'}(v,q) &= 
-\frac{q^2}{(4m_N)^2}cl(j_\chi) \left(
-	c_{12}^x c_{12}^{x'} q^2
-	+ c_{12}^x c_{12}^{x'} 
-\right)
-\\
-R_{\Delta}^{xx'}(v,q) &= 
-\frac{q^2}{(2m_N)^2}cl(j_\chi) \left(
-	c_{5}^{x}c_{5}^{x'}q^2
-	+ c_{8}^{x}c_{8}^{x'}
-\right)
-+2\frac{q^2}{m_N^2} c_{2}^{x}c_{2}^{x'}
-(v^2-q^2/(2\mu_T)^2)
-\\
-R_{\Delta \Sigma'}^{xx'}(v,q) &= 
-\frac{q^2}{(2m_N)^2}cl(j_\chi) \left(
-c_{4}^{x}c_{5}^{x'} - c_{8}^{x}c_{9}^{x'}
-\right)
-- \frac{q^2}{m_N}c_{2}^{x}c_{3}^{x'} (v^2-q^2/(2\mu_T)^2)
-\\
-R_{\Phi''M}^{xx'}(v,q) &= 
-\frac{q^2}{4m_N} cl(j_\chi) c_{11}^{x} 
-\left(
-c_{12}^{x'} - c_{12}^{x'} q^2
-\right)
-+ \frac{q^2}{m_N} c_{3}^{x'} \left(
-	c_{1}^{x} + c_{2}^{x} (v^2-q^2/(2\mu_T)^2)
-\right)
-\end{align}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%80
+% Tex formatting style for this section: 
+%   * parenthesis hierarchy: \{, [, (
+%   * zero indent for new definition or equality
+%   * single indent for new print line (usage of \\)
+%   * double indent for source line continuation without new print line
+\begin{dmath}
+R_{M}^{xx'}(v,q) = \frac{1}{4}cl(j_\chi) \{ [v^2-(q/2\mu_t)^2] 
+        (c_5^{x}c_5^{x'}q^2 + c_8^{x}c_8^{x'}) + c_{11}^{x}c_{11}^{x'}q^2 \}
+    + \{c_1^{x} + c_2^{x}[v^2-(q/2\mu_t)^2] \} \{c_1^{x'} 
+        + c_2^{x'}[v^2-(q/2\mu_t)^2] \} 
+\end{dmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%80
+\begin{dmath}
+R_{\Sigma''}^{xx'}(v,q) = \frac{1}{16}cl(j_\chi) \{c_6^{x}c_6^{x'}q^4 
+    + (c_{13}^{x}c_{13}^{x'}q^2 + c_{12}^{x} c_{12}^{x'} ) [v^2 
+    - (q/2\mu_T)^2 ] + 2c_4^xc_6^{x'}q^2 + c_4^xc_4^{x'}\} 
+    + \frac{1}{4}c_{10}^xc_{10}^{x '}q^2
+\end{dmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%80
+\begin{dmath}
+R_{\Sigma'}^{xx'}(v,q) = \frac{1}{32} cl(j_\chi) \{ 2c_{9}^{x}c_{9}^{x'}q^2 
+        + ( c_{15}^{x}c_{15}^{x'}q^4 + c_{14}^{x}c_{14}^{x'}q^2 
+        - 2c_{12}^{x}c_{15}^{x'} q^2 + c_{12}^{x}c_{12}^{x'}) [v^2-(q/2\mu_T)^2]
+        + 2c_{4}^{x}c_{4}^{x'} \} 
+        +\frac{1}{8}(c_{3}^{x}c_3^{x'}q^2 + c_{7}^{x}c_{7}^{x'})[v^2-(q/2\mu_T)^2]
+\end{dmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%80
+\begin{dmath}
+R_{\Phi''}^{xx'}(v,q) = \frac{q^2}{(4m_N)^2}cl(j_\chi) (c_{12}^x - c_{15}^{x}q^2
+        )(c_{12}^{x '}-c_{15}^{x '}q^2 ) 
+    + \frac{q^2}{(4m_N)^2}q^2c_3^x c_3^{x'} 
+\end{dmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%80
+\begin{dmath}
+R_{\tilde{\Phi}'}^{xx'}(v,q) = \frac{q^2}{(4m_N)^2}cl(j_\chi)(
+        c_{12}^xc_{12}^{x'}q^2 + c_{12}^x c_{12}^{x'})
+\end{dmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%80
+\begin{dmath}
+R_{\Delta}^{xx'}(v,q) = \frac{q^2}{(2m_N)^2}cl(j_\chi) (c_{5}^{x}c_{5}^{x'}q^2 
+        + c_{8}^{x}c_{8}^{x'}) 
+        + 2\frac{q^2}{m_N^2}c_{2}^{x}c_{2}^{x'}[v^2-(q/2\mu_T)^2]
+\end{dmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%80
+\begin{dmath}
+R_{\Delta \Sigma'}^{xx'}(v,q) = \frac{q^2}{(2m_N)^2}cl(j_\chi) 
+        (c_{4}^{x}c_{5}^{x'} - c_{8}^{x}c_{9}^{x'}) 
+        - \frac{q^2}{m_N} c_{2}^{x}c_{3}^{x'} [v^2-(q/2\mu_T)^2]
+\end{dmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%80
+\begin{dmath}
+R_{\Phi''M}^{xx'}(v,q) = \frac{q^2}{4m_N}cl(j_\chi)c_{11}^{x}
+        (c_{12}^{x'} - c_{15}^{x'} q^2) 
+        + \frac{q^2}{m_N}c_{3}^{x'}  \{c_{1}^{x} + c_{2}^{x} [v^2-(q/2\mu_T)^2]\}
+\end{dmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%80
 As a shorthand we have introduced the notation 
 \begin{align}
 	cl(j) = 4j(j+1)/3.
@@ -661,54 +652,63 @@ the ground state of the target nucleus.
 \section{Control file keywords}
 
 \begin{longtable}{| l | c | p{2.5in} | c | l | }
-  \hline
-  Keyword & Symbol & Meaning & Units & Default \\
-  \hline
-  dmdens & $\rho_\chi$ & Local dark matter density. & GeV/cm$^3$ & 0.3\\
+  \hline Keyword & Symbol & Meaning & Units & Default \\
 
-  dmspin & $j_\chi$ & Instrinsic spin of WIMP particles. & $\hbar$ &
+  \hline dmdens & $\rho_\chi$ & Local dark matter density. & GeV/cm$^3$ & 0.3\\
+
+  \hline dmspin & $j_\chi$ & Instrinsic spin of WIMP particles. & $\hbar$ &
   $\frac{1}{2}$ \\
 
-  fillnuclearcore & & Logical flag (enter 0 for False, 1 for True) to fill the
+  \hline fillnuclearcore & & Logical flag (enter 0 for False, 1 for True) to fill the
   inert-core single-particle orbitals in the nuclear level densities.
   Phenomenological shell model calculations typically provide only the density
   matrices for the active valence-space orbitals, leaving it to the user to
   infer the core-orbital densities. This option automatically assigns these
   empty matrix elements assuming a totally filled core. & & 1 (true)\\
 
-  intpoints & & Number of lattice points in the numerical quadrature. More lattice
+  \hline hofrequency & $\hbar \omega$ & Set the harmonic oscillator length by
+  specifying the harmonic oscillator frequency. (b = 6.43/sqrt($\hbar\omega$)).
+  If using an \textit{ab initio} interaction, $\hbar \omega$ should be set to
+  match the value used in the interaction.
+              & MeV & See hoparameter.\\
+
+  \hline hoparameter & $b$ & Harmonic oscillator length. Determines the scale of the
+  nuclear wavefunction interaction. & fm &
+  $(\frac{41.467}{45A^{-1/3}-25A^{-2/3}})^{1/2}$  \\
+
+  \hline intpoints & & Number of lattice points in the numerical quadrature. More lattice
   points results in a more accurate integral, at the cost of runtime. & &
   1000\\
 
-  maxwellv0 & $v_0$ & Maxwell-Boltzman velocity distribution scaling factor. &
+  \hline maxwellv0 & $v_0$ & Maxwell-Boltzman velocity distribution scaling factor. &
   km/s & 220.0 \\
 
-  mnucleon & $m_N$ & Mass of a nucleon. It's assumed that $m_p\approx m_n$. &
+  \hline mnucleon & $m_N$ & Mass of a nucleon. It's assumed that $m_p\approx m_n$. &
   GeV & 0.938272 \\
 
-  ntscale & $N_t$ & Effective number of target nuclei scaling factor. The
+  \hline ntscale & $N_t$ & Effective number of target nuclei scaling factor. The
   differential event rate is multiplied by this constant in units of
   kilogram-days. For example, if the detector had a total effective exposure of
   2500 kg days, one might enter 2500 for this value. & kg days & 1.0 \\
 
-  useenergyfile & & Logical flag (enter 0 for False, 1 for True) to read energy
+  \hline useenergyfile & & Logical flag (enter 0 for False, 1 for True) to read energy
   grid used for calculation from a user-provided file intead of specifying a
   range. & & 0 (false) \\
 
-  usemomentum & & Logical flag (enter 0 for False, 1 for True) to use momentum
+  \hline usemomentum & & Logical flag (enter 0 for False, 1 for True) to use momentum
   transfer intead of recoil energy as the independent variable. & &0 (false) \\
 
-  vearth & $v_{earth}$ & Speed of the earth in the galactic frame. & km/s & 
+  \hline vearth & $v_{earth}$ & Speed of the earth in the galactic frame. & km/s & 
   232.0\\
 
-  vescape & $v_{escape}$ & Galactic escape velocity. Particles moving faster than
+  \hline vescape & $v_{escape}$ & Galactic escape velocity. Particles moving faster than
   this speed will escape the galaxy, thus setting an upper limit on the WIMP
   velocity distribution. & km/s & 12 $\times\ v_{scale}$ \\
 
-  weakmscale & $m_v$ & Weak interaction mass scale. User defined EFT coefficients
+  \hline weakmscale & $m_v$ & Weak interaction mass scale. User defined EFT coefficients
   are divided by $m_v^2$. & GeV & 246.2 \\
 
-  wimpmass & $m_\chi$ & WIMP particle mass. & GeV & 50.0\\
+  \hline wimpmass & $m_\chi$ & WIMP particle mass. & GeV & 50.0\\
   \hline
 \end{longtable}
 
