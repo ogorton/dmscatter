@@ -23,4 +23,4 @@ literature/
 */*.bigstick
 */*.out
 *.
-python/__pycache__/
+*__pycache__*
