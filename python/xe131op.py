@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import dmf90factor as dm
+import dmfortfactor as dm
 
-exec_name = "dmf90factor.x"
+exec_name = "dmfortfactor.x"
 input_template = "xe131.input.template"
 dresfiles = [
     'xe131gcn.dres',

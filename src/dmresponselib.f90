@@ -2,7 +2,7 @@
 ! equation (40) in the paper.
 !
 
-module dmresponse
+module dmresponselib
 
     use constants
     use parameters
@@ -269,4 +269,4 @@ function Cl(j)
 
 end function Cl
 
-end module dmresponse
+end module dmresponselib

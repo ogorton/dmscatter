@@ -1,39 +1,18 @@
+module phi
+    use norm
+    use bessel
+    contains
+
 !-------------------------------------------------------------------------------
 function PhiPPsummand1(y,np,lp,jp,n,l,j,bigJ)
 
-    use sj2iref
+    use wignerfunctions
     implicit none
-    INTERFACE
-
-        function Jnorm(j)
-            use sj2iref
-    implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Jnorm
-        end function Jnorm
-
-        function Qnorm(j)
-            use sj2iref
-    implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Qnorm
-        end function Qnorm
-
-        function BesselElementminus(y,np,lp,n,l,bigL)
-            use sj2iref
-    implicit none
-            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
-            REAL(kind=8), INTENT(IN) :: y
-            REAL(kind=8) :: BesselElementminus
-        end function BesselElementminus
-
-    end INTERFACE
 
     INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ
     REAL(kind=8), INTENT(IN) :: y
     INTEGER :: bigL
     REAL(kind=8) :: xjp,xj
-    REAL(kind=8) :: Wigner_9j
     REAL(kind=8) :: PhiPPsummand1
 
     xjp = dble(jp)/2.0
@@ -57,40 +36,14 @@ end function PhiPPsummand1
 !-------------------------------------------------------------------------------
 function PhiPPsummand2(y,np,lp,jp,n,l,j,bigJ)
 
-    use sj2iref
+    use wignerfunctions
     implicit none
-    INTERFACE
-
-        function Jnorm(j)
-            use sj2iref
-    implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Jnorm
-        end function Jnorm
-
-        function Qnorm(j)
-            use sj2iref
-    implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Qnorm
-        end function Qnorm
-
-        function BesselElementplus(y,np,lp,n,l,bigL)
-            use sj2iref
-    implicit none
-            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
-            REAL(kind=8),    INTENT(IN) :: y
-            REAL(kind=8) :: BesselElementplus
-        end function BesselElementplus
-
-    end INTERFACE
 
     INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
     INTEGER, INTENT(IN) :: bigJ
     INTEGER :: bigL
     REAL(kind=8), INTENT(IN) :: y
     !REAL(kind=8) :: xjp,xj
-    REAL(kind=8) :: Wigner_9j
     REAL(kind=8) :: PhiPPsummand2
 
     PhiPPsummand2 = 0.0
@@ -115,39 +68,13 @@ end function PhiPPsummand2
 
 !-------------------------------------------------------------------------------
 function PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)
-    use sj2iref
+    use wignerfunctions
     implicit none
-    INTERFACE
-
-        function Jnorm(j)
-            use sj2iref
-    implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Jnorm
-        end function Jnorm
-
-        function Qnorm(j)
-            use sj2iref
-    implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Qnorm
-        end function Qnorm
-
-        function BesselElementplus(y,np,lp,n,l,bigL)
-            use sj2iref
-    implicit none
-            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
-            REAL(kind=8), INTENT(IN) :: y
-            REAL(kind=8) :: BesselElementplus
-        end function BesselElementplus
-
-    end INTERFACE
 
     INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
     INTEGER, INTENT(IN) :: bigJ
     INTEGER :: bigL
     REAL(kind=8), INTENT(IN) :: y
-    REAL(kind=8) :: Wigner_9j
     REAL(kind=8) :: PhiPPsummand3
 
     PhiPPsummand3 = 0.0
@@ -174,38 +101,12 @@ end function PhiPPsummand3
 !-------------------------------------------------------------------------------
 function PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ)
 
-    use sj2iref
+    use wignerfunctions
     implicit none
-    INTERFACE
-
-        function Jnorm(j)
-            use sj2iref
-    implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Jnorm
-        end function Jnorm
-
-        function Qnorm(j)
-            use sj2iref
-    implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Qnorm
-        end function Qnorm
-
-        function BesselElementminus(y,np,lp,n,l,bigL)
-            use sj2iref
-    implicit none
-            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
-            REAL(kind=8),    INTENT(IN) :: y
-            REAL(kind=8) :: BesselElementminus
-      end function BesselElementminus
-
-    end INTERFACE
 
     INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ
     REAL(kind=8), INTENT(IN) :: y
     INTEGER :: bigL
-    REAL(kind=8) :: Wigner_9j
     REAL(kind=8) :: PhiPPsummand4
 
     PhiPPsummand4 = 0.0
@@ -229,18 +130,8 @@ end function PhiPPsummand4
 !-------------------------------------------------------------------------------
 function PhiPPoverall(lp,jp,l,j)
 
-    use sj2iref
+    use wignerfunctions
     implicit none
-    INTERFACE
-
-        function Jnorm(j)
-            use sj2iref
-    implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Jnorm
-        end function Jnorm
-
-    end INTERFACE
 
     INTEGER, INTENT(IN) :: lp,jp,l,j
     REAL(kind=8) :: Pi = 3.1415926535897932
@@ -254,4 +145,4 @@ function PhiPPoverall(lp,jp,l,j)
 end function PhiPPoverall
 
 
-
+end module phi

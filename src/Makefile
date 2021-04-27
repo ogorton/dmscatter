@@ -1,4 +1,7 @@
+.DEFAULT_GOAL := default
+
 COMP = gfortran
+exec=dmfortfactor.x
 
 F77_CFLAGS = -c -O2
 F90_CFLAGS = -c -O2
@@ -8,59 +11,59 @@ openmp_cflags = "-O2 -fopenmp -c"
 openmp_lflags = "-fopenmp"
 debug_cflags = "-O2 -fbounds-check -Wall -c"
 
-exec=dmf90factor.x
+src = $(wildcard *.f90)
+obj = $(src:.f90=.o)
 
-OBJ1 = \
-fileobject.o\
-intlib.o\
-sj2i.o\
-progressmessage.o\
-norm.o\
-modules.o\
-setparameters.o\
-setcoeffs.o\
-controlfiler.o\
-getsps.o\
-densities.o\
-readdensities.o\
-bessel.o\
-summand.o\
-phi.o\
-mjl.o\
-sigma.o\
-zhangjin.o\
-operme.o\
-dmresponsefun.o\
-dmresponse_lib.o\
-dmresponse_iso.o\
-dmresponse_pn.o\
-nucresponse.o\
-test_nucresponse.o\
-transition.o\
-diffcrosssection.o\
-velocitydist.o\
-quadrature.o\
-deventrate.o\
-spectra.o\
-totaleventrate.o\
-main.o\
-cg.o\
-nucinputs.o\
-dmf90factor.o
-
+#####################################
+# STANDARD OBJECT-SOURCE DEPENDENCY #
+#####################################
 %.o : %.f90
 	$(COMP) $(F90_CFLAGS) $(<F)
 
-%.o : %.f
-	$(COMP) $(F77_CFLAGS) $(<F)
+##################################
+# SUBROUTINE/MODULE DEPENDENCIES #
+##################################
+bessel.o : wignerfunctions.o norm.o
 
-default: $(OBJ1)
-	$(COMP) -o $(exec) $(F90_LFLAGS) $(OBJ1) 
+mjl.o : bessel.o norm.o
 
-dmf90factor:
+phi.o : bessel.o norm.o
+
+sigma.o : bessel.o norm.o
+
+operme.o : sigma.o phi.o mjl.o
+
+densities.o : orbitals.o
+
+dmresponse.o : dmresponselib.o
+
+nucresponse.o : orbitals.o
+
+controlfiler.o : orbitals.o
+
+transition.o : dmresponse.o nucresponse.o
+
+crosssection.o : transition.o 
+
+eventrate.o : crosssection.o velocitydist.o intlib.o
+
+spectra.o : fileobject.o eventrate.o
+
+totaleventrate.o : eventrate.o
+
+dmfortfactor.o : spectra.o wignerfunctions.o modules.o nucresponse.o
+
+################
+# USER RECIPES #
+################
+default: modules.o $(obj)
+	$(COMP) -o $(exec) $(F90_LFLAGS) $^
+	mv $(exec) ~/bin/
+
+dmfortfactor:
 	$(MAKE)
 
-serial: $(OBJ1) 
+serial: 
 	$(MAKE)
 
 openmp:

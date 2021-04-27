@@ -1,4 +1,4 @@
-module integral
+module eventrate
     implicit none
     real (kind=8) :: globalq
     contains
@@ -8,7 +8,7 @@ function deventrate(q, wimp, nuc_target, eft)
     use constants
     use parameters
    
-    use Mdiffcrosssection
+    use crosssection
     use Mmaxbolt
     implicit none
     real(doublep) :: dEventRate
@@ -27,7 +27,7 @@ function deventrate(q, wimp, nuc_target, eft)
     real(doublep), allocatable :: EventRate_integrand(:), xtab(:)
     integer, allocatable :: indx(:)
     integer :: i, j, itmp, ind
-    real(doublep) :: ve, v0, vesc, error
+    real(doublep) :: ve, v0, vesc, vmin, error
 
     real(doublep) :: abserror, relerror
 
@@ -36,16 +36,16 @@ function deventrate(q, wimp, nuc_target, eft)
     globalq = q
     muT = wimp%mass * nuc_target%mass * mN / (wimp%mass + nuc_target%mass * mN)
 
-    ve = vdist_t%vearth * kilometerpersecond
-    v0 = vdist_t%vscale * kilometerpersecond
-    vesc = vdist_t%vescape * kilometerpersecond
-    vdist_min = q/(2d0*muT)
+    ve = vearth * kilometerpersecond
+    v0 = vscale * kilometerpersecond
+    vesc = vescape * kilometerpersecond
+    vmin = q/(2d0*muT)
 
-    if (vdist_min > vesc) then
+    if (vmin > vesc) then
         dEventRate = 0d0
         return
     end if
-    dv = (vesc-vdist_min)/lattice_points 
+    dv = (vesc-vmin)/lattice_points 
 
     allocate(EventRate_integrand(lattice_points))
     allocate(xtab(lattice_points))
@@ -56,22 +56,21 @@ function deventrate(q, wimp, nuc_target, eft)
 
 
     if (adaptive) then
-        call gaus8 ( dspectra, vdist_min, vesc, abserror, deventrate, ind )
-        !call monte_carlo ( dspectra, vdist_min, vesc, lattice_points, deventrate )
+        call gaus8 ( dspectra, vmin, vesc, abserror, deventrate, ind )
     else
         !$OMP parallel do private(v) shared(wimp, nuc_target, eftsmall) &
         !$OMP schedule(dynamic,10)
             do i = 1, lattice_points
-                v = (vdist_min + (i-1) * dv)
+                v = (vmin + (i-1) * dv)
                 xtab(i) = v
                 EventRate_integrand(i) = diffCrossSection(v, q, wimp, nuc_target, eft) &
                             * v * v * ( maxbolt(v-ve,v0) - maxbolt(v+ve,v0) ) 
             end do
         !$OMP end parallel do
         !$OMP barrier
-            do i = 1, lattice_points
-                write(1099,*)xtab(i)/kilometerpersecond,EventRate_integrand(i)
-            end do
+!            do i = 1, lattice_points
+!                write(1099,*)xtab(i)/kilometerpersecond,EventRate_integrand(i)
+!            end do
         
             if (quadrature_type == 1) then    
                 if (all(EventRate_integrand == 0)) then
@@ -101,17 +100,17 @@ function dspectra(vv)
     use main ! This is the only function allowed to use main.
     use kinds
     use constants
-    use mdiffcrosssection
+    use crosssection
     use mmaxbolt
     implicit none
     real(doublep) :: vv
     real(doublep) :: dspectra, ve, v0
-    ve = vdist_t%vearth * kilometerpersecond
-    v0 = vdist_t%vscale * kilometerpersecond
+    ve = vearth * kilometerpersecond
+    v0 = vscale * kilometerpersecond
 
     dspectra = diffCrossSection(vv, globalq, wimp, nuc_target, eft) &
         * vv * vv * ( maxbolt(vv-ve,v0) - maxbolt(vv+ve,v0) )
 
 end function
 
-end module
+end module eventrate

@@ -1,7 +1,7 @@
 subroutine setup_nuclearinputs(nuc_target)
 
     use parameters
-    use spspace
+    use orbitals
     use constants
     implicit none
 

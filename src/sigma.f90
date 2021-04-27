@@ -1,30 +1,18 @@
+module sigma
+    use norm
+    use bessel
+    contains
+
 !-------------------------------------------------------------------------------
 function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
-    use sj2iref
+    use wignerfunctions
     implicit none
-    INTERFACE
-
-        function Jnorm(j)
-            implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Jnorm
-        end function Jnorm
-
-        function BesselElement(y,np,lp,n,l,bigL)
-            implicit none
-            INTEGER, INTENT(IN) :: n, np, l, lp, bigL
-            REAL(kind=8), INTENT(IN) :: y
-            REAL(kind=8) :: BesselElement
-        end function BesselElement
-
-    end INTERFACE
 
     INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
     INTEGER, INTENT(IN) :: bigJ,bigL
     REAL(kind=8), INTENT(IN) :: y
     REAL(kind=8) :: xjp,xj
     REAL(kind=8) :: Pi = 3.14159265358979323
-    REAL(kind=8) :: Wigner_9j
     REAL(kind=8) :: SigmaJ
 
     xjp = dble(jp)/2.0
@@ -42,24 +30,6 @@ end function SigmaJ
 !-------------------------------------------------------------------------------
 function SigmaPJ(y,np,lp,jp,n,l,j,bigJ)
 
-    INTERFACE
-
-        function Qnorm(j)
-            implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Qnorm
-        end function Qnorm
-
-        function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
-            implicit none
-            INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
-            INTEGER, INTENT(IN) :: bigJ,bigL
-            REAL(kind=8), INTENT(IN) :: y
-            REAL(kind=8) :: SigmaJ
-        end function SigmaJ
-
-  end INTERFACE
-
   INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
   INTEGER, INTENT(IN) :: bigJ
   REAL(kind=8), INTENT(IN) :: y
@@ -74,24 +44,6 @@ end function SigmaPJ
 !-------------------------------------------------------------------------------
 function SigmaPPJ(y,np,lp,jp,n,l,j,bigJ)
 
-    INTERFACE
-
-        function Qnorm(j)
-            implicit none
-            REAL(kind=8), INTENT(IN)  :: j
-            REAL(kind=8) :: Qnorm
-        end function Qnorm
-
-        function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
-            implicit none
-            INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
-            INTEGER, INTENT(IN) :: bigJ,bigL
-            REAL(kind=8), INTENT(IN) :: y
-            REAL(kind=8) :: SigmaJ
-       end function SigmaJ
-
-    end INTERFACE
-
     INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
     INTEGER, INTENT(IN) :: bigJ
     REAL(kind=8), INTENT(IN) :: y
@@ -103,4 +55,4 @@ function SigmaPPJ(y,np,lp,jp,n,l,j,bigJ)
 end function SigmaPPJ
 
 
-
+end module sigma

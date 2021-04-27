@@ -1,11 +1,11 @@
-module mdiffcrosssection
+module crosssection
     contains
 function diffCrossSection(v, q, wimp, nucl, eft)
     ! Computes the differential cross section per recoil energy ds/dEr
     use kinds
     use constants
     use parameters
-    use Mtransition_probability
+    use transition
     implicit none
     type(particle) :: wimp
     type(nucleus) :: nucl

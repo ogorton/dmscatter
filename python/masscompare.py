@@ -2,7 +2,7 @@ import os
 import matplotlib.pyplot as plt
 import runCustomControl
 
-exec_name = "dmf90factor.x"
+exec_name = "dmfortfactor.x"
 
 # This script works by replacing MASS_KEYWORD with the desired value of the
 # WIMP mass, then running the code with a control file "<>.control".

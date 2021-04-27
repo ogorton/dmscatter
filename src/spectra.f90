@@ -1,4 +1,4 @@
-module espectra
+module mod_spectra
 
     use kinds
     implicit none
@@ -12,8 +12,8 @@ module espectra
 contains
 
 function velocitycurve(vlist, q, wimp, nuc_target, eft, option)
-    use mdiffcrosssection
-    use mtransition_probability
+    use crosssection
+    use transition
     use parameters
     implicit none
     real(doublep) :: q, v
@@ -118,7 +118,7 @@ end subroutine
 
 function spectra(momenta, wimp, nuc_target, eft)
     use parameters
-    use integral
+    use eventrate
     implicit none
     real(doublep), dimension(:) :: momenta
     type(particle) :: wimp
@@ -270,5 +270,5 @@ subroutine read_energy_grid(filename)
     close(159)
 end subroutine read_energy_grid
 
-end module espectra
+end module mod_spectra
 

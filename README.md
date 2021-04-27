@@ -8,16 +8,16 @@ in [this arXiv link](https://arxiv.org/abs/1308.6288).
 Source code is located in src directory. To compile the program, you must have
 the gfortran compiler. From the /src/ directory, run:
 
-    make dmf90factor
+    make dmfortfactor
     
-This places the dmf90factor.x executable in the src directory. Move it to your bin
+This places the dmfortfactor.x executable in the src directory. Move it to your bin
 directory if desired.
 
 
 An example is provided in the "sample/si" directory. To run this example, move to
 the /sample/si directory and run:
 
-    ../../src/dmf90factor.x < input.si28
+    ../../src/dmfortfactor.x < input.si28
 
 This computes the event rate spectra for a Si28 target. 
 

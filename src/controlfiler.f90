@@ -48,12 +48,6 @@ subroutine readcontrolfile(resfile, eft, wimp)
     coefkey = "coefnonrel"
     EOF = .false.
 
-    print*,'Possible keywords:'
-    do i =1,14
-        print*,trim(keyword_array(i))
-    enddo
-    print*,''
-
     do while (.not. EOF)
 
         ! Read past comments
@@ -78,6 +72,7 @@ subroutine readcontrolfile(resfile, eft, wimp)
                 read(resfile,*,end=111)keyword, op, coupling, coef
                 call setpncoeffsnonrel(eft, coupling, op, coef)
             else
+                call addKeywordpair(keyword, keyvalue)
                 call setkeyword(keyword,keyvalue, wimp)
             endif
 
@@ -108,8 +103,8 @@ subroutine setkeyword(keyword, keyvalue, wimp)
     use constants
     use momenta
     use quadrature
-    use spspace
     use parameters
+    use orbitals, only: bfm
 
     implicit none
 
@@ -121,8 +116,8 @@ subroutine setkeyword(keyword, keyvalue, wimp)
     select case (keyword)
 
     case('vearth')
-        vdist_t%vearth = keyvalue
-        print*,trim(keyword),": Set velocity of earth in galactic frame set to",vdist_t%vearth
+        vearth = keyvalue
+        print*,trim(keyword),": Set velocity of earth in galactic frame set to",vearth
 
     case('dmdens')
         wimp%localdensity = keyvalue
@@ -150,16 +145,16 @@ subroutine setkeyword(keyword, keyvalue, wimp)
         print*,trim(keyword),': Set dark matter particle mass to',keyvalue
 
     case('vescape')
-        vdist_t%vescape = keyvalue
-        print*,trim(keyword),': Set escape velocity to', vdist_t%vescape
+        vescape = keyvalue
+        print*,trim(keyword),': Set escape velocity to', vescape
 
     case('weakmscale')
         mV = keyvalue
         print*,trim(keyword),': Set standard-model weak interaction mass scale to',mv
 
     case('maxwellv0')
-        vdist_t%vscale = keyvalue
-        print*,trim(keyword),': Set velocity distribution scaling to',vdist_t%vscale
+        vscale = keyvalue
+        print*,trim(keyword),': Set velocity distribution scaling to',vscale
 
     case('mnucleon')
         mn = keyvalue

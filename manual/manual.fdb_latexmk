@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1616444766 "manual.tex" "manual.pdf" "manual" 1616444768
+["pdflatex"] 1618949750 "manual.tex" "manual.pdf" "manual" 1618949752
   "/usr/local/texlive/2020/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -115,15 +115,15 @@
   "/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1586288239 4811913 0be9a7e86c70a26e5e3042966bcd7097 ""
   "/usr/local/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1586288259 2432462 fd0fa20e9a3cb5f8169fd0ba1c955158 ""
   "/usr/local/texlive/2020/texmf.cnf" 1586288231 577 d60164b4589a341208aff7a667fbbdcb ""
-  "manual.aux" 1616444768 3372 55efdf85aa119eb0f4665a5f68799d1d "pdflatex"
-  "manual.out" 1616444768 1316 d3e104bb2777bfcf9e98df85272efced "pdflatex"
-  "manual.tex" 1616444765 28568 ef22c3da47d499948ad49ee713cf2884 ""
-  "manual.toc" 1616444768 1603 3148660d608b79f8d01d931b0216a448 "pdflatex"
+  "manual.aux" 1618949752 3372 55efdf85aa119eb0f4665a5f68799d1d "pdflatex"
+  "manual.out" 1618949752 1316 d3e104bb2777bfcf9e98df85272efced "pdflatex"
+  "manual.tex" 1618949741 28573 b482c7b0ac19fa6d48f9a1a1fa229bba ""
+  "manual.toc" 1618949752 1603 3148660d608b79f8d01d931b0216a448 "pdflatex"
   "weightedspectra.pdf" 1613005174 18444 9e1a1b6dbe24fadb6093c701627f9f09 ""
   "xe131.WIMPmassCompare.pdf" 1613185802 15932 67c19ec8f3e386ba7c904e37eaaf505a ""
   (generated)
-  "manual.out"
-  "manual.log"
-  "manual.pdf"
-  "manual.aux"
   "manual.toc"
+  "manual.out"
+  "manual.pdf"
+  "manual.log"
+  "manual.aux"

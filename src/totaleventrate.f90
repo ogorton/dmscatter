@@ -35,7 +35,7 @@ function fspectra(q)
     use main ! This is the only function allowed to use main.
     use kinds
     use constants
-    use integral
+    use eventrate
     implicit none
     real(doublep), intent(in) :: q
     real(doublep) :: fspectra

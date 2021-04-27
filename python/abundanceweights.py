@@ -2,7 +2,7 @@ import os
 import matplotlib.pyplot as plt
 import runCustomInput
 
-exec_name = "dmf90factor.x"
+exec_name = "dmfortfactor.x"
 input_template = "input.xeAAA" # Filename ends in .template, this is the prefix.
 workdir = os.getcwd()
 plt.figure()
