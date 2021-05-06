@@ -2,8 +2,6 @@
 module kinds
     implicit none
     integer,parameter :: doublep = kind(1.d0)
-    integer :: keylength = 20
-
 end module kinds
 
 !===============================================================================
@@ -122,6 +120,7 @@ module quadrature
 
     integer :: quadrature_type = 1
     integer :: lattice_points = 1000
+    integer :: gaussorder = 12
 
 end module quadrature
 

@@ -209,6 +209,10 @@ subroutine setkeyword(keyword, keyvalue, wimp)
             print*,trim(keyword),': Set to not print density matrix.'
         end if        
 
+    case('gaussorder')
+        gaussorder = int(keyvalue)
+        print*,trim(keyword),': Set order of Gauss-Legendre quadrature to',keyvalue
+
     case default
         print*,'Invalid keyword "',trim(keyword),'". Ignoring.'
 

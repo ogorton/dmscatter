@@ -1,4 +1,3 @@
-
 subroutine setupcoef(eft)
     use parameters
 
@@ -122,6 +121,3 @@ subroutine normalizecoeffs(eft, wimp)
     enddo
 
 end subroutine normalizecoeffs
-
-
-

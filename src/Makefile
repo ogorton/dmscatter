@@ -45,7 +45,7 @@ transition.o : dmresponse.o nucresponse.o
 
 crosssection.o : transition.o 
 
-eventrate.o : crosssection.o velocitydist.o intlib.o
+eventrate.o : gausquad.o gaus.o crosssection.o velocitydist.o intlib.o
 
 spectra.o : fileobject.o eventrate.o
 

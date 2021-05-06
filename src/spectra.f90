@@ -130,11 +130,14 @@ function spectra(momenta, wimp, nuc_target, eft)
     real(doublep) :: q
 
     N = size(momenta)
+    !$OMP parallel do private(q) schedule(static, 1)
     do i = 1, N
         q = momenta(i)
         spectra(i) = dEventRate(q, wimp, nuc_target, eft)
-        call progressmessage(100*real(i)/real(N))
+        !call progressmessage(100*real(i)/real(N))
     end do
+    !$OMP end parallel do
+    !$OMP barrier
 
 end function spectra
 

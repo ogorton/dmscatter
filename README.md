@@ -29,6 +29,10 @@ directory, try running:
 
 More extensive documentation can be found in the manual document.
 
+### Version 1.7 update (May 5, 2021)
+* Improved speed by re-writing Gaussian-Legendre routine in modern fortran with
+  fixed (non-adaptive) number of evaluation points. The new implementation also
+  supports parallelization, which the previously referenced library did not.
 ### Version 1.6 update (Apr. 19, 2021)
 * Improved speed by caching Wigner coefficients in memory
 * Added options to compute transition probabilities and differential cross
