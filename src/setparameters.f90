@@ -12,7 +12,7 @@ subroutine setparameters(nuc_target)
 
     print*,'Setting default parameter values.'
 
-    nuc_target%Mt = nuc_target%N - nuc_target%Z
+    nuc_target%Mt = nuc_target%N - nuc_target%Z ! note non-standard definition
     nuc_target%mass = nuc_target%Z + nuc_target%N
     nuc_target%nt = 1.0d0 / ( nuc_target%mass * mN)
 

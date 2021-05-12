@@ -101,15 +101,15 @@ function nucFormFactor(tau1,tau2,term,y,densmat,Tiso,Mtiso)
     end do
 
     if (.not.pndens) then
-        isofactor =  sqrt(2*dble(tau1)+1.0) * sqrt(2*dble(tau2)+1.0) &
-            * (-1.0)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
-            * (-1.0)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso) *2
+        isofactor =  2*sqrt(2*dble(tau1)+1.0) * sqrt(2*dble(tau2)+1.0) &
+            * (-1.0)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau1,Tiso,Mtiso,0,-Mtiso) &
+            * (-1.0)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau2,Tiso,Mtiso,0,-Mtiso) 
         nucFormFactor = nucFormFactor * isofactor
     end if
 
 end function nucFormFactor
 !-----------------------------------------------------------------------------80
-function nucFormFactor_transform(tau1,tau2,term,y,densmat,Tiso,Mtiso, Jx2iso) result(FF)
+function nucFormFactor_transform(tau1,tau2,term,y,densmat,Tiso,Mtiso) result(FF)
 
     ! Provides the nuclear form factors for a given isospin coupling, computed 
     ! from pn-formalism density matrices, and vice versa. 
@@ -162,7 +162,6 @@ function nucFormFactor_transform(tau1,tau2,term,y,densmat,Tiso,Mtiso, Jx2iso) re
         case default
             stop "Invalid coupleto var."
     end select 
-    !nucFormFactor_iso = nucFormFactor_iso * ( Jx2iso + 1) / (4*pi) 
 
 end function nucFormFactor_transform
 !-----------------------------------------------------------------------------80
@@ -224,7 +223,7 @@ subroutine test_nucresponse(nuc_target)
                 nuc_target%densitymats%rho,&
                 nuc_target%groundstate%Tx2, &
                 nuc_target%Mt )
-            print*, tt1, tt2, Response/4.0
+            print*, tt1, tt2, Response
           end do
         end do
         print*,"tau,   tau',   response"
@@ -233,8 +232,7 @@ subroutine test_nucresponse(nuc_target)
             Response = 0.25d0 * nucFormFactor_transform(tt1, tt2, ioption, y, &
                 nuc_target%densitymats%rho,&
                 nuc_target%groundstate%Tx2, &
-                nuc_target%Mt, &
-                nuc_target%groundstate%Jx2 )
+                nuc_target%Mt)
             print*, tt1, tt2, Response
           end do
         end do
@@ -243,11 +241,10 @@ subroutine test_nucresponse(nuc_target)
         print*,"x,   x',   response"
         do tt1 = 0, 1
           Do tt2 = 0,1
-            Response = 1.0d0 * nucFormFactor_transform(tt1, tt2, ioption, y, &
+            Response = 0.25d0 * nucFormFactor_transform(tt1, tt2, ioption, y, &
                 nuc_target%densitymats%rho,&
                 nuc_target%groundstate%Tx2, &
-                nuc_target%Mt, &
-                nuc_target%groundstate%Jx2 )
+                nuc_target%Mt)
             print*, tt1, tt2, Response
           end do
         end do
@@ -255,11 +252,11 @@ subroutine test_nucresponse(nuc_target)
         print*,"tau,   tau',   response"
         Do tt1 = 0,1
           Do tt2 = 0,1
-            Response = nucFormFactor(tt1, tt2, ioption, y, &
+            Response = 0.25d0 * nucFormFactor(tt1, tt2, ioption, y, &
                 nuc_target%densitymats%rho,&
                 nuc_target%groundstate%Tx2, &
                 nuc_target%Mt )
-            print*, tt1, tt2, Response/4.0
+            print*, tt1, tt2, Response
           end do
         end do        
     end if

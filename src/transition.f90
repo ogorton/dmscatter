@@ -38,19 +38,9 @@ function transition_probability(q,v,wimp,nucl,eft)
             do term = 1, 8
                 tmpprod = dmresponsefun(eftsmall, term, tau1, tau2, q, v, wimp%j, muT)
                 if (tmpprod.eq.0) cycle
-                print*,tau1,tau2,term,tmpprod
-                if (pndens) then
-                    tmpprod = tmpprod * &
+                tmpprod = tmpprod * &
                         nucFormFactor(tau1, tau2, term, y, &
                             nucl%densitymats%rho, nucl%groundstate%Tx2, nucl%Mt)
-                else
-                    tmpprod = tmpprod * &
-                        nucFormFactor_transform(tau1, tau2, term, y, &
-                            nucl%densitymats%rho, &
-                            nucl%groundstate%Tx2, &
-                            nucl%Mt,&
-                            nucl%groundstate%Jx2)
-                end if
                 transition_probability = transition_probability + tmpprod
             end do ! term
         end do ! tau2
