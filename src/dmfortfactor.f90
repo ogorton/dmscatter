@@ -21,6 +21,7 @@ program dmfortfactor
     print*," "
     print*,"(*) Not available in this release."
     read*,computeoption
+    if (computeoption>6) stop "Invalid option."
 
     call setupandrun(computeoption)
 

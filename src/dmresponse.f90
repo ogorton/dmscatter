@@ -12,9 +12,9 @@ function dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT)
     REAL(doublep) :: dmresponsefun
 
     if (pndens) then
-        dmresponsefun = dmresponse_pn(eft, term, tau1, tau2, q, v, jchi, muT)
+       dmresponsefun = dmresponse_pn(eft, term, tau1, tau2, q, v, jchi, muT)
     else
-        dmresponsefun = dmresponse_iso(eft, term, tau1, tau2, q, v, jchi, muT)
+       dmresponsefun = dmresponse_iso(eft, term, tau1, tau2, q, v, jchi, muT)
     end if
     
 end function
@@ -44,41 +44,44 @@ function dmresponse_iso(eft, ifunc, tau1, tau2, q, v, jchi, muT)
     REAL(kind=8), INTENT(IN) :: v
     REAL(kind=8), INTENT(IN) :: jchi
     REAL(kind=8), INTENT(IN) :: muT    
+
+    character(len=2) :: coupleto
+
     dmresponse_iso = -1000
 
     ! Determine isospin coupling by recombining the proton and neutron
     ! couplings. Recall that for p/n coupling:
     !   0 = proton
     !   1 = neutron
-
-    if (tau1==0 .and. tau2==0) then
+    write(coupleto,'(I1,I1)') tau1, tau2
+    select case(coupleto)
+      case('00')    
         dmresponse_iso = &
-                     dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
+                   + dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 0, 1, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 1, 0, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 1, 1, q, v, jchi, muT)
-    end if
-    if (tau1==0 .and. tau2==1) then
+      case('01')
         dmresponse_iso = &
-                     dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
+                   + dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 0, 1, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 1, 0, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 1, 1, q, v, jchi, muT)
-    end if
-    if (tau1==1 .and. tau2==0) then
+      case('10')
         dmresponse_iso = &
-                     dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
+                   + dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 0, 1, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 1, 0, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 1, 1, q, v, jchi, muT)
-    end if
-    if (tau1==1 .and. tau2==1) then
+      case('11')
         dmresponse_iso = &
-                     dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
+                   + dmresponse_pn(eft, ifunc, 0, 0, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 0, 1, q, v, jchi, muT) &
                    - dmresponse_pn(eft, ifunc, 1, 0, q, v, jchi, muT) &
                    + dmresponse_pn(eft, ifunc, 1, 1, q, v, jchi, muT)
-    end if
+      case default
+        stop "Invalid coupleto var."
+    end select
     dmresponse_iso = 0.25d0*dmresponse_iso
     return
 

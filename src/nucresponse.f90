@@ -1,7 +1,11 @@
 !================================================
 module nucresponse
     contains
-function nucResponseFun(tau1,tau2,term,y,densmat,Tiso,Mtiso)
+function nucFormFactor(tau1,tau2,term,y,densmat,Tiso,Mtiso)
+
+    ! Computes the nuclear form factor terms for a given 
+    ! pn-coupling (iso-coupling) using pn-formalism (iso-formalism)
+    ! density matrices.
 
     use kinds
     use orbitals
@@ -24,7 +28,7 @@ function nucResponseFun(tau1,tau2,term,y,densmat,Tiso,Mtiso)
 
     REAL(doublep) :: spOME1,spOME2
     REAL(doublep) :: DRME1, DRME2
-    REAL(doublep)  :: nucResponsefun
+    REAL(doublep)  :: nucFormFactor, isofactor
 
     jmin = -1
     jmax = -1
@@ -66,42 +70,102 @@ function nucResponseFun(tau1,tau2,term,y,densmat,Tiso,Mtiso)
         stop "Invalid term."
     end select        
 
-    nucResponsefun = 0.d0
+    nucFormFactor = 0.d0
 
     do j = jmin,jmax,2
       DRME1 = 0.d0
       DRME2 = 0.d0
       do a = 1, ntotal(1)
         do b = 1, ntotal(1)
-          !if (abs(densmat(j,tau1,a,b)) < 1.0e-5 &
-          !      .and. abs(densmat(j,tau2,a,b)) < 1.0e-5) cycle
 
           ! Operator 1 with tau2 <j| op1,tau1 |j>
           if (abs(densmat(j,tau1,a,b)) > 1.0e-5 ) then
-              call OperME(op1,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME1)
+              call OperME(op1,y,nodal(a),lorb(a),jorb(a), &
+                                nodal(b),lorb(b),jorb(b), &
+                                j,spOME1)
               DRME1 = DRME1 + densmat(j,tau1,a,b) * spOME1 
           end if
 
           ! Operator 2 with tau2 <j| op2,tau2 |j>
           if (abs(densmat(j,tau2,a,b)) > 1.0e-5 ) then
-              call OperME(op2,y,nodal(a),lorb(a),jorb(a),nodal(b),lorb(b),jorb(b),j,spOME2)
+              call OperME(op2,y,nodal(a),lorb(a),jorb(a),& 
+                                nodal(b),lorb(b),jorb(b),&
+                                j,spOME2)
               DRME2 = DRME2 + densmat(j,tau2,a,b) * spOME2 
           end if
 
         end do
       end do
-      nucResponsefun = nucResponsefun + DRME1 * DRME2
+      nucFormFactor = nucFormFactor + DRME1 * DRME2
 
     end do
 
     if (.not.pndens) then
-        nucResponsefun = nucResponsefun * sqrt(2*dble(tau1)+1.0) * sqrt(2*dble(tau2)+1.0) &
-            * tj2i_lookup(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
-            * tj2i_lookup(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso) &
-            * 2.0
+        isofactor =  sqrt(2*dble(tau1)+1.0) * sqrt(2*dble(tau2)+1.0) &
+            * (-1.0)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau1,Tiso,-Mtiso,0,Mtiso) &
+            * (-1.0)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau2,Tiso,-Mtiso,0,Mtiso) *2
+        nucFormFactor = nucFormFactor * isofactor
     end if
 
-end function nucResponsefun
+end function nucFormFactor
+!-----------------------------------------------------------------------------80
+function nucFormFactor_transform(tau1,tau2,term,y,densmat,Tiso,Mtiso, Jx2iso) result(FF)
+
+    ! Provides the nuclear form factors for a given isospin coupling, computed 
+    ! from pn-formalism density matrices, and vice versa. 
+    ! For pn -> iso, an additional factor of (1/4) is required.
+    ! For iso -> pn, no additional factor is required.
+
+    use kinds
+    use orbitals
+    use parameters
+    use wignerfunctions
+    use constants, only: pi
+
+    implicit none
+
+    integer :: tau1, tau2
+    integer :: term
+    real(doublep) :: y
+    real(doublep), allocatable, intent(in) :: densmat(:,:,:,:)
+
+    integer :: Mtiso, Tiso, Jx2iso
+    real(doublep) :: FF
+    character(len=2) :: coupleto
+
+    write(coupleto,'(I1,I1)')tau1, tau2
+    select case(coupleto)
+        case('00')
+            FF = ( &
+                + nucFormFactor(0,0,term,y,densmat,Tiso,Mtiso) &
+                + nucFormFactor(0,1,term,y,densmat,Tiso,Mtiso) &
+                + nucFormFactor(1,0,term,y,densmat,Tiso,Mtiso) &
+                + nucFormFactor(1,1,term,y,densmat,Tiso,Mtiso) )
+        case('01')
+            FF = ( &
+                + nucFormFactor(0,0,term,y,densmat,Tiso,Mtiso) &
+                - nucFormFactor(0,1,term,y,densmat,Tiso,Mtiso) &
+                + nucFormFactor(1,0,term,y,densmat,Tiso,Mtiso) &
+                - nucFormFactor(1,1,term,y,densmat,Tiso,Mtiso) )
+        case('10')
+            FF = ( &
+                + nucFormFactor(0,0,term,y,densmat,Tiso,Mtiso) &
+                + nucFormFactor(0,1,term,y,densmat,Tiso,Mtiso) &
+                - nucFormFactor(1,0,term,y,densmat,Tiso,Mtiso) &
+                - nucFormFactor(1,1,term,y,densmat,Tiso,Mtiso) )
+        case('11')
+            FF = ( &
+                + nucFormFactor(0,0,term,y,densmat,Tiso,Mtiso) &
+                - nucFormFactor(0,1,term,y,densmat,Tiso,Mtiso) &
+                - nucFormFactor(1,0,term,y,densmat,Tiso,Mtiso) &
+                + nucFormFactor(1,1,term,y,densmat,Tiso,Mtiso) )            
+        case default
+            stop "Invalid coupleto var."
+    end select 
+    !nucFormFactor_iso = nucFormFactor_iso * ( Jx2iso + 1) / (4*pi) 
+
+end function nucFormFactor_transform
+!-----------------------------------------------------------------------------80
 subroutine test_nucresponse(nuc_target)
 
     use parameters
@@ -118,7 +182,7 @@ subroutine test_nucresponse(nuc_target)
     print*,' '
     do while(.not.success)
 
-       print*," Enter options of operator (1-8) "
+       print*," Enter your choice of response form factor (1-8) "
        ! J=0,2,...
        print*," (1) W_M "
        print*," (2) W_{\PhiPP}"
@@ -150,15 +214,55 @@ subroutine test_nucresponse(nuc_target)
 
     Response = 0.d0
 
-    Write (*,*) "Non-zero Response for option",ioption
-    Do tt1 = 0,1
-        Do tt2 = 0,1
-            Response = nucResponseFun(tt1,tt2,ioption,y,&
-                nuc_target%densitymats%rho, nuc_target%groundstate%Tx2, &
-                nuc_target%Mt)
-            print*, tt1, tt2, Response
+    Write (*,*) "Response for option",ioption
+    if (pndens) then
+        print*,"From pn-density:"
+        print*,"x,   x',   response"
+        Do tt1 = 0,1
+          Do tt2 = 0,1
+            Response = nucFormFactor(tt1, tt2, ioption, y, &
+                nuc_target%densitymats%rho,&
+                nuc_target%groundstate%Tx2, &
+                nuc_target%Mt )
+            print*, tt1, tt2, Response/4.0
+          end do
         end do
-    end do
+        print*,"tau,   tau',   response"
+        do tt1 = 0, 1
+          Do tt2 = 0,1
+            Response = 0.25d0 * nucFormFactor_transform(tt1, tt2, ioption, y, &
+                nuc_target%densitymats%rho,&
+                nuc_target%groundstate%Tx2, &
+                nuc_target%Mt, &
+                nuc_target%groundstate%Jx2 )
+            print*, tt1, tt2, Response
+          end do
+        end do
+    else
+        print*,"From iso-density:"
+        print*,"x,   x',   response"
+        do tt1 = 0, 1
+          Do tt2 = 0,1
+            Response = 1.0d0 * nucFormFactor_transform(tt1, tt2, ioption, y, &
+                nuc_target%densitymats%rho,&
+                nuc_target%groundstate%Tx2, &
+                nuc_target%Mt, &
+                nuc_target%groundstate%Jx2 )
+            print*, tt1, tt2, Response
+          end do
+        end do
+
+        print*,"tau,   tau',   response"
+        Do tt1 = 0,1
+          Do tt2 = 0,1
+            Response = nucFormFactor(tt1, tt2, ioption, y, &
+                nuc_target%densitymats%rho,&
+                nuc_target%groundstate%Tx2, &
+                nuc_target%Mt )
+            print*, tt1, tt2, Response/4.0
+          end do
+        end do        
+    end if
 
     print*,'test_nucresponse COMPLETE'
 

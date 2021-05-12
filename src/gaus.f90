@@ -33,6 +33,7 @@ subroutine gaus8_threadsafe ( func, a, b, err, result, ierr, tid )
 !*****************************************************************************80
 !
 !! GAUS8 estimates the integral of a function.
+!   Modified by O. Gorton c. May 2021 for use with openMP.
 !
 !  Discussion:
 !

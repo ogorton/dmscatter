@@ -6,7 +6,7 @@ function transition_probability(q,v,wimp,nucl,eft)
     use parameters
     use orbitals, only: bfm
     use dmresponse, only: dmresponsefun
-    use nucresponse, only: nucresponsefun
+    use nucresponse
     implicit none
     REAL(doublep) :: q
     REAL(doublep) :: v
@@ -29,14 +29,28 @@ function transition_probability(q,v,wimp,nucl,eft)
     muT = wimp%mass * mN * nucl%mass / (wimp%mass + mN * nucl%mass)
 
     transition_probability = 0.0
-    if (v <  q/(2d0*muT)) return
+    !if (v <  q/(2d0*muT)) then
+    !    transition_probability = 0.0
+    !else
 
     do tau1 = 0, 1
         do tau2 = 0, 1
             do term = 1, 8
                 tmpprod = dmresponsefun(eftsmall, term, tau1, tau2, q, v, wimp%j, muT)
-                if (tmpprod.ne.0) tmpprod = tmpprod * &
-                    nucResponsefun(tau1, tau2, term, y, nucl%densitymats%rho, nucl%groundstate%Tx2, nucl%Mt)
+                if (tmpprod.eq.0) cycle
+                print*,tau1,tau2,term,tmpprod
+                if (pndens) then
+                    tmpprod = tmpprod * &
+                        nucFormFactor(tau1, tau2, term, y, &
+                            nucl%densitymats%rho, nucl%groundstate%Tx2, nucl%Mt)
+                else
+                    tmpprod = tmpprod * &
+                        nucFormFactor_transform(tau1, tau2, term, y, &
+                            nucl%densitymats%rho, &
+                            nucl%groundstate%Tx2, &
+                            nucl%Mt,&
+                            nucl%groundstate%Jx2)
+                end if
                 transition_probability = transition_probability + tmpprod
             end do ! term
         end do ! tau2
@@ -44,6 +58,6 @@ function transition_probability(q,v,wimp,nucl,eft)
 
     transition_probability = transition_probability &
         * (4.0*pi/(nucl%groundstate%jx2+1)) / ((4.0*mN*wimp%mass)**2.0)
-    
+!endif
 end function transition_probability
 end module

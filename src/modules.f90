@@ -11,7 +11,6 @@ module parameters
 
     implicit none
 
-    
     ! Nonrelativistic operator coefficients
     integer :: num_response_coef = 17
     type coeff
@@ -46,9 +45,7 @@ module parameters
    type onebdenmat
        logical good
        real(doublep), allocatable :: rho(:,:,:,:)
-       real(doublep), allocatable :: rhop(:,:,:),rhon(:,:,:)  ! added in version 9
    end type onebdenmat
-   !type (onebdenmat) :: densitymats
 
    type state
        integer Jx2 ! spin times 2

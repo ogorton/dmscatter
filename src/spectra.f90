@@ -32,13 +32,13 @@ function velocitycurve(vlist, q, wimp, nuc_target, eft, option)
         do i = 1, size(vlist)
             v = vlist(i)
             velocitycurve(i) = transition_probability(q, v, wimp, nuc_target, eft)
-            call progressmessage(100*real(i)/real(size(vlist)))
+!            call progressmessage(100*real(i)/real(size(vlist)))
         end do
     case(3)
         do i = 1, size(vlist)
             v = vlist(i)
             velocitycurve(i) = diffCrossSection(v, q, wimp, nuc_target, eft)
-            call progressmessage(100*real(i)/real(size(vlist)))
+!            call progressmessage(100*real(i)/real(size(vlist)))
         end do        
     case default
         stop "Not a velocity curve option."
@@ -66,6 +66,8 @@ subroutine velocity_curve(wimp, nuc_target, eft, option)
     print '("Er = ",F8.4," (keV)")',Er
     Qr = sqrt(2d0*nuc_target%mass*mN*er*kev)
     print '("Qr = ",F8.4,"(GeV/c)")',qr
+    print '("Vmin = ",F8.4,"(km/s)")',1/kilometerpersecond&
+        *qr/(2.0* wimp%mass * nuc_target%mass * mN / (wimp%mass + nuc_target%mass * mN))
 
     print*,"Enter start v (km/s):"
     read*,vstart

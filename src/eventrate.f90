@@ -56,8 +56,11 @@ function deventrate(q, wimp, nuc_target, eft)
     relerror = 1e-6
     abserror = 1e-6
 
-    !call gaus8_threadsafe ( dspectra, vmin, vesc, abserror, deventrate, ind, tid )
-    deventrate = gaussquad(dspectra, gaussorder, vmin, vesc, tid)
+    if (quadrature_type==1) then
+        call gaus8_threadsafe ( dspectra, vmin, vesc, relerror, deventrate, ind, tid )
+    else
+        deventrate = gaussquad(dspectra, gaussorder, vmin, vesc, tid)
+    end if
 
     Nt = nuc_target%Nt
     rhochi = wimp%localdensity / centimeter**3d0

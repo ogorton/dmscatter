@@ -2,6 +2,22 @@ module gausquad
 
     contains
 function gaussquad(func,n,a,b,tid) result(z)
+  !
+  ! This function computes the indefinite integral of the function func
+  ! from a to b using an n-point Gauss-Legendre quadrature algorithm.
+  !
+  ! This function is thread-safe. 
+  !
+  ! The function func must be an external function which takes two arguments:
+  !          func(x, tid)
+  ! where x is a ready kind-8 and tid is an integer. Typically tid is used
+  ! for accessing data unique to a thread, available in shared memory.
+  !
+  ! This function is modified from its original form found on Rosettacode.org:
+  !     https://rosettacode.org
+  !     https://rosettacode.org/wiki/Numerical_integration/Gauss-Legendre_Quadrature
+  ! which is freely available under GNU free documentation license 1.2.
+  !
   implicit none
 
   real (kind=8), external :: func

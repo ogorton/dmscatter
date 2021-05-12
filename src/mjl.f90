@@ -21,9 +21,9 @@ function MJ(y,np,lp,jp,n,l,j,bigJ)
     MJ = (-1)**(0.5d0+xj+dble(bigJ))&
         *SQRT(Jnorm(xj)*Jnorm(xjp) &
         *Jnorm(dble(l))*Jnorm(dble(lp))*Jnorm(dble(bigJ))/(4*Pi)) &
-        & * tj2i_lookup(2*lp,2*bigJ,2*l,0,0,0) &
+          * tj2i_lookup(2*lp,2*bigJ,2*l,0,0,0) &
           * sj2i_lookup(2*lp,jp,1,j,2*l,2*bigJ)   &
-        & * BesselElement(y,np,lp,n,l,bigJ)
+          * BesselElement(y,np,lp,n,l,bigJ)
 
 end function MJ
 
@@ -41,8 +41,8 @@ function MJLDivQoverall(lp,jp,l,j,bigJ,bigL)
     xj  = dble(j )/2.0
 
     ! Error trap
-
-    MJLDivQoverall = (-1.0)**(bigL+j)* Qnorm(dble(lp))*Qnorm(xjp) &
+    ! (-1.0)**(bigL+j/2+1/2)
+    MJLDivQoverall = (-1.0)**(bigL+j/2+1/2)* Qnorm(dble(lp))*Qnorm(xjp) &
         *Qnorm(xj)*Qnorm(dble(bigJ))*Qnorm(dble(bigL)) &
         *sj2i_lookup(2*lp,jp,1,j,2*l,2*bigJ)/SQRT(4*Pi)
 

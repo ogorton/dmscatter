@@ -256,7 +256,7 @@ subroutine read2Jtrans(resfile,found)
    else
            print*,"Density matrix is in isospin format."
            print*,"This format is not currently supported."
-           STOP "Incompatible density matrix format."
+!           STOP "Incompatible density matrix format."
            pndens=.false.
    end if
 

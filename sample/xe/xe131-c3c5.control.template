@@ -4,8 +4,8 @@
 # i = 1,...,16
 # t: p=proton n=neutron s=scaler v=vector
 #control name	 i	coupling	c_i^t
-coefnonrel    3    n            1.0
-coefnonrel    5    n            6.123233995736766e-17
+coefnonrel    3    n            c3
+coefnonrel    5    n            c5
 wimpmass 500.0
 vearth 232.0
 maxwellv0 220.0

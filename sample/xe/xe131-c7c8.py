@@ -5,8 +5,8 @@ import dmfortfactor as dm
 with open("operators.txt") as f: operatorsymbols = f.readlines()
 
 exec_name = "dmfortfactor.x"
-input_template = "xe131-c7c8.input.template"
-control_template = "xe131-c7c8.control.template"
+input_template = "xe131-c3c5.input.template"
+control_template = "xe131-c3c5.control.template"
 
 
 angle = np.arange(0,np.pi/2.0,np.pi/2.0/9)
@@ -22,10 +22,10 @@ ax = fig.add_subplot(111, projection="3d")
 for i, a in enumerate(angle):
 
     r = 0.00048
-    c7 = np.sin(a)
-    c8 = np.cos(a)
+    c3 = np.sin(a)
+    c5 = np.cos(a)
 
-    control_dict = {"c7" : c7, "c8" : c8}
+    control_dict = {"c3" : c3, "c5" : c5}
     input_dict = {}
 
     Er, dRdE = dm.runTemplates(exec_name, input_template, control_template, input_dict,
@@ -45,4 +45,4 @@ ax.set_ylabel(r"$log(E_r)$ (keV)")
 ax.set_zlabel(r"$log(dR_D/dE_r)$ (1/GeV)")
 
 plt.show()
-plt.savefig("xe131c7c8.pdf")
+plt.savefig("xe131c3c5.pdf")
