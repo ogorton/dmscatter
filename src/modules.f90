@@ -116,6 +116,7 @@ module quadrature
     implicit none
 
     integer :: quadrature_type = 1
+    real(doublep) :: quadrature_relerr = 1e-6
     integer :: lattice_points = 1000
     integer :: gaussorder = 12
 

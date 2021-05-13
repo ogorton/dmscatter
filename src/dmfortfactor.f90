@@ -12,7 +12,7 @@ program dmfortfactor
     print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     print*,''
     print*,'Select an option:'
-    print*,'[1] Event rate per unit recoil energy (spectra)'a
+    print*,'[1] Event rate per unit recoil energy (spectra)'
     print*,'[2] Differential cross section per recoil energy'
     print*,'[3] Scattering probability'
     print*,'[4] (*) Total cross section'

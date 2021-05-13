@@ -127,9 +127,9 @@ subroutine setkeyword(keyword, keyvalue, wimp)
         quadrature_type = keyvalue
         print*,trim(keyword),': not implemented.'
 
-    case('intpoints')
-        lattice_points = int( keyvalue )
-        print*,trim(keyword),": Set number of integral lattice points to",lattice_points
+    case('quadrelerr')
+        quadrature_relerr = dble( keyvalue )
+        print*,trim(keyword),": Set adaptive quadrature routine to seek relative error:",keyvalue
 
     case('gev')
         gev = keyvalue

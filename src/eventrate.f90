@@ -31,12 +31,13 @@ function deventrate(q, wimp, nuc_target, eft)
     integer :: i, j, itmp, ind, norder
     real(doublep) :: ve, v0, vesc, vmin, error
 
-    real(doublep) :: abserror, relerror
+    real(doublep) :: relerror
 
     logical :: adaptive = .true.
     integer :: tid
 
     tid = 1
+! Don't delete the following line; it's an openMP command, not a comment.
 !$  tid = omp_get_thread_num() + 1
     qglobal(tid) = q 
 
@@ -52,15 +53,17 @@ function deventrate(q, wimp, nuc_target, eft)
         return
     end if
 
-    abserror=dspectra(vesc,tid) ! This line prevents a segfault... idk why
-    relerror = 1e-6
-    abserror = 1e-6
+    !relerror=dspectra(vesc,tid) ! This line prevents a segfault... idk why
+    relerror = quadrature_relerr
 
-    if (quadrature_type==1) then
+    select case(quadrature_type)
+      case(1)
         call gaus8_threadsafe ( dspectra, vmin, vesc, relerror, deventrate, ind, tid )
-    else
+      case(2)
         deventrate = gaussquad(dspectra, gaussorder, vmin, vesc, tid)
-    end if
+      case default
+        stop "Invalid quadrature option."
+    end select
 
     Nt = nuc_target%Nt
     rhochi = wimp%localdensity / centimeter**3d0
