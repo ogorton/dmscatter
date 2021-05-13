@@ -28,13 +28,13 @@ function velocitycurve(vlist, q, wimp, nuc_target, eft, option)
     integer :: i
 
     select case(option)
-    case(2)
+    case(3)
         do i = 1, size(vlist)
             v = vlist(i)
             velocitycurve(i) = transition_probability(q, v, wimp, nuc_target, eft)
 !            call progressmessage(100*real(i)/real(size(vlist)))
         end do
-    case(3)
+    case(2)
         do i = 1, size(vlist)
             v = vlist(i)
             velocitycurve(i) = diffCrossSection(v, q, wimp, nuc_target, eft)

@@ -124,6 +124,7 @@ subroutine setkeyword(keyword, keyvalue, wimp)
         print*,trim(keyword),": Set local dark matter density to",keyvalue
 
     case('quadtype')
+        quadrature_type = keyvalue
         print*,trim(keyword),': not implemented.'
 
     case('intpoints')

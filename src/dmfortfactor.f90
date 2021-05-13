@@ -12,9 +12,9 @@ program dmfortfactor
     print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     print*,''
     print*,'Select an option:'
-    print*,'[1] Event rate per unit recoil energy (spectra)'
-    print*,'[2] Scattering probability'
-    print*,'[3] Differential cross section per recoil energy'
+    print*,'[1] Event rate per unit recoil energy (spectra)'a
+    print*,'[2] Differential cross section per recoil energy'
+    print*,'[3] Scattering probability'
     print*,'[4] (*) Total cross section'
     print*,'[5] Total scattering events per detector (does not produce spectra data)'
     print*,'[6] Nuclear response function test'
