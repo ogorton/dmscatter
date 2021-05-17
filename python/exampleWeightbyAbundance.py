@@ -1,6 +1,6 @@
 import os
 import matplotlib.pyplot as plt
-import runCustomInput
+import dmfortfactor as dm
 
 exec_name = "dmfortfactor.x"
 input_template = "input.xeAAA" # Filename ends in .template, this is the prefix.
@@ -17,7 +17,7 @@ for i,isotope in enumerate(isotopes):
     label = "xe"+str(isotope)
     param_dict = { "NEUTRONS" : N, "AAA" : isotope }
 
-    RecoilE, EventRate = runCustomInput.runCustomInput(exec_name, 
+    RecoilE, EventRate = dm.runCustomInput(exec_name, 
             input_template, param_dict, workdir, label)
 
     weightedsum += EventRate * weights[i]

@@ -1,6 +1,6 @@
 import os
 import matplotlib.pyplot as plt
-import runCustomControl
+import dmfortfactor as dm
 
 exec_name = "dmfortfactor.x"
 
@@ -17,7 +17,7 @@ plt.figure()
 for wimp_mass in (50.,150.0, 500.,5000.):
 
     param_dict = { "MASS_KEYWORD" : wimp_mass }
-    RecoilE, EventRate = runCustomControl.runCustomControl(exec_name, 
+    RecoilE, EventRate = dm.runCustomControl(exec_name, 
             inputfile, control_template, param_dict, workdir, label)
 
     plt.plot(RecoilE, EventRate, label="$m_\chi=$%2.2f"%wimp_mass)

@@ -2,9 +2,6 @@ import os
 import subprocess
 import numpy as np
 
-def run(func, Z, N, controlfilename, dresfile, estart, estop, estep):
-    return
-
 def runTemplates(exec_name, input_template, control_template, input_dict,
     control_dict, workdir='./', label='runCustom',
     resultfile='eventrate_spectra.dat'):
