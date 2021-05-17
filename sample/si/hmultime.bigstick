@@ -1,4 +1,0 @@
-  proc     Hmult          reduce    f fragment 
-    0       5.126000       0.000000   1     93710
-  proc     Hmult           Hmult+reduce   Wait 
-    0       5.126000       5.126000       0.000000       5.126000

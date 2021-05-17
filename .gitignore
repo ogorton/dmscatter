@@ -6,7 +6,6 @@ src/*.mod
 src/*.x
 src/*.bak
 src/*.swp
-sample/fort*
 .DS_Store
 manual/*.aux
 manual/*.fls
@@ -25,11 +24,12 @@ sample/*/*.aux
 sample/*/*.fdb_latexmk
 sample/*/*.bak
 sample/*/*.pyc
+sample/*/*.bigstick
 literature/
-*/*.lcoef
-*/*.wfn
-*/*.log
-*/*.bigstick
-*/*.out
+*/*/*.lcoef
+*/*/*.wfn
+*/*/*.log
+*/*/*.bigstick
+*/*/*.out
 *.
 *__pycache__*
