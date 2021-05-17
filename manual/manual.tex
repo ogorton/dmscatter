@@ -56,16 +56,19 @@ Model-Independent WIMP Scattering Responses and Event Rates
 
 \tableofcontents
 
-This is the manual for the FORTRAN version of the model- independent WIMP 
-scattering response and event rate code, which was originally written in 
-Mathematica and described in 
-\href{http://arxiv.org/abs/1308.6288v1}{arXiv:1308.6288}.
 
 \clearpage
 
-\section{Quickstart guide: Fortran interface}
-This program primarily computes two quantities. The first is the WIMP-nucleus
-differential event rate spectra:
+\section{Preamble}
+
+This is the manual for the FORTRAN version of the model- independent WIMP 
+scattering response and event rate code, which was originally written in 
+Mathematica and described in 
+\href{http://arxiv.org/abs/1308.6288v1}{arXiv:1308.6288}.  We call our program
+{\tt DMFortFactor}, a Fortran interpretation of DMFormFactor.
+
+This program is concerned principally with computing the WIMP-nucleus differential 
+event rate as a function of the nuclear recoil energy $E_R$:
 \begin{dmath}
 \frac{dR_D}{dE_R} = \frac{dR_D}{d\vec{q}^2}(q)
 	\\= N_T\frac{\rho_\chi}{m_\chi}\int_{v_{min}}^{v_{escape}} 
@@ -80,13 +83,52 @@ nucleus in $GeV$. Recoil energies $E_R$ are given in keV.
 The cross section is determined using a user-defined WIMP-nucleus interaction
 within a non-relativistic effective field theory (EFT) framework. The
 interaction is specified by 16 coupling coefficients defining an interaction:
-
 \begin{equation}
-	\sum_{x=p,n}\sum_{i=1}^{16} c_i^x \mathcal{O}_i
+	\sum_{x=p,n}\sum_{i=1}^{16} c_i^x \mathcal{O}_i.
 \end{equation}
 
-The second is the integral of the first over either energy or momentum-transfer,
-for a range specified by the user. 
+\section{Quickstart guide}
+{\tt DMFortFactor} can be used interactively from the command line,  where the user
+is guided by prompts for a small number of datafiles and parameters.  Naturally, this interactive
+process can be expedited by piping a pre-written input file into the command line interface (CLI).
+
+We also provide a generic application programming interface (API) for the Python language. 
+This API essentially offers a prescribed and easy-to-use way to run {\tt DMFortFactor} 
+in a programmatic way.  Any sufficiently advanced linux user could probably write a script to produce any
+possible set of inputs to our code.  But our API removes the need by making it easy for anyone 
+who can use a Python function to write their own advanced scripts allowing them to 
+perform parameter studies and comparisons of different inputs to the theory.
+
+\subsection{SuperQuickstart guide}
+\begin{enumerate}
+	\item Navigate to the {\tt src/} directory from wherever you have stored {\tt darkmatter/} (e.g. {\tt cd src/}, or {\tt cd $\sim$/Downloads/darkmatter/src/})
+	\item Run the command: {\tt make new}
+	\item Navigate to the directory {\tt sample/xe/} (e.g. {\tt cd ../sample/xe/})
+	\item Run the command: {\tt ../../src/dmfortfactor.x < xe131.input}
+\end{enumerate}
+If successful,  one of the last lines printed to screen should be ``Event rate spectra written to eventrate_spectra.dat''.
+
+\subsection{Compiling with make}
+There are multiple directories in the project. All of the Fortran code which needs to be compiled is found in
+the {\tt src/} directory.  We provide a {\tt Makefile} to compile the code using a few different options. 
+
+The easiest way to get started is simply to navigate to {\tt src/}  and run
+\begin{lstlisting}
+make dmfortfactor
+\end{lstlisting}
+This will compile {\tt DMFortFactor} using {\tt gfortran}.  If you want to use a different compiler, you must 
+edit the Makefile to change the {\tt COMP} variable from gfortran to your compiler of choice.
+
+Aditionally, if you want to utilize multiple CPU cores to speed up the runtime, you can compile with {\tt openMP}:
+\begin{lstlisting}
+make openmp
+\end{lstlisting}
+Both of these options will compile the source code and leave the executable, called {\tt dmfortfactor.x} in the {\tt src/} directory.
+Note that if you change from a serial executable to a parallel executable (or vice versa) you should run:
+\begin{lstlisting}
+make clean
+\end{lstlisting}
+in between builds.
 
 \subsection{Required files}
 There are two files required for any calculation:
@@ -97,7 +139,39 @@ There are two files required for any calculation:
 Additionally, if the user enables the option ``usenergyfile'', then a file
 containing the input energies or momentum will also be required.
 
-\subsection{Event rate spectra (events per GeV)}
+\subsection{Control file}
+Each EFT parameter is written on its own line in [mycontrolfile].control, with
+four values: the keyword "coefnonrel", the operator number (integer 1..16), the
+coupling type ("p"=proton, "n"=neutron, "s"=scalar, "v"=vecctor), and the
+coefficient value. For example, 
+\begin{verbatim}
+coefnonrel    1    s     3.1
+\end{verbatim}
+would set $c_1^0 = 3.1$. We take the isospin convention:
+\begin{equation}
+	\begin{split}
+		c^0 = c^p + c^n\\
+		c^1 = c^p - c^n
+	\end{split}
+\end{equation}
+Thus, the previous example is equivalent to:
+\begin{verbatim}
+coefnonrel    1    p     1.55
+coefnonrel    1    n     1.55
+\end{verbatim}
+
+The control file also serves a more general but optional function: to set any 
+parameter in the program to a custom value.  
+Simply add an entry to the control file with two values: the first 
+should be the keyword for the parameter and the 
+second should be the value to set that parameter to. For example, to set the 
+velocity of the earth in the galactic frame to $240\ km/s$, you should add the line:
+\begin{verbatim}
+vearth  240.0
+\end{verbatim}
+A complete list of keywords is given in section \ref{cfk}.
+
+\subsection{Event rate spectra (events per GeV) using the CLI}
 The program will prompt the user for 
 the minimum necessary inputs to run a calculation with default parameter 
 values, including the name of a control file which contains the EFT
@@ -143,69 +217,17 @@ calculation, the total event rate for the energy range requested will be
 estimatted by numerical integration. Note that the accuracy of this result will
 depend on the choice of the step size.
 
-\subsection{Control file}
+\subsection{Python interface}
 
-Each EFT parameter is written on its own line in [mycontrolfile].control, with
-four values: the keyword "coefnonrel", the operator number (integer 1..16), the
-coupling type ("p"=proton, "n"=neutron, "s"=scalar, "v"=vecctor), and the
-coefficient value. For example, 
-\begin{verbatim}
-coefnonrel    1    s     3.1
-\end{verbatim}
-would set $c_1^0 = 3.1$. We take the isospin convention:
-\begin{equation}
-	\begin{split}
-		c^0 = c^p + c^n\\
-		c^1 = c^p - c^n
-	\end{split}
-\end{equation}
-Thus, the previous example is equivalent to:
-\begin{verbatim}
-coefnonrel    1    p     1.55
-coefnonrel    1    n     1.55
-\end{verbatim}
-
-The control file also serves a more general but optional function: to set any 
-parameter in the program to a custom value.  
-Simply add an entry to the control file with two values: the first 
-should be the keyword for the parameter and the 
-second should be the value to set that parameter to. For example, to set the 
-velocity of the earth in the galactic frame to $240\ km/s$, you should add the line:
-\begin{verbatim}
-vearth  240.0
-\end{verbatim}
-
-\subsection{Total integrated events}
-Inputs 2 - 6 for this calculation will be almost identical to those required for
-the event rate spectra calculation. The main difference is in the sixth and
-final input:
-\begin{verbatim}
- Using adaptive numerical integration to determine total 
- integrated event rate. What are the limits of integration 
- for recoil energies in kev? Enter starting energy, 
- stoping energy, relative error:
-0.0 250.0 0.001
-\end{verbatim}
-Here, we have again been asked for a starting and stopping recoil energy, but
-this time the third value is the desired relative error of the integrated
-spectra. In this example, 0.001 corresponds to a desired uncertainty of 0.1\%. 
-
-An important difference between this calculation and the event rate spectra
-calculation is that in this evaluation, the spectra is not written to file. This
-is because an adaptive integration routine is used to keep the number of
-function evaluations to a minimum. As a result, this calculation will be much
-faster than computing the entire spectra.
-
-\clearpage
-
-\section{Quickstart Guide: Python interface}
-
-We provide two generic API's for interacting with the Fortran program through a
-python interface. They are: \textbf{runCustomControl} and
-\textbf{runCustomInput}. The former runs the Fortran code with a control file
+We provide three generic API's for interacting with the Fortran program through a
+python interface. They are: {\tt runCustomControl}, {\tt runCustomInput}, and 
+{\tt runTemplates}. 
+The first runs the Fortran code with a control file
 which has been programatically modified by the API then returns the results to
-the calling environment. The latter does the same, except with a custom input
-file, rather than a custom control file.
+the calling environment. The second does the same, except with a custom input
+file, rather than a custom control file. The third combines the functionality of
+both. Here we demonstrate an application of {\tt runTempaltes} to generate a
+plot of event rate specra for a range of WIMP masses.
 
 \subsection{Example: using runCustomInput to generate a weighted sum of
 event rate spectra}
@@ -421,6 +443,31 @@ following plot:
 \includegraphics[width=.8 \textwidth]{xe131.WIMPmassCompare.pdf}
 
 \clearpage
+
+\section{Other compute options}
+
+
+\subsection{Total integrated events}
+Inputs 2 - 6 for this calculation will be almost identical to those required for
+the event rate spectra calculation. The main difference is in the sixth and
+final input:
+\begin{verbatim}
+ Using adaptive numerical integration to determine total 
+ integrated event rate. What are the limits of integration 
+ for recoil energies in kev? Enter starting energy, 
+ stoping energy, relative error:
+0.0 250.0 0.001
+\end{verbatim}
+Here, we have again been asked for a starting and stopping recoil energy, but
+this time the third value is the desired relative error of the integrated
+spectra. In this example, 0.001 corresponds to a desired uncertainty of 0.1\%. 
+
+An important difference between this calculation and the event rate spectra
+calculation is that in this evaluation, the spectra is not written to file. This
+is because an adaptive integration routine is used to keep the number of
+function evaluations to a minimum. As a result, this calculation will be much
+faster than computing the entire spectra.
+
 
 \section{Equations found in the code}
 \subsection{Differential event rate}
@@ -649,7 +696,7 @@ of which there are six, are nuclear operators constructed from Bessel
 spherical harmonics and vector spherical harmonics, and are evaluated here on 
 the ground state of the target nucleus.
 
-\section{Control file keywords}
+\section{Control file keywords}\label{cfk}
 
 \begin{longtable}{| l | c | p{2.5in} | c | l | }
   \hline Keyword & Symbol & Meaning & Units & Default \\

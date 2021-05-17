@@ -98,14 +98,14 @@ subroutine velocity_curve(wimp, nuc_target, eft, option)
     cslist = velocitycurve(vlist, qr, wimp, nuc_target, eft, option)
 
     select case(option)
-    case(2)
+    case(3)
         outputfile = foli("transition_probability.dat")
         call sopennew(outputfile)
         do i = 1, sizevlist
             write(outputfile%iunit,*) vlist(i)/kilometerpersecond, cslist(i)
         end do
         call sclose(outputfile)
-    case(3)
+    case(2)
         outputfile = foli("crosssection.dat")
         call sopennew(outputfile)
         do i = 1, sizevlist

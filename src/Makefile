@@ -2,6 +2,7 @@
 
 COMP = gfortran
 exec=dmfortfactor.x
+bindir = "~/bin/"
 
 F77_CFLAGS = -c -O2
 F90_CFLAGS = -c -O2
@@ -58,7 +59,14 @@ dmfortfactor.o : spectra.o wignerfunctions.o modules.o nucresponse.o
 ################
 default: modules.o $(obj)
 	$(COMP) -o $(exec) $(F90_LFLAGS) $^
-	mv $(exec) ~/bin/
+
+install:
+	$(MAKE)
+	mv $(exec) $(bindir)
+
+make new:
+	make clean
+	$(MAKE)
 
 dmfortfactor:
 	$(MAKE)
