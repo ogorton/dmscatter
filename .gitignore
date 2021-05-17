@@ -31,5 +31,5 @@ literature/
 */*/*.log
 */*/*.bigstick
 */*/*.out
-*.
+*/*/*.
 *__pycache__*
