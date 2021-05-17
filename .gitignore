@@ -1,4 +1,6 @@
 tmp/
+slides/
+literature/
 paper/
 dev/
 src/*.o
@@ -25,7 +27,6 @@ sample/*/*.fdb_latexmk
 sample/*/*.bak
 sample/*/*.pyc
 sample/*/*.bigstick
-literature/
 */*/*.lcoef
 */*/*.wfn
 */*/*.log
