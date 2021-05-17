@@ -65,7 +65,7 @@ install:
 	mv $(exec) $(bindir)
 
 make new:
-	make clean
+	make clean 
 	$(MAKE)
 
 dmfortfactor:
@@ -81,4 +81,5 @@ debug:
 	$(MAKE) F90_CFLAGS=$(debug_cflags) F77_CFLAGS=$(debug_cflags)
 
 clean:
+	touch make.o make.x make.mod
 	rm *.o *.x *.mod
