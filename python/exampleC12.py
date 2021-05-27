@@ -26,10 +26,12 @@ for opi,operator in enumerate(operators):
     for i, dresfile in enumerate(dresfiles):
 
         rlabel = 'run_%s_%s'%(operator,hofrequencies[i])
-        control_dict = {"OPERATOR" : operator,
-            "HOFREQUENCY" : hofrequencies[i]}
-        input_dict = {"DRESFILE" : dresfile[:-5],
-                "LABEL": rlabel} # remove .dres extension
+        control_dict = {
+            "OPERATOR" : operator,
+            "HOFREQUENCY" : hofrequencies[i]} # ho freq to match interaction
+        input_dict = {
+            "DRESFILE" : dresfile[:-5],
+            "LABEL": rlabel} # remove .dres extension
         
         E, R = dm.runTemplates(exec_name, input_template, control_template, input_dict,
             control_dict, workdir='./',

@@ -7,6 +7,7 @@ subroutine setupcoef(eft)
     ! Explicit proton-neutron coefficients
     allocate(eft%xpnc(0)%c(num_response_coef))
     allocate(eft%xpnc(1)%c(num_response_coef))
+
     ! Isospin formalism coefficients
     allocate(eft%isoc(0)%c(num_response_coef))
     allocate(eft%isoc(1)%c(num_response_coef))
@@ -27,6 +28,10 @@ subroutine setpncoeffsnonrel(eft, coupling, op, coeffdimless)
     character(1), intent(in) :: coupling
 
     print*,coupling,op,coeffdimless
+    if (op<1 .or. op>15) then
+        print*,"Warning, EFT operator must be 1 <= i <= 15."
+        stop "Invalid EFT coefficient."
+    end if
 
     select case(coupling)
         case('p')

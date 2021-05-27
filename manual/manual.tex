@@ -1,6 +1,6 @@
 \documentclass[11pt]{article}
 \usepackage{geometry}
-\geometry{margin=1.5in}
+\geometry{margin=1.in}
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{epstopdf}
@@ -219,9 +219,14 @@ depend on the choice of the step size.
 
 \subsection{Python interface}
 
-We provide three generic API's for interacting with the Fortran program through a
-python interface. They are: {\tt runCustomControl}, {\tt runCustomInput}, and 
+We provide three generic API's for interacting with the Fortran program. They are: {\tt runCustomControl}, {\tt runCustomInput}, and 
 {\tt runTemplates}. 
+These can all by imported into your own Python script by having the file {\tt dmfortfactoy.py} in your working directory and
+adding the following line to your import statements:
+\begin{lstlisting}[language=Python]
+import dmfortfactor as dm
+\end{lstlisting}
+This library contains three functions.
 The first runs the Fortran code with a control file
 which has been programatically modified by the API then returns the results to
 the calling environment. The second does the same, except with a custom input
@@ -273,7 +278,7 @@ atomic number and natural abundances for Xenon isotopes:
 \begin{lstlisting}[language=python]
 import os
 import matplotlib.pyplot as plt
-import runCustomInput
+import dmfortfactor as dm
 
 exec_name = "dmfortfactor.x"
 workdir = os.getcwd()
@@ -309,7 +314,7 @@ returns the event rate spectra vs recoil energy arrays. All-together now:
 \begin{lstlisting}[language=python]
 import os
 import matplotlib.pyplot as plt
-import runCustomInput
+import dmfortfactor as dm
 
 exec_name = "dmfortfactor.x"
 workdir = os.getcwd()
@@ -324,7 +329,7 @@ for i,isotope in enumerate(isotopes):
     label = "xe"+str(isotope)
     param_dict = { "NEUTRONS" : N, "AAA" : isotope }
 
-    RecoilE, EventRate = runCustomInput.runCustomInput(exec_name,
+    RecoilE, EventRate = dm.runCustomInput(exec_name,
             input_template, param_dict, workdir, label)
 
     weightedsum += EventRate * weights[i]    
@@ -390,7 +395,7 @@ We again start by constructing the necessary arguments:
 \begin{lstlisting}[language=python]
 import os
 import matplotlib.pyplot as plt
-import runCustomControl
+import dmfortfactor as dm
 
 exec_name = "dmfortfactor.x"
 inputfile = 'input.xe131'
@@ -426,7 +431,7 @@ runCustomControl API:
 \begin{lstlisting}[language=python]
 import os
 import matplotlib.pyplot as plt
-import runCustomControl
+import dmfortfactor as dm
 
 exec_name = "dmfortfactor.x"
 inputfile = 'input.xe131'
@@ -434,7 +439,7 @@ control_template = "xe131.control"
 workdir = os.getcwd()
 for wimp_mass in (50.,150.0, 500.,5000.):
     param_dict = { "MASS_KEYWORD" : wimp_mass }
-    RecoilE, EventRate = runCustomControl.runCustomControl(exec_name,
+    RecoilE, EventRate = dm.runCustomControl(exec_name,
             inputfile, control_template, param_dict, workdir)
 \end{lstlisting}
 We could, for example, plot the result at each iteration and construct the
@@ -445,28 +450,36 @@ following plot:
 \clearpage
 
 \section{Other compute options}
-
-
-\subsection{Total integrated events}
-Inputs 2 - 6 for this calculation will be almost identical to those required for
-the event rate spectra calculation. The main difference is in the sixth and
-final input:
-\begin{verbatim}
- Using adaptive numerical integration to determine total 
- integrated event rate. What are the limits of integration 
- for recoil energies in kev? Enter starting energy, 
- stoping energy, relative error:
-0.0 250.0 0.001
-\end{verbatim}
-Here, we have again been asked for a starting and stopping recoil energy, but
-this time the third value is the desired relative error of the integrated
-spectra. In this example, 0.001 corresponds to a desired uncertainty of 0.1\%. 
-
-An important difference between this calculation and the event rate spectra
-calculation is that in this evaluation, the spectra is not written to file. This
-is because an adaptive integration routine is used to keep the number of
-function evaluations to a minimum. As a result, this calculation will be much
-faster than computing the entire spectra.
+There are a handful of other options available from the main menu of the code.  Presently, the primary use-cases for these options are validation and debugging.  the compute-options are:
+\begin{itemize}
+	\item [{[2]}] Differential cross section at a fixed recoil energy over a range of speeds
+	\item [{[3]}] Transition/scattering probability at a fixed recoil energy over a range of speeds
+	\item [{[5]}] Total integrated events (without producing spectra file)
+	\item [{[6]}] Nuclear response functions at a given value of $y=(qb/2)^2$
+\end{itemize}
+The number is square brackets [x] will be refered to as the compute-option.
+Once a compute-option is chosen,  subsequent CLI inputs are the same up until the density matrix file (.dres) has been read-in. Then, the inputs depend on the compute-option chosen.
+\begin{itemize}
+	\item [{[2]}] Differential cross section per recoil energy. Four additional inputs:
+		\begin{itemize}
+			\item E-recoil (keV)
+			\item v-start (km/s)
+			\item v-stop (km/s)
+			\item v-step (km/s)
+		\end{itemize}
+	\item [{[3]}] Scattering probability. Same as [2].
+	\item [{[5]}] Total scattering events per detector (does not produce spectra data).  This option uses adaptive quadrature to perform the integral of the event rate spectra with the fewest number of evaluations to reach the desired relative error.  This will be much faster than the result from options [1]. Three additional inputs:
+		\begin{itemize}
+			\item E-start (keV)
+			\item E-stop (keV)
+			\item Desired relative error (decimal value)
+		\end{itemize}
+	\item [{[6]}] Nuclear response function test. This compute-option allows the user to evaluate the nuclear response functions $W_i^{x,x'}(y)$ for a provided value of $y$. All combinations of $x$ and $x'$ will be printed for both isospin and proton-neutron couplings.  Two additional inputs are required:
+	\begin{itemize}
+		\item Function number (1 - 8)
+		\item Value of $y=(qb/2)^2$ (dimensionless)
+	\end{itemize}
+\end{itemize}
 
 
 \section{Equations found in the code}
@@ -651,7 +664,7 @@ here. The unit-less variable $y$ is defined
  y = \left ( \frac{qb}{2} \right) ^2,
  \end{align}
  in terms of the harmonic oscillator size parameter $b$, which has a default value of 
- \begin{align}
+ \begin{align}\label{bho}
 b^2 = 41.467/(45A^{-1./3} - 25A^{-2/3})\ fm^2.
  \end{align}
 
@@ -696,6 +709,8 @@ of which there are six, are nuclear operators constructed from Bessel
 spherical harmonics and vector spherical harmonics, and are evaluated here on 
 the ground state of the target nucleus.
 
+
+
 \section{Control file keywords}\label{cfk}
 
 \begin{longtable}{| l | c | p{2.5in} | c | l | }
@@ -713,7 +728,7 @@ the ground state of the target nucleus.
   infer the core-orbital densities. This option automatically assigns these
   empty matrix elements assuming a totally filled core. & & 1 (true)\\
   
-  \hline gaussorder & n & Order of the Gauss-Legendre quadrature to use when using Type 2 quadrature. (See quadtype.) An n-th order routine will perform n function evaluations.  Naturally, a higher order will result in higher precision, but longer compute time. & & 12\\
+  \hline gaussorder &  & Order of the Gauss-Legendre quadrature to use when using Type 2 quadrature. (See quadtype.) An n-th order routine will perform n function evaluations.  Naturally, a higher order will result in higher precision, but longer compute time. & & 12\\
 
   \hline hofrequency & $\hbar \omega$ & Set the harmonic oscillator length by
   specifying the harmonic oscillator frequency. (b = 6.43/sqrt($\hbar\omega$)).
@@ -723,7 +738,7 @@ the ground state of the target nucleus.
 
   \hline hoparameter & $b$ & Harmonic oscillator length. Determines the scale of the
   nuclear wavefunction interaction. & fm &
-  $(\frac{41.467}{45A^{-1/3}-25A^{-2/3}})^{1/2}$  \\
+  See eqn. (\ref{bho}).  \\
 
   \hline maxwellv0 & $v_0$ & Maxwell-Boltzman velocity distribution scaling factor. &
   km/s & 220.0 \\
@@ -739,6 +754,11 @@ the ground state of the target nucleus.
   \hline quadrelerr &  & Desired relative error for the adaptive numerical quadrature routine (quadtype 1).  & & $10^{-6}$\\
   
   \hline quadtype & & Option for type of numerical quadrature. (Type 1 = adaptive 8th order Gauss-Legendre quadrature.  Type 2 = static n-th order Gauss-Legendre quadrature.) && 1 (type 1)\\
+
+  \hline sj2tablemax & & Maximum value of $2\times J$ used when caching Wigner 3-J and 6-J functions into memory. & & 12\\
+  
+  \hline sj2tablemin & & Minimum value of $2\times J$ used when caching Wigner 3-J and 6-J functions into memory. & & -2\\
+  
 
   \hline useenergyfile & & Logical flag (enter 0 for False, 1 for True) to read energy
   grid used for calculation from a user-provided file intead of specifying a

@@ -4,7 +4,7 @@
 # i = 1,...,16
 # t: p=proton n=neutron s=scaler v=vector
 #control name	 i	coupling	c_i^t
-coefnonrel    1    n            1.0
+coefnonrel       13      n               0.00048
 wimpmass 500.0
 vearth 232.0
 maxwellv0 220.0
@@ -14,3 +14,4 @@ intpoints 1000
 usemomentum 0
 useenergyfile 0
 ntscale  2500.0
+hofrequency na

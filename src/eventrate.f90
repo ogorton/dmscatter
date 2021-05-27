@@ -26,14 +26,12 @@ function deventrate(q, wimp, nuc_target, eft)
 
     real(doublep) :: v  ! DM velocity variable
     real(doublep) :: dv ! DM differential velocity / lattive spacing
-    real(doublep), allocatable :: EventRate_integrand(:), xtab(:)
     integer, allocatable :: indx(:)
     integer :: i, j, itmp, ind, norder
     real(doublep) :: ve, v0, vesc, vmin, error
 
     real(doublep) :: relerror
 
-    logical :: adaptive = .true.
     integer :: tid
 
     tid = 1
@@ -58,9 +56,10 @@ function deventrate(q, wimp, nuc_target, eft)
 
     select case(quadrature_type)
       case(1)
-        call gaus8_threadsafe ( dspectra, vmin, vesc, relerror, deventrate, ind, tid )
+        call gaus8_threadsafe (spectraintegrand1d, vmin, vesc, &
+            relerror, deventrate, ind, tid )
       case(2)
-        deventrate = gaussquad(dspectra, gaussorder, vmin, vesc, tid)
+        deventrate = gaussquad(spectraintegrand1d, gaussorder, vmin, vesc, tid)
       case default
         stop "Invalid quadrature option."
     end select
@@ -72,7 +71,7 @@ function deventrate(q, wimp, nuc_target, eft)
   
 end function deventrate
 
-function dspectra(vv, tid)
+function spectraintegrand1d(vv, tid)
     ! The purpose of this function is to create a callable func for the
     ! adaptive integral routine. Other functions in this program use
     ! (the good practice of) explicit data dependency. An exception
@@ -84,15 +83,17 @@ function dspectra(vv, tid)
     use constants
     use crosssection
     use mmaxbolt
+
     implicit none
-    real(doublep) :: vv, qq
-    real(doublep) :: dspectra, ve, v0
+    real(doublep) :: vv, qq, ve, v0
+    real(doublep) :: spectraintegrand1d
     integer tid
+
     ve = vearth * kilometerpersecond
     v0 = vscale * kilometerpersecond
     qq = qglobal(tid)
 
-    dspectra = diffCrossSection(vv, qq, wimp, nuc_target, eft) &
+    spectraintegrand1d = diffCrossSection(vv, qq, wimp, nuc_target, eft) &
         * vv * vv * ( maxbolt(vv-ve,v0) - maxbolt(vv+ve,v0) )
 
 end function

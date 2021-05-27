@@ -2,7 +2,7 @@
 
 COMP = gfortran
 exec=dmfortfactor.x
-bindir = "~/bin/"
+bindir = ~/bin/
 
 F77_CFLAGS = -c -O2
 F90_CFLAGS = -c -O2
@@ -46,11 +46,11 @@ transition.o : dmresponse.o nucresponse.o
 
 crosssection.o : transition.o 
 
-eventrate.o : gausquad.o gaus.o crosssection.o velocitydist.o intlib.o
+eventrate.o : gausquad.o gaus.o crosssection.o velocitydist.o 
 
 spectra.o : fileobject.o eventrate.o
 
-totaleventrate.o : eventrate.o
+totaleventrate.o : eventrate.o gaus.o
 
 dmfortfactor.o : spectra.o wignerfunctions.o modules.o nucresponse.o
 
@@ -62,6 +62,10 @@ default: modules.o $(obj)
 
 install:
 	$(MAKE)
+	mv $(exec) $(bindir)
+
+install-openmp:
+	$(MAKE) F90_CFLAGS=$(openmp_cflags) F90_LFLAGS=$(openmp_lflags)
 	mv $(exec) $(bindir)
 
 make new:

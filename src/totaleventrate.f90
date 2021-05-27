@@ -1,10 +1,13 @@
 subroutine totaleventrate(nuc_target)
     use kinds
     use parameters
+    use quadrature
+    use gaus
     implicit none
     type(nucleus) :: nuc_target
     real(doublep) :: q_start, q_stop, error, relerror, result, abserror
     real(doublep) :: fspectra, mtarget
+    integer :: ind
 
     mtarget = nuc_target%mass
 
@@ -14,8 +17,10 @@ subroutine totaleventrate(nuc_target)
 
     print*,"Computing integral..."
     abserror=fspectra(q_stop) ! This line prevents a segfault... idk why
+    relerror = quadrature_relerr
 
-    call chinsp ( fspectra, q_start, q_stop, relerror, error, result )
+    !call chinsp ( fspectra, q_start, q_stop, relerror, error, result )
+    call gaus8_threadsafe (fspectra,  q_start, q_stop, relerror, result, ind, 1)
 
     print*,"Error estimate:"
     print*,error

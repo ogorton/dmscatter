@@ -92,6 +92,7 @@ end module momenta
 
 !===============================================================================
 module constants
+
     use kinds
     implicit none
     real(doublep) :: pi = 3.14159265358979323846264338327950288419716939937510
@@ -117,7 +118,6 @@ module quadrature
 
     integer :: quadrature_type = 1
     real(doublep) :: quadrature_relerr = 1e-6
-    integer :: lattice_points = 1000
     integer :: gaussorder = 12
 
 end module quadrature
@@ -136,6 +136,7 @@ module keywords
     type(keywordpair) :: keywordpairs(maxkeywords)
 
     contains
+
         subroutine addKeywordpair(key, val)
             implicit none
             character(len=20) :: key

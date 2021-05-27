@@ -65,8 +65,6 @@ subroutine printparameters(wimp,nuc_target,eft)
     print'("ve (km/s)",T30,F10.6)',vearth
     print'("v escape (km/s)",T30,F15.6)',vescape
 
-    print*,'Integral lattice size = ',lattice_points
-
     print*,''
     print*,'EFT coupling coefficients:'
     write(6,"(A,T12,A,T24,A,T36,A,T48,A)")'i','p','n','s','v'

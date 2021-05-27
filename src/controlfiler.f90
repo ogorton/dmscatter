@@ -18,7 +18,6 @@ subroutine opencontrolfile(resfile)
         return
 2       continue
         print*,filename(1:ilast),'.control does not exist '
-        stop "Missing control file."
 
     end do    
 
@@ -46,56 +45,48 @@ subroutine readcontrolfile(resfile, eft, wimp)
     print*,"Reading control file."
 
     coefkey = "coefnonrel"
-    EOF = .false.
 
-    do while (.not. EOF)
+    do while(.true.)
 
-        ! Read past comments
         read(resfile,'(a100)',end=111) line
 
-        if (line(1:1).eq.'#' .or. line(1:1).eq.'!') then 
-            print*,trim(line)
+        if (line(1:1).eq.'#' .or. line(1:1).eq.'!') then
+            print*,'Comment: ',trim(line)
             cycle
-        end if
+        end if            
 
         backspace(resfile)
-    
-        ! Read in coefficient matrix
-        do while(.not.EOF)
-            read(resfile,'(a100)',end=111) line
+        read(resfile,*,err=110)keyword, keyvalue
+        if (keyword == coefkey) then
+            ! Coefficients have more arguments.
+            ! Go back to read them.
             backspace(resfile)
-            read(resfile,*,err=110)keyword, keyvalue
-            if (keyword == coefkey) then
-                ! Coefficients have more arguments.
-                ! Go back to read them.
-                backspace(resfile)
-                read(resfile,*,end=111)keyword, op, coupling, coef
-                call setpncoeffsnonrel(eft, coupling, op, coef)
-            else
-                call addKeywordpair(keyword, keyvalue)
-                call setkeyword(keyword,keyvalue, wimp)
-            endif
-
-        end do
-
-        print*,'End of control file.'
-        print*,''
-
-        return
-111     continue
-
-        EOF = .true.
-        print*,'End of control file.'
-        print*,''
-        return
-
-110     continue
-        print*,"Problem reading in control command. This command will be ignored:"
-        print*,line
+            read(resfile,*,end=111)keyword, op, coupling, coef
+            call setpncoeffsnonrel(eft, coupling, op, coef)
+        else
+            call addKeywordpair(keyword, keyvalue)
+            call setkeyword(keyword,keyvalue, wimp)
+        endif
 
     end do
 
+    print*,'End of control file.'
+    print*,''
+
+    return
+111 continue
+
+    print*,'End of control file.'
+    print*,''
+    return
+
+110 continue
+    print*,"Problem reading in control command. This command will be ignored:"
+    print*,line
+
 end subroutine readcontrolfile
+
+!=============================================
 subroutine setkeyword(keyword, keyvalue, wimp)
 
     use kinds
@@ -104,6 +95,7 @@ subroutine setkeyword(keyword, keyvalue, wimp)
     use momenta
     use quadrature
     use parameters
+    use wignerfunctions, only: maxsj2i, minsj2i
     use orbitals, only: bfm
 
     implicit none
@@ -214,8 +206,18 @@ subroutine setkeyword(keyword, keyvalue, wimp)
         gaussorder = int(keyvalue)
         print*,trim(keyword),': Set order of Gauss-Legendre quadrature to',keyvalue
 
+    case('sj2tablemin')
+        minsj2i = int(keyvalue)
+        print*,trim(keyword),': Set minimum Wigner 6-J table value to Jx2 =',keyvalue
+
+    case('sj2tablemax')
+        maxsj2i = int(keyvalue)
+        print*,trim(keyword),': Set mmaximum Wigner 6-J table value to Jx2 =',keyvalue
+
     case default
-        print*,'Invalid keyword "',trim(keyword),'". Ignoring.'
+        print*,''
+        print*,'WARNING: Invalid keyword "',trim(keyword),'". Ignoring.'
+        print*,''
 
     end select
 

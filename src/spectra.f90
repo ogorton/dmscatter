@@ -132,7 +132,7 @@ function spectra(momenta, wimp, nuc_target, eft)
     real(doublep) :: q
 
     N = size(momenta)
-    !$OMP parallel do private(q) schedule(static, 1)
+    !$OMP parallel do private(q) schedule(dynamic, 1)
     do i = 1, N
         q = momenta(i)
         spectra(i) = dEventRate(q, wimp, nuc_target, eft)
@@ -186,8 +186,9 @@ subroutine eventrate_spectra(wimp, nuc_target, eft)
 
     event_rate_spectra = spectra(momentum_grid, wimp, nuc_target, eft)
 
-    call cubint ( energy_grid_size, momentum_grid, momentum_grid*Event_rate_spectra/(mn*mtarget), 1, &
-                energy_grid_size, totaleventrate, error )
+    call boole(energy_grid_size, momentum_grid, momentum_grid*Event_rate_spectra/(mn*mtarget),&
+        totaleventrate)
+    
 
     write(6,"(A,T30,A,T56,A)")" E-recoil (kev)","q-transfer (gev/c)","Eventrate (events/gev)"
     do calc_num = 1, energy_grid_size

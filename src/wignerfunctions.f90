@@ -15,18 +15,6 @@ subroutine sj2itable
 ! sj2i.f90. File must follow the corresponding
 ! formatting.
     implicit none
-!    interface 
-!        FUNCTION Wigner_6j(a,b,c,d,e,f)
-!            implicit none
-!            INTEGER, INTENT(IN) :: a,b,c,d,e,f
-!            REAL(kind=8) :: Wigner_6j            
-!        end function 
-!        FUNCTION Wigner_3j(a,b,c,d,e,f)
-!            implicit none
-!            INTEGER, INTENT(IN) :: a,b,c,d,e,f
-!            REAL(kind=8) :: Wigner_3j
-!        end function        
-!    end interface
     logical :: timeit
     integer (kind=8) :: ti, tf, clock_rate
     real :: rn
@@ -40,6 +28,8 @@ subroutine sj2itable
     if (timeit) call system_clock(count = ti)
     write(6,'(a)')repeat("-",80)
     print*,'Generating Wigner six-J look-up table'
+    print '("min Jx2:  ",I3)',minsj2i
+    print '("max Jx2:  ",I3)',maxsj2i
     write(6,'(a)')repeat("-",80)
     print*,'Table max 2J:',maxsj2i
 

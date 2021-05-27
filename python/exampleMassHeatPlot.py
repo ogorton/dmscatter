@@ -1,7 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
+import pandas as pd
 import dmfortfactor as dm
+import timeit
 
 ###############################################################################
 # This script generates a heat map of differential event rate spectra for a 
@@ -36,7 +38,10 @@ if compute:
     # I'm doing an event rate calculation, so this is the filename this script
     # should look for.
     resultfile = "eventrate_spectra.dat"
-    
+    g = open(filename_base+".csv", "w+")
+    g.write("# WIMP_mass, Recoil_energy, Event_rate\n")
+
+    tzero = timeit.default_timer()
     for WIMPMASS in masses:
 
         print("m = %s"%WIMPMASS)
@@ -44,11 +49,18 @@ if compute:
         
         input_dict = {}
         control_dict = {"WIMPMASS" : WIMPMASS}
-    
+   
+        tstart = timeit.default_timer()
         E, R = dm.runTemplates(exec_name, 
             input_template, control_template,
             input_dict, control_dict, 
             workdir, label, resultfile)
+        exectime = timeit.default_timer() - tstart
+        tcycle = timeit.default_timer()
+        
+        print("DMFortFactor exec time: %s s"%(exectime))
+        print("Python exec time:       %s s"%(tcycle - tzero - exectime))
+        tzero = tcycle 
 
         f = open(str(WIMPMASS)+filename_base, "w+")
         f.write("# Event rate (events/GeV) for %s GeV WIMPs."%WIMPMASS)
@@ -57,9 +69,13 @@ if compute:
             f.write("%10.5f    %s\n"%(energy, R[ii]))
         f.close()
 
+        for ii, energy in enumerate(E):
+            g.write("%s, %10.5f, %s\n"%(WIMPMASS,energy,R[ii]))
+    g.close()
+
 if plot:
 
-    # Just a text time with tex commands for convenient plot labels
+    # Just a text file with tex commands for convenient plot labels
     with open("operators.txt") as f: operatorsymbols = f.readlines()
 
     for ii,WIMPMASS in enumerate(masses):

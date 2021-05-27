@@ -4,7 +4,7 @@
 # i = 1,...,16
 # t: p=proton n=neutron s=scaler v=vector
 #control name	 i	coupling	c_i^t
-coefnonrel       1       n               0.00048
+#coefnonrel       1       n               0.00048
 #coefnonrel       3       n               0.00048
 #coefnonrel       4       n               0.00048
 #coefnonrel       5       n               0.00048
@@ -18,7 +18,7 @@ coefnonrel       1       n               0.00048
 #coefnonrel       13      n               0.00048
 #coefnonrel       14      n               0.00048
 #coefnonrel       15      n               0.00048
-#coefnonrel       1       p               0.00048
+coefnonrel       1       v               0.00048
 #coefnonrel       3       p               0.00048
 #coefnonrel       4       p               0.00048
 #coefnonrel       5       p               0.00048
@@ -37,7 +37,6 @@ vearth 232.0
 maxwellv0 220.0
 #vescape 550.
 dmdens 0.3
-intpoints 1000
 usemomentum 0
 useenergyfile 0
 ntscale  2500.0
