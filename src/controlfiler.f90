@@ -219,6 +219,8 @@ subroutine setkeyword(keyword, keyvalue, wimp)
         print*,'WARNING: Invalid keyword "',trim(keyword),'". Ignoring.'
         print*,''
 
+        stop "Invalid keyword in control file."
+
     end select
 
 end subroutine setkeyword
