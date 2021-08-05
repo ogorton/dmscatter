@@ -136,7 +136,7 @@ function dmrPhiTPJ(eft, tau1, tau2, q, v, jchi, muT)
     !REAL(kind=8) :: Cl
 
     dmrPhiTPJ = q*q/(16*mN*mN)*Cl(jchi) * ( &
-            eft(tau1,12)*eft(tau2,12)*q*q &
+            eft(tau1,13)*eft(tau2,13)*q*q &
             + eft(tau1,12)*eft(tau2,12) &
         )
 
