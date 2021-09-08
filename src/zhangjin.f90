@@ -137,10 +137,10 @@ subroutine chgm ( a, b, x, hg )
 
     else
 
-      call gamma ( a, ta )
-      call gamma ( b, tb )
+      ta = gamma(a)
+      tb = gamma(b)
       xg = b - a
-      call gamma ( xg, tba )
+      tba = gamma(xg)
       sum1 = 1.0D+00
       sum2 = 1.0D+00
       r1 = 1.0D+00
@@ -180,131 +180,6 @@ subroutine chgm ( a, b, x, hg )
 
   a = a1
   x = x0
-
-  return
-end
-
-
-
-
-!-------------------------------------------------------------------------------
-subroutine gamma ( x, ga )
-
-!*****************************************************************************80
-!
-!! GAMMA evaluates the Gamma function.
-!
-!  Licensing:
-!
-!    The original FORTRAN77 version of this routine is copyrighted by 
-!    Shanjie Zhang and Jianming Jin.  However, they give permission to 
-!    incorporate this routine into a user program that the copyright 
-!    is acknowledged.
-!
-!  Modified:
-!
-!    08 September 2007
-!
-!  Author:
-!
-!    Original FORTRAN77 version by Shanjie Zhang, Jianming Jin.
-!    FORTRAN90 version by John Burkardt.
-!
-!  Reference:
-!
-!    Shanjie Zhang, Jianming Jin,
-!    Computation of Special functions,
-!    Wiley, 1996,
-!    ISBN: 0-471-11963-6,
-!    LC: QA351.C45
-!
-!  Parameters:
-!
-!    Input, real ( kind = 8 ) X, the argument.
-!    X must not be 0, or any negative integer.
-!
-!    Output, real ( kind = 8 ) GA, the value of the Gamma function.
-!
-  implicit none
-
-  real ( kind = 8 ), dimension ( 26 ) :: g = (/ &
-    1.0D+00, &
-    0.5772156649015329D+00, &
-   -0.6558780715202538D+00, &
-   -0.420026350340952D-01, &
-    0.1665386113822915D+00, &
-   -0.421977345555443D-01, &
-   -0.96219715278770D-02, &
-    0.72189432466630D-02, &
-   -0.11651675918591D-02, &
-   -0.2152416741149D-03, &
-    0.1280502823882D-03, &
-   -0.201348547807D-04, &
-   -0.12504934821D-05, &
-    0.11330272320D-05, &
-   -0.2056338417D-06, &
-    0.61160950D-08, &
-    0.50020075D-08, &
-   -0.11812746D-08, &
-    0.1043427D-09, &
-    0.77823D-11, &
-   -0.36968D-11, &
-    0.51D-12, &
-   -0.206D-13, &
-   -0.54D-14, &
-    0.14D-14, &
-    0.1D-15 /)
-  real ( kind = 8 ) ga
-  real ( kind = 8 ) gr
-  integer ( kind = 4 ) k
-  integer ( kind = 4 ) m
-  integer ( kind = 4 ) m1
-  real ( kind = 8 ), parameter :: pi = 3.141592653589793D+00
-  real ( kind = 8 ) r
-  real ( kind = 8 ) x
-  real ( kind = 8 ) z
-
-  if ( x == aint ( x ) ) then
-
-    if ( 0.0D+00 < x ) then
-      ga = 1.0D+00
-      m1 = int ( x ) - 1
-      do k = 2, m1
-        ga = ga * k
-      end do
-    else
-      ga = 1.0D+300
-    end if
-
-  else
-
-    if ( 1.0D+00 < abs ( x ) ) then
-      z = abs ( x )
-      m = int ( z )
-      r = 1.0D+00
-      do k = 1, m
-        r = r * ( z - real ( k, kind = 8 ) )
-      end do
-      z = z - real ( m, kind = 8 )
-    else
-      z = x
-    end if
-
-    gr = g(26)
-    do k = 25, 1, -1
-      gr = gr * z + g(k)
-    end do
-
-    ga = 1.0D+00 / ( gr * z )
-
-    if ( 1.0D+00 < abs ( x ) ) then
-      ga = ga * r
-      if ( x < 0.0D+00 ) then
-        ga = - pi / ( x* ga * sin ( pi * x ) )
-      end if
-    end if
-
-  end if
 
   return
 end

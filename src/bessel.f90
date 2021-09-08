@@ -184,7 +184,7 @@ function Summand3(y,m,mp,l,lp,bigL)
     b = dble(bigL)+3.d0/2.d0
     !  Summand3 = chg(a, b, y) 
     call chgm(a,b,y,Summand3)
-    call chgm(0.0d0,1.5d0,4.0d0,hg)
+    !call chgm(0.0d0,1.5d0,4.0d0,hg)
     !  if (abs(a) .le. 1.0d-7) Summand3 = -chg(a,b,y)
     !  print*, 'here ', chg(0.0d0,1.5d0,4.d0), chg(-1.d0,1.5d0,4.d0), hg
 end function Summand3
