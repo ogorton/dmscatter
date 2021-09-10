@@ -21,23 +21,10 @@ filename_base = "GeV-rate.dat"
 
 if compute:
 
-    # Path to dmfortfactor executable (mine is in ~/bin/)
-    exec_name = "dmfortfactor.x"
-    
-    # Template input file. In this case, it's just an input file since nothing is
-    # modified.
-    input_template = "xe131.input"
-    
-    workdir = "./"
-    label="runCustom" # prefix for temporary files generatd by dm API
-    
     # Template control file. This one does get modified and will be renamed to drop
     # the .template suffix.
     control_template = "xe131.control.template"
-    
-    # I'm doing an event rate calculation, so this is the filename this script
-    # should look for.
-    resultfile = "eventrate_spectra.dat"
+
     g = open(filename_base+".csv", "w+")
     g.write("# WIMP_mass, Recoil_energy, Event_rate\n")
 
@@ -45,16 +32,28 @@ if compute:
     for WIMPMASS in masses:
 
         print("m = %s"%WIMPMASS)
-    
-        
-        input_dict = {}
-        control_dict = {"WIMPMASS" : WIMPMASS}
-   
+        control_dict = {
+                "wimpmass" : WIMPMASS,
+                "vearth" : 232.0,
+                "ntscale" : 2500.0,
+                "maxwellv0" : 220.0
+        }
         tstart = timeit.default_timer()
-        E, R = dm.runTemplates(exec_name, 
-            input_template, control_template,
-            input_dict, control_dict, 
-            workdir, label, resultfile)
+
+        # EFT coupling: isovector
+        cvvec = np.zeros(15)
+        cvvec[1] = 0.00048
+
+        E, R = dm.EventrateSpectra(
+            Z = 54, 
+            N = 77, 
+            dres = "xe131gcn", 
+            ermin = 1.0, 
+            ermax = 1000.0, 
+            erstep = 1.0,
+            controlwords = control_dict,
+            cvvec = cvvec)
+
         exectime = timeit.default_timer() - tstart
         tcycle = timeit.default_timer()
         
