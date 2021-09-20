@@ -1,4 +1,13 @@
-\documentclass[11pt]{article}
+\documentclass[
+14pt, % Main document font size
+a4paper, % Paper type, use 'letterpaper' for US Letter paper
+oneside, % One page layout (no page indentation)
+%twoside, % Two page layout (page indentation for binding and different headers)
+headinclude,footinclude, % Extra spacing for the header and footer
+BCOR5mm, % Binding correction
+]{scrartcl}
+\input{structure.tex}
+
 \usepackage{geometry}
 \geometry{margin=1.in}
 \usepackage{graphicx}
@@ -21,11 +30,12 @@
 
 %Code listing style named "mystyle"
 \lstdefinestyle{mystyle}{
-  backgroundcolor=\color{backcolour},   commentstyle=\color{codegreen},
+  backgroundcolor=\color{backcolour},   
+  commentstyle=\color{codegreen},
   keywordstyle=\color{magenta},
   numberstyle=\tiny\color{codegray},
   stringstyle=\color{codepurple},
-  basicstyle=\ttfamily\footnotesize,
+  basicstyle=\ttfamily\small,
   breakatwhitespace=false,
   breaklines=true,
   captionpos=b,
@@ -44,6 +54,11 @@
 \author{Oliver Gorton, Changfeng Jiao and Calvin Johnson}
 
 \begin{document}
+
+\fontfamily{cmss}\selectfont
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
 \maketitle
 
 {
@@ -60,7 +75,6 @@ Model-Independent WIMP Scattering Responses and Event Rates
 \clearpage
 
 \section{Preamble}
-
 This is the manual for the FORTRAN version of the model- independent WIMP 
 scattering response and event rate code, which was originally written in 
 Mathematica and described in 
@@ -78,7 +92,7 @@ event rate as a function of the nuclear recoil energy $E_R$:
 This quantity has units of events/GeV and is implicitly multiplied by
 an effective exposure of 1 Kilogram-Day of target nuclei. This is done by
 taking $N_t = 1\ kilogram\cdot day / m_T$, where $m_T$ is the mass of the target
-nucleus in $GeV$. Recoil energies $E_R$ are given in keV.
+nucleus in GeV. Recoil energies $E_R$ are given in keV.
 
 The cross section is determined using a user-defined WIMP-nucleus interaction
 within a non-relativistic effective field theory (EFT) framework. The
@@ -88,43 +102,51 @@ interaction is specified by 16 coupling coefficients defining an interaction:
 \end{equation}
 
 \section{Quickstart guide}
-{\tt DMFortFactor} can be used interactively from the command line,  where the user
-is guided by prompts for a small number of datafiles and parameters.  Naturally, this interactive
-process can be expedited by piping a pre-written input file into the command line interface (CLI).
+{\tt DMFortFactor} can be used interactively from the command line,  where the
+user is guided by prompts for a small number of datafiles and parameters.
+Naturally, this interactive process can be expedited by piping a pre-written
+input file into the command line interface (CLI).
 
-We also provide a generic application programming interface (API) for the Python language. 
-This API essentially offers a prescribed and easy-to-use way to run {\tt DMFortFactor} 
-in a programmatic way.  Any sufficiently advanced linux user could probably write a script to produce any
-possible set of inputs to our code.  But our API removes the need by making it easy for anyone 
-who can use a Python function to write their own advanced scripts allowing them to 
-perform parameter studies and comparisons of different inputs to the theory.
+We also provide a generic application programming interface (API) for the Python
+language.  This API essentially offers a prescribed and easy-to-use way to run
+{\tt DMFortFactor} in a programmatic way.  Any sufficiently advanced linux user
+could probably write a script to produce any possible set of inputs to our code.
+But our API removes the need by making it easy for anyone who can use a Python
+function to write their own advanced scripts allowing them to perform parameter
+studies and comparisons of different inputs to the theory.
 
 \subsection{SuperQuickstart guide}
 \begin{enumerate}
 	\item Navigate to the {\tt src/} directory from wherever you have stored {\tt darkmatter/} (e.g. {\tt cd src/}, or {\tt cd $\sim$/Downloads/darkmatter/src/})
 	\item Run the command: {\tt make new}
-	\item Navigate to the directory {\tt sample/xe/} (e.g. {\tt cd ../sample/xe/})
+	\item Navigate to the directory {\tt runs/xe/} (e.g. {\tt cd ../runs/xe/})
 	\item Run the command: {\tt ../../src/dmfortfactor.x < xe131.input}
 \end{enumerate}
-If successful,  one of the last lines printed to screen should be ``Event rate spectra written to eventrate_spectra.dat''.
+If successful,  one of the last lines printed to screen should be ``Event rate
+spectra written to eventrate_spectra.dat''.
 
 \subsection{Compiling with make}
-There are multiple directories in the project. All of the Fortran code which needs to be compiled is found in
-the {\tt src/} directory.  We provide a {\tt Makefile} to compile the code using a few different options. 
+There are multiple directories in the project. All of the Fortran code which
+needs to be compiled is found in the {\tt src/} directory.  We provide a {\tt
+Makefile} to compile the code using a few different options. 
 
 The easiest way to get started is simply to navigate to {\tt src/}  and run
 \begin{lstlisting}
 make dmfortfactor
 \end{lstlisting}
-This will compile {\tt DMFortFactor} using {\tt gfortran}.  If you want to use a different compiler, you must 
-edit the Makefile to change the {\tt COMP} variable from gfortran to your compiler of choice.
+This will compile {\tt DMFortFactor} using {\tt gfortran}.  If you want to use a
+different compiler, you must edit the Makefile to change the {\tt COMP} variable
+from gfortran to your compiler of choice.
 
-Aditionally, if you want to utilize multiple CPU cores to speed up the runtime, you can compile with {\tt openMP}:
+Aditionally, if you want to utilize multiple CPU cores to speed up the runtime,
+you can compile with {\tt openMP}: 
 \begin{lstlisting}
 make openmp
 \end{lstlisting}
-Both of these options will compile the source code and leave the executable, called {\tt dmfortfactor.x} in the {\tt src/} directory.
-Note that if you change from a serial executable to a parallel executable (or vice versa) you should run:
+Both of these options will compile the source code and leave the executable,
+called {\tt dmfortfactor.x} in the {\tt src/} directory.  Note that if you
+change from a serial executable to a parallel executable (or vice versa) you
+should run:
 \begin{lstlisting}
 make clean
 \end{lstlisting}
@@ -139,7 +161,10 @@ There are two files required for any calculation:
 Additionally, if the user enables the option ``usenergyfile'', then a file
 containing the input energies or momentum will also be required.
 
-\subsection{Control file}
+If you use the {\tt EventrateSpectra} Python wrapper, then the control file will
+automatically be generated.
+
+\subsubsection{Control file (.control)}
 Each EFT parameter is written on its own line in [mycontrolfile].control, with
 four values: the keyword "coefnonrel", the operator number (integer 1..16), the
 coupling type ("p"=proton, "n"=neutron, "s"=scalar, "v"=vecctor), and the
@@ -160,23 +185,24 @@ coefnonrel    1    p     1.55
 coefnonrel    1    n     1.55
 \end{verbatim}
 
-The control file also serves a more general but optional function: to set any 
-parameter in the program to a custom value.  
-Simply add an entry to the control file with two values: the first 
-should be the keyword for the parameter and the 
-second should be the value to set that parameter to. For example, to set the 
-velocity of the earth in the galactic frame to $240\ km/s$, you should add the line:
+The control file also serves a more general but optional function: to set any
+parameter in the program to a custom value.  Simply add an entry to the control
+file with two values: the first should be the keyword for the parameter and the
+second should be the value to set that parameter to. For example, to set the
+velocity of the earth in the galactic frame to $240\ km/s$, you should add the
+line:
 \begin{verbatim}
 vearth  240.0
 \end{verbatim}
 A complete list of keywords is given in section \ref{cfk}.
 
+\subsubsection{Nuclear density matrix file (.dres)}
+
 \subsection{Event rate spectra (events per GeV) using the CLI}
-The program will prompt the user for 
-the minimum necessary inputs to run a calculation with default parameter 
-values, including the name of a control file which contains the EFT
-coefficients, and optionally, additional customizations to the calculation
-parameters.
+The program will prompt the user for the minimum necessary inputs to run a
+calculation with default parameter values, including the name of a control file
+which contains the EFT coefficients, and optionally, additional customizations
+to the calculation parameters.
 
 After selecting the option to compute an event rate spectra, there are six
 further lines of input. These will be explained by an example:
@@ -202,8 +228,8 @@ neutrons in the target nucleus. In this case, 54 and 74, respectively, for
 $^{131}$Xe.
 
 Third is the name of the control file containing the EFT coefficients and other,
-optional, settings. The '.control' file extension is omitted. This contents of
-this file will be explained in more detail later.
+optional, settings. The `.control' file extension should be omitted. This 
+contents of this file will be explained in more detail later.
 
 Fourth is the file containing the nuclear wave functions in the form of one-body
 density matrices. Only the ground-state need be included. The '.dres' file
@@ -217,122 +243,101 @@ calculation, the total event rate for the energy range requested will be
 estimatted by numerical integration. Note that the accuracy of this result will
 depend on the choice of the step size.
 
-\subsection{Python interface}
+\subsection{Event rate spectra from the Python wrapper}
+We provide a Python wrapper for the code and a number of example scripts
+demonstrating its use. The wrapper comes in the form of a Python function {\tt
+EventrateSpectra} which can be imported from dmfortfactor.py in the Python
+directory.  This function has three required arguments: 
+\begin{enumerate}
+    \item Z the number of protons in the target nucleus
+    \item N the number of neutrons in the target nucleus
+    \item The `.dres' filename for the one-body density matrix file describing the nuclear structure. 
+\end{enumerate}
+If no other arguments are provided, default values will be used for all of the
+remaining necessary parameters, including zero interaction strength.  To
+calculate an event rate with a nonzero interaction, the user should also provide
+one or more of the optional EFT coupling coefficient arrays: {\tt cpvec, cnvec,
+csvec, cvvec}. These store the couplings to protons, neutrons, isoscalar, and
+isovector, respectively.  Finally, the user can also pass a dictionary of valid
+control keywords and values to the function in order to set any of the control
+words defined in the manual.
 
-We provide three generic API's for interacting with the Fortran program. They are: {\tt runCustomControl}, {\tt runCustomInput}, and 
-{\tt runTemplates}. 
-These can all by imported into your own Python script by having the file {\tt dmfortfactoy.py} in your working directory and
-adding the following line to your import statements:
+To compute the eventrate spectra for $^{131}$Xe with a WIMP mass of 50 GeV and a
+$c_3^v=0.0048$ coupling, one might call:
 \begin{lstlisting}[language=Python]
 import dmfortfactor as dm
+control_dict = {"wimpmass" : 50.0}
+cvvec = np.zeros(15)
+cvvec[2] = 0.0048 
+Erkev, ER = dm.EventrateSpectra(
+            Z = 54,
+            N = 77,
+            dres = "xe131gcn",
+            controlwords = control_dict,
+            cvvec = cvvec)
 \end{lstlisting}
-This library contains three functions.
-The first runs the Fortran code with a control file
-which has been programatically modified by the API then returns the results to
-the calling environment. The second does the same, except with a custom input
-file, rather than a custom control file. The third combines the functionality of
-both. Here we demonstrate an application of {\tt runTempaltes} to generate a
-plot of event rate specra for a range of WIMP masses.
+This will return the differential event rate spectra for recoil energies from 1
+keV to 1 MeV in 1 keV steps. The file `xe131gcn.dres' must exist in the current
+working directory and contain a valid one-body density matrix for $^{131}$Xe.
 
-\subsection{Example: using runCustomInput to generate a weighted sum of
-event rate spectra}
 
-In this example we will construct a simple python script using the 
-runCustomInput API to compute the differential
-event rate spectra for several isotopes of Xe, and compute the weighted sum
-according to the natural abundances of each isotope.
+\section{Python interface}
 
-Firt, examining the API for runCustomInput:
+We provide two generic API's for interacting with the Fortran program. They are:
+{\tt runTemplates} and {\tt EventrateSpectra}.  These can be imported into your
+own Python script by having the file {\tt dmfortfactoy.py} in your working
+directory or by adding it to your path:
+\begin{lstlisting}[language=Python]
+import sys
+sys.path.append('/path/to/dmfortfactor.py')
+import dmfortfactor as dm
+\end{lstlisting}
+
+{\tt EventrateSpectra} is essentially a wrapper for the event-rate calculation
+function of {\tt dmfortfactor}. It makes use of {\tt runTemplates} but shields
+the user from having to handle the input and control files needed by {\tt
+dmfortfactor}.
+
+{\tt runTemplates} is a fairly generic function which runs an arbitrary linux
+program which takes an input file by a linux pipe, and makes use of a secondary
+`control' file. {\tt runTemplates} takes in templates for the input and control
+files, modifies them using {\tt sed} to replace string keys with values from a
+Python dictionary, runs the executable, then collects outputs written to an
+output file, returning the data as Numpy arrays.
+
+\subsection{Example: generating a weighted sum of event rate spectra}
 
 \begin{lstlisting}[language=python]
-def runCustomInput(exec_name, input_template, param_dict,
-    workdir='', label='runCustom',resultfile='eventrate_spectra.dat'):
-
-    """
-     Author: Oliver Gorton, 2020
-
-     This is a function for running an executable program with a custom
-     input file by replacing keywords in a template used by the executed
-     code.
-
-     exec_name: (string) containing the path to and name of the
-         executable you want to run
-     input_template: (string) this is an input or control file used by the 
-         executable and which will be edited by this function
-     param_dict: (dictionary) of keywords and the values to which those 
-         keywords will be changed. The keywords are strings which should 
-         appear in the input_template file. 
-     workdir: (string) name of the working directory where you want to 
-         call the executable and send the output.
-     label: (string) name for this job, to label the input and output 
-         files generated by this function.
-
-    """
-\end{lstlisting}
-The first three inputs are mandatory while the last three are optional, having
-default values defined in the function.
-We begin constructing our script by creating the generic inputs for the
-executatble name and the directory where the calculations will be done (this is
-where the required files for the calculation should be). We also specify the 
-atomic number and natural abundances for Xenon isotopes:
-\begin{lstlisting}[language=python]
-import os
+import sys
+sys.path.append("/Users/oliver/projects/darkmatter/python")
+import numpy as np
 import matplotlib.pyplot as plt
 import dmfortfactor as dm
 
-exec_name = "dmfortfactor.x"
-workdir = os.getcwd()
-
+plt.figure()
 Z = 54
 isotopes = [128, 129, 130, 131, 132, 134, 136]
 weights = [.01910, .26401, .04071, .21232, .26909, .10436, .08857]
 weightedsum = 0.0
-\end{lstlisting}
-Now, we will need the input-file template. Having created the template file, for
-example:
-\begin{verbatim}
-1
-54
-NEUTRONS
-xe
-xeAAAgcn
-1. 1000. 1.0
-\end{verbatim}
-with our arbitrary choice of keywords "NEUTRONS" and "AAA", 
-let's loop over our isotopes, and for each assemble the dictionary of
-keywords which the API will replace with values:
-\begin{lstlisting}[language=python]
-input_template = "input.xeAAA"
+
 for i,isotope in enumerate(isotopes):
     N = isotope - Z
+    controls = {
+            "wimpmass" :500.0,
+            "vescape" : 550.0}
+    cp = np.zeros(15)
+    cp[0] = 1
+    RecoilE, EventRate = dm.EventrateSpectra(
+            Z,
+            N,
+            dres = "xe%igcn"%isotope,
+            controlwords = controls,
+            cpvec = cp )
+
+    weightedsum += EventRate * weights[i]
+
     label = "xe"+str(isotope)
-    param_dict = { "NEUTRONS" : N, "AAA" : isotope }
-\end{lstlisting}
-We now have all of the required arguments: exec\_name, input\_template,
-param\_dict, workdir, and label. We are ready to call runCustomInput, which
-returns the event rate spectra vs recoil energy arrays. All-together now:
-\begin{lstlisting}[language=python]
-import os
-import matplotlib.pyplot as plt
-import dmfortfactor as dm
-
-exec_name = "dmfortfactor.x"
-workdir = os.getcwd()
-
-Z = 54
-isotopes = [128, 129, 130, 131, 132, 134, 136]
-weights = [.01910, .26401, .04071, .21232, .26909, .10436, .08857]
-weightedsum = 0.0
-input_template = "input.xeAAA"
-for i,isotope in enumerate(isotopes):
-    N = isotope - Z
-    label = "xe"+str(isotope)
-    param_dict = { "NEUTRONS" : N, "AAA" : isotope }
-
-    RecoilE, EventRate = dm.runCustomInput(exec_name,
-            input_template, param_dict, workdir, label)
-
-    weightedsum += EventRate * weights[i]    
+    plt.plot(RecoilE, EventRate, label="$^{%s}$Xe"%isotope)
 \end{lstlisting}
 We now have the weighted sum of event rates stored in the variable weightedsum.
 Using matplotlib, we could produce the following plot:
@@ -343,109 +348,9 @@ Using matplotlib, we could produce the following plot:
 
 }
 
-\subsection{Example: using runCustomControl to compare event-rate spectra for
+\subsection{Example: comparing event-rate spectra for
 calculations with different WIMP masses}
 
-In this example we will construct a simple python script using the 
-runCustomControl API to compute the differential event rate spectra for several
-values of the WIMP particle mass. This is very similar in implementation to the
-previous example, with the main difference being that the WIMP mass is edited by
-the user through the control file, rather than through the interactive input or
-input file. The appropriate API for this task is therefore \textbf{
-runCustomControl}:
-\begin{lstlisting}[language=python]
-def runCustomControl(exec_name, inputfile, control_template, param_dict,
-    workdir='', label='runCustom',resultfile='eventrate_spectra.dat'):
-
-    """
-     Author: Oliver Gorton, 2020
-
-     This is a function for running an executable program with a custom
-     control file by replacing keywords in a template used by the executed
-     code. The control file is one which is used indirectly (not a by a 
-     command line pipe). For example, an interaction file for bigstick.
-
-     exec_name: 
-         (string) containing the path to and name of the
-         executable you want to run
-     inputfile: 
-         (string) this is an input file used by the executable
-     control_template: 
-         (string) the base-name of a file ending in 
-         '.control'. "<control_template>.template" is the template 
-         file which the function will edit and copy into 
-         <control_template>.
-     param_dict: 
-         (dictionary) of keywords and the values to which those 
-         keywords will be changed. The keywords are strings which should 
-         appear in the input_template file. 
-     workdir: 
-         (string) name of the working directory where you want to call
-         the executable and send the output.
-     label: 
-         (string) name for this job, to label the input and output files 
-         generated by this function.
-
-    """
-\end{lstlisting}
-This API has the same inputs as runCustomInput, with `inputfile' intead of
-`input\_template', and one additional argument: `control\_template'.
-
-We again start by constructing the necessary arguments:
-\begin{lstlisting}[language=python]
-import os
-import matplotlib.pyplot as plt
-import dmfortfactor as dm
-
-exec_name = "dmfortfactor.x"
-inputfile = 'input.xe131'
-control_template = "xe131.control"
-workdir = os.getcwd()
-\end{lstlisting}
-As in the previous example, inputfile is a standard input file we have placed in
-the current working directory. This time, it is a complete input file with no
-replaceable keywords:
-\begin{verbatim}
-1
-54
-77
-xe131
-xe131gcn
-1. 1000. 10.0
-\end{verbatim}
-Alongside this standard input file, we also create a template control file
-called ``xe131.control.template''. When the API replaces the keywords in this
-file, it will strip the .template filename extension, creating a file called
-``xe131.control'', which is referenced in the fourth line of the above input
-file. Within this template file, we find the line (along with other necessary
-and/or optional control commands not listed for brevity):
-\begin{verbatim}
-wimpmass MASS_KEYWORD
-\end{verbatim}
-`wimpmass' is the keyword for setting the WIMP mass, and `MASS\_KEYWORD' is our
-arbitrary keyword for the Python API to replace.
-
-We complete the script by looping over different WIMP masses, creating the
-dictionary or keywords to replace and their values, and finally call the
-runCustomControl API:
-\begin{lstlisting}[language=python]
-import os
-import matplotlib.pyplot as plt
-import dmfortfactor as dm
-
-exec_name = "dmfortfactor.x"
-inputfile = 'input.xe131'
-control_template = "xe131.control"
-workdir = os.getcwd()
-for wimp_mass in (50.,150.0, 500.,5000.):
-    param_dict = { "MASS_KEYWORD" : wimp_mass }
-    RecoilE, EventRate = dm.runCustomControl(exec_name,
-            inputfile, control_template, param_dict, workdir)
-\end{lstlisting}
-We could, for example, plot the result at each iteration and construct the
-following plot:
-
-\includegraphics[width=.8 \textwidth]{xe131.WIMPmassCompare.pdf}
 
 \clearpage
 
@@ -483,6 +388,9 @@ Once a compute-option is chosen,  subsequent CLI inputs are the same up until th
 
 
 \section{Equations found in the code}
+We present the equations necessary to reproduce the code. For a more complete
+description of the theory, see 
+\href{https://link.aps.org/doi/10.1103/PhysRevC.89.065501}{Phys. Rev. C 89.065501.}
 \subsection{Differential event rate}
 \begin{equation}\label{ER}
 \begin{split}
@@ -570,7 +478,11 @@ new subroutine for the analytic forms found in the Mathematica script.
 \frac{d\sigma(v,E_R)}{dE_R} = 2m_T \frac{d\sigma(v)(v,\vec{q}^2)}{d\vec{q}^2} = 2m_T\frac{1}{4\pi v^2}T(v,q),
 \end{split}
 \end{equation}
-Where $v$ is the velocity of the dark matter particles in the lab-frame, $q$ is the momentum transfer of the scattering event, $m_T$ is the mass of the target nucleus, and $T(v,q)$ is the transition or scattering probability. We can see here that the differential cross section has an explicit $1/v^2$ dependence, independent of any velocity dependence of $T(v,q)$.
+Where $v$ is the velocity of the dark matter particles in the lab-frame, $q$ 
+is the momentum transfer of the scattering event, $m_T$ is the mass of the 
+target nucleus, and $T(v,q)$ is the transition or scattering probability. We 
+can see here that the differential cross section has an explicit $1/v^2$ 
+dependence, independent of any velocity dependence of $T(v,q)$.
 
 
 \subsection{Transition probability / Scattering probability}
@@ -582,7 +494,9 @@ The scattering probability is
 T(v,q) &= \frac{1}{2j_\chi+1}\frac{1}{2j_T+1}\sum_{spins}|\mathcal{M}(v,q)|^2 
 \end{split}
 \end{equation}
-where $j_\chi$ is the spin of the WIMP, $j_T$ is the spin angular momentum of the target nucleus, and $\mathcal{M}$ Galilean invariant amplitude, which is defined by
+where $j_\chi$ is the spin of the WIMP, $j_T$ is the spin angular momentum of 
+the target nucleus, and $\mathcal{M}$ Galilean invariant amplitude, which is 
+defined by
 \begin{align}
 	T(v,q) = \frac{4\pi}{2j_T+1}\frac{1}{(4m_\chi)^2}
 		\sum_{x=p,n}\sum_{x'=p,n}^1\sum_{i=1}^8 R_i^{xx'}(v^2,q^2)
@@ -590,9 +504,15 @@ where $j_\chi$ is the spin of the WIMP, $j_T$ is the spin angular momentum of th
 %		\left < \mathcal{O}_{j_T,x}^{(i)}(y)\right >
 %		\left < \mathcal{O'}_{j_T,x'}^{(i)}(y)\right >
 \end{align}
-where $m_\chi$ is the mass of the dark matter particle and $x$ is an index used to sum over isospin couplings. The coefficients $R_i^{x,x'}$ are dark matter particle response functions, to be define in another section. The operators $W_i^{xx'}(q)$ are nuclear response functions, which are sums over matrix elements of nuclear operators constructed from Bessel spherical harmonics and vector spherical harmonics.
+where $m_\chi$ is the mass of the dark matter particle and $x$ is an index used 
+to sum over isospin couplings. The coefficients $R_i^{x,x'}$ are dark matter 
+particle response functions, to be define in another section. The operators 
+$W_i^{xx'}(q)$ are nuclear response functions, which are sums over matrix 
+elements of nuclear operators constructed from Bessel spherical harmonics and 
+vector spherical harmonics.
 \subsection{Dark matter response functions}
-There are 8 dark matter response functions which group 15 operator coefficients $c_i^x$ according the pair of nuclear response functions which they multiply.
+There are 8 dark matter response functions which group 15 operator coefficients
+$c_i^x$ according the pair of nuclear response functions which they multiply.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%80
 % Tex formatting style for this section: 
@@ -705,11 +625,73 @@ W_{\Phi''M}^{xx'}(y) &= \sum_{even\ J}
 
 
 \subsection{Nuclear operators and their matrix elements}
-of which there are six, are nuclear operators constructed from Bessel 
+There are six nuclear operators constructed from Bessel 
 spherical harmonics and vector spherical harmonics, and are evaluated here on 
 the ground state of the target nucleus.
 
+There are six nuclear operators $\mathcal{W}^{(f)}$, $f=1,...,6$, describing the electro-weak coupling of the WIMPs to the nucleon degrees of freedom. The six single-particle operators are given the symbols:
+\begin{equation}
+    \mathcal{W}^{(f=1,...,6)}_J=M_J, \Delta_J, \Sigma_J', \Sigma_J'', \tilde{\Phi}_J', \Phi_J'',
+\end{equation}
+and are constructed from Bessel spherical and vector harmonics \cite{DONNELLY1979103}:
+\begin{dmath}
+    M_{JM}(q\vec{x})\equiv j_J(qx)Y_{JM}(\Omega_x)
+\end{dmath}
+\begin{dmath}
+    \vec{M}_{JML}(q\vec{x}) \equiv j_L(qx) \vec{Y}_{JLM}(\Omega_x),
+\end{dmath}
+where
+\begin{dmath}
+    Y_{JLM}(\Omega_x) = \sum_{m\lambda} \bra{Lm1\lambda}\ket{(L1)JM_J} Y_{Lm}(\Omega_x)\vec{e}_\lambda.
+\end{dmath}
+The six multipole operators are defined as:
+\begin{align}
+    \label{oplist}
+M_{JM}\ \ &\\
+\Delta_{JM} \equiv& \vec{M}_{JJM}\cdot \frac{1}{q}\vec{\nabla}\\
+\Sigma'_{JM} \equiv& -i \left \{\frac{1}{q}\vec{\nabla}\times \vec{M}_{JJM}  \right\}\cdot \vec{\sigma}\\
+\Sigma''_{JM} \equiv& \left \{ \frac{1}{q}\vec{\nabla}M_{JM} \right \}\cdot \vec{\sigma}\\
+\tilde{\Phi}'_{JM} \equiv& \left( \frac{1}{q} \vec{\nabla} \times \vec{M}_{JJM}\right)\cdot \left(\vec{\sigma}\times \frac{1}{q}\vec{\nabla} \right) + \frac{1}{2}\vec{M}_{JJM}\cdot \vec{\sigma}\\
+\Phi''_{JM}\equiv& i\left(\frac{1}{q}\vec{\nabla}M_{JM} \right)\cdot \left(\vec{\sigma}\times \frac{1}{q}\vec{\nabla} \right)
+\end{align}
 
+The matrix elements of these operators can be calculated for standard wave functions from second-quantized shell model calculations:
+\begin{equation*}
+    \bra{\Psi_f} \mathcal{W}^{(f)}_J \ket{\Psi_i} = \Tr(\mathcal{W}^{(f)}_J \rho^{f,i}_J )
+\end{equation*}
+\begin{equation}
+ = \sum_{a,b}
+     \bra{a} |\mathcal{W}^{(f)}_J| \ket{b}
+     \rho^{fi}_J(ab),
+\end{equation}
+where single-particle orbital labels $a$ imply shell model quantum number $n_a, l_a, j_a$,
+and the double-bar $||$ indicates reduced matrix elements~\cite{edmonds1996angular}.
+We assume a harmonic oscillator single-particle basis, with the important convention that the
+radial nodal quantum number $n_a$ starts at 0, that is, we label the orbitals as $0s, 0p, 1s0d$, etc..,
+and \textit{not} starting with $1s, 1p,$ etc.
+Then the one-body matrix elements for operators $ \bra{a} |\mathcal{W}^{(f)}_J| \ket{b}$, built from spherical Bessel functions and vector spherical harmonics,  have closed-form expressions in terms of confluent hypergeometric
+functions~\cite{DONNELLY1979103}.
+
+The matrix element of the Bessel function on harmonic oscillator wave functions is
+\begin{equation}
+    \begin{split}
+    \bra{1l'}j_L(y)\ket{1l} = 
+        \frac{
+            (2y)^{L/2}e^{-y}(L+l'+l+1)!!
+        }{
+            (2L+1)!![(2l'+1)!!(2l+1)!!]^{1/2}
+        }\\
+        \times\ _1F_1((L-l'-l)/2, L+\frac{3}{2}, y),
+    \end{split}
+\end{equation}    
+where $_1F_1$ is the confluent hypergeometric function:
+\begin{equation}
+    _1F_1(a,b,z) = \sum_{n=0}^\infty \frac{a^{(n)}z^n}{b^{(n)}n!},
+\end{equation}
+which makes use of the rising factorial function:
+\begin{equation}
+    m^{(n)} = \frac{(m+n-1)!}{(m-1)!}.
+\end{equation}
 
 \section{Control file keywords}\label{cfk}
 
