@@ -52,13 +52,13 @@ def EventrateSpectra(Z, N, dres, ermin=1, ermax=1000, erstep=1,
                 Array of differential event rates (events/GeV)
     '''
 
-    writeinput(name, Z, N, dres, ermin, ermax, erstep)
-    writecontrol(name, controlwords, cpvec, cnvec, csvec, cvvec)
+    inputfile = writeinput(name, Z, N, dres, ermin, ermax, erstep)
+    controlfile = writecontrol(name, controlwords, cpvec, cnvec, csvec, cvvec)
 
     RecoilE, EventRate = runTemplates(
         exec_path, 
-        CSspectra_inputfilename,
-        control_template, 
+        inputfile,
+        controlfile, 
         )
 
     return RecoilE, EventRate
@@ -74,6 +74,7 @@ def writeinput(name, Z, N, dres, ermin, ermax, erstep):
     CSspectra_inputfile.write("%s\n"%dres)
     CSspectra_inputfile.write("%s %s %s\n"%(ermin, ermax, erstep))
     CSspectra_inputfile.close()
+    return CSspectra_inputfilename
 
 def writecontrol(name, controlword_dict, cpvec, cnvec, csvec, cvvec):
 
@@ -90,16 +91,17 @@ def writecontrol(name, controlword_dict, cpvec, cnvec, csvec, cvvec):
             if len(cvec) != 15:
                 print("Error: '%s' coupling vector is length-%i. Should be 15."%coupling)
                 exit()
-            nonzeroOps = np.nonzero(cvec)
+            nonzeroOps = np.flatnonzero(cvec)
             for operator in nonzeroOps:
                 nonzero = True
-                f.write("coefnonrel  %2i  %s  %20.10f\n"%(operator, coupling,
+                f.write("coefnonrel  %2i  %s  %20.10f\n"%(operator+1, coupling,
                     cvec[operator]))
     if not nonzero: print("Warning: there were no nonzero EFT couplings!")
 
     for key in controlword_dict:
         f.write("%s    %s\n"%(key, controlword_dict[key]))
     f.close()
+    return filename
 
 def runTemplates(exec_name, input_template, control_template, input_dict={},
     control_dict={}, workdir='./', label='runCustom',
