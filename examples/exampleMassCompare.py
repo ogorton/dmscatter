@@ -1,24 +1,34 @@
-import os
+import sys
+sys.path.append('/Users/oliver/projects/darkmatter/python')
 import matplotlib.pyplot as plt
 import dmfortfactor as dm
+import numpy as np
 
-exec_name = "dmfortfactor.x"
-
-# This script works by replacing MASS_KEYWORD with the desired value of the
-# WIMP mass, then running the code with a control file "<>.control".
-
-control_template = "xe131.control" # Filename ends in .template, this is the prefix.
-inputfile = 'input.xe131'
-workdir = os.getcwd()
 label = "xe131"
 
 plt.figure()
+cv = np.zeros(15)
+cs = np.zeros(15)
+cp = np.zeros(15)
+cn = np.zeros(15)
+cn[0] = 0.0048
 
 for wimp_mass in (50.,150.0, 500.,5000.):
 
-    param_dict = { "MASS_KEYWORD" : wimp_mass }
-    RecoilE, EventRate = dm.runCustomControl(exec_name, 
-            inputfile, control_template, param_dict, workdir, label)
+    cwords = { "wimpmass" : wimp_mass }
+
+    RecoilE, EventRate = dm.EventrateSpectra(
+        Z = 54,
+        N = 77,
+        dres = "../dres/xe131gcn",
+        controlwords = cwords,
+        ermin = 1,
+        ermax = 1000.0,
+        erstep = 1.0,
+        csvec = cs,
+        cvvec = cv,
+        cpvec = cp,
+        cnvec = cn)
 
     plt.plot(RecoilE, EventRate, label="$m_\chi=$%2.2f"%wimp_mass)
 

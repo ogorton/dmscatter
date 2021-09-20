@@ -20,7 +20,7 @@ for i,isotope in enumerate(isotopes):
     RecoilE, EventRate = dm.EventrateSpectra(
             Z,
             N,
-            dres = "xe%igcn"%isotope,
+            dres = "../dres/xe%igcn"%isotope,
             controlwords = controls,
             cpvec = cp )
 

@@ -5,13 +5,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import dmfortfactor as dm
 
-exec_name = "dmfortfactor.x"
-input_template = "c12.input.template"
-dresfile = 'c12Nmax8chi20hw.dres'
+dresfile = '../dres/c12Nmax8chi20hw'
 
 hofrequencies = np.arange(15., 25., 1)
 
-control_template = "c12.control.template"
 operators = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 for operator in operators:
@@ -24,15 +21,28 @@ for operator in operators:
     for i, hofrequency in enumerate(hofrequencies):
 
         rlabel = 'run_%s_%s'%(operator,hofrequency)
-        control_dict = {"OPERATOR" : operator,
-            "HOFREQUENCY" : hofrequency}
-        input_dict = {"DRESFILE" : dresfile[:-5],
-                "LABEL": rlabel} # remove .dres extension
-        
-        E, R = dm.runTemplates(exec_name, input_template, control_template, input_dict,
-            control_dict, workdir='./',
-            label=rlabel,
-            resultfile='eventrate_spectra.dat')
+
+        control_dict = {
+                "hofrequency" : hofrequency,
+                "wimpmass" : 500.0,
+                "vearth" : 232.0,
+                "maxwellv0" : 220.0,
+                "vescape" : 550.0,
+                "dmdens" : 0.3,
+                "ntscale" : 2500.0                
+            }
+
+        cn = np.zeros(15)
+        cn[operator-1] = 1.0
+
+        E, R = dm.EventrateSpectra(
+                Z = 6, 
+                N = 6, 
+                dres = dresfile,
+                controlwords = control_dict,
+                cnvec = cn)
+
+
         if (first):
             first=False
             R0 = R
