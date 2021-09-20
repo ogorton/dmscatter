@@ -6,7 +6,7 @@ program dmfortfactor
     print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     print*,'Welcome to our FORTAN 90 implementation of the WIMP-nucleon scattering code.'
     print*,'Based on the Mathematica script described in arXiv:1308.6288 (2003).'
-    print*,'  VERSION 1.4 UPDATED: 2021.01.15 @ SDSU'
+    print*,'  VERSION 1.8 UPDATED: 2021.09.15 @ SDSU'
     print*,'  Dev. contact: cjohnson@sdsu.edu'
     print*,'                 ogorton@sdsu.edu'
     print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
