@@ -1,5 +1,5 @@
 module transition
-    contains
+contains
 function transition_probability(q,v,wimp,nucl,eft)
     use kinds
     use constants

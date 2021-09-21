@@ -47,7 +47,6 @@ end function velocitycurve
 
 
 subroutine velocity_curve(wimp, nuc_target, eft, option)
-    use folium
     use parameters
     use constants, only: kev, mN, kilometerpersecond
     implicit none
@@ -58,8 +57,7 @@ subroutine velocity_curve(wimp, nuc_target, eft, option)
     real(doublep) :: Er, Qr, vstart, vstop, vstep
     integer :: sizevlist, i
     real(doublep), allocatable :: vlist(:), cslist(:)
-    type(foli) :: outputfile
-    integer :: option
+    integer :: option, iunit
 
     print*,"Enter recoil E (keV):"
     read*,Er
@@ -99,19 +97,17 @@ subroutine velocity_curve(wimp, nuc_target, eft, option)
 
     select case(option)
     case(3)
-        outputfile = foli("transition_probability.dat")
-        call sopennew(outputfile)
+        open(newunit=iunit, file="transition_probability.dat")
         do i = 1, sizevlist
-            write(outputfile%iunit,*) vlist(i)/kilometerpersecond, cslist(i)
+            write(iunit,*) vlist(i)/kilometerpersecond, cslist(i)
         end do
-        call sclose(outputfile)
+        close(iunit)
     case(2)
-        outputfile = foli("crosssection.dat")
-        call sopennew(outputfile)
+        open(newunit=iunit, file="crosssection.dat")
         do i = 1, sizevlist
-            write(outputfile%iunit,*) vlist(i)/kilometerpersecond, cslist(i)
+            write(iunit,*) vlist(i)/kilometerpersecond, cslist(i)
         end do
-        call sclose(outputfile)
+        close(iunit)
     case default
         STOP "Not a velocity curve option."
     end select        

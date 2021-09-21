@@ -1,5 +1,5 @@
 module norm
-    contains
+contains
 !-------------------------------------------------------------------------------
 function Jnorm(j)
     implicit none

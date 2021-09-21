@@ -1,5 +1,5 @@
 module crosssection
-    contains
+contains
 function diffCrossSection(v, q, wimp, nucl, eft)
     ! Computes the differential cross section per recoil energy ds/dEr
     use kinds

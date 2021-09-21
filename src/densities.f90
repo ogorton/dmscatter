@@ -4,7 +4,7 @@ subroutine openresults(resfile)
    implicit none
    integer resfile
 
-   character(22):: filename
+   character(100):: filename
    integer ilast
 
    logical success
@@ -126,7 +126,7 @@ end subroutine printdensities
   end if
 
   return
-  end function closest2J
+end function closest2J
 subroutine readheaderv2(nuc_target, resfile)
    use parameters
    implicit none

@@ -48,7 +48,7 @@ crosssection.o : transition.o
 
 eventrate.o : gausquad.o gaus.o crosssection.o velocitydist.o 
 
-spectra.o : fileobject.o eventrate.o
+spectra.o : eventrate.o
 
 totaleventrate.o : eventrate.o gaus.o
 

@@ -1,7 +1,7 @@
 module sigma
-    use norm
-    use bessel
-    contains
+use norm
+use bessel
+contains
 
 !-------------------------------------------------------------------------------
 function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
