@@ -3,10 +3,10 @@ module mod_spectra
     use kinds
     implicit none
 
-    real(doublep) :: ER_start
-    real(doublep) :: ER_stop
-    real(doublep) :: ER_step
-    real(doublep), allocatable :: energy_grid(:), momentum_grid(:)
+    real(doublep) :: x_start
+    real(doublep) :: x_stop
+    real(doublep) :: x_step
+    real(doublep), allocatable :: x_grid(:), energy_grid(:), momentum_grid(:)
     integer :: energy_grid_size
 
 contains
@@ -151,9 +151,9 @@ subroutine eventrate_spectra(wimp, nuc_target, eft)
     type(eftheory) :: eft
     
     integer :: calc_num
+    integer :: iunit
     real(doublep) :: recoil_energy, momentum_transfer
     real(doublep), allocatable :: event_rate_spectra(:)
-
     real(doublep) :: mtarget, totaleventrate, error
 
     print*,"Computing differential event rate spectra"
@@ -162,19 +162,7 @@ subroutine eventrate_spectra(wimp, nuc_target, eft)
     mtarget = nuc_target%mass
 
     ! Get domain
-    call get_energy_grid
-    allocate(momentum_grid(energy_grid_size))
-    do calc_num = 1, energy_grid_size
-        if (usemomentum) then
-            momentum_transfer = ER_start + (calc_num - 1) * ER_step
-            recoil_energy = momentum_transfer**2d0 / (2d0*mtarget*mN*kev)
-            momentum_grid(calc_num) = momentum_transfer
-            energy_grid(calc_num) = recoil_energy
-        else
-            recoil_energy = energy_grid(calc_num)
-            momentum_grid(calc_num) = sqrt(2d0*mtarget*mN*recoil_energy*kev)
-        end if
-    end do    
+    call get_energy_grid(mtarget)
 
     ! Setup calculation and compute
     print*,'Number of event rates to compute:',energy_grid_size
@@ -196,23 +184,25 @@ subroutine eventrate_spectra(wimp, nuc_target, eft)
     print*,'Total integrated eventrate (events)',totaleventrate,'pm',error
 
     ! Write results to file
-    open(unit=157, file='eventrate_spectra.dat')
-    write(157,"(A,T30,A)")"# Recoil energy (kev)","Event rate (events/gev)"
+    open(newunit=iunit, file='eventrate_spectra.dat')
+    write(iunit,"(A,T30,A)")"# Recoil energy (kev)","Event rate (events/gev)"
     do calc_num = 1, energy_grid_size
         recoil_energy = energy_grid(calc_num)
-        write(157,*)recoil_energy,event_rate_spectra(calc_num)
+        write(iunit,*)recoil_energy,event_rate_spectra(calc_num)
     end do
 
-    close(157)
+    close(iunit)
     print*,"Event rate spectra written to eventrate_spectra.dat"
 
 end subroutine eventrate_spectra
 
-subroutine get_energy_grid
+subroutine get_energy_grid(mtarget)
     use momenta
+    use constants, only: kev, mN
     implicit none
     integer :: calc_num
-    character(len=40) :: filename
+    character(len=100) :: filename
+    real(doublep) :: momentum_transfer, mtarget, recoil_energy
 
     ! Get recoil energy grid from user or from file
     if (useenergyfile) then
@@ -228,48 +218,61 @@ subroutine get_energy_grid
             print*,'Enter starting energy, stoping energy, step size:'
         end if
 
-        read*,ER_start, ER_stop, ER_step
+        read*,x_start, x_stop, x_step
 
         if (usemomentum) then
-            print*,"q min  (gec/c)",ER_start
-            print*,"q max  (gev/c)",ER_stop
-            print*,"q step (gev/c)",ER_step
+            print*,"q min  (gec/c)",x_start
+            print*,"q max  (gev/c)",x_stop
+            print*,"q step (gev/c)",x_step
         else
-            print*,"E min  (kev)",ER_start
-            print*,"E max  (kev)",ER_stop
-            print*,"E step (kev)",ER_step
+            print*,"E min  (kev)",x_start
+            print*,"E max  (kev)",x_stop
+            print*,"E step (kev)",x_step
         end if        
 
-        energy_grid_size = int((ER_stop - ER_start) / ER_step) + 1
+        energy_grid_size = int((x_stop - x_start) / x_step) + 1
 
         allocate(energy_grid(energy_grid_size))
         do calc_num = 1, energy_grid_size
-            energy_grid(calc_num) = ER_start + (calc_num - 1) * ER_step
+            energy_grid(calc_num) = x_start + (calc_num - 1) * x_step
         end do
-    end if    
+    end if
+
+    allocate(momentum_grid(energy_grid_size))
+    do calc_num = 1, energy_grid_size
+        if (usemomentum) then
+            momentum_transfer = x_start + (calc_num - 1) * x_step
+            recoil_energy = momentum_transfer**2d0 / (2d0*mtarget*mN*kev)
+            momentum_grid(calc_num) = momentum_transfer
+            energy_grid(calc_num) = recoil_energy
+        else
+            recoil_energy = energy_grid(calc_num)
+            momentum_grid(calc_num) = sqrt(2d0*mtarget*mN*recoil_energy*kev)
+        end if
+    end do    
 end subroutine
 
 subroutine read_energy_grid(filename)
 
     use kinds
     implicit none
-    character(len=40) :: filename
-    integer :: i, io
+    character(len=100) :: filename
+    integer :: i, io, iunit
 
-    open(unit=159,file=trim(filename))
+    open(newunit=iunit,file=trim(filename))
     do 
-        read(159,*,iostat=io)
+        read(iunit,*,iostat=io)
         if (io/=0) exit
         energy_grid_size = energy_grid_size + 1
     end do
 
     allocate(energy_grid(energy_grid_size))
-    rewind(159)
+    rewind(iunit)
 
     do i = 1, energy_grid_size
-        read(159,*) energy_grid(i)
+        read(iunit,*) energy_grid(i)
     end do
-    close(159)
+    close(iunit)
 end subroutine read_energy_grid
 
 end module mod_spectra

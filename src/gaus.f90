@@ -125,7 +125,6 @@ subroutine gaus8_threadsafe ( func, a, b, err, result, ierr, tid )
   real ( kind = 8 ) gl
   real ( kind = 8 ) glr
   real ( kind = 8 ) gr(30)
-  real ( kind = 8 ) h
   real ( kind = 8 ) hh(30)
   integer ( kind = 4 ), save :: icall = 0
   integer ( kind = 4 ) ierr
@@ -145,7 +144,6 @@ subroutine gaus8_threadsafe ( func, a, b, err, result, ierr, tid )
   real ( kind = 8 ) tol
   real ( kind = 8 ) vl(30)
   real ( kind = 8 ) vr
-  real ( kind = 8 ) x
 
   integer tid
 

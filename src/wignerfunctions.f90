@@ -376,24 +376,6 @@ FUNCTION Wigner_6j(a,b,c,d,e,f)
   ! a b c !
   ! d e f !
  
-!  INTERFACE
-!
-!     FUNCTION FacLOG(N)
-!
-!       IMPLICIT NONE
-!       INTEGER, INTENT(IN) :: N
-!       REAL(kind=8) ::  FacLOG
-!     END FUNCTION FacLOG
-!
-!     FUNCTION Triangle(a,b,c)
-!
-!       IMPLICIT NONE
-!       INTEGER, INTENT(IN) :: a,b,c
-!       REAL(kind=8) :: Triangle
-!     END FUNCTION Triangle
-!
-!  END INTERFACE
-
  INTEGER, INTENT(IN) :: a,b,c,d,e,f
 
   REAL(kind=8) :: Wigner_6j

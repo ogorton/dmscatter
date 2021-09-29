@@ -31,6 +31,3 @@
       ans=dx*(2d0/45d0)*boole_out
          
       end subroutine  
-
-
-

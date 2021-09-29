@@ -1,6 +1,7 @@
 module gausquad
 
-    contains
+contains
+
 function gaussquad(func,n,a,b,tid) result(z)
   !
   ! This function computes the indefinite integral of the function func

@@ -40,6 +40,8 @@ dmresponse.o : dmresponselib.o
 
 nucresponse.o : orbitals.o
 
+nucresponse_spectra.o : orbitals.o spectra.o
+
 controlfiler.o : orbitals.o
 
 transition.o : dmresponse.o nucresponse.o

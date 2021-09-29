@@ -1,7 +1,7 @@
 !================================================
 module nucresponse
     contains
-function nucFormFactor(tau1,tau2,term,y,densmat,Tiso,Mtiso)
+function nucFormFactor(tau1, tau2, term, y, densmat, Tiso, Mtiso)
 
     ! Computes the nuclear form factor terms for a given 
     ! pn-coupling (iso-coupling) using pn-formalism (iso-formalism)
@@ -109,7 +109,7 @@ function nucFormFactor(tau1,tau2,term,y,densmat,Tiso,Mtiso)
 
 end function nucFormFactor
 !-----------------------------------------------------------------------------80
-function nucFormFactor_transform(tau1,tau2,term,y,densmat,Tiso,Mtiso) result(FF)
+function nucFormFactor_transform(tau1, tau2, term, y, densmat, Tiso, Mtiso) result(FF)
 
     ! Provides the nuclear form factors for a given isospin coupling, computed 
     ! from pn-formalism density matrices, and vice versa. 
@@ -168,12 +168,13 @@ end function nucFormFactor_transform
 subroutine test_nucresponse(nuc_target)
 
     use parameters
+    use orbitals, only: bfm
     implicit none
 
     type(nucleus) :: nuc_target
     integer :: ioption, op1, op2, Mtiso
     integer :: tt1,tt2
-    REAL(kind=8) :: y !, spOME, spOME1,spOME2
+    REAL(kind=8) :: y, q !, spOME, spOME1,spOME2
     REAL(kind=8) :: Response
     logical :: success
 
@@ -208,12 +209,20 @@ subroutine test_nucresponse(nuc_target)
     end do
 
     print*,' '
-    print*,' Enter the value of y '
-    read(5,*)y
+    print*,' Enter nuclear recoil q in GeV:'
+    read(5,*)q
+
+    y = (q * bfm / 2d0) ** 2d0
+
+    if (.true.) then
+        print*,'q',q
+        print*,'bfm',bfm
+        print*,'y',y
+    end if
 
     Response = 0.d0
 
-    Write (*,*) "Response for option",ioption
+    write (*,*) "Response for option",ioption
     if (pndens) then
         print*,"From pn-density:"
         print*,"x,   x',   response"
