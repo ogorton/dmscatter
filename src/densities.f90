@@ -195,34 +195,24 @@ subroutine read2state(resfile,locchar,n,found,finished)
    found = .false.
    select case (locchar)
      case ('i')
-     do while(.not.found)
-        read(resfile,1,end=111)myloc
-1 format(a4)
-        if(myloc(2:4)=='Ini')then
-        backspace(resfile)
-        read(resfile,11)myloc,n
-!       print*, 'int', n
-11 format(a4,13x,i4)
-
-           found = .true.
-           exit
-
-        endif
-      end do
-
-      case('f')
-
-        read(resfile,11)myloc,n
-        if(myloc(2:4)=='Fin')found=.true.
-
-!        print*, 'fin',n
+       do while(.not.found)
+          read(resfile,'(a4)',end=111)myloc
+          if(myloc(2:4)=='Ini')then
+              backspace(resfile)
+              read(resfile,'(a4,13x,i4)')myloc,n
+              found = .true.
+              exit
+          endif
+       end do
+     case('f')
+       read(resfile,'(a4,13x,i4)')myloc,n
+       if(myloc(2:4)=='Fin')found=.true.
    end select
    finished = .false.
    return
 111 continue
    finished = .true.
    return
-
 end subroutine read2state
 
 
@@ -281,18 +271,15 @@ subroutine readdensity(nuc_target, resfile,success)
 
     do i = 1,norb(1)*norb(1)!nsporb*nsporb
         read(resfile,*,err=1,end=1)a,b,ops,opv
+        if(ops /= 0.0)then
+            nuc_target%densitymats%rho(jt,0,a,b)= ops
+            success=.true.
+        end if
 
-             if(ops /= 0.0)then
-               nuc_target%densitymats%rho(jt,0,a,b)= ops
-               success=.true.
-             end if
-
-             if(opv /= 0.0)then
-               nuc_target%densitymats%rho(jt,1,a,b) = opv
-               success=.true.
-             end if
-
-        !end if
+        if(opv /= 0.0)then
+            nuc_target%densitymats%rho(jt,1,a,b) = opv
+            success=.true.
+        end if
    end do
 
    return
@@ -323,14 +310,14 @@ subroutine readalldensities(nuc_target,resfile)
       call read2state(resfile,'i',istate,foundi,finished)
       if(finished)exit
       if(.not.foundi)then
-           endoffile = .true.
-           exit
+          endoffile = .true.
+          exit
       end if
       call read2state(resfile,'f',fstate,foundf,finished)
 
       if(.not.foundf)then
-           endoffile = .true.
-           exit
+          endoffile = .true.
+          exit
       end if
       if(finished)exit
 
@@ -347,14 +334,13 @@ subroutine readalldensities(nuc_target,resfile)
 
           call readdensity(nuc_target, resfile,success)
           if(success)nodensities=.false.
-!          end if
       end do ! endoflist
       exit
 
    end do  ! endoffile
 
    if(nodensities)then
-          print*,' Wait! That density file held no densities ! '
+       print*,' Wait! That density file held no densities ! '
    end if
 
    return

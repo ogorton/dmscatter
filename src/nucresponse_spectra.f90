@@ -10,11 +10,14 @@ subroutine nucresponse_spectra(nuc_target)
     integer :: iunit
     integer :: ioperator, tau, tau_prime, iy
     integer :: iqq
-    type(nucleus) :: nuc_target
+    type(nucleus) :: nuc_target   
 
     real(doublep) :: yy, qq
     real(doublep), allocatable :: xlist(:), Wlist(:,:,:,:)
     real(doublep) :: mtarget
+    real(doublep) :: tolerance
+
+    tolerance = epsilon(qq)
 
     mtarget = nuc_target%mass
     call get_energy_grid(mtarget)
@@ -63,22 +66,14 @@ subroutine nucresponse_spectra(nuc_target)
     write(iunit,'(a)')'# tau = 0, 1 isospin coupling'
     write(iunit,'(a)')'# q = momentum transfer'
     write(iunit,'(a)')  '# Format:'
-    write(iunit,'(a)')  '# q'
-    write(iunit,'(a)')  '# W(1, 0, 0, q) W(1, 1, 0, q) W(1, 0, 1, q) W(1, 1, 1, q)'
-    write(iunit,'(a)')  '# W(2, 0, 0, q) W(2, 1, 0, q) W(2, 0, 1, q) W(2, 1, 1, q)'
-    write(iunit,'(a)')  '# W(3, 0, 0, q) W(3, 1, 0, q) W(3, 0, 1, q) W(3, 1, 1, q)'
-    write(iunit,'(a)')  '# W(4, 0, 0, q) W(4, 1, 0, q) W(4, 0, 1, q) W(4, 1, 1, q)'
-    write(iunit,'(a)')  '# W(5, 0, 0, q) W(5, 1, 0, q) W(5, 0, 1, q) W(5, 1, 1, q)'
-    write(iunit,'(a)')  '# W(6, 0, 0, q) W(6, 1, 0, q) W(6, 0, 1, q) W(6, 1, 1, q)'
-    write(iunit,'(a)')  '# W(7, 0, 0, q) W(7, 1, 0, q) W(7, 0, 1, q) W(7, 1, 1, q)'
-    write(iunit,'(a)')  '# W(8, 0, 0, q) W(8, 1, 0, q) W(8, 0, 1, q) W(8, 1, 1, q)'
+    write(iunit,'(a)')  '# q, { W(i, 0, 0, q) W(i, 1, 0, q) W(i, 0, 1, q) W(i, 1, 1, q); i = 1, ..., 8}'
+
     do iqq = 1, energy_grid_size
       qq = momentum_grid(iqq)
-      write(iunit, '(ES20.5)') qq
-      do ioperator = 1, 8
-        write(iunit,'(8(ES20.5))') Wlist(iqq, ioperator, :, :)
-      end do
+      write(iunit,'(ES15.5E3,32(ES15.5E3))') qq, Wlist(iqq, 1:8, 0:1, 0:1)
     end do
     close(iunit)
+
+    deallocate(Wlist)
 
 end subroutine nucresponse_spectra
