@@ -1,7 +1,3 @@
-mkdir tmp
-cp clean.sh tmp/
-cp install.sh tmp/
-rm ./* 
-rm -r CMakeFiles
-cp tmp/* ./
-rm -r tmp
+shopt -s extglob
+echo "Cleaning build directory..."
+rm -r !(clean.sh|build.sh|build-serial.sh) && echo "Done."
