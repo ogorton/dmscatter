@@ -11,6 +11,7 @@ function nucFormFactor(tau1, tau2, term, y, densmat, Tiso, Mtiso)
     use orbitals
     use parameters
     use wignerfunctions
+    use densities, only: maxJt, minJt
 
     implicit none
 
@@ -32,40 +33,41 @@ function nucFormFactor(tau1, tau2, term, y, densmat, Tiso, Mtiso)
 
     jmin = -1
     jmax = -1
+    jmax = maxJt
 
     select case(term)
       case(1)
         ! Mj Mj
         op1 = 1; op2 = 1
-        jmin = 0; jmax = 6            
+        jmin = 0
       case(2)
         ! PhiPPJ PhiPPJ
         op1 = 3; op2 = 3
-        jmin = 0; jmax = 6
+        jmin = 0
       case(3)
         ! PhiTPJ PhiTPJ
         op1 = 4; op2 = 4
-        jmin = 2; jmax = 6
+        jmin = 2
       case(4)
         ! DeltaJ DeltaJ
         op1 = 5; op2 = 5
-        jmin = 1; jmax = 5
+        jmin = 1
       case(5)
         ! SigmaPJ SigmaPJ
         op1 = 6; op2 = 6
-        jmin = 1; jmax = 5
+        jmin = 1
       case(6)
         ! SigmaPPJ SigmaPPJ
         op1 = 7; op2 = 7
-        jmin = 1; jmax = 5
+        jmin = 1
       case(7)
         ! PhiPPJ MJ
         op1 = 3; op2 = 1
-        jmin = 0; jmax = 6
+        jmin = 0
       case(8) 
         ! DeltaJ SigmaPJ
         op1 = 5; op2 = 6
-        jmin = 1; jmax = 5
+        jmin = 1
       case default
         stop "Invalid term."
     end select        

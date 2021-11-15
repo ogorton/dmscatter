@@ -14,6 +14,10 @@ the gfortran compiler and Cmake installed. From the `build` directory, run:
 This places the dmfortfactor.x executable in the `build` directory. Move it to
 your bin directory if desired.
 
+To run one of the example Python scripts, try moving to `runs` and running:
+
+    python3 ../examples/exampleXe.py
+
 More extensive documentation can be found in the manual document.
 
 ### Developer contacts

@@ -27,6 +27,7 @@ sample/*/*.fdb_latexmk
 sample/*/*.bak
 sample/*/*.pyc
 sample/*/*.bigstick
+test/
 */*/*.lcoef
 */*/*.wfn
 */*/*.log

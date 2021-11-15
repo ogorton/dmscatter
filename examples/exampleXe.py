@@ -18,13 +18,17 @@ Erkev, ER = dm.EventrateSpectra(
         N = 77,
         dres = "../dres/xe131gcn",
         controlwords = cwords,
-        ermin = 1,
-        ermax = 1000.0,
-        erstep = 1.0,
+        epmin = 1,
+        epmax = 1000.0,
+        epstep = 1.0,
         csvec = cs,
         cvvec = cv,
         cpvec = cp,
         cnvec = cn)
 
+plt.xscale('log')
+plt.yscale('log')
+plt.xlabel(r"$E_{recoil}$ (keV)")
+plt.ylabel(r"$dR/dE_r$ (1/MeV)")
 plt.plot(Erkev,ER)
 plt.show()

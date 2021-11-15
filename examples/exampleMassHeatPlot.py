@@ -42,16 +42,16 @@ if compute:
 
         # EFT coupling: isovector
         cvvec = np.zeros(15)
-        cvvec[1] = 0.00048
+        cvvec[0] = 0.00048
 
         # Evaluate the model
         E, R = dm.EventrateSpectra(
             Z = 54, 
             N = 77, 
-            dres = "xe131gcn", 
-            ermin = 1.0, 
-            ermax = 1000.0, 
-            erstep = 1.0,
+            dres = "../dres/xe131gcn", 
+            epmin = 1.0, 
+            epmax = 1000.0, 
+            epstep = 1.0,
             controlwords = control_dict,
             cvvec = cvvec)
 

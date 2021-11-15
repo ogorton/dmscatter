@@ -1,3 +1,9 @@
+module densities
+implicit none
+integer :: jt, tt
+integer :: maxJt=-1
+integer :: minJt=999
+contains
 !===================================================================
 subroutine openresults(resfile)
    use parameters
@@ -89,8 +95,11 @@ subroutine printdensities(nuc_target)
     type(nucleus) :: nuc_target
     integer J,a, b
     print*,'Printing density matrix.'
+    print*,"PN-format:",pndens
+    print*,"min Jt:",minJt
+    print*,"max Jt:",maxJt
     print*,'# spo =', ntotal(1)
-    do J=0,10
+    do J=minJt,maxJt
         print*,'J=',J
         do a=1,ntotal(1)
             do b=1,ntotal(1)
@@ -110,7 +119,7 @@ end subroutine printdensities
 !  function to force conversion of unconverged xJ to integer J
 !  that is, odd 2 x J for odd A, and even for even A
 !
-  function closest2J(evenA,xj)
+function closest2J(evenA,xj)
 
   implicit none
   integer closest2J
@@ -127,6 +136,7 @@ end subroutine printdensities
 
   return
 end function closest2J
+
 subroutine readheaderv2(nuc_target, resfile)
    use parameters
    implicit none
@@ -136,7 +146,6 @@ subroutine readheaderv2(nuc_target, resfile)
    integer i,j,n
    real(kind=8) e,ex,xj,xt
    integer np,zp
-   integer closest2J   ! function to convert poorly converged values
       rewind(resfile)
       read(resfile,'(a)')tmpline
       read(resfile,*)zp,np
@@ -218,12 +227,11 @@ end subroutine read2state
 
 subroutine read2Jtrans(resfile,found)
    use parameters
-!   use op_info,only:pndens
+
    implicit none
    integer resfile
    logical found
    character(3) :: tmpchar
-   !integer j
 
    read(resfile,'(a3)',end=111)tmpchar
    if(tmpchar(2:3) == ' ' .or. tmpchar(2:3)=='In' .or. tmpchar(1:2)=='++')then
@@ -233,6 +241,10 @@ subroutine read2Jtrans(resfile,found)
    if(tmpchar(2:3) == 'Jt')then
      backspace(resfile)
      read(resfile,'(5x,i4)')jt
+
+     !update min/max jt
+     minJt = min(minJt, jt)
+     maxJt = max(maxJt, jt)
 
    end if
    found = .true.
@@ -244,9 +256,6 @@ subroutine read2Jtrans(resfile,found)
            pndens=.true.
            print*,'Density matrix is in explicit proton-neutron format.'
    else
-           print*,"Density matrix is in isospin format."
-           print*,"This format is not currently supported."
-!           STOP "Incompatible density matrix format."
            pndens=.false.
    end if
 
@@ -345,3 +354,5 @@ subroutine readalldensities(nuc_target,resfile)
 
    return
 end subroutine readalldensities
+
+end module densities

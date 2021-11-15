@@ -8,14 +8,18 @@ program dmfortfactor
     implicit none
     integer(kind=8) :: clock_rate, tstart, tstop    
     character(len=2) :: option
+    logical :: usingopenMP
+    usingopenMP = .false.
+    !$ usingopenMP = .true.
 
     print *,'================================================================================='
     print *,'Welcome to our modern Fortran implementation of the WIMP-nucleon scattering code.'
     print *,'Based on the Mathematica script described in arXiv:1308.6288 (2003).'
-    print *,'  VERSION 1.8 UPDATED: 2021.09.15 @ SDSU'
+    print *,'  VERSION 1.9 UPDATED: 2021.10.21 @ SDSU'
     print *,'  Developer contacts:'
     print *,'            cjohnson@sdsu.edu'
     print *,'             ogorton@sdsu.edu'
+    print *,' openMP:',usingopenMP
     print *,'================================================================================='
     print *,''
     print *,'Select an option:'

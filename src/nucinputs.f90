@@ -3,6 +3,7 @@ subroutine setup_nuclearinputs(nuc_target)
     use parameters
     use orbitals
     use constants
+    use densities
     implicit none
 
     type(nucleus) :: nuc_target

@@ -59,6 +59,7 @@ module orbitals
     data cores(10)%nradial/1/, cores(10)%l/1/, cores(10)%jx2/1/, cores(10)%nodal/2/
     data cores(11)%nradial/0/, cores(11)%l/4/, cores(11)%jx2/9/, cores(11)%nodal/1/
     contains
+
 subroutine getorbitals(resfile, A)
     implicit none
     integer :: resfile

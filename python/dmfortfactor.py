@@ -2,81 +2,126 @@ import os
 import subprocess
 import numpy as np
 
-def EventrateSpectra(Z, N, dres, ermin=1, ermax=1000, erstep=1, 
+def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1, 
         controlwords={}, cpvec=None, cnvec=None, csvec=None, cvvec=None,
-        exec_path='dmfortfactor.x', name="CSspectra"):
+        exec_path='dmfortfactor', name=".eventratespectra"):
 
     '''
-        Calls the dmfortfactor eventrate spectra function, which computes the
-        differential WIMP-nucleus scattering event rate as a function of nuclear
-        recoil energy.
+    Calls the dmfortfactor eventrate spectra function, which computes the
+    differential WIMP-nucleus scattering event rate as a function of nuclear
+    recoil energy.
 
-        Required arguments:
-            Z 
-                Number of protons in the target nucleus
-            N   
-                Number of neutron in the target nucleus
-            dres
-                Filename ending in .dres (not including .dres) for the file
-                containing the reduced one-body density matrices for the target
-                nucleus wave function
+    Required arguments:
+        Z 
+            Number of protons in the target nucleus
+        N   
+            Number of neutron in the target nucleus
+        dres
+            Filename ending in .dres (not including .dres) for the file
+            containing the reduced one-body density matrices for the target
+            nucleus wave function
 
-        Optional arguments:
-            ermin
-                Recoil energy minimum (keV)
-            ermax
-                Recoil energy maximum (keV)
-            erstep
-                Recoil energy step size (keV). Spectra will be produced for recoil
-                energies from ermin to ermax in steps of erstep.
-            controlwords
-                Dictionary of control words. Keys must be valid dmfortfactor
-                control keywords, and values must be numbers.
-            cpvec
-                Length-15 array of nonrelativistic proton- coupling coefficients
-            cnvec
-                Length-15 array of nonrelativistic neutron- coupling coefficients
-            csvec
-                Length-15 array of nonrelativistic isoscalar- coupling coefficients
-            cvvec
-                Length-15 array of nonrelativistic isovector- coupling coefficients
-            exec_path
-                Path to the executable for dmfortfactor
-            name
-                Name string assigned to temporary files
+    Optional arguments:
+        epmin
+            Recoil energy minimum (keV)
+        epmax
+            Recoil energy maximum (keV)
+        epstep
+            Recoil energy step size (keV). Spectra will be produced for recoil
+            energies from epmin to epmax in steps of epstep.
+        controlwords
+            Dictionary of control words. Keys must be valid dmfortfactor
+            control keywords, and values must be numbers.
+        cpvec
+            Length-15 array of nonrelativistic proton- coupling coefficients
+        cnvec
+            Length-15 array of nonrelativistic neutron- coupling coefficients
+        csvec
+            Length-15 array of nonrelativistic isoscalar- coupling coefficients
+        cvvec
+            Length-15 array of nonrelativistic isovector- coupling coefficients
+        exec_path
+            Path to the executable for dmfortfactor
+        name
+            Name string assigned to temporary files
 
-        Returns:
-            RecoilE
-                Array of recoil energies (keV)
-            EventRate
-                Array of differential event rates (events/GeV)
+    Returns:
+        RecoilE
+            Array of recoil energies (keV)
+        EventRate
+            Array of differential event rates (events/GeV)
     '''
 
-    inputfile = writeinput(name, Z, N, dres, ermin, ermax, erstep)
+    inputfile = writeinput('er', name, Z, N, dres, epmin, epmax, epstep)
     controlfile = writecontrol(name, controlwords, cpvec, cnvec, csvec, cvvec)
 
     RecoilE, EventRate = runTemplates(
         exec_path, 
         inputfile,
         controlfile, 
+        label=name
         )
 
     return RecoilE, EventRate
 
-def writeinput(name, Z, N, dres, ermin, ermax, erstep):
+def NucFormFactor(Z, N, dres, epmin=1, epmax=1000, epstep=1,
+    controlwords={}, exec_path='dmfortfactor', name=".nucFFspectra"):
+
+    from scipy.interpolate import interp1d
+    
+    inputfile = writeinput('ws', name, Z, N, dres, epmin, epmax, epstep)
+    controlfile = writecontrol(name, controlwords)
+
+
+    columns  = runTemplates(
+        exec_path,
+        inputfile,
+        controlfile,
+        label=name,
+        resultfile='nucresponse_spectra.dat'
+        )
+
+    q = columns[0]
+    W = columns[1:]
+
+    function_lst = []
+    for operator in range(0,8):
+        for tau in range(0,2):
+            for tau_prime in range(0,2):
+                windx = operator + tau * 8 + tau_prime * 8 * 2
+                function_lst.append(interp1d(q, W[windx,:]))
+
+    def Wfunc(qq):
+
+        result = np.zeros((8,2,2))
+        for operator in range(0,8):
+            for tau in range(0,2):
+                for tau_prime in range(0,2):
+                    windx = operator + tau * 8 + tau_prime * 8 * 2
+                    f = function_lst[windx]
+                    result[operator, tau, tau_prime] = f(qq)
+        return result
+
+    return Wfunc
+    
+##
+## Helper funtions
+##
+def writeinput(option, name, Z, N, dres, epmin, epmax, epstep):
     # Create input file
     CSspectra_inputfilename = name + ".input"
     CSspectra_inputfile = open(CSspectra_inputfilename, "w+")
-    CSspectra_inputfile.write("1\n")
+    CSspectra_inputfile.write("%s\n"%option)
     CSspectra_inputfile.write("%i\n"%Z)
     CSspectra_inputfile.write("%i\n"%N)
-    CSspectra_inputfile.write("CSspectra\n")
+    CSspectra_inputfile.write("%s\n"%name)
     CSspectra_inputfile.write("%s\n"%dres)
-    CSspectra_inputfile.write("%s %s %s\n"%(ermin, ermax, erstep))
+    CSspectra_inputfile.write("%s %s %s\n"%(epmin, epmax, epstep))
     CSspectra_inputfile.close()
     return CSspectra_inputfilename
 
-def writecontrol(name, controlword_dict, cpvec, cnvec, csvec, cvvec):
+def writecontrol(name, controlword_dict, cpvec=None, cnvec=None, csvec=None,
+        cvvec=None):
 
     # Create control file
     filename = name + ".control"
@@ -147,26 +192,33 @@ def runTemplates(exec_name, input_template, control_template, input_dict={},
         exit()
 
     # Control file
-    findandreplace = "sed '"
-    for keyword in control_dict.keys():
-        findandreplace += "s/%s/%s/g;"%(keyword,control_dict[keyword])
-    findandreplace += "' %s > %s.control"%(control_template, label)
-    returned = subprocess.call(findandreplace, shell=True)    
+    if control_dict == {}:
+        pass
+    else:
+        findandreplace = "sed '"
+        for keyword in control_dict.keys():
+            findandreplace += "s/%s/%s/g;"%(keyword,control_dict[keyword])
+        findandreplace += "' %s > %s.control"%(control_template, label)
+        returned = subprocess.call(findandreplace, shell=True)    
 
     # Input file
-    findandreplace = "sed '"
-    for keyword in input_dict.keys():
-        findandreplace += "s/%s/%s/g;"%(keyword,input_dict[keyword])
-    findandreplace += "' %s > %s.input"%(input_template,label)
-    returned = subprocess.call(findandreplace, shell=True)    
+    if input_dict == {}:
+        custominput = input_template
+    else:
+        findandreplace = "sed '"
+        custominput = "%s.input"%label
+        for keyword in input_dict.keys():
+            findandreplace += "s/%s/%s/g;"%(keyword,input_dict[keyword])
+        findandreplace += "' %s > %s"%(input_template,custominput)
+        returned = subprocess.call(findandreplace, shell=True)    
 
     # Execute
-    command = "%s < %s.input > %s.output"%(exec_name,label,label)
+    command = "%s < %s > %s.output"%(exec_name,custominput,label)
     print(command)
     returned = subprocess.call(command,shell=True)
     if(returned != 0): print("Return code: %s"%returned)    
 
     # Collect output
-    RecoilE, EventRate = np.loadtxt(resultfile, unpack=True, skiprows=1)
+    columns = np.loadtxt(resultfile, unpack=True)
     os.chdir(path)
-    return RecoilE, EventRate    
+    return columns

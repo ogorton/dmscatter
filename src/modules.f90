@@ -36,9 +36,6 @@ module parameters
    logical :: evenA
    integer nlocalstates !,maxlocalstates
    integer nsporb   ! # of single-particle orbits
-   integer jt, tt   ! spin, isospin of transition operator
-   integer :: maxeventJt = 5
-   integer :: maxoddJt = 6
    logical ::  pndens ! true: proton-neutron format density matrices.
                       ! false: isospin-conserving format density matrices
 

@@ -55,10 +55,10 @@ function dmrMJ(eft, tau1, tau2, q, v, jchi, muT)
 
     dmrMJ = 0.25*Cl(jchi) &
         * ((eft(tau1,5)*eft(tau2,5)*q*q + eft(tau1,8)*eft(tau2,8)) &
-                 * (v*v - q*q/(4d0*muT*muT)) &
+                 * vp2(v,q,muT) &
             + eft(tau1,11)*eft(tau2,11)*q*q) &
-        + (eft(tau1,1) + eft(tau1,2)*(v*v - q*q/(4d0*muT*muT))) &
-            * (eft(tau2,1) + eft(tau2,2)*(v*v - q*q/(4d0*muT*muT)))
+        + (eft(tau1,1) + eft(tau1,2)*vp2(v,q,muT)) &
+            * (eft(tau2,1) + eft(tau2,2)*vp2(v,q,muT) )
 
 end function dmrMJ
 
@@ -109,10 +109,7 @@ function dmrPhiPPJMJ(eft, tau1, tau2, q, v, jchi, muT)
     dmrPhiPPJMJ = q*q/(4*mN) * Cl(jchi) * eft(tau1,11) * ( &
                 eft(tau2,12) - eft(tau2,15)*q*q &
             ) + q*q/(mN)*eft(tau2,3) * ( &
-                eft(tau1,1) + eft(tau1,2) * ( &
-                    v*v - q*q/(4d0*muT*muT) &
-                ) &
-        )
+                eft(tau1,1) + eft(tau1,2) * vp2(v,q,muT))
 
 end function dmrPhiPPJMJ
 
@@ -165,7 +162,7 @@ function dmrSigmaPPJ(eft, tau1, tau2, q, v, jchi, muT)
             eft(tau1,6)*eft(tau2,6)*q**4 + ( &
                 eft(tau1,13)*eft(tau2,13)*q*q &
                 + eft(tau1,12)*eft(tau2,12) &
-            ) * (v*v - q*q/(4d0*muT*muT)) &
+            ) * vp2(v,q,muT) &
             + 2*eft(tau1,4)*eft(tau2,6)*q*q &
             + eft(tau1,4)*eft(tau2,4) &
         ) + (1./4)*eft(tau1,10)*eft(tau2,10)*q*q
@@ -197,12 +194,12 @@ function dmrSigmaPJ(eft, tau1, tau2, q, v, jchi, muT)
                 + eft(tau1,14)*eft(tau2,14)*q*q &
                 - 2*eft(tau1,12)*eft(tau2,15)*q*q &
                 + eft(tau1,12)*eft(tau2,12) &
-            ) * (v*v - q*q/(4d0*muT*muT)) &
+            ) * vp2(v,q,muT) &
             + 2*eft(tau1,4)*eft(tau2,4) &
         ) + (1./8) * ( &
             eft(tau1,3)*eft(tau2,3)*q*q &
             + eft(tau1,7)*eft(tau2,7) &
-        ) * (v*v - q*q/(4d0*muT*muT))
+        ) * vp2(v,q,muT)
 
 end function dmrSigmaPJ
 
@@ -228,7 +225,7 @@ function dmrDeltaJ(eft, tau1, tau2, q, v, jchi, muT)
             eft(tau1,5)*eft(tau2,5)*q*q &
             + eft(tau1,8)*eft(tau2,8) &
         ) + 2*q*q/(mN*mN) * eft(tau1,2)*eft(tau2,2) &
-            * (v*v - q*q/(4d0*muT*muT))
+            * vp2(v,q,muT)
 
 end function dmrDeltaJ
 
@@ -251,9 +248,9 @@ function dmrSigmaPJDeltaJ(eft, tau1, tau2, q, v, jchi, muT)
     ! functions called
     !REAL(kind=8) :: Cl
 
-    dmrSigmaPJDeltaJ = q*q/(4*mN*mN) * Cl(jchi) * ( &
-            eft(tau1,4)*eft(tau2,5) - eft(tau2,8)*eft(tau1,9) &
-        ) - q*q/(mN)*eft(tau2,2)*eft(tau1,3) * (v*v - q*q/(4d0*muT*muT))
+    dmrSigmaPJDeltaJ = q*q/(4*mN) * Cl(jchi) * ( &
+            eft(tau1,4)*eft(tau2,5) - eft(tau1,8)*eft(tau2,9) &
+        ) - q*q/(mN)*eft(tau2,2)*eft(tau1,3) * vp2(v,q,muT)
 
 end function dmrSigmaPJDeltaJ
 
@@ -268,5 +265,13 @@ function Cl(j)
     Cl = 4.0 * j * (j + 1) / 3.0
 
 end function Cl
+!-------------------------------------------------------------------------------
+function vp2(v,q,muT)
+    implicit none
+    REAL(kind=8), INTENT(IN) :: v, q, muT
+    real(kind=8) :: vp2
+
+    vp2 = v*v - q*q/(4d0*muT*muT)
+end function vp2
 
 end module dmresponselib
