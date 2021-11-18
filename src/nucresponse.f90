@@ -1,6 +1,41 @@
 !================================================
 module nucresponse
     contains
+function OperME(opid,y,np,lp,jp,n,l,j,bigJ) result(operatorME)
+
+    use mjl
+    use norm
+    use phi
+    use sigma
+
+    implicit none
+
+    character(len=8), intent(in) :: opid
+    INTEGER, INTENT(IN) :: np,lp,jp,n,l,j,bigJ
+    REAL (kind=8), INTENT(IN)  :: y
+    REAL (kind=8) :: operatorME
+
+    select case(opid)
+    case('mj')
+        operatorME = MJ(y,np,lp,jp,n,l,j,bigJ)
+    case('sigmaj')
+        operatorME = SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ)
+    case('phippj')
+        operatorME = PhiPPJ(y,np,lp,jp,n,l,j,bigJ)
+    case('phitpj')
+        operatorME = PhiTPJ(y,np,lp,jp,n,l,j,bigJ)
+    case('deltaj')
+        operatorME = MJLDivQ(y,np,lp,jp,n,l,j,bigJ,bigJ)
+    case('sigmapj')
+        operatorME = SigmaPJ(y,np,lp,jp,n,l,j,bigJ)
+    case('sigmappj')
+        operatorME = SigmaPPJ(y,np,lp,jp,n,l,j,bigJ)
+    case default
+        stop 'The choice of operator j should be from 1 to 7'
+    end select
+
+end function OperME
+
 function nucFormFactor(tau1, tau2, term, y, densmat, Tiso, Mtiso)
 
     ! Computes the nuclear form factor terms for a given 
@@ -19,15 +54,17 @@ function nucFormFactor(tau1, tau2, term, y, densmat, Tiso, Mtiso)
     integer :: term
     real(doublep) :: y
     real(doublep), allocatable, intent(in) :: densmat(:,:,:,:)
+    real(doublep) :: dme1, dme2
 
     integer :: j,a,b!,ap,an
     integer :: jmin, jmax
     
-    integer :: op1, op2
+    character(len=8) :: op1, op2
+    logical :: same
 
     integer :: Mtiso, Tiso
 
-    REAL(doublep) :: spOME1,spOME2
+    REAL(doublep) :: spOME1,spOME2, spome
     REAL(doublep) :: DRME1, DRME2
     REAL(doublep)  :: nucFormFactor, isofactor
 
@@ -35,39 +72,42 @@ function nucFormFactor(tau1, tau2, term, y, densmat, Tiso, Mtiso)
     jmax = -1
     jmax = maxJt
 
+    same = .true.
     select case(term)
       case(1)
-        ! Mj Mj
-        op1 = 1; op2 = 1
+        op1 = 'mj'
+        op2 = op1
         jmin = 0
       case(2)
-        ! PhiPPJ PhiPPJ
-        op1 = 3; op2 = 3
+        op1 = 'phippj'
+        op2 = op1
         jmin = 0
       case(3)
-        ! PhiTPJ PhiTPJ
-        op1 = 4; op2 = 4
+        op1 = 'phitpj'
+        op2 = op1
         jmin = 2
       case(4)
-        ! DeltaJ DeltaJ
-        op1 = 5; op2 = 5
+        op1 = 'deltaj'
+        op2 = op1
         jmin = 1
       case(5)
-        ! SigmaPJ SigmaPJ
-        op1 = 6; op2 = 6
+        op1 = 'sigmapj'
+        op2 = op1
         jmin = 1
       case(6)
-        ! SigmaPPJ SigmaPPJ
-        op1 = 7; op2 = 7
+        op1 = 'sigmappj'
+        op2 = op1
         jmin = 1
       case(7)
-        ! PhiPPJ MJ
-        op1 = 3; op2 = 1
+        op1 = 'mj'
+        op2 = 'phippj'
         jmin = 0
+        same = .false.
       case(8) 
-        ! DeltaJ SigmaPJ
-        op1 = 5; op2 = 6
+        op1 = 'sigmapj'
+        op2 = 'deltaj'
         jmin = 1
+        same=.false.
       case default
         stop "Invalid term."
     end select        
@@ -79,23 +119,31 @@ function nucFormFactor(tau1, tau2, term, y, densmat, Tiso, Mtiso)
       DRME2 = 0.d0
       do a = 1, ntotal(1)
         do b = 1, ntotal(1)
+          dme1 = densmat(j,tau1,a,b)
+          dme2 = densmat(j,tau2,a,b)
 
-          ! Operator 1 with tau2 <j| op1,tau1 |j>
-          if (abs(densmat(j,tau1,a,b)) > 1.0e-5 ) then
-              call OperME(op1,y,nodal(a),lorb(a),jorb(a), &
-                                nodal(b),lorb(b),jorb(b), &
-                                j,spOME1)
-              DRME1 = DRME1 + densmat(j,tau1,a,b) * spOME1 
+          if (same) then
+            if (abs(dme1) >= 1.0e-5 .or. abs(dme2) >= 1.0e-5) then
+              spome = OperME(op1,y,nodal(a),lorb(a),jorb(a), &
+                                    nodal(b),lorb(b),jorb(b), j)
+              DRME1 = DRME1 + dme1 * spome
+              DRME2 = DRME2 + dme2 * spome
+            end if
+          else
+            ! Operator 1 with tau2 <j| op1,tau1 |j>
+            if (abs(dme1) >= 1.0e-5 ) then
+              spome1 = OperME(op1,y,nodal(a),lorb(a),jorb(a), &
+                                    nodal(b),lorb(b),jorb(b), j)
+              DRME1 = DRME1 + dme1 * spOME1 
+            end if         
+
+            ! Operator 2 with tau2 <j| op2,tau2 |j>
+            if (abs(dme2) >= 1.0e-5 ) then
+              spome2 = OperME(op2,y,nodal(a),lorb(a),jorb(a),& 
+                                    nodal(b),lorb(b),jorb(b),j)
+              DRME2 = DRME2 + dme2 * spOME2 
+            end if
           end if
-
-          ! Operator 2 with tau2 <j| op2,tau2 |j>
-          if (abs(densmat(j,tau2,a,b)) > 1.0e-5 ) then
-              call OperME(op2,y,nodal(a),lorb(a),jorb(a),& 
-                                nodal(b),lorb(b),jorb(b),&
-                                j,spOME2)
-              DRME2 = DRME2 + densmat(j,tau2,a,b) * spOME2 
-          end if
-
         end do
       end do
       nucFormFactor = nucFormFactor + DRME1 * DRME2
@@ -103,9 +151,9 @@ function nucFormFactor(tau1, tau2, term, y, densmat, Tiso, Mtiso)
     end do
 
     if (.not.pndens) then
-        isofactor =  2*sqrt(2*dble(tau1)+1.0) * sqrt(2*dble(tau2)+1.0) &
-            * (-1.0)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau1,Tiso,Mtiso,0,-Mtiso) &
-            * (-1.0)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau2,Tiso,Mtiso,0,-Mtiso) 
+        isofactor =  2d0*sqrt((2d0*dble(tau1)+1d0) * (2d0*dble(tau2)+1d0)) &
+            * (-1)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau1,Tiso,Mtiso,0,-Mtiso) &
+            * (-1)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau2,Tiso,Mtiso,0,-Mtiso) 
         nucFormFactor = nucFormFactor * isofactor
     end if
 

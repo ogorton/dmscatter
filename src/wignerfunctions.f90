@@ -1,26 +1,41 @@
 module wignerfunctions
     implicit none
-
     real(kind=8), allocatable :: sj2i_table(:,:,:,:,:,:)
     real(kind=8), allocatable :: tj2i_table(:,:,:,:,:,:)
     integer :: maxsj2i=12, minsj2i=-2
     integer :: tableJmin, tableJmax
     integer(kind=8) :: sj2i_dim
 contains
-subroutine sj2itable
 
+function faclog(i) result(f)
+    implicit none
+    integer, intent(in) :: i
+    real(kind=8) :: f
+     if (i==0) then
+         f = 0d0
+         return
+     end if
+    f = log_gamma(dble(i+1))    
+end function faclog    
+
+subroutine sj2itable
 ! Reads in lookup table for SJ2I symbols
 ! that were created using the PNISM utility
 ! sj2i.f90. File must follow the corresponding
 ! formatting.
+
     implicit none
     logical :: timeit
     integer (kind=8) :: ti, tf, clock_rate
     real :: rn
     integer :: i,j,k,l,m,n, a,b
+    integer, parameter :: ndim=301
+    integer prime(ndim)
+    common /pr/ prime
 
     tableJmin = maxsj2i
     tableJmax = 0
+
     timeit = .true.
     call system_clock(count_rate = clock_rate)
 
@@ -41,7 +56,6 @@ subroutine sj2itable
     allocate(tj2i_table(a:b,a:b,a:b,a:b,a:b,a:b))
     tj2i_table=0.0    
 
-!$OMP PARALLEL DO PRIVATE(j,k,l,m,n)
     do n = minsj2i, maxsj2i
         print*,'Jx2=',n
         do m = minsj2i, maxsj2i
@@ -49,15 +63,14 @@ subroutine sj2itable
                 do k = minsj2i, maxsj2i
                     do j = minsj2i, maxsj2i
                         do i = minsj2i, maxsj2i
-                           sj2i_table(i,j,k,l,m,n)=Wigner_6j(I,J,K,L,M,N)
-                           tj2i_table(i,j,k,l,m,n)=Wigner_3j(I,J,K,L,M,N)
+                           sj2i_table(i,j,k,l,m,n) = wigner_6j(i, j, k, l, m, n)
+                           tj2i_table(i,j,k,l,m,n) = wigner_3j(i, j, k, l, m, n)
                         enddo
                     enddo
                 enddo
             enddo
         enddo
     enddo
-!$OMP end parallel do
 
     print*,'Tables have been saved to memory. Mem. used (MB):',real(sizeof(rn)*2*(maxsj2i+1)**6,4)*10.**(-6.)
     if (timeit) then
@@ -70,71 +83,44 @@ end subroutine sj2itable
 function sj2i_lookup(I,J,K,L,M,N) result(sj2i)
     implicit none
     real(kind=8) sj2i
-!    interface
-!        FUNCTION Wigner_6j(a,b,c,d,e,f)
-!            implicit none
-!            INTEGER, INTENT(IN) :: a,b,c,d,e,f
-!            REAL(kind=8) :: Wigner_6j
-!        end function
-!    end interface
     integer, intent(in) :: I,J,K,L,M,N
     integer :: maxJ, minJ
 
     maxJ = max(I,J,K,L,M,N)
     minJ = min(I,J,K,L,M,N)
-    tableJmin = min(tableJmin, minJ)
-    tableJmax = max(tableJmax, maxJ)    
 
-    if (maxJ > maxsj2i .or. minJ<0) then
-        sj2i = real(Wigner_6j(I,J,K,L,M,N))
+    tableJmin = min(tableJmin, minJ)
+    tableJmax = max(tableJmax, maxJ)   
+
+    if (maxJ > maxsj2i .or. minJ<minsj2i) then
+        sj2i = wigner_6j(i, j, k, l, m, n)
     else
         sj2i = sj2i_table(i,j,k,l,m,n)
     endif
-
     return
-
 end function
 
 function tj2i_lookup(I,J,K,L,M,N) result(tj2i)
     implicit none
     real(kind=8) tj2i
-    !interface
-    !    FUNCTION Wigner_3j(a,b,c,d,e,f)
-    !        implicit none
-    !        INTEGER, INTENT(IN) :: a,b,c,d,e,f
-    !        REAL(kind=8) :: Wigner_3j
-    !    end function
-    !end interface
     integer, intent(in) :: I,J,K,L,M,N
-    integer :: maxJ
+    integer :: maxJ, minj
 
     maxJ = max(I,J,K,L,M,N)
+    minj = min(I,J,K,L,M,N)
 
-    if (maxJ > maxsj2i) then
-        tj2i = real(Wigner_3j(I,J,K,L,M,N))
+    if (maxJ > maxsj2i .or. minJ<minsj2i) then
+        tj2i = wigner_3j(i, j, k, l, m, n)
     else
         tj2i = tj2i_table(i,j,k,l,m,n)
     endif
-
     return
-
 end function
-
-
 
 FUNCTION CG(j1, m1, j2, m2, J, M)
 
   IMPLICIT NONE
 
-!  INTERFACE
-!     FUNCTION FacLOG(N)
-!
-!       IMPLICIT NONE
-!       INTEGER, INTENT(IN) :: N  
-!       REAL(kind=8) ::  FacLOG
-!     END FUNCTION FacLOG
-!  END INTERFACE
-  
   INTEGER, INTENT(IN) :: j1, j2, m1, m2, J, M
   REAL(kind=8) :: CG
 
@@ -178,22 +164,6 @@ FUNCTION CG(j1, m1, j2, m2, J, M)
   fact9 = FacLOG((j2 - m2)     / 2) 
   fact10= FacLOG((j2 + m2)     / 2) 
 
- !  IF (   fact1 .LE. 0.0 .OR. &
- !      & fact2 .LE. 0.0 .OR. &
- !      & fact3 .LE. 0.0 .OR. &
- !      & fact4 .LE. 0.0 .OR. &
- !      & fact5 .LE. 0.0 .OR. &
- !      & fact6 .LE. 0.0 .OR. &
- !      & fact7 .LE. 0.0 .OR. &
- !      & fact8 .LE. 0.0 .OR. &
- !      & fact9 .LE. 0.0 .OR. &
- !      & fact10 .LE. 0.0 ) THEN
- !    WRITE(0,*) j1, j2, J, m1, m2
- !    WRITE(0,*) fact1, fact2, fact3, fact4, fact5
- !    WRITE(0,*) fact6, fact7, fact8, fact9, fact10
- !    STOP
-  !END IF
-
  CG_1 = fact1 + fact2 + fact3 + fact4 + fact5 &
        & - &
        &(fact6 + fact7 + fact8 + fact9 + fact10)
@@ -231,15 +201,6 @@ FUNCTION Wigner_3j (j1, j2, J, m1, m2, M)
   ! j1/2 j2/2 J/2 !
   ! m1/2 m2/2 M/2 !
 
-!  INTERFACE     
-!     FUNCTION CG(j1, m1, j2, m2, J, M)
-!
-!       IMPLICIT NONE
-!       INTEGER, INTENT(IN) :: j1, j2, m1, m2, J, M
-!       REAL(kind=8) :: CG
-!     END FUNCTION CG
-!  END INTERFACE
-!
   INTEGER, INTENT(IN) :: j1, j2, J, m1, m2, M
 
   REAL (kind=8) :: Wigner_3j
@@ -249,42 +210,41 @@ FUNCTION Wigner_3j (j1, j2, J, m1, m2, M)
   RETURN
 
 END FUNCTION Wigner_3j
-
-
-FUNCTION FacLOG(N)
-
-  IMPLICIT NONE
-
-  ! return LOG(N!), not N!
-
-  INTEGER, INTENT(IN) :: N
-  
-  REAL(kind=8) ::  FacLOG
-
-  INTEGER :: i
-
-  FacLOG = 1.0D0
-
-  IF ( N .EQ. 0) THEN
-     FacLOG = 0.0D0
-     RETURN
-  END IF
- 
-  IF ( N .LT. 0) THEN
-     PRINT *, N
-     STOP "FacLOG: Impossible to calculate N! N is negative"
-  END IF
-  
-  DO i = 1, N
-     FacLOG = FacLOG * DBLE(i)
-  END DO
-
-  FacLOG = LOG(FacLOG)
-  
-  RETURN
-
-END FUNCTION FacLOG
-
+!
+!
+!FUNCTION FacLOG(N)
+!
+!  IMPLICIT NONE
+!
+!  ! return LOG(N!), not N!
+!
+!  INTEGER, INTENT(IN) :: N
+!  
+!  REAL(kind=8) ::  FacLOG
+!
+!  INTEGER :: i
+!
+!  FacLOG = 1.0D0
+!
+!  IF ( N .EQ. 0) THEN
+!     FacLOG = 0.0D0
+!     RETURN
+!  END IF
+! 
+!  IF ( N .LT. 0) THEN
+!     PRINT *, N
+!     STOP "FacLOG: Impossible to calculate N! N is negative"
+!  END IF
+!  
+!  DO i = 1, N
+!     FacLOG = FacLOG * DBLE(i)
+!  END DO
+!
+!  FacLOG = LOG(FacLOG)
+!  
+!  RETURN
+!
+!END FUNCTION FacLOG
 FUNCTION DBLEFacLOG(N)
 
   IMPLICIT NONE
@@ -329,15 +289,6 @@ FUNCTION Triangle(a,b,c)
   ! \Delta(a/2, b/2, c/2)
   ! \Delta(a/2, b/2, c/2) = sqrt( (a/2+b/2-c/2)! (a/2-b/2+c/2)! (-a/2+b/2+c/2)! / (a/2+b/2+c/2+1)! )
   ! if a/2,b/2,c/2 do not satisfy the triangle inequality, it returns zero.
-
-!  INTERFACE
-!     FUNCTION FacLOG(N)
-!
-!       IMPLICIT NONE
-!       INTEGER, INTENT(IN) :: N
-!       REAL(kind=8) ::  FacLOG
-!     END FUNCTION FacLOG
-!  END INTERFACE
 
   INTEGER, INTENT(IN) :: a,b,c
 
@@ -456,17 +407,6 @@ FUNCTION Wigner_9j(j1,j2,j3,j4,j5,j6,j7,j8,j9)
 ! j4/2 j5/2 j6/2 !
 ! j7/2 j8/2 j9/2 !
 
-!  INTERFACE
-!
-!  FUNCTION Wigner_6j(a,b,c,d,e,f)
-!
-!       IMPLICIT NONE
-!       INTEGER, INTENT(IN) :: a,b,c,d,e,f
-!       REAL(kind=8) :: Wigner_6j
-!     END FUNCTION Wigner_6j
-!
-!  END INTERFACE
-
   INTEGER, INTENT(IN) :: j1,j2,j3,j4,j5,j6,j7,j8,j9
   REAL(kind=8) :: Wigner_9j
 
@@ -493,10 +433,6 @@ FUNCTION Wigner_9j(j1,j2,j3,j4,j5,j6,j7,j8,j9)
           & sj2i_lookup(j1,j4,j7,j8,j9, x) *&
           & sj2i_lookup(j2,j5,j8,j4, x,j6) *&
           & sj2i_lookup(j3,j6,j9, x,j1,j2)
-          !& Wigner_6j(j1,j4,j7,j8,j9, x)  * &
-          !& Wigner_6j(j2,j5,j8,j4, x,j6) * &
-          !& Wigner_6j(j3,j6,j9, x,j1,j2)
-
   END DO
 
   RETURN

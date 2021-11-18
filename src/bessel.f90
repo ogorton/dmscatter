@@ -213,17 +213,6 @@ end function Summand3A
 !-------------------------------------------------------------------------------
 function Summand4A(y,m,mp,l,lp,bigL)
     implicit none
-!    INTERFACE
-!  
-!       function chg(a,b,x)
-!         
-!         implicit none
-!         REAL(kind=8) :: a, b
-!         REAL(kind=8) :: x
-!         REAL(kind=8) ::  chg
-!       end function chg
-!  
-!    end INTERFACE
 
     INTEGER, INTENT(IN) :: m, mp, l, lp, bigL
     REAL(kind=8), INTENT(IN) :: y

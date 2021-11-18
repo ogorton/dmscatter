@@ -32,7 +32,6 @@ function transition_probability(q,v,wimp,nucl,eft)
     if (v <  q/(2d0*muT)) then
         transition_probability = 0.0
     else
-
         do tau1 = 0, 1
             do tau2 = 0, 1
                 do term = 1, 8

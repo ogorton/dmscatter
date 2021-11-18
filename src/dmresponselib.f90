@@ -53,7 +53,7 @@ function dmrMJ(eft, tau1, tau2, q, v, jchi, muT)
     ! functions called
     !REAL(kind=8) :: Cl
 
-    dmrMJ = 0.25*Cl(jchi) &
+    dmrMJ = 0.25d0*Cl(jchi) &
         * ((eft(tau1,5)*eft(tau2,5)*q*q + eft(tau1,8)*eft(tau2,8)) &
                  * vp2(v,q,muT) &
             + eft(tau1,11)*eft(tau2,11)*q*q) &

@@ -19,10 +19,10 @@ function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
     xj  = dble(j )/2.0
 
     SigmaJ = (-1.0)**lp * SQRT(Jnorm(xj)*Jnorm(xjp)*Jnorm(dble(l))*Jnorm(dble(lp))  &
-         & *Jnorm(dble(bigJ))*Jnorm(dble(bigL))/(4*Pi))     &
-         & * SQRT(6.0) * tj2i_lookup(2*lp,2*bigL,2*l,0,0,0) &
-         & * Wigner_9j(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ) &
-         & * BesselElement(y,np,lp,n,l,bigL)
+          *Jnorm(dble(bigJ))*Jnorm(dble(bigL))/(4*Pi))     &
+          * SQRT(6.0) * tj2i_lookup(2*lp,2*bigL,2*l,0,0,0) &
+          * BesselElement(y,np,lp,n,l,bigL) &
+          * Wigner_9j(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ) 
 
 end function SigmaJ
 
