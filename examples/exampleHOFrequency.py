@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/Users/oliver/projects/darkmatter/python")
+sys.path.append("../python")
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -40,7 +40,8 @@ for operator in operators:
                 N = 6, 
                 dres = dresfile,
                 controlwords = control_dict,
-                cnvec = cn)
+                cnvec = cn,
+                exec_path='../src/dmfortfactor')
 
 
         if (first):

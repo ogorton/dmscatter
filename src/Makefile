@@ -12,7 +12,7 @@ openmp_cflags = "-Ofast -fopenmp -c"
 openmp_lflags = "-fopenmp"
 debug_cflags = "-Ofast -fbounds-check -Wall -c"
 
-src = $(wildcard *.f90)
+src = $(wildcard *.f*)
 obj = $(src:.f90=.o)
 
 #####################################
@@ -20,6 +20,9 @@ obj = $(src:.f90=.o)
 #####################################
 %.o : %.f90
 	$(COMP) $(F90_CFLAGS) $(<F)
+
+%.o : %.f
+	$(COMP) $(F77_CFLAGS) $(<F)
 
 ##################################
 # SUBROUTINE/MODULE DEPENDENCIES #

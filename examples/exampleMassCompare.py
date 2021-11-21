@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/Users/oliver/projects/darkmatter/python')
+sys.path.append("../python")
 import matplotlib.pyplot as plt
 import dmfortfactor as dm
 import numpy as np
@@ -28,7 +28,8 @@ for wimp_mass in (50.,150.0, 500.,5000.):
         csvec = cs,
         cvvec = cv,
         cpvec = cp,
-        cnvec = cn)
+        cnvec = cn,
+        exec_path='../src/dmfortfactor')
 
     plt.plot(RecoilE, EventRate, label="$m_\chi=$%2.2f"%wimp_mass)
 

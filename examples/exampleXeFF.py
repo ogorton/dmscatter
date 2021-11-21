@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/Users/oliver/projects/darkmatter/python')
+sys.path.append("../python")
 import dmfortfactor as dm
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,7 +16,8 @@ Wfunc = dm.NucFormFactor(
         controlwords = cwords,
         epmin = 0.001,
         epmax = 10.0,
-        epstep = 0.001)
+        epstep = 0.001,
+        exec_path='../src/dmfortfactor')
 
 q = 0.001
 print("q = %10.5f"%q)

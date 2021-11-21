@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/Users/oliver/projects/darkmatter/python')
+sys.path.append("../python")
 import dmfortfactor as dm
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,7 +24,8 @@ Erkev, ER = dm.EventrateSpectra(
         csvec = cs,
         cvvec = cv,
         cpvec = cp,
-        cnvec = cn)
+        cnvec = cn,
+        exec_path='../src/dmfortfactor')
 
 plt.xscale('log')
 plt.yscale('log')

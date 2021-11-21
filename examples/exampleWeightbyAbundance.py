@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/Users/oliver/projects/darkmatter/python")
+sys.path.append("../python")
 import numpy as np
 import matplotlib.pyplot as plt
 import dmfortfactor as dm
@@ -22,7 +22,8 @@ for i,isotope in enumerate(isotopes):
             N,
             dres = "../dres/xe%igcn"%isotope,
             controlwords = controls,
-            cpvec = cp )
+            cpvec = cp,
+            exec_path='../src/dmfortfactor')
 
     weightedsum += EventRate * weights[i]
 

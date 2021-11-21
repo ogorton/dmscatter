@@ -28,10 +28,8 @@ subroutine sj2itable
     logical :: timeit
     integer (kind=8) :: ti, tf, clock_rate
     real :: rn
+    real*8 x
     integer :: i,j,k,l,m,n, a,b
-    integer, parameter :: ndim=301
-    integer prime(ndim)
-    common /pr/ prime
 
     tableJmin = maxsj2i
     tableJmax = 0
