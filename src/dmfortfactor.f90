@@ -2,7 +2,7 @@ program dmfortfactor
 
     use main
     use mod_spectra, only: eventrate_spectra, velocity_curve
-    use wignerfunctions, only: tableJmin, tableJmax, sj2itable
+    use wigner
     use nucresponse, only: test_nucresponse
 
     implicit none
@@ -51,7 +51,8 @@ program dmfortfactor
     call normalizecoeffs(eft, wimp)
     call setup_nuclearinputs(nuc_target)
     call printparameters(wimp,nuc_target,eft)
-    call sj2itable
+    call threej_table_init()
+    call sixj_table_init()
     
     call system_clock(tstart)
     select case(option)
@@ -73,6 +74,6 @@ program dmfortfactor
     call system_clock(tstop)
 
     print*,'Compute time (s)',real(tstop-tstart)/real(clock_rate)
-    print*,"6-J Table Lookup min/max requested:",tableJmin, tableJmax
+    print*,"6-J Table Lookup min/max requested:", tablemin_used, tablemax_used
         
 end program dmfortfactor

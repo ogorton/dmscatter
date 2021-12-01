@@ -1,11 +1,11 @@
 module sigma
 use norm
 use bessel
+use wigner
 contains
 
 !-------------------------------------------------------------------------------
 function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
-    use wignerfunctions
     implicit none
 
     INTEGER, INTENT(IN) :: np,lp,jp,n,l,j
@@ -20,9 +20,9 @@ function SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigL)
 
     SigmaJ = (-1.0)**lp * SQRT(Jnorm(xj)*Jnorm(xjp)*Jnorm(dble(l))*Jnorm(dble(lp))  &
           *Jnorm(dble(bigJ))*Jnorm(dble(bigL))/(4*Pi))     &
-          * SQRT(6.0) * tj2i_lookup(2*lp,2*bigL,2*l,0,0,0) &
+          * SQRT(6.0) * threej_lookup(2*lp,2*bigL,2*l,0,0,0) &
           * BesselElement(y,np,lp,n,l,bigL) &
-          * Wigner_9j(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ) 
+          * ninej(2*lp,2*l,2*bigL,1,1,2,jp,j,2*bigJ) 
 
 end function SigmaJ
 

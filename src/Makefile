@@ -28,7 +28,7 @@ obj = $(src:.f90=.o)
 # SUBROUTINE/MODULE DEPENDENCIES #
 ##################################
 
-bessel.o : wignerfunctions.o norm.o
+bessel.o : wigner.o norm.o
 
 mjl.o : bessel.o norm.o
 
@@ -58,7 +58,7 @@ spectra.o : eventrate.o
 
 totaleventrate.o : eventrate.o gaus.o
 
-dmfortfactor.o : spectra.o wignerfunctions.o modules.o nucresponse.o
+dmfortfactor.o : spectra.o wigner.o modules.o nucresponse.o
 
 ################
 # USER RECIPES #

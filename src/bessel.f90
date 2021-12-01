@@ -1,31 +1,30 @@
 module bessel
+    use wigner
 contains
 !-------------------------------------------------------------------------------
 function BesselF1(y,np,lp,n,l,bigL)
-    use wignerfunctions
     implicit none
 
     INTEGER, INTENT(IN) :: np,lp,n,l,bigL
     REAL(kind=8),INTENT(IN) :: y
     REAL(kind=8) :: BesselF1
 
-    BesselF1 = 2.0**(dble(bigL)) / exp(DBLEFacLOG(2*bigL+1)) * y**(bigL/2.d0) &
-        & * exp(-y) * sqrt (EXP(FacLOG(np-1)+FacLOG(n-1)))
+    BesselF1 = 2.0**(dble(bigL)) / exp(logdoublefac(2*bigL+1)) * y**(bigL/2.d0) &
+        & * exp(-y) * sqrt (EXP(logfac(np-1)+logfac(n-1)))
 
 end function BesselF1
 
 
 !-------------------------------------------------------------------------------
 function BesselF1A(y,np,lp,n,l,bigL)
-    use wignerfunctions
     implicit none
 
     INTEGER, INTENT(IN) :: np,lp,n,l,bigL
     REAL(kind=8),INTENT(IN) :: y
     REAL(kind=8) :: BesselF1A
 
-    BesselF1A = 2**(dble(bigL)-1.0) / exp(DBLEFacLOG(2*bigL+1)) * y**((dble(bigL)-1.0)/2.d0) &
-        & * exp(-y) * sqrt (EXP(FacLOG(np-1)+FacLOG(n-1)))
+    BesselF1A = 2**(dble(bigL)-1.0) / exp(logdoublefac(2*bigL+1)) * y**((dble(bigL)-1.0)/2.d0) &
+        & * exp(-y) * sqrt (EXP(logfac(np-1)+logfac(n-1)))
 
 end function BesselF1A
 
@@ -41,7 +40,6 @@ end function BesselF2
 
 !-------------------------------------------------------------------------------
 function BesselF3(y,np,lp,n,l,bigL)
-    use wignerfunctions
     implicit none
 
     INTEGER, INTENT(IN) :: np,lp,n,l, bigL
@@ -143,12 +141,11 @@ end function BesselElementplus
 
 !-------------------------------------------------------------------------------
 function Summand1(m,mp,n,np)
-    use wignerfunctions
     implicit none
     INTEGER, INTENT(IN) :: m, mp, n, np
     REAL(kind=8) :: Summand1
 
-    Summand1 = (-1)**(m+mp) / exp(FacLOG(m)+FacLOG(mp)+FacLOG(n-1-m)+FacLOG(np-1-mp))
+    Summand1 = (-1)**(m+mp) / exp(logfac(m)+logfac(mp)+logfac(n-1-m)+logfac(np-1-mp))
 
 end function Summand1
 

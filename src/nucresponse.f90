@@ -45,7 +45,7 @@ function nucFormFactor(tau1, tau2, term, y, densmat, Tiso, Mtiso)
     use kinds
     use orbitals
     use parameters
-    use wignerfunctions
+    use wigner, only: threej_lookup
     use densities, only: maxJt, minJt
 
     implicit none
@@ -152,8 +152,8 @@ function nucFormFactor(tau1, tau2, term, y, densmat, Tiso, Mtiso)
 
     if (.not.pndens) then
         isofactor =  2d0*sqrt((2d0*dble(tau1)+1d0) * (2d0*dble(tau2)+1d0)) &
-            * (-1)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau1,Tiso,Mtiso,0,-Mtiso) &
-            * (-1)**((Tiso - Mtiso)/2) * tj2i_lookup(Tiso,2*tau2,Tiso,Mtiso,0,-Mtiso) 
+            * (-1)**((Tiso - Mtiso)/2) * threej_lookup(Tiso,2*tau1,Tiso,Mtiso,0,-Mtiso) &
+            * (-1)**((Tiso - Mtiso)/2) * threej_lookup(Tiso,2*tau2,Tiso,Mtiso,0,-Mtiso) 
         nucFormFactor = nucFormFactor * isofactor
     end if
 
@@ -169,7 +169,6 @@ function nucFormFactor_transform(tau1, tau2, term, y, densmat, Tiso, Mtiso) resu
     use kinds
     use orbitals
     use parameters
-    use wignerfunctions
     use constants, only: pi
 
     implicit none

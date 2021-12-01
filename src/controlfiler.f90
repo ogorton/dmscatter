@@ -95,7 +95,7 @@ subroutine setkeyword(keyword, keyvalue, wimp)
     use momenta
     use quadrature
     use parameters
-    use wignerfunctions, only: maxsj2i, minsj2i
+    use wigner, only: tablemin2j, tablemax2j
     use orbitals, only: bfm
 
     implicit none
@@ -207,11 +207,11 @@ subroutine setkeyword(keyword, keyvalue, wimp)
         print*,trim(keyword),': Set order of Gauss-Legendre quadrature to',keyvalue
 
     case('sj2tablemin')
-        minsj2i = int(keyvalue)
+        tablemin2j = int(keyvalue)
         print*,trim(keyword),': Set minimum Wigner 6-J table value to Jx2 =',keyvalue
 
     case('sj2tablemax')
-        maxsj2i = int(keyvalue)
+        tablemax2j = int(keyvalue)
         print*,trim(keyword),': Set mmaximum Wigner 6-J table value to Jx2 =',keyvalue
 
     case default
