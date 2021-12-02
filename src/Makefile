@@ -28,6 +28,8 @@ obj = $(src:.f90=.o)
 # SUBROUTINE/MODULE DEPENDENCIES #
 ##################################
 
+setparameters.o : orbitals.o
+
 bessel.o : wigner.o norm.o
 
 mjl.o : bessel.o norm.o
@@ -92,4 +94,4 @@ debug:
 
 clean:
 	touch make.o make.x make.mod
-	rm *.o *.x *.mod
+	rm *.o *.x *.mod dmfortfactor
