@@ -4,7 +4,7 @@ module wigner
     real(kind=8), allocatable :: threej_table(:,:,:,:,:,:)
     real(kind=8), allocatable :: sixj_table(:,:,:,:,:,:)
     integer :: tablemin2j = 0
-    integer :: tablemax2j = 20
+    integer :: tablemax2j = 12
     integer :: tablemin_used
     integer :: tablemax_used
 
