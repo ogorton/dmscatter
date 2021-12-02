@@ -4,7 +4,6 @@ sys.path.append("../python")
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
-import pandas as pd
 import dmfortfactor as dm
 import timeit
 
