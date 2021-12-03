@@ -48,9 +48,11 @@ module wigner
             end if
 
             logdoublefac = 1d0
-            do i = imin, n
+            do i = imin, n, 2
                 logdoublefac = logdoublefac * dble(i)
             end do
+
+            logdoublefac = log(logdoublefac)
 
             return
 

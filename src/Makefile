@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := default
 
+#COMP = <compiler>
 COMP = gfortran
 exec=dmfortfactor
 bindir = ~/bin/
