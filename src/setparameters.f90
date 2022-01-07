@@ -10,9 +10,18 @@ subroutine setparameters(nuc_target)
 
     type(nucleus) :: nuc_target
 
+    print *,' '
+    print *,'Enter the target proton number '
+    read(5,*) nuc_target%Z
+    print *,' '
+    print *,'Enter the target neutron number '
+    read(5,*) nuc_target%N
+
+    nuc_target%A = nuc_target%Z + nuc_target%N
+
     print*,'Setting default parameter values.'
 
-    nuc_target%Mt = nuc_target%N - nuc_target%Z ! note non-standard definition
+    nuc_target%Mt = + nuc_target%Z - nuc_target%N ! note non-standard definition
     nuc_target%mass = nuc_target%Z + nuc_target%N
     nuc_target%nt = 1.0d0 / ( nuc_target%mass * mN)
 

@@ -1,25 +1,69 @@
 module wigner
 
+    ! Oliver Gorton, San Diego State University, 2021.12.7
+    !
+    ! Library of functions for computation of Wigner 3-j, 6-j and 9-j symbols
+    ! using algebraic expressions in terms of factorials. Should be accurate
+    ! to 10^{-10} relative error for values less than about j=20.
+    !
+    ! For an analysis of relative error compared to more modern methods, see
+    ! arXiv:1504.08329 by H. T. Johansson and C. Forssen. A more accurate but
+    ! slower method involves prime factorization of integers. In old Fortran,
+    ! see work by Liqiang Wei:
+    ! Computer Physics Communications 120 (1999) 222-230.
+    !
+    ! All integer arguments are 2*j in order to accomadate half-integer
+    ! arguments while taking advantage of faster integer-arithmetic.
+    ! Invalid arguments return 0d0 and program continues.
+    !
+    ! Optionally, compile with OpenMP to accelerate table initialization.
+    !
+    ! List of real(kind=8) functions:
+    !     logfac(n)
+    !     logdoublefac(n)
+    !     triangle(two_j1, two_j2, two_j3)
+    !     vector_couple(two_j1, two_m1, two_j2, two_m2, two_jc, two_mc)
+    !     threej(two_j1, two_j2, two_j3, two_m1, two_m2, two_m3)
+    !     threej_lookup(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
+    !     sixj(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
+    !     sixj_lookup(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
+    !     ninej(two_j1,two_j2,two_j3,two_j4,two_j5,two_j6,two_j7,two_j8,two_j9)
+    !
+    ! List of subroutines:
+    !     threej_table_init(min2j, max2j)
+    !     sixj_table_init(min2j, max2j)
+
+
     implicit none
     real(kind=8), allocatable :: threej_table(:,:,:,:,:,:)
     real(kind=8), allocatable :: sixj_table(:,:,:,:,:,:)
+
+    ! Default min/max values of 3-j, 6-j (x2) table arguments to store in
+    ! lookup table when calling _table_init().
     integer :: tablemin2j = 0
     integer :: tablemax2j = 12
+
+    ! These variables are modified by the lookup table functions to track
+    ! the largest 2j values used during the program. Use these to inform future
+    ! table sizes.
     integer :: tablemin_used
     integer :: tablemax_used
 
     contains
 
         function logfac(n)
+
             ! Computes log(n!)
+            ! Log-factorial is used to delay numerical overflow.
+
             implicit none
             integer :: n
-            real*8 :: logfac
+            real(kind=8) :: logfac
             integer :: i
             if (n<=0) then
                 logfac = 0d0
                 return
-            end if   
+            end if
             logfac = 1d0
             do i = 1, n
                 logfac = logfac * dble(i)
@@ -29,6 +73,11 @@ module wigner
         end function logfac
 
         function logdoublefac(n)
+
+            ! Computes log(n!!)
+            ! The double-factorial is NOT (n!)!. The double factorial is
+            ! defined as the product of all the integers from 1 to n that
+            ! have the same parity (even or odd) as n.
 
             implicit none
             integer :: n
@@ -60,6 +109,9 @@ module wigner
 
         function triangle(two_j1, two_j2, two_j3) result(delta)
 
+            ! Computes the triangle functions, typically denoted as
+            !     \delta(abc) = (a+b-c)!(a-b+c)!(b+c-a)!/(a+b+c+1)!
+
             implicit none
             integer :: two_j1, two_j2, two_j3
             integer :: c1, c2, c3, c4
@@ -87,14 +139,15 @@ module wigner
             return
         end function triangle
 
-        function vector_couple(j1, m1, j2, m2, jc, mc) result(cg)
+        function vector_couple(two_j1, two_m1, two_j2, &
+                               two_m2, two_jc, two_mc) result(cg)
 
-            ! Computes the clebsh-gordon vector-coupling coefficient
-            !  (j1/2 m1/2 j2/2 m2/2 | j1/2 j2/2 jc/2 mc/2)
+            ! Computes the Clebsh-Gordon vector-coupling coefficient
+            !  (j1 m1 j2 m2 | j1 j2 jc mc)
             ! using algebraic expressions in factorials from Edmonds.
 
             implicit none
-            integer :: j1,j2,jc,m1,m2,mc
+            integer :: two_j1,two_j2,two_jc,two_m1,two_m2,two_mc
             real(kind=8) :: cg, fac_prod, fac_sum, den
             integer :: t1, t2, t3, t4
             integer :: d1, d2, d3, d4, d5, d6
@@ -102,43 +155,43 @@ module wigner
             integer :: zmin, zmax, z
 
             cg = 0d0
-            if (m1+m2 /= mc) return
-            if (j1<0) return
-            if (j2<0) return
-            if (jc<0) return
-            if (abs(m1)>j1) return
-            if (abs(m2)>j2) return
-            if (abs(jc)>jc) return
-            if (mod(j1+m1,2) /= 0) return
-            if (mod(j2+m2,2) /= 0) return
-            if (mod(jc+mc,2) /= 0) return            
+            if (two_m1+two_m2 /= two_mc) return
+            if (two_j1<0) return
+            if (two_j2<0) return
+            if (two_jc<0) return
+            if (abs(two_m1)>two_j1) return
+            if (abs(two_m2)>two_j2) return
+            if (abs(two_jc)>two_jc) return
+            if (mod(two_j1+two_m1,2) /= 0) return
+            if (mod(two_j2+two_m2,2) /= 0) return
+            if (mod(two_jc+two_mc,2) /= 0) return
 
-            t1 = ( j1 + j2 - jc)/2
-            t2 = ( j1 - j2 + jc)/2
-            t3 = (-j1 + j2 + jc)/2
-            t4 = ( j1 + j2 + jc)/2
+            t1 = ( two_j1 + two_j2 - two_jc)/2
+            t2 = ( two_j1 - two_j2 + two_jc)/2
+            t3 = (-two_j1 + two_j2 + two_jc)/2
+            t4 = ( two_j1 + two_j2 + two_jc)/2
             if (t1<0) return
             if (t2<0) return
             if (t3<0) return
 
-            d1 = (j1 + m1)/2 
-            d2 = (j1 - m1)/2  
-            d3 = (j2 + m2)/2 
-            d4 = (j2 - m2)/2 
-            d5 = (jc + mc)/2 
-            d6 = (jc - mc)/2 
+            d1 = (two_j1 + two_m1)/2
+            d2 = (two_j1 - two_m1)/2
+            d3 = (two_j2 + two_m2)/2
+            d4 = (two_j2 - two_m2)/2
+            d5 = (two_jc + two_mc)/2
+            d6 = (two_jc - two_mc)/2
 
-            dd1 = (jc - j2 + m1)/2
-            dd2 = (jc - j1 - m2)/2
+            dd1 = (two_jc - two_j2 + two_m1)/2
+            dd2 = (two_jc - two_j1 - two_m2)/2
 
-            fac_prod = sqrt(dble(jc)+1d0) &
-                * triangle(j1,j2,jc) &
+            fac_prod = sqrt(dble(two_jc)+1d0) &
+                * triangle(two_j1,two_j2,two_jc) &
                 * exp(0.5d0 * (logfac(d1) + logfac(d2) &
                               +logfac(d3) + logfac(d4) &
                               +logfac(d5) + logfac(d6)))
 
             zmin = max(0, -dd1, -dd2)
-            zmax = min(t1, d2, d3) 
+            zmax = min(t1, d2, d3)
 
             fac_sum = 0d0
             do z = zmin, zmax
@@ -153,23 +206,29 @@ module wigner
             return
         end function vector_couple
 
-        function threej(j1, j2, j3, m1, m2, m3) result(tj)
+        function threej(two_j1, two_j2, two_j3,&
+                        two_m1, two_m2, two_m3) result(tj)
 
             ! Computes the Wigner 3-J symbol with arguments
-            !   j1/2 j1/2 j3/2
-            !   m1/2 m2/2 m3/2
-            ! using clebsh-gordon vector-coupling coefficients
+            !   two_j1/2 two_j1/2 two_j3/2
+            !   two_m1/2 two_m2/2 two_m3/2
+            ! using clebsh-gordon vector-coupling coefficients.
 
             implicit none
-            integer :: j1,j2,j3,m1,m2,m3
+            integer :: two_j1,two_j2,two_j3,two_m1,two_m2,two_m3
             real(kind=8) :: tj
 
-            tj = (-1) **((j1 - j2 - m3)/2)/sqrt(dble(j3)+1d0) &
-                * vector_couple(j1, m1, j2, m2, j3, -m3)
+            tj = (-1) **((two_j1 - two_j2 - two_m3)/2)/sqrt(dble(two_j3)+1d0) &
+                * vector_couple(two_j1, two_m1, two_j2, two_m2, two_j3, -two_m3)
 
         end function threej
 
         subroutine threej_table_init(min2j, max2j)
+
+            ! Initializes the table of 3-j symbols into memory accessible from
+            ! the module. If the optional arguments are given, they override the
+            ! default values set in the module variables for the min/max j-
+            ! values stored in the table.
 
             implicit none
             integer, optional :: min2j, max2j
@@ -198,7 +257,7 @@ module wigner
             print*,"Table min. 2J:",a
             print*,"Table max. 2J:",b
             print*,'Memory required (MB):',real(sizeof(dummy_real) &
-                                    * (a-b+1)**6,4)*10d0**(-6)
+                                    * (b-a+1)**6,4)*10d0**(-6)
 
             if (allocated(threej_table)) deallocate(threej_table)
             allocate(threej_table(a:b,a:b,a:b,a:b,a:b,a:b))
@@ -222,38 +281,49 @@ module wigner
             call system_clock(count = tf)
             print*,'Table has been saved to memory.'
             print*,'Seconds to initialize:',real((tf-ti))/real(clock_rate)
-        end subroutine threej_table_init 
 
-        function threej_lookup(j1,j2,j3,l1,l2,l3) result(tj)
+        end subroutine threej_table_init
+
+        function threej_lookup(two_j1, two_j2, two_j3,&
+                               two_l1, two_l2, two_l3) result(tj)
+
+            ! Function to lookup a value of the 3-j symbol stored in the
+            ! lookup table. If the requested value has any argument outside
+            ! the defined lookup table values, it is computed using the 3-j
+            ! function instead.
+            ! This function also updates module variables tracking the largest
+            ! j values requested from the lookup function, to inform future
+            ! table initializations.
+
 
             implicit none
-            integer :: j1,j2,j3,l1,l2,l3
+            integer :: two_j1,two_j2,two_j3,two_l1,two_l2,two_l3
             real(kind=8) :: tj
             integer :: minj, maxj
 
-            minj = min(j1,j2,j3,l1,l2,l3)
-            maxj = max(j1,j2,j3,l1,l2,l3)
+            minj = min(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
+            maxj = max(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
             tablemin_used = min(tablemin_used, minj)
             tablemax_used = max(tablemax_used, maxj)
 
             if (minj < tablemin2j .or. maxj > tablemax2j) then
-                tj = threej(j1,j2,j3,l1,l2,l3)
+                tj = threej(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
             else
-                tj = threej_table(j1,j2,j3,l1,l2,l3)
+                tj = threej_table(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
             end if
 
             return
-        end function threej_lookup        
+        end function threej_lookup
 
-        function sixj(j1,j2,j3,l1,l2,l3) result(sj)
+        function sixj(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3) result(sj)
 
             ! Computes the wigner six-j symbol with arguments
-            !    j1/2 j2/2 j3/2
-            !    l1/2 l2/2 l3/2
-            ! using explicit algebraic expressions from Edmonds (1955/7)
+            !    two_j1/2 two_j2/2 two_j3/2
+            !    two_l1/2 two_l2/2 two_l3/2
+            ! using explicit algebraic expressions from Edmonds (1955/7).
 
             implicit none
-            integer :: j1,j2,j3,l1,l2,l3
+            integer :: two_j1,two_j2,two_j3,two_l1,two_l2,two_l3
             integer :: z, zmin, zmax
             integer  :: n2, n3, n4
             integer  :: d1, d2, d3, d4
@@ -261,30 +331,34 @@ module wigner
             real(kind=8) :: fac_sum, triangle_prod, num, den
 
             sj = 0d0
-            if ( j1 < 0) return
-            if ( j2 < 0) return
-            if ( j3 < 0) return
-            if ( l1 < 0) return
-            if ( l2 < 0) return
-            if ( l3 < 0) return
-            if ( j1 < abs(j2-j3) .OR. j1 > j2+j3 ) return
-            if ( j1 < abs(l2-l3) .OR. j1 > l2+l3 ) return
-            if ( l1 < abs(j2-l3) .OR. l1 > j2+l3 ) return
-            if ( l1 < abs(l2-j3) .OR. l1 > l2+j3 ) return            
+            if ( two_j1 < 0) return
+            if ( two_j2 < 0) return
+            if ( two_j3 < 0) return
+            if ( two_l1 < 0) return
+            if ( two_l2 < 0) return
+            if ( two_l3 < 0) return
+            if ( two_j1 < abs(two_j2-two_j3)) return
+            if ( two_j1 > two_j2+two_j3 ) return
+            if ( two_j1 < abs(two_l2-two_l3)) return
+            if ( two_j1 > two_l2+two_l3 ) return
+            if ( two_l1 < abs(two_j2-two_l3)) return
+            if ( two_l1 > two_j2+two_l3 ) return
+            if ( two_l1 < abs(two_l2-two_j3)) return
+            if ( two_l1 > two_l2+two_j3 ) return
 
-            n2 = (j1+j2+l1+l2)/2
-            n3 = (j2+j3+l2+l3)/2
-            n4 = (j3+j1+l3+l1)/2
+            n2 = (two_j1+two_j2+two_l1+two_l2)/2
+            n3 = (two_j2+two_j3+two_l2+two_l3)/2
+            n4 = (two_j3+two_j1+two_l3+two_l1)/2
 
-            d1 = (j1+j2+j3)/2
-            d2 = (j1+l2+l3)/2
-            d3 = (l1+j2+l3)/2
-            d4 = (l1+l2+j3)/2
+            d1 = (two_j1+two_j2+two_j3)/2
+            d2 = (two_j1+two_l2+two_l3)/2
+            d3 = (two_l1+two_j2+two_l3)/2
+            d4 = (two_l1+two_l2+two_j3)/2
 
-            triangle_prod = triangle(j1,j2,j3) &
-                           *triangle(j1,l2,l3) &
-                           *triangle(l1,j2,l3) &
-                           *triangle(l1,l2,j3)
+            triangle_prod = triangle(two_j1,two_j2,two_j3) &
+                           *triangle(two_j1,two_l2,two_l3) &
+                           *triangle(two_l1,two_j2,two_l3) &
+                           *triangle(two_l1,two_l2,two_j3)
 
             zmin = max(d1, d2, d3, d4)
             zmax = min(n2, n3, n4)
@@ -325,7 +399,7 @@ module wigner
                 tablemin2j = a
             end if
             if (.not. present(max2j)) then
-                b = tablemax2j 
+                b = tablemax2j
             else
                 b = max2j
                 tablemax2j = b
@@ -333,9 +407,9 @@ module wigner
             print*,"Table min. 2J:",a
             print*,"Table max. 2J:",b
             print*,'Memory required (MB):',real(sizeof(dummy_real) &
-                                    * (a-b+1)**6,4)*10d0**(-6)
+                                    * (b-a+1)**6,4)*10d0**(-6)
 
-            if (allocated(sixj_table)) deallocate(sixj_table) 
+            if (allocated(sixj_table)) deallocate(sixj_table)
             allocate(sixj_table(a:b,a:b,a:b,a:b,a:b,a:b))
             sixj_table = 0d0
 
@@ -357,60 +431,65 @@ module wigner
             call system_clock(count = tf)
             print*,'Table has been saved to memory.'
             print*,'Seconds to initialize:',real((tf-ti))/real(clock_rate)
-        end subroutine sixj_table_init                                
+        end subroutine sixj_table_init
 
-        function sixj_lookup(j1,j2,j3,l1,l2,l3) result(sj)
-            
+        function sixj_lookup(two_j1, two_j2, two_j3,&
+                             two_l1, two_l2, two_l3) result(sj)
+
             implicit none
-            integer :: j1,j2,j3,l1,l2,l3
+            integer :: two_j1,two_j2,two_j3,two_l1,two_l2,two_l3
             real(kind=8) :: sj
             integer :: minj, maxj
 
-            minj = min(j1,j2,j3,l1,l2,l3)
-            maxj = max(j1,j2,j3,l1,l2,l3)
+            minj = min(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
+            maxj = max(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
             tablemin_used = min(tablemin_used, minj)
             tablemax_used = max(tablemax_used, maxj)
 
             if (minj < tablemin2j .or. maxj > tablemax2j) then
-                sj = sixj(j1,j2,j3,l1,l2,l3)
+                sj = sixj(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
             else
-                sj = sixj_table(j1,j2,j3,l1,l2,l3)
+                sj = sixj_table(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3)
             end if
 
             return
         end function sixj_lookup
 
-        function ninej(j1,j2,j3,j4,j5,j6,j7,j8,j9) result(nj)
-            
+        function ninej(two_j1, two_j2, two_j3,&
+                       two_j4, two_j5, two_j6,&
+                       two_j7, two_j8, two_j9) result(nj)
+
             implicit none
-            integer :: j1,j2,j3,j4,j5,j6,j7,j8,j9
+            integer :: two_j1,two_j2,two_j3
+            integer :: two_j4,two_j5,two_j6
+            integer :: two_j7,two_j8,two_j9
             integer :: z, zmin, zmax
             real(kind=8) :: nj
 
             nj = 0d0
 
-            if (j1 < 0) return
-            if (j2 < 0) return
-            if (j3 < 0) return
-            if (j4 < 0) return
-            if (j5 < 0) return
-            if (j6 < 0) return
-            if (j7 < 0) return
-            if (j8 < 0) return
-            if (j9 < 0) return
+            if (two_j1 < 0) return
+            if (two_j2 < 0) return
+            if (two_j3 < 0) return
+            if (two_j4 < 0) return
+            if (two_j5 < 0) return
+            if (two_j6 < 0) return
+            if (two_j7 < 0) return
+            if (two_j8 < 0) return
+            if (two_j9 < 0) return
 
-            zmin = max(abs(j1-j9), abs(j4-j8), abs(j2-j6))
-            zmax = min(j1+j9, j4+j8, j2+j6)
+            zmin = max(abs(two_j1-two_j9),abs(two_j4-two_j8),abs(two_j2-two_j6))
+            zmax = min(two_j1+two_j9, two_j4+two_j8, two_j2+two_j6)
 
             do z = zmin, zmax
                 nj = nj + (-1) ** z * (z + 1d0) &
-                    * sixj_lookup(j1,j4,j7,j8,j9, z) &
-                    * sixj_lookup(j2,j5,j8,j4, z,j6) &
-                    * sixj_lookup(j3,j6,j9, z,j1,j2)
+                    * sixj_lookup(two_j1,two_j4,two_j7,two_j8,two_j9,     z) &
+                    * sixj_lookup(two_j2,two_j5,two_j8,two_j4,     z,two_j6) &
+                    * sixj_lookup(two_j3,two_j6,two_j9,     z,two_j1,two_j2)
             end do
 
             return
 
         end function ninej
 
-end module wigner        
+end module wigner

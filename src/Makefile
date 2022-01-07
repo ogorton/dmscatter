@@ -70,12 +70,11 @@ default: modules.o $(obj)
 	$(COMP) -o $(exec) $(F90_LFLAGS) $^
 
 install:
-	$(MAKE)
 	mv $(exec) $(bindir)
 
 install-openmp:
 	$(MAKE) F90_CFLAGS=$(openmp_cflags) F90_LFLAGS=$(openmp_lflags)
-	mv $(exec) $(bindir)
+	make install
 
 make new:
 	make clean 

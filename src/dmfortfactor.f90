@@ -34,15 +34,6 @@ program dmfortfactor
     read *,option
 
     call system_clock(count_rate = clock_rate)
-    print *,' '
-    print *,'Enter the target proton number '
-    read(5,*) nuc_target%Z
-    print *,' '
-    print *,'Enter the target neutron number '
-    read(5,*) nuc_target%N
-    
-    nuc_target%A = nuc_target%Z + nuc_target%N
-    
     call setparameters(nuc_target)
     call setupcoef(eft)
     call opencontrolfile(2)

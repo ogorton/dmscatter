@@ -86,7 +86,6 @@ subroutine coredensity(nuc_target)
 
 end subroutine coredensity
 
-!===================================================================
 
 subroutine printdensities(nuc_target)
     use parameters
@@ -137,6 +136,7 @@ function closest2J(evenA,xj)
   return
 end function closest2J
 
+
 subroutine readheaderv2(nuc_target, resfile)
    use parameters
    implicit none
@@ -167,6 +167,9 @@ subroutine readheaderv2(nuc_target, resfile)
                if(n==1)then
                  backspace(resfile)
                  read(resfile,*,err=3)n,e,ex,xj,xt
+                 print*,n,e,ex,xj,xt
+                 nuc_target%groundstate%Jx2 = closest2J(evenA,xj)
+                 nuc_target%groundstate%Tx2 = closest2J(evenA,xt)
 
                end if
 
@@ -179,8 +182,6 @@ subroutine readheaderv2(nuc_target, resfile)
 
 3           continue
 
-           nuc_target%groundstate%Jx2 = closest2J(evenA,xj)
-           nuc_target%groundstate%Tx2 = closest2J(evenA,xt)
          backspace(resfile)
          return
       end if
@@ -192,7 +193,6 @@ subroutine readheaderv2(nuc_target, resfile)
 end subroutine readheaderv2
 
 
-!-------------------------------------------------------------------------------
 subroutine read2state(resfile,locchar,n,found,finished)
    implicit none
    integer resfile
