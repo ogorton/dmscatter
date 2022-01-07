@@ -26,6 +26,16 @@ To run one of the example Python scripts, try moving to `runs` and running:
 
 More extensive documentation can be found in the manual document.
 
+## Validation plots
+We include a script for generating validation tests against data generated with
+DMFormFactor, the Mathematica package. After compiling the code, navigate to
+`test` and run
+
+    make test
+
+After a few minutes a file called `validation.pdf` should be generated with a
+number of plots comparing the output of DMFortFactor against DMFormFactor.
+
 ### Developer contacts
 * Calvin Johnson (PI) cjohnson@sdsu.edu
 * Oliver Gorton (Grad. student) ogorton@sdsu.edu
