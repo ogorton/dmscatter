@@ -1,6 +1,11 @@
 # A Fortran Program for Experimental WIMP Analysis
 *Oliver Gorton, Changfeng Jiao, and Calvin Johnson*
 
+**Dev Contacts**
+
+* Oliver Gorton (PhD student) ogorton@sdsu.edu
+* Calvin Johnson (PI) cjohnson@sdsu.edu
+
 Computes the differential event rate per recoil energy for WIMP-nucleon
 scattering events. This code based on the Mathematica package described in [this
 arXiv link](https://arxiv.org/abs/1308.6288).
@@ -35,7 +40,3 @@ DMFormFactor, the Mathematica package. After compiling the code, navigate to
 
 After a few minutes a file called `validation.pdf` should be generated with a
 number of plots comparing the output of DMFortFactor against DMFormFactor.
-
-### Developer contacts
-* Calvin Johnson (PI) cjohnson@sdsu.edu
-* Oliver Gorton (Grad. student) ogorton@sdsu.edu
