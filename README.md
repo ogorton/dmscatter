@@ -38,5 +38,7 @@ DMFormFactor, the Mathematica package. After compiling the code, navigate to
 
     make test
 
-After a few minutes a file called `validation.pdf` should be generated with a
-number of plots comparing the output of DMFortFactor against DMFormFactor.
+After a few minutes, and if you have [pandoc](https://pandoc.org/index.html) 
+installed, a file called `validation.pdf` should be generated with a number of
+plots comparing the output of DMFortFactor against DMFormFactor. If you don't
+have pandoc, you can still view the plots individually in the test directory. 
