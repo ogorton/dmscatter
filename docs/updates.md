@@ -1,10 +1,16 @@
-# A Fortran Program for Experimental WIMP Analysis
+# Update log
 *Oliver Gorton, Changfeng Jiao, and Calvin Johnson*
+
+### Version 1.10 update (Jan. 12, 2021)
+* Validation test scripts
+* Improved organization of code
+* Comprehensive documentation
 
 ### Version 1.7 update (May 5, 2021)
 * Improved speed by re-writing Gaussian-Legendre routine in modern fortran with
   fixed (non-adaptive) number of evaluation points. The new implementation also
   supports parallelization, which the previously referenced library did not.
+
 ### Version 1.6 update (Apr. 19, 2021)
 * Improved speed by caching Wigner coefficients in memory
 * Added options to compute transition probabilities and differential cross
@@ -13,6 +19,7 @@
 * Previous versions claimed compatibility with isospin-formalism density
   matrices. This turns out not to be the case. An appropriate error trap has
 been added.
+
 ### Version 1.5 update (Feb. 22, 2021)
 * Renamed executable to dmf90factor.x (previously darkmatter.x)
 * A ".sps" file is no longer required; the code now deduces this information
