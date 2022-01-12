@@ -23,10 +23,10 @@ Each function has three required arguments:
 
 ## Event rate spectra
 To calculate an event rate with a nonzero interaction, the user should also
-provide one or more of the optional EFT coupling coefficient arrays: `cpvec,
-cnvec, csvec, cvvec`. These set the couplings to protons, neutrons, isoscalar,
+provide one or more of the optional EFT coupling coefficient arrays: `cp,
+cn, cs, cv`. These set the couplings to protons, neutrons, isoscalar,
 and isovector, respectively. The $0^{th}$ index sets the first operator
-coefficient: `cpvec[0]`$= c_1^p$, etc.  Finally, the user can also pass a
+coefficient: `cp[0]`$= c_1^p$, etc.  Finally, the user can also pass a
 dictionary of valid control keywords and values to the function in order to set
 any of the control words defined in the manual.
 
@@ -35,14 +35,14 @@ a $c_3^v=0.0048$ coupling, one might call:
 ```Python
 import dmfortfactor as dm
 control_dict = {"wimpmass" : 50.0}
-cvvec = np.zeros(15)
-cvvec[2] = 0.0048 
+cv = np.zeros(15)
+cv[2] = 0.0048 
 Erkev, ER = dm.EventrateSpectra(
             Z = 54,
             N = 77,
             dres = "../dres/xe131gcn",
             controlwords = control_dict,
-            cvvec = cvvec,
+            cv = cv,
             exec_path = "../src/dmfortfactor")
 ```
 This will return the differential event rate spectra for recoil energies from 1
