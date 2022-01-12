@@ -38,14 +38,13 @@ import sys
 sys.path.append("../python")
 import dmfortfactor as dm
 ```
-Replace "../python" with the path to the `dmfortfactor/python` diretory on your
+If necessary, replace "../python" with the path to the `dmfortfactor/python` diretory on your
 system.
 
 The main function in this module, used to compute the differential event-rate
 spectra, can be called like this:
 ```Python
-import dmfortfactor as dm
-Erkev, ER = dm.EventrateSpectra(
+Recoilenergykev, Eventrate = dm.EventrateSpectra(
             Z = 54,
             N = 77,
             dres = "../dres/xe131gcn",
