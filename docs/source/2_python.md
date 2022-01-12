@@ -5,6 +5,15 @@ example scripts demonstrating its use. The wrapper comes with two Python
 functions `EventrateSpectra`, and `NucFormFactor` which can be imported
 from `dmfortfactor.py` in the Python directory. 
 
+To include this module in your own code, add the following lines of code:
+```Python
+import sys
+sys.path.append("../python")
+import dmfortfactor as dm
+```
+Replace "../python" with the path to the `dmfortfactor/python` diretory on your
+system.
+
 Each function has three required arguments: 
 
 1. Z the number of protons in the target nucleus, 
