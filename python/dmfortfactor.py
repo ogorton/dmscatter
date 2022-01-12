@@ -3,7 +3,7 @@ import subprocess
 import numpy as np
 
 def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1, 
-        controlwords={}, cpvec=None, cnvec=None, csvec=None, cvvec=None,
+        controlwords={}, cp=None, cn=None, cs=None, cv=None,
         exec_path='dmfortfactor', name=".eventratespectra"):
 
     '''
@@ -32,14 +32,14 @@ def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1,
         controlwords
             Dictionary of control words. Keys must be valid dmfortfactor
             control keywords, and values must be numbers.
-        cpvec
+        cp
             Length-15 array of nonrelativistic proton- coupling coefficients
-        cnvec
+        cn
             Length-15 array of nonrelativistic neutron- coupling coefficients
-        csvec
+        cs
             Length-15 array of nonrelativistic isoscalar- coupling coefficients
-        cvvec
-            Length-15 array of nonrelativistic isovector- coupling coefficients
+        cv
+            Length-15 array of nonrelativistic isotor- coupling coefficients
         exec_path
             Path to the executable for dmfortfactor
         name
@@ -53,7 +53,7 @@ def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1,
     '''
 
     inputfile = writeinput('er', name, Z, N, dres, epmin, epmax, epstep)
-    controlfile = writecontrol(name, controlwords, cpvec, cnvec, csvec, cvvec)
+    controlfile = writecontrol(name, controlwords, cp, cn, cs, cv)
 
     RecoilE, EventRate = runTemplates(
         exec_path, 
@@ -120,8 +120,8 @@ def writeinput(option, name, Z, N, dres, epmin, epmax, epstep):
     CSspectra_inputfile.close()
     return CSspectra_inputfilename
 
-def writecontrol(name, controlword_dict, cpvec=None, cnvec=None, csvec=None,
-        cvvec=None):
+def writecontrol(name, controlword_dict, cp=None, cn=None, cs=None,
+        cv=None):
 
     # Create control file
     filename = name + ".control"
@@ -129,18 +129,18 @@ def writecontrol(name, controlword_dict, cpvec=None, cnvec=None, csvec=None,
     f = open(filename, "w+")
 
     nonzero = False
-    allcouplings = {'p':cpvec, 'n':cnvec, 's':csvec, 'v':cvvec}
+    allcouplings = {'p':cp, 'n':cn, 's':cs, 'v':cv}
     for coupling in allcouplings:
-        cvec = allcouplings[coupling]
-        if cvec is not None:
-            if len(cvec) != 15:
-                print("Error: '%s' coupling vector is length-%i. Should be 15."%coupling)
+        c = allcouplings[coupling]
+        if c is not None:
+            if len(c) != 15:
+                print("Error: '%s' coupling tor is length-%i. Should be 15."%coupling)
                 exit()
-            nonzeroOps = np.flatnonzero(cvec)
+            nonzeroOps = np.flatnonzero(c)
             for operator in nonzeroOps:
                 nonzero = True
                 f.write("coefnonrel  %2i  %s  %20.10f\n"%(operator+1, coupling,
-                    cvec[operator]))
+                    c[operator]))
     if not nonzero: print("Warning: there were no nonzero EFT couplings!")
 
     for key in controlword_dict:

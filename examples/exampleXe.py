@@ -21,10 +21,10 @@ Erkev, ER = dm.EventrateSpectra(
         epmin = 1,
         epmax = 1000.0,
         epstep = 1.0,
-        csvec = cs,
-        cvvec = cv,
-        cpvec = cp,
-        cnvec = cn,
+        cs = cs,
+        cv = cv,
+        cp = cp,
+        cn = cn,
         exec_path='../src/dmfortfactor')
 
 plt.xscale('log')
@@ -32,4 +32,5 @@ plt.yscale('log')
 plt.xlabel(r"$E_{recoil}$ (keV)")
 plt.ylabel(r"$dR/dE_r$ (1/MeV)")
 plt.plot(Erkev,ER)
+plt.savefig("exampleXe.pdf")
 plt.show()

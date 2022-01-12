@@ -22,7 +22,7 @@ for i,isotope in enumerate(isotopes):
             N,
             dres = "../dres/xe%igcn"%isotope,
             controlwords = controls,
-            cpvec = cp,
+            cp = cp,
             exec_path='../src/dmfortfactor')
 
     weightedsum += EventRate * weights[i]

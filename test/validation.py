@@ -73,10 +73,10 @@ for coupleto in ("n","p"):
                 epmax = 1000.0,
                 epstep = 1.0,
                 exec_path='../src/dmfortfactor',
-                csvec = cs,
-                cvvec = cv,
-                cpvec = cp,
-                cnvec = cn)
+                cs = cs,
+                cv = cv,
+                cp = cp,
+                cn = cn)
 
             # Plot the error w.r.t. DMFormFactor V6
             R = interp1d(energy, eventrate)

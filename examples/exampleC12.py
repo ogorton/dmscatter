@@ -46,7 +46,7 @@ for opi,operator in enumerate(operators):
                 N = 6,
                 dres = dresfile[:-5],
                 controlwords = control_dict,
-                cnvec = cn,
+                cn = cn,
                 exec_path='../src/dmfortfactor')
 
 

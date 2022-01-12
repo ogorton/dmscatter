@@ -39,9 +39,9 @@ if compute:
         }
         tstart = timeit.default_timer()
 
-        # EFT coupling: isovector
-        cvvec = np.zeros(15)
-        cvvec[0] = 0.00048
+        # EFT coupling: isotor
+        cv = np.zeros(15)
+        cv[0] = 0.00048
 
         # Evaluate the model
         E, R = dm.EventrateSpectra(
@@ -52,7 +52,7 @@ if compute:
             epmax = 1000.0, 
             epstep = 1.0,
             controlwords = control_dict,
-            cvvec = cvvec,
+            cv = cv,
             exec_path='../src/dmfortfactor')
 
         exectime = timeit.default_timer() - tstart

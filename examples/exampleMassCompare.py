@@ -25,10 +25,10 @@ for wimp_mass in (50.,150.0, 500.,5000.):
         epmin = 1,
         epmax = 1000.0,
         epstep = 1.0,
-        csvec = cs,
-        cvvec = cv,
-        cpvec = cp,
-        cnvec = cn,
+        cs = cs,
+        cv = cv,
+        cp = cp,
+        cn = cn,
         exec_path='../src/dmfortfactor')
 
     plt.plot(RecoilE, EventRate, label="$m_\chi=$%2.2f"%wimp_mass)

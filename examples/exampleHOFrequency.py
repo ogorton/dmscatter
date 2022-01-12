@@ -40,7 +40,7 @@ for operator in operators:
                 N = 6, 
                 dres = dresfile,
                 controlwords = control_dict,
-                cnvec = cn,
+                cn = cn,
                 exec_path='../src/dmfortfactor')
 
 
