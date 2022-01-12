@@ -8,7 +8,7 @@
 
 Computes the differential event rate per recoil energy for WIMP-nucleon
 scattering events. This code is based on the Mathematica package
-(DMFormFactor)[https://www.ocf.berkeley.edu/~nanand/software/dmformfactor/]
+[DMFormFactor](https://www.ocf.berkeley.edu/~nanand/software/dmformfactor/)
 described in [this arXiv link](https://arxiv.org/abs/1308.6288).
 
 Source code is located in `src` directory. To compile the program, you must have
