@@ -1,6 +1,7 @@
 subroutine setup_nuclearinputs(nuc_target)
 
-    use parameters
+    use types, only: nucleus
+    use settings
     use orbitals
     use constants
     use densities

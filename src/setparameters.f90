@@ -2,9 +2,8 @@ subroutine setparameters(nuc_target)
 
     use constants
     use quadrature 
-    use momenta
     use orbitals, only:bfm
-    use parameters
+    use types, only: nucleus
 
     implicit none
 
@@ -34,10 +33,10 @@ subroutine printparameters(wimp,nuc_target,eft)
 
     use constants
     use quadrature
-    use momenta
+    use settings
     use orbitals, only: bfm
-    use parameters
     use keywords
+    use types
 
     implicit none
     integer i
@@ -69,6 +68,7 @@ subroutine printparameters(wimp,nuc_target,eft)
     print'("Target atomic mass",T30,F10.6)',nuc_target%mass
     print'("System reduced mass",T30,F10.6)',wimp%mass * nuc_target%mass * mN/(wimp%mass+nuc_target%mass*mn)!mchi * mtarget * mN / (mchi+mtarget*mN)
     print'("Target mass density (1/GeV)",T30,F10.6)',nuc_target%nt
+    print'("Target experimental mass (kg*days)",T30,F10.6)',ntscale
     print'("Local WIMP density (GeV/cm^3)",T30,F10.6)',wimp%localdensity
     print'("v0 (km/s)",T30,F10.6)',vscale
     print'("ve (km/s)",T30,F10.6)',vearth
@@ -77,7 +77,7 @@ subroutine printparameters(wimp,nuc_target,eft)
     print*,''
     print*,'EFT coupling coefficients:'
     write(6,"(A,T12,A,T24,A,T36,A,T48,A)")'i','p','n','s','v'
-    do i = 1, num_response_coef
+    do i = 1, size(eft%xpnc(0)%c)
         if ((eft%xpnc(0)%c(i).ne.0) &
             .or. (eft%xpnc(1)%c(i).ne.0) &
             .or. (eft%isoc(0)%c(i).ne.0) &

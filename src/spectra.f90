@@ -3,10 +3,10 @@ module mod_spectra
     use kinds
     implicit none
 
-    real(doublep) :: x_start
-    real(doublep) :: x_stop
-    real(doublep) :: x_step
-    real(doublep), allocatable :: x_grid(:), energy_grid(:), momentum_grid(:)
+    real(dp) :: x_start
+    real(dp) :: x_stop
+    real(dp) :: x_step
+    real(dp), allocatable :: x_grid(:), energy_grid(:), momentum_grid(:)
     integer :: energy_grid_size
 
 contains
@@ -14,16 +14,16 @@ contains
 function velocitycurve(vlist, q, wimp, nuc_target, eft, option)
     use crosssection
     use transition
-    use parameters
+    use types
     implicit none
-    real(doublep) :: q, v
-    real(doublep), dimension(:) :: vlist
+    real(dp) :: q, v
+    real(dp), dimension(:) :: vlist
     type(particle) :: wimp
     type(nucleus) :: nuc_target
     type(eftheory) :: eft
     integer :: option
 
-    real(doublep), dimension(size(vlist)) :: velocitycurve
+    real(dp), dimension(size(vlist)) :: velocitycurve
 
     integer :: i
 
@@ -32,13 +32,11 @@ function velocitycurve(vlist, q, wimp, nuc_target, eft, option)
         do i = 1, size(vlist)
             v = vlist(i)
             velocitycurve(i) = transition_probability(q, v, wimp, nuc_target, eft)
-!            call progressmessage(100*real(i)/real(size(vlist)))
         end do
     case(2)
         do i = 1, size(vlist)
             v = vlist(i)
             velocitycurve(i) = diffCrossSection(v, q, wimp, nuc_target, eft)
-!            call progressmessage(100*real(i)/real(size(vlist)))
         end do        
     case default
         stop "Not a velocity curve option."
@@ -47,16 +45,16 @@ end function velocitycurve
 
 
 subroutine velocity_curve(wimp, nuc_target, eft, option)
-    use parameters
+    use types
     use constants, only: kev, mN, kilometerpersecond
     implicit none
 
     type(particle) :: wimp
     type(nucleus) :: nuc_target
     type(eftheory) :: eft    
-    real(doublep) :: Er, Qr, vstart, vstop, vstep
+    real(dp) :: Er, Qr, vstart, vstop, vstep
     integer :: sizevlist, i
-    real(doublep), allocatable :: vlist(:), cslist(:)
+    real(dp), allocatable :: vlist(:), cslist(:)
     integer :: option, iunit
 
     print*,"Enter recoil E (keV):"
@@ -115,24 +113,23 @@ subroutine velocity_curve(wimp, nuc_target, eft, option)
 end subroutine
 
 function spectra(momenta, wimp, nuc_target, eft)
-    use parameters
+    use types
     use eventrate
     implicit none
-    real(doublep), dimension(:) :: momenta
+    real(dp), dimension(:) :: momenta
     type(particle) :: wimp
     type(nucleus) :: nuc_target
     type(eftheory) :: eft
-    real(doublep), dimension(size(momenta)) :: spectra
+    real(dp), dimension(size(momenta)) :: spectra
 
     integer :: i, N
-    real(doublep) :: q
+    real(dp) :: q
 
     N = size(momenta)
     !$OMP parallel do private(q) schedule(dynamic, 1)
     do i = 1, N
         q = momenta(i)
         spectra(i) = dEventRate(q, wimp, nuc_target, eft)
-        !call progressmessage(100*real(i)/real(N))
     end do
     !$OMP end parallel do
     !$OMP barrier
@@ -141,8 +138,7 @@ end function spectra
 
 subroutine eventrate_spectra(wimp, nuc_target, eft)
     use constants
-    use momenta
-    use parameters
+    use types
 
     implicit none
 
@@ -152,9 +148,9 @@ subroutine eventrate_spectra(wimp, nuc_target, eft)
     
     integer :: calc_num
     integer :: iunit
-    real(doublep) :: recoil_energy, momentum_transfer
-    real(doublep), allocatable :: event_rate_spectra(:)
-    real(doublep) :: mtarget, totaleventrate, error
+    real(dp) :: recoil_energy, momentum_transfer
+    real(dp), allocatable :: event_rate_spectra(:)
+    real(dp) :: mtarget, totaleventrate, error
 
     print*,"Computing differential event rate spectra"
 
@@ -197,12 +193,12 @@ subroutine eventrate_spectra(wimp, nuc_target, eft)
 end subroutine eventrate_spectra
 
 subroutine get_energy_grid(mtarget)
-    use momenta
+    use settings
     use constants, only: kev, mN
     implicit none
     integer :: calc_num
     character(len=100) :: filename
-    real(doublep) :: momentum_transfer, mtarget, recoil_energy
+    real(dp) :: momentum_transfer, mtarget, recoil_energy
 
     ! Get recoil energy grid from user or from file
     if (useenergyfile) then

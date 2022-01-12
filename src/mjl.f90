@@ -74,7 +74,7 @@ module mjl
         implicit none
         integer, intent(in) :: np,lp,jp,n,l,j,bigJ,bigL
         real(kind=8), intent(in) :: y
-        real(kind=8) :: MJLDivQ, tmp
+        real(kind=8) :: MJLDivQ
     
         MJLDivQ = MJLDivQoverall(lp,jp,l,j,bigJ,bigL) &            
             * (MJLDivQsummand1(y,np,lp,jp,n,l,j,bigJ,bigL) &

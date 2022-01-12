@@ -54,17 +54,16 @@ module nucresponse
     
         use kinds
         use orbitals
-        use parameters
         use wigner, only: threej_lookup, vector_couple
-        use densities, only: maxJt, minJt
+        use densities, only: maxJt, minJt, pndens
     
         implicit none
     
         integer :: tau1, tau2
         integer :: term
-        real(doublep) :: y
-        real(doublep), allocatable, intent(in) :: densmat(:,:,:,:)
-        real(doublep) :: dme1, dme2
+        real(dp) :: y
+        real(dp), allocatable, intent(in) :: densmat(:,:,:,:)
+        real(dp) :: dme1, dme2
     
         integer :: j,a,b!,ap,an
         integer :: jmin, jmax
@@ -74,10 +73,10 @@ module nucresponse
     
         integer :: Mtiso, Tiso
     
-        real(doublep) :: dmepsilon
-        real(doublep) :: spome
-        real(doublep) :: wfn_me1, wfn_me2
-        real(doublep) :: nucFormFactor, isofactor
+        real(dp) :: dmepsilon
+        real(dp) :: spome
+        real(dp) :: wfn_me1, wfn_me2
+        real(dp) :: nucFormFactor, isofactor
     
         jmin = -1
         jmax = -1
@@ -186,18 +185,17 @@ module nucresponse
     
         use kinds
         use orbitals
-        use parameters
         use constants, only: pi
     
         implicit none
     
         integer :: tau1, tau2
         integer :: term
-        real(doublep) :: y
-        real(doublep), allocatable, intent(in) :: densmat(:,:,:,:)
+        real(dp) :: y
+        real(dp), allocatable, intent(in) :: densmat(:,:,:,:)
     
         integer :: Mtiso, Tiso, Jx2iso
-        real(doublep) :: FF
+        real(dp) :: FF
         character(len=2) :: coupleto
     
         write(coupleto,'(I1,I1)')tau1, tau2
@@ -235,8 +233,9 @@ module nucresponse
 
     subroutine test_nucresponse(nuc_target)
     
-        use parameters
         use orbitals, only: bfm
+        use types, only: nucleus
+        use densities, only: pndens
         implicit none
     
         type(nucleus) :: nuc_target

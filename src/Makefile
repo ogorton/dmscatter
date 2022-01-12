@@ -30,43 +30,27 @@ obj = $(src:.f90=.o)
 ##################################
 
 setparameters.o : orbitals.o
-
 bessel.o : wigner.o norm.o
-
 mjl.o : bessel.o norm.o
-
 phi.o : bessel.o norm.o sigma.o
-
 sigma.o : bessel.o norm.o
-
 operme.o : sigma.o phi.o mjl.o
-
 densities.o : orbitals.o
-
-dmresponse.o : dmresponselib.o
-
+dmresponse.o : dmresponselib.o densities.o
 nucresponse.o : orbitals.o mjl.o phi.o sigma.o densities.o
-
 nucresponse_spectra.o : orbitals.o spectra.o
-
-controlfiler.o : orbitals.o
-
+controlfile.o : modules.o orbitals.o quadrature.o
 transition.o : dmresponse.o nucresponse.o
-
 crosssection.o : transition.o 
-
-eventrate.o : gausquad.o gaus.o crosssection.o velocitydist.o 
-
+eventrate.o : quadrature.o gaus.o crosssection.o velocitydist.o 
 spectra.o : eventrate.o
-
-totaleventrate.o : eventrate.o gaus.o
-
-dmfortfactor.o : spectra.o wigner.o modules.o nucresponse.o
+totaleventrate.o : eventrate.o quadrature.o
+dmfortfactor.o : spectra.o wigner.o modules.o nucresponse.o controlfile.o 
 
 ################
 # USER RECIPES #
 ################
-default: modules.o $(obj)
+default: $(obj)
 	$(COMP) -o $(exec) $(F90_LFLAGS) $^
 
 install:
@@ -91,6 +75,10 @@ openmp:
 
 debug:
 	$(MAKE) F90_CFLAGS=$(debug_cflags) F77_CFLAGS=$(debug_cflags)
+
+tidy:
+	mv *.o obj
+	mv *.mod mod
 
 clean:
 	touch make.o make.x make.mod

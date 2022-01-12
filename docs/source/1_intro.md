@@ -14,7 +14,7 @@ header-includes: |
     \usepackage{physics}
     \def\be{\begin{align}}
     \def\ee{\end{align}}
-bibliography: refs.bib
+bibliography: source/refs.bib
 cls: nature.cls
 linkcolor: blue
 urlcolor: blue

@@ -191,7 +191,7 @@ module bessel
         INTEGER, INTENT(IN) :: m, mp, l, lp,bigL
         REAL(kind=8), INTENT(IN) :: y
         REAL(kind=8) :: a, b
-        REAL(kind=8) :: CHGF_regular,hg
+        REAL(kind=8) :: CHGF_regular
     
         a = dble(bigL-lp-l-2*mp-2*m)/2.d0
         b = dble(bigL)+3.d0/2.d0

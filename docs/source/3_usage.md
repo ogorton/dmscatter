@@ -63,7 +63,7 @@ studies and comparisons of different inputs to the theory.
 This should generate the following figure:
 
 \centering
-![Example output graph.](exampleXe.pdf){width=80%}
+![Example output graph.](source/exampleXe.pdf){width=80%}
 \flushleft
 
 ## Compiling with make

@@ -1,10 +1,10 @@
 !-----------------------------------------------------------------------------80
 subroutine nucresponse_spectra(nuc_target)
-    use momenta
     use mod_spectra
     use orbitals, only: bfm
-    use parameters, only: nucleus, pndens
+    use types, only: nucleus
     use nucresponse, only: nucFormFactor, nucFormFactor_transform
+    use densities, only: pndens
     implicit none
     integer :: n_xvalues
     integer :: iunit
@@ -12,10 +12,10 @@ subroutine nucresponse_spectra(nuc_target)
     integer :: iqq
     type(nucleus) :: nuc_target   
 
-    real(doublep) :: yy, qq
-    real(doublep), allocatable :: xlist(:), Wlist(:,:,:,:)
-    real(doublep) :: mtarget
-    real(doublep) :: tolerance
+    real(dp) :: yy, qq
+    real(dp), allocatable :: xlist(:), Wlist(:,:,:,:)
+    real(dp) :: mtarget
+    real(dp) :: tolerance
 
     tolerance = epsilon(qq)
 

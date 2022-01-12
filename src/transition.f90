@@ -3,25 +3,25 @@ contains
 function transition_probability(q,v,wimp,nucl,eft)
     use kinds
     use constants
-    use parameters
     use orbitals, only: bfm
     use dmresponse, only: dmresponsefun
     use nucresponse
+    use types
     implicit none
-    REAL(doublep) :: q
-    REAL(doublep) :: v
+    REAL(dp) :: q
+    REAL(dp) :: v
     type(particle) :: wimp
     type(nucleus) :: nucl
     type(eftheory) :: eft
     real(kind=8), allocatable :: eftsmall(:,:)
     !
-    REAL(doublep) :: y
-    REAL(doublep) :: muT
-    REAL(doublep) :: transition_probability, tmpprod
+    REAL(dp) :: y
+    REAL(dp) :: muT
+    REAL(dp) :: transition_probability, tmpprod
 
     integer :: tau1, tau2, term
 
-    allocate(eftsmall(0:1,num_response_coef))
+    allocate(eftsmall(0:1,size(eft%xpnc(0)%c)))
     eftsmall(0,:) = eft%xpnc(0)%c
     eftsmall(1,:) = eft%xpnc(1)%c    
 

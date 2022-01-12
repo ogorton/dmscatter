@@ -4,11 +4,14 @@ program dmfortfactor
     use mod_spectra, only: eventrate_spectra, velocity_curve
     use wigner
     use nucresponse, only: test_nucresponse
+    use keywords, only: controlfile
 
     implicit none
     integer(kind=8) :: clock_rate, tstart, tstop    
     character(len=2) :: option
     logical :: usingopenMP
+
+    call system_clock(count_rate = clock_rate)
     usingopenMP = .false.
     !$ usingopenMP = .true.
 
@@ -33,15 +36,12 @@ program dmfortfactor
 
     read *,option
 
-    call system_clock(count_rate = clock_rate)
     call setparameters(nuc_target)
-    call setupcoef(eft)
-    call opencontrolfile(2)
-    call readcontrolfile(2, eft, wimp)
-    call convertisospinform(eft)
-    call normalizecoeffs(eft, wimp)
+    call controlfile(eft, wimp)
     call setup_nuclearinputs(nuc_target)
+
     call printparameters(wimp,nuc_target,eft)
+
     call threej_table_init()
     call sixj_table_init()
     

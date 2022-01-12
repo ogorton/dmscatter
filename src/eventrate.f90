@@ -1,4 +1,5 @@
 module eventrate
+
     implicit none
     real(kind=8) :: qglobal(128)
     contains
@@ -8,36 +9,35 @@ module eventrate
         use quadrature
         use kinds
         use constants
-        use parameters
-        use gaus
-        use gausquad
+        use types
         use crosssection
-        use Mmaxbolt
+        use distributions
+
         implicit none
-        real(doublep) :: dEventRate
-        real(doublep) :: q
+        real(dp) :: dEventRate
+        real(dp) :: q
         type(particle) :: wimp
         type(nucleus) :: nuc_target
         type(eftheory) :: eft
     
-        real(doublep) :: mchi, muT
-        real(doublep) :: Nt, units
-        real(doublep) :: rhochi
-        real(doublep), allocatable :: eftsmall(:,:)
+        real(dp) :: mchi, muT
+        real(dp) :: Nt, units
+        real(dp) :: rhochi
+        real(dp), allocatable :: eftsmall(:,:)
     
-        real(doublep) :: v  ! DM velocity variable
-        real(doublep) :: dv ! DM differential velocity / lattive spacing
+        real(dp) :: v  ! DM velocity variable
+        real(dp) :: dv ! DM differential velocity / lattive spacing
         integer, allocatable :: indx(:)
         integer :: i, j, itmp, ind, norder
-        real(doublep) :: ve, v0, vesc, vmin, error
+        real(dp) :: ve, v0, vesc, vmin, error
     
-        real(doublep) :: relerror
+        real(dp) :: relerror
     
         integer :: tid
     
         tid = 1
-    ! Don't delete the following line; it's an openMP command, not a comment.
-    !$  tid = omp_get_thread_num() + 1
+        ! Don't delete the following line; it's an openMP command, not a comment.
+        !$  tid = omp_get_thread_num() + 1
         qglobal(tid) = q 
     
         muT = wimp%mass * nuc_target%mass * mN / (wimp%mass + nuc_target%mass * mN)
@@ -52,12 +52,11 @@ module eventrate
             return
         end if
     
-        !relerror=dspectra(vesc,tid) ! This line prevents a segfault... idk why
         relerror = quadrature_relerr
     
         select case(quadrature_type)
           case(1)
-            call gaus8_threadsafe (spectraintegrand1d, vmin, vesc, &
+            call gaus8_threadsafe(spectraintegrand1d, vmin, vesc, &
                 relerror, deventrate, ind, tid )
           case(2)
             deventrate = gaussquad(spectraintegrand1d, gaussorder, vmin, vesc, tid)
@@ -83,11 +82,11 @@ module eventrate
         use kinds
         use constants
         use crosssection
-        use mmaxbolt
+        use distributions
     
         implicit none
-        real(doublep) :: vv, qq, ve, v0
-        real(doublep) :: spectraintegrand1d
+        real(dp) :: vv, qq, ve, v0
+        real(dp) :: spectraintegrand1d
         integer tid
     
         ve = vearth * kilometerpersecond

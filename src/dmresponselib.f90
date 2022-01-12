@@ -5,10 +5,9 @@
 module dmresponselib
 
     use constants
-    use parameters
     implicit none
 
-contains
+    contains
 
     ! Darkmatter particle response function:
     !   $R_M^{\tau\tau'}(\vec{v}_T^{\perp 2}, \frac{\vec{q}^2}{2m_N^2})$

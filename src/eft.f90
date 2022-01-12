@@ -1,8 +1,10 @@
 subroutine setupcoef(eft)
-    use parameters
-
+    use types, only: eftheory
     implicit none
     type(eftheory) :: eft
+    integer :: num_response_coef
+
+    num_response_coef = 15
 
     ! Explicit proton-neutron coefficients
     allocate(eft%xpnc(0)%c(num_response_coef))
@@ -20,7 +22,7 @@ subroutine setupcoef(eft)
 end subroutine setupcoef
 
 subroutine setpncoeffsnonrel(eft, coupling, op, coeffdimless)
-    use parameters
+    use types, only: eftheory
     implicit none
     type(eftheory) :: eft
     integer, intent(in) :: op
@@ -50,9 +52,12 @@ end subroutine
 
 
 subroutine convertisospinform(eft)
-    use parameters
+    use types, only: eftheory
     type(eftheory) :: eft
     integer :: i
+    integer :: num_response_coef
+    
+    num_response_coef = size(eft%xpnc(0)%c)
 
     print*,'Converting EFT coefficients isospin <=> proton-neutron formalism.'
 
@@ -93,13 +98,13 @@ end subroutine
 !!  If[Op==15, coeff=(4mN*mchiFORMAL/mV^2)coeffdimless/mN^2;];
 !!  
 subroutine normalizecoeffs(eft, wimp)
-    use parameters
+    use types
     use constants
     use kinds
     implicit none
     type(particle) :: wimp
     type(eftheory) :: eft
-    real(doublep) :: mchi
+    real(dp) :: mchi
     integer :: i, j, op, mNdenomOps(7), mNmNdenomOps(2)
 
     print*,'Normalizing EFT coefficients.'

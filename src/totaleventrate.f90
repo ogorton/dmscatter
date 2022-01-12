@@ -1,13 +1,12 @@
 subroutine totaleventrate(nuc_target)
 
     use kinds
-    use parameters
+    use types, only: nucleus
     use quadrature
-    use gaus
     implicit none
     type(nucleus) :: nuc_target
-    real(doublep) :: q_start, q_stop, error, relerror, result, abserror
-    real(doublep) :: fspectra, mtarget
+    real(dp) :: q_start, q_stop, error, relerror, result, abserror
+    real(dp) :: fspectra, mtarget
     integer :: ind
 
     mtarget = nuc_target%mass
@@ -20,8 +19,7 @@ subroutine totaleventrate(nuc_target)
     abserror=fspectra(q_stop) ! This line prevents a segfault... idk why
     relerror = quadrature_relerr
 
-    !call chinsp ( fspectra, q_start, q_stop, relerror, error, result )
-    call gaus8_threadsafe (fspectra,  q_start, q_stop, relerror, result, ind, 1)
+    call gaus8_threadsafe(fspectra,  q_start, q_stop, relerror, result, ind, 1)
 
     print*,"Error estimate:"
     print*,error
@@ -43,8 +41,8 @@ function fspectra(q)
     use constants
     use eventrate
     implicit none
-    real(doublep), intent(in) :: q
-    real(doublep) :: fspectra
+    real(dp), intent(in) :: q
+    real(dp) :: fspectra
 
     fspectra = q * dEventRate(q, wimp, nuc_target, eft) /(mn*nuc_target%mass)
 
@@ -52,11 +50,11 @@ end function
 
 subroutine get_q_limits(mtarget,q_start, q_stop, error)
     use kinds
-    use momenta
     use constants
+    use settings, only: usemomentum
     implicit none
-    real(doublep) :: mtarget, E_start, E_stop, error
-    real(doublep) :: q_start, q_stop
+    real(dp) :: mtarget, E_start, E_stop, error
+    real(dp) :: q_start, q_stop
 
     ! Get recoil energy grid from user or from file
     if (usemomentum) then
