@@ -48,7 +48,7 @@ Recoilenergykev, Eventrate = dm.EventrateSpectra(
             Z = 54,
             N = 77,
             dres = "../dres/xe131gcn",
-            cnvec = [0.00048, 0,0,0,0,0,0,0,0,0,0,0,0,0,0] )
+            cn = [0.00048, 0,0,0,0,0,0,0,0,0,0,0,0,0,0] )
 ```
 
 To run one of the example Python scripts, try moving to `runs` and running:
