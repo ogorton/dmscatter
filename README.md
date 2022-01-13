@@ -2,7 +2,7 @@
 *Oliver Gorton, Changfeng Jiao, and Calvin Johnson*
 
 Computes the differential event rate per recoil energy for WIMP-nucleon
-scattering events. This code is based on the Mathematica package
+scattering events. This code is based on the Mathematica package,
 [DMFormFactor](https://www.ocf.berkeley.edu/~nanand/software/dmformfactor/)
 described in [this arXiv link](https://arxiv.org/abs/1308.6288).
 
@@ -17,7 +17,7 @@ extensible to the full capabilities of the underlying program.
 
 ## Compile
 Source code is located in `src` directory. To compile the program, you must have
-the gfortran compiler and make installed. From the `src` directory, run:
+the `gfortran` compiler and `make` installed. From the `src` directory, run:
 
     make dmfortfactor
 
@@ -26,10 +26,10 @@ of the code, instead run:
 
     make openmp
 
-This places the dmfortfactor executable in the `src` directory. Move it to
-your path's bin directory if desired. Note that if you want to switch between
-and serial or parallel version, you must run `make clean' to clear out the old
-object files.
+Both options create the executable `dmfortfactor` in the `src` directory. (Many
+of the example Python scripts expect to find it there.) Note that if you want to
+switch between and serial or parallel version, you must run `make clean'
+in-between compiles.
 
 ## Run with Python
 The main Python interface to the code can be imported and called:
@@ -50,7 +50,6 @@ Recoilenergykev, Eventrate = dm.EventrateSpectra(
             dres = "../dres/xe131gcn",
             cn = [0.00048, 0,0,0,0,0,0,0,0,0,0,0,0,0,0] )
 ```
-
 To run one of the example Python scripts, try moving to `runs` and running:
 
     python3 ../examples/exampleXe.py
