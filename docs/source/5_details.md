@@ -1,7 +1,7 @@
 # Details of computation
 
 We present the equations necessary to reproduce the code. For a more complete
-description of the theory, see [@PhysRevC.89.065501]
+description of the theory, see[@PhysRevC.89.065501].
 
 ## Differential event rate
 
@@ -77,7 +77,7 @@ around the Sun. Another point is that the cut-off model where the speed
 probability drops to zero after an escape velocity is reached is not very
 realistic: actually, the cutoff should be smoother. 
 
-A semi-recent review on the subject can be found here [@RevModPhys.85.1561].
+A semi-recent review on the subject can be found here[@RevModPhys.85.1561].
 
 ## Differential cross section
 
@@ -117,7 +117,7 @@ forms familiar from electro-weak theory in a shell model framework
 the EFT content, labeled $R_i^{x,x'}$, and another containing the nuclear
 response functions, labeled $W_i^{x,x'}$ for each of the $i=1,...,8$ allowed
 combinations of electro-weak-theory operators, discussed in the next section.
-One obtains the following form [@Fitzpatrick_2013;@Anand_2014]:
+One obtains the following form[@Fitzpatrick_2013;@Anand_2014]:
 $$
     T(v,q) = \frac{4\pi}{(4m_T)^2} \frac{1}{2j_T+1} \sum_{x=p,n}\sum_{x'=p,n}\sum_{i=1}^8 R_i^{x,x'}(v^2,q^2)W_i^{x,x'}(q).
 $$
@@ -245,27 +245,26 @@ transfer momenta or recoil energy.
 There are six parity-and-CP-conserving nuclear operators, $M_J, \Delta_J,
 \Sigma_J', \Sigma_J'', \tilde{\Phi}_J', \Phi_J''$, describing the electro-weak
 coupling of the WIMPs to the nucleon degrees of freedom.  These are constructed
-from Bessel spherical and vector harmonics [@DONNELLY1979103]:
-\begin{align}
+from Bessel spherical and vector harmonics[@DONNELLY1979103]:
+$$
     M_{JM}(q\vec{x})\equiv j_J(qx)Y_{JM}(\Omega_x)
-\end{align}
-\begin{align}
+$$
+$$
     \vec{M}_{JML}(q\vec{x}) \equiv j_L(qx) \vec{Y}_{JLM}(\Omega_x),
-\end{align}
+$$
 where, using unit vectors $\vec{e}_{\lambda = -1, 0, +1}$,
-\begin{align}
+$$
     Y_{JLM}(\Omega_x) = \sum_{m\lambda} \bra{Lm1\lambda}\ket{(L1)JM_J} Y_{Lm}(\Omega_x)\vec{e}_\lambda.
-\end{align}
+$$
 The six multipole operators are defined as:
-\begin{align}
-    \label{oplist}
+\begin{align*}
 M_{JM}\ \ &\\
 \Delta_{JM} \equiv& \vec{M}_{JJM}\cdot \frac{1}{q}\vec{\nabla}\\
 \Sigma'_{JM} \equiv& -i \left \{\frac{1}{q}\vec{\nabla}\times \vec{M}_{JJM}  \right\}\cdot \vec{\sigma}\\
 \Sigma''_{JM} \equiv& \left \{ \frac{1}{q}\vec{\nabla}M_{JM} \right \}\cdot \vec{\sigma}\\
 \tilde{\Phi}'_{JM} \equiv& \left( \frac{1}{q} \vec{\nabla} \times \vec{M}_{JJM}\right)\cdot \left(\vec{\sigma}\times \frac{1}{q}\vec{\nabla} \right) + \frac{1}{2}\vec{M}_{JJM}\cdot \vec{\sigma}\\
 \Phi''_{JM}\equiv& i\left(\frac{1}{q}\vec{\nabla}M_{JM} \right)\cdot \left(\vec{\sigma}\times \frac{1}{q}\vec{\nabla} \right)
-\end{align}
+\end{align*}
 
 The matrix elements of these operators can be calculated for standard wave
 functions from second-quantized shell model calculations:
@@ -277,7 +276,7 @@ $$
 $$
 where single-particle orbital labels $a$ imply shell model quantum number $n_a,
 l_a, j_a$, and the double-bar $||$ indicates reduced matrix
-elements [@edmonds1996angular]. For elastic collisions, only the ground
+elements[@edmonds1996angular]. For elastic collisions, only the ground
 state is involved, i.e. $\Psi_f=\Psi_i=\Psi_{g.s.}$.
 
 We assume a harmonic oscillator single-particle basis, with the important
@@ -287,7 +286,7 @@ and _not_ starting with $1s, 1p,$ etc.
 Then, the one-body matrix elements for operators $\bra{a} |X^{(f)}_J| \ket{b}$,
 built from spherical Bessel functions and vector spherical harmonics,  have
 closed-form expressions in terms of confluent hypergeometric
-functions [@DONNELLY1979103].
+functions[@DONNELLY1979103].
 
 The nuclear structure input is in the form of one-body density matrices between
 many-body eigenstates,
@@ -297,16 +296,16 @@ $$
 $$
 where $\hat{c}^\dagger_a$ is the fermion creation operator (with good angular
 momentum quantum numbers), $\tilde{c}_b$ is the
-time-reversed [@edmonds1996angular] fermion destruction operator.  Here the
+time-reversed[@edmonds1996angular] fermion destruction operator.  Here the
 matrix element is reduced in angular momentum but not isospin, and so are in
 proton-neutron format. These density matrices are the product of a many-body
-code, in our case BIGSTICK [@BIGSTICK1,@BIGSTICK2], although one could use
+code, in our case BIGSTICK[@BIGSTICK1;@BIGSTICK2], although one could use
 one-body density matrices, appropriately formatted, from any many-body code.
 
 
 ## Electroweak matrix elements
 To compute the matrix elements of the electroweak operators in a harmonic
-oscillator basis, we use the derivations from [@DONNELLY1979103]. Namely,
+oscillator basis, we use the derivations from[@DONNELLY1979103]. Namely,
 equations (1a) - (1f) and (3a) - (3d), which express the necessary geometric
 matrix elements in terms of matrix elements of the spherical Bessel functions.
 Here, we write out the remaining explicit formulas for obtaining matrix elements
@@ -320,7 +319,8 @@ $$
     m^{(n)} = \frac{(m+n-1)!}{(m-1)!}.
 $$
 
-The first additional relation is:
+The first additional relation is computed in DMFortFactor by the function
+`BesselElement`:
 \begin{align*}
 \bra{n'l'j'} j_L(y) \ket{nlj} = \frac{2^L}{(2L+1)!!} y^{L/2} e^{-y}
     \sqrt{(n'-1)!(n-1)!}
@@ -330,10 +330,8 @@ The first additional relation is:
     \frac{(-1)^{m+m'}}{m!m'!(n-m-1)!(n'-m'-1)!} \\
     \times
     \frac{\Gamma[(l+l'+L+2m+2m'+3)/2]}{\Gamma(l+m+3/2)\Gamma(l'+m'+3/2)}
-    \ _1F_1[(L-l'-l-2m'-2m)/2; L+3/2; y],
+    \ _1F_1[(L-l'-l-2m'-2m)/2; L+3/2; y].
 \end{align*}
-which is computed in DMFortFactor by the function `BesselElement`.
-
 The two additional relations are needed. As computed by `BesselElementMinus`:
 \begin{align*}
 \bra{n'l'j'} j_L(y) (\frac{d}{dy}-\frac{l}{y}) \ket{nlj}
@@ -363,14 +361,19 @@ As computed by `BesselElementPlus`:
     + (2l+2m+1)\ _1F_1[(L-l'-l-2m'-2m+1)/2; L+3/2; y] \Big\}.
 \end{align*}
 
+All remaining electroweak matrix elements can be computed in terms of these
+Bessel elements, combined with vector coupling coefficients, etc., as layed out
+in the aforementioned reference.
+
 
 ## Wigner vector coupling functions
 We implement a standard set of functions and subroutines for computing the
 vector-coupling 3-j, 6-j, and 9-j symbols using the Racah alebraic expressions
-[@edmonds1996angular].
+[@edmonds1996angular]. We distribute the Fortran library for these functions in
+their own [Github project](https://github.com/ogorton/wigner) as well.
 
 One method we use to improve  compute time  is to cache Wigner 3-$j$ and 6-$j$
-symbols~\cite{edmonds1996angular} (used to evaluate electro-weak matrix
+symbols[@edmonds1996angular] (used to evaluate electro-weak matrix
 elements) in memory at the start of run-time. As a side effect, our tests show
 that this adds a constant compute time to any given calculation of roughly 0.3
 seconds in serial execution and uses roughly 39 MB of memory (for the default
@@ -382,45 +385,43 @@ with the keywords `sj2tablemin` and `sj2tablemax`.
 
 For the 3-j symbol, we use the relation to the Clebsh-Gordon vector-coupling
 coefficients:
-\begin{align*}
+$$
     \begin{pmatrix}
         j_1 & j_2 & J\\
         m_1 & m_1 & M
     \end{pmatrix}
-    = (-1)^{j_1-j_2-M}(2J+1)^{-1/2}\\
+    = (-1)^{j_1-j_2-M}(2J+1)^{-1/2}
     (j_1j_2m_1m_2 | j_1 j_2; J, -M).
-\end{align*}
+$$
 The vector coupling coefficients are computed as:
 \begin{align*}
     (j_1j_2 & m_1m_2 | j_1 j_2; J, M) = \delta(m_1+m_1,m) (2J+1)^{1/2}\Delta(j_1j_2J)\\
     & \times[(j_1+m_1)(j_1-m_1)(j_2+m_2)(j_2-m_2)(J+M)(J-M)]^{1/2}\sum_z (-1)^z \frac{1}{f(z)},
 \end{align*}
 where
-\begin{align*}
-    f(z) &= z!(j_1+j_2-J-z)!(j_1-m_2-z)!\\
-    & \times(j_2+m_2-z)!(J-j_2+m_1+z)!(J-m_1-m_2+z)!,
-\end{align*}
+$$
+    f(z) = z!(j_1+j_2-J-z)!(j_1-m_2-z)!
+    (j_2+m_2-z)!(J-j_2+m_1+z)!(J-m_1-m_2+z)!,
+$$
 and
-\begin{align*}
+$$
     \Delta(abc) = \left[\frac{(a+b-c)!(a-b+c)!(-a+b+c)!}{(a+b+c+1)!} \right]^{1/2}.
-\end{align*}
+$$
 The sum over $z$ is over all integers such that the factorials are well-defined
 (non-negative-integer arguments).
 
 Similarly, for the 6-j symbols:
-\begin{align*}
+$$
     \begin{Bmatrix}
         j_1 & j_2 & j_3\\
         m_1 & m_1 & m_3
     \end{Bmatrix}
-    &= \Delta(j_1j_2j_3)\Delta(j_1m_2m_3)\Delta(m_1j_2m_3)\\
-    &\times \Delta(m_1m_2j_3) \sum_z (-1)^z\frac{(z+1)!}{g(z)},
-\end{align*}
+    = \Delta(j_1j_2j_3)\Delta(j_1m_2m_3)\Delta(m_1j_2m_3)
+     \Delta(m_1m_2j_3) \sum_z (-1)^z\frac{(z+1)!}{g(z)},
+$$
 with
-\begin{align*}
-    g(z) &= (\alpha - z)!(\beta-z)!(\gamma-z)!\\
-    &\times (z-\delta)!(z-\epsilon)!(z-\zeta)!(z-\eta)!
-\end{align*}
+$g(z) = (\alpha - z)!(\beta-z)!(\gamma-z)!(z-\delta)!(z-\epsilon)!(z-\zeta)!(z-\eta)!$ 
+and
 \begin{align*}
     \alpha &= j_1+j_1+m_1+m_2 & \beta  &= j_2+j_3+m_2+m_3\\
     \gamma &= j_3+j_1+m_3+m_1 \\
@@ -429,14 +430,14 @@ with
 \end{align*}
 
 For the 9-j symbol, we use the relation to the 6-j symbol:
-\begin{align*}
+$$
         \begin{Bmatrix}
         j_1 & j_2 & j_3\\
         j_4 & j_5 & j_6\\
         j_7 & j_8 & j_9
     \end{Bmatrix}
-    &= \sum_k (-1)^{2k} (2k+1) \\
-        &\times \begin{Bmatrix}
+    = \sum_k (-1)^{2k} (2k+1)
+      \begin{Bmatrix}
         j_1 & j_4 & j_7\\
         j_8 & j_9 & z
         \end{Bmatrix}
@@ -448,7 +449,7 @@ For the 9-j symbol, we use the relation to the 6-j symbol:
         j_3 & j_6 & j_9\\
         z & j_1 & j_2
         \end{Bmatrix}.        
-\end{align*}
+$$
 The 6-j symbols used to calculate the 9-j symbol are first taken from any
 tabulated values. Otherwise, they are computed as previously described.
 
