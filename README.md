@@ -28,7 +28,7 @@ of the code, instead run:
 
 Both options create the executable `dmfortfactor` in the `src` directory. (Many
 of the example Python scripts expect to find it there.) Note that if you want to
-switch between and serial or parallel version, you must run `make clean'
+switch between and serial or parallel version, you must run `make clean`
 in-between compiles.
 
 ## Run with Python
