@@ -1,6 +1,11 @@
 # DMFortFactor: A Fast Fortran Program for WIMP-Nucleus Form Factors
 *Oliver Gorton, Changfeng Jiao, and Calvin Johnson*
 
+Computes the differential event rate per recoil energy for WIMP-nucleon
+scattering events. This code is based on the Mathematica package
+[DMFormFactor](https://www.ocf.berkeley.edu/~nanand/software/dmformfactor/)
+described in [this arXiv link](https://arxiv.org/abs/1308.6288).
+
 Can be used as a standard Fortran program via the command line, or via our
 convenient Python interfaces, which offer a minimal interface, optionally 
 extensible to the full capabilities of the underlying program.
@@ -9,11 +14,6 @@ extensible to the full capabilities of the underlying program.
 
 * Oliver Gorton (PhD student) ogorton@sdsu.edu
 * Calvin Johnson (PI) cjohnson@sdsu.edu
-
-Computes the differential event rate per recoil energy for WIMP-nucleon
-scattering events. This code is based on the Mathematica package
-[DMFormFactor](https://www.ocf.berkeley.edu/~nanand/software/dmformfactor/)
-described in [this arXiv link](https://arxiv.org/abs/1308.6288).
 
 ## Compile
 Source code is located in `src` directory. To compile the program, you must have
@@ -59,7 +59,7 @@ More extensive documentation can be found in the manual document.
 
 ## Validation plots
 We include a script for generating validation tests against data generated with
-DMFormFactor, the Mathematica package. After compiling the code, navigate to
+DMFormFactor (the Mathematica package). After compiling the code, navigate to
 `test` and run
 
     make test
