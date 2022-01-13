@@ -76,7 +76,6 @@ have pandoc, you can still view the plots individually in the test directory.
 | dres      | Nuclear structure information: the density matrix files (.dres) |
 | examples  | Example Python scripts using our Python wrapper |
 | python    | Python modules containing the wrapper for DMFortFactor |
-| runs      | A good place to run the code and example scripts. (Some of the
-examples expect to be run here. |
+| runs      | A good place to run the code and example scripts. (Some of the examples expect to be run here. |
 | src       | Fortran source code and Makefile. Compile the code here. |
 | test      | Test script and validation data. |
