@@ -42,7 +42,7 @@ nucresponse_spectra.o : orbitals.o spectra.o
 controlfile.o : modules.o orbitals.o quadrature.o
 transition.o : dmresponse.o nucresponse.o
 crosssection.o : transition.o 
-eventrate.o : quadrature.o gaus.o crosssection.o velocitydist.o 
+eventrate.o : quadrature.o crosssection.o velocitydist.o 
 spectra.o : eventrate.o
 totaleventrate.o : eventrate.o quadrature.o
 dmfortfactor.o : spectra.o wigner.o modules.o nucresponse.o controlfile.o 
