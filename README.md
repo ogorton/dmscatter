@@ -67,3 +67,16 @@ After a few minutes, and if you have [pandoc](https://pandoc.org/index.html)
 installed, a file called `validation.pdf` should be generated with a number of
 plots comparing the output of DMFortFactor against DMFormFactor. If you don't
 have pandoc, you can still view the plots individually in the test directory. 
+
+## Directory
+
+| Directory | Description |
+| --------- | ----------- |
+| docs      | Manual and other documentation | 
+| dres      | Nuclear structure information: the density matrix files (.dres) |
+| examples  | Example Python scripts using our Python wrapper |
+| python    | Python modules containing the wrapper for DMFortFactor |
+| runs      | A good place to run the code and example scripts. (Some of the
+examples expect to be run here. |
+| src       | Fortran source code and Makefile. Compile the code here. |
+| test      | Test script and validation data. |
