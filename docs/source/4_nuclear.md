@@ -1,4 +1,4 @@
-# Nuclear structure input
+# Nuclear Structure Input
 
 Users must provide nuclear one-body density matrix elements of the form:
 $$
@@ -55,4 +55,46 @@ for a target state with total isospin $T$:
     \rho_{J,\tau=0}^{\Psi}(a,b)_{(core)} &= \delta_{a,b} [1/2][j_a][J][T],\\
     \rho_{J,\tau=1}^{\Psi}(a,b)_{(core)} &= 0.0.
 \end{align*}
+
+## Nuclear density matrix format
+We adopt the output format from the BIGSTICK shell-model code. The output
+one-body densities are written to a file with extension `.dres`. We provide a
+full specification of this plain-text-file format in the `docs` directory. Here,
+we show the form of the file and explain its contents.  
+```
+  State      E        Ex         J       T
+    1   -330.17116   0.00000     1.500  11.500
+  Single particle state quantum numbers
+ORBIT      N     L   2 x J
+     1     0     2     3
+     2     0     2     5
+     3     1     0     1
+ Initial state #    1 E = -330.17117 2xJ, 2xT =    3  23
+ Final state   #    1 E = -330.17117 2xJ, 2xT =    3  23
+ Jt =   0, proton      neutron
+    1    1   1.55844   5.40558
+```
+The file is comprised of three sections: 
+
+1. Many-body state information
+2. Single-particle state quantum numbers
+3. Density matrix element blocks
+
+Only the ground state is needed for inelastic WIMP-nucleus scattering
+calculations.  The single-particle state quantum numbers specify the quantum
+numbers for the simple-harmonic oscillator states involved in the one-body
+operators. 
+
+Finally, the one-body density matrix elements are listed in nested blocks with
+three layers: 
+
+* (i) the initial and final state specification (corresponding to the many-body states listed in section (1) of the file), 
+* (ii) the angular momentum carried by the one-body density matrix operator, labeled {\tt Jt} here, 
+* (iii) the single-particle state labels `a`, `b` in columns 1 and 2 (corresponding to the single-particle state labels listed in section (2) of the file) and the proton and neutron (isospin-0 and isospin-1) density matrix elements in columns 3 and 4. 
+
+Both (i) and (ii) must be specified along with columns 1 and 2 of (iii) in order
+to fully determine a matrix element $\rho^{f,i}_K(a,b)$, where $K=J_t$. Note
+that the values of $K$ are restricted by conservation of angular momentum; both
+between the many-body states labeled $i$ and $f$, and the single-particle states
+labeled $a$ and $b$.
 

@@ -15,15 +15,16 @@ header-includes: |
     \def\be{\begin{align}}
     \def\ee{\end{align}}
 bibliography: source/refs.bib
-cls: nature.cls
+csl: source/american-physics-society.csl
 linkcolor: blue
 urlcolor: blue
+link-citations: yes
 ---
 
 # Introduction
 We present here  a fast modern Fortran code, DMFortFactor, for computing
 WIMP-nucleus scattering event rates using a previously studied theoretical
-framework [@PhysRevC.89.065501,@Fitzpatrick_2013], now with advanced algorithmic
+framework[@PhysRevC.89.065501; @Fitzpatrick_2013], now with advanced algorithmic
 and numerical implementation, including the ability to take advantage of
 multi-core CPUs.  Furthermore, we enhance accessibility by including Python
 wrappers with example scripts.

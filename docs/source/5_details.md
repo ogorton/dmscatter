@@ -1,109 +1,133 @@
 # Details of computation
 
 We present the equations necessary to reproduce the code. For a more complete
-description of the theory, see
-\href{https://link.aps.org/doi/10.1103/PhysRevC.89.065501}{Phys. Rev. C 89.065501.}
+description of the theory, see [@PhysRevC.89.065501]
 
 ## Differential event rate
-$$\label{ER}
+
+The main computation of the code is the differential event rate for WIMP-nucleus
+scattering events. This is obtained by integrating the differential WIMP-nucleus
+cross section over the velocity distribution of the WIMP-halo in the galactic
+frame: \begin{equation}\label{ER}
+\begin{split}
 	\frac{dR}{dE_r}(E_r)
-	 = N_T n_\chi \int_{v_{min}}^{v_{escape}} \frac{d\sigma}{dE_r}(v,E_r) \tilde{f}(\vec{v})vd^3v,
-$$
+	 = N_T n_\chi \int_{v_{min}}^{v_{escape}} \frac{d\sigma}{dE_r}(v,E_r)\ \tilde{f}(\vec{v})\ v\ d^3v,
+\end{split}
+\end{equation}
 where $E_r$ is the recoil energy of the WIMP-nucleus scattering event, $N_T$ is
 the number of target nuclei, $n_\chi = \rho_\chi/m_\chi$ is the local dark
 matter number density, $\sigma$ is the WIMP-nucleus cross section.  The dark
 matter velocity distribution in the lab frame, $\tilde{f}(\vec{v})$, is obtained
-by boosting the Galactic-frame distribution $f(\vec{v})$: $\tilde{f}(\vec{v}) =
-f(\vec{v} + \vec{v}_{earth})$, where $\vec{v}_{earth}$ is the velocity of the
-earth in the galactic rest frame. The simplest model is a three-dimensional
-Maxwell distribution:
+by boosting the Galactic-frame distribution $f(\vec{v})$:
+$$
+\tilde{f}(\vec{v}) = f(\vec{v} + \vec{v}_{earth}),
+$$ 
+where $\vec{v}_{earth}$ is the velocity of the earth in the galactic rest frame.
+
+### Standard Halo Model
+The simplest model is a three-dimensional Maxwell-Boltzmann distribution, also
+called a Standard Halo Model (SHM):
 $$
 	f(\vec{v}) \propto e^{-\vec{v}^2/v_0^2},
 $$
-where $v_0$ is some scaling factor (typically taken to be around $220\ km/s$).
-
-In order to evaluate the integral over the dark matter distribution, we make the
-conversion to spherical coordinates. We need to evaluate an integral of the
-form:
+where $v_0$ is some scaling factor (typically taken to be around $220\
+\mathrm{km/s}$). With this distribution, the integral in the differential
+event-rate has the form: 
 $$
-I = \int_{v_{min}}^{v_{max}} d^3v \frac{f(\vec{v} + \vec{v}_{earth})}{v} = \int_{v_{min}}^{v_{max}} d^3v \frac{1}{v} e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2}
+	I = \int_{v_{min}}^{v_{escape}} d^3v\ \frac{d\sigma(v,q)}{d{q}^2}\  e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2}.
 $$
-Noting that $(\vec{v}+\vec{v}_{earth})^2 = \vec{v}^2 + \vec{v}^2_{earth} + 2vv_{earth}\cos(\theta)$,
-with $\|\vec{v}\|\equiv v$ and $\theta$ defining
-the angle between the two vectors, it's convenient to make the substitution
-$d^3v = d\phi d(\cos \theta) v^2 dv$:
-
-\begin{align}
-	I &=  \int_0^{2\pi} d\phi \int_{v_{min}}^{v_{max}} dv \int_{-1}^1 d(\cos \theta) e^{-2vv_{earth}\cos\theta/v_0^2} v^2 \frac{1}{v} e^{-(\vec{v}^2+\vec{v}^2_{earth})/v_0^2}\\
-	&= 2\pi \int_{v_{min}}^{v_{max}} dv v e^{-(\vec{v}^2+\vec{v}^2_{earth})/v_0^2} \left(-\frac{v_0^2}{2vv_{earth}} e^{-2vv_{earth}\cos\theta/v_0^2}\right)_{-1}^1\\
-	&= \frac{\pi v_0^2}{v_{earth} }\int_{v_{min}}^{v_{max}} dv e^{-(\vec{v}^2+\vec{v}^2_{earth})/v_0^2}
-		\left(- e^{-2vv_{earth}/v_0^2} + e^{+2vv_{earth}/v_0^2}\right)\\
-	&= \frac{\pi v_0^2}{v_{earth} }\int_{v_{min}}^{v_{max}} dv
-		\left(- e^{(v+v_{earth})^2/v_0^2} + e^{(v-v_{earth})^2/v_0^2}\right)\\
-	&= \frac{\pi v_0^2}{v_{earth} }\int_{v_{min}}^{v_{max}} dv
-		\left( g(v-v_{earth}) - g(v+v_{earth}) \right)
-\end{align}
-
-where in the last equality, we have defined a one-dimensional Gaussian form
+To reduce to a one-dimensional integral, we make the conversion to spherical
+coordinates.  Noting that $(\vec{v}+\vec{v}_{earth})^2 = \vec{v}^2 +
+\vec{v}^2_{earth} + 2vv_{earth}\cos(\theta)$, with $\theta$ defining the angle
+between the two vectors, we make the substitution $d^3v = d\phi d(\cos \theta)
+v^2 dv$. The angular part simplifies:
 $$
-g(v) \propto e^{-v^2/v_0^2}.
+\int_0^{2\pi} d\phi \int_{-1}^1 d(\cos \theta) e^{-2vv_{earth}\cos\theta/v_0^2}
+= 2 \pi \left(-\frac{v_0^2}{2vv_{earth}} e^{-2vv_{earth}\cos\theta/v_0^2}\right)_{-1}^1.
 $$
+Making the substitutions, we obtain:
+$$
+	I =  \frac{\pi v_0^2}{v_{earth} } \int_{v_{min}}^{v_{escape}} dv\ v^2 \frac{d\sigma(v,q)}{d{q}^2} 
+		\left[ g(v-v_{earth}) - g(v+v_{earth}) \right],
+$$
+where $g(x)$ is a one-dimensional Gaussian form:
+$$
+	g(v) = \frac{1}{(\pi v_0^2)^{3/2}}e^{-v^2/v_0^2}.
+$$
+We then use Gauss-Legendre quadrature to evaluate $I$[^quad].  The limits of the
+integral, $v_{min}$ and $v_{escape}$, have physical constraints. The minimum
+speed is defined by the minimum recoil energy of a WIMP-nucleus collision at a
+momentum transfer $q$: $v_{min} = q/(2\mu_T)$, where $\mu_T$ is the reduced mass
+of the WIMP-nucleus system. The maximum speed could in principle be infinite,
+and in some approximations this is taken to be the limit. (Numerically, we
+approximate $\infty \approx 12 \times v_{0}$.) In more realistic models, the
+maximum speed is taken to be the galactic escape velocity: $v_{max}=v_{escape}
+\approx 550$ km/s.
 
-The final expression for $I$ can be trivially generalized to other spherically
-symmetric velocity-dependent forms of the differential cross section. What's
-important is the reduction of the velocity-boosted $d^3v$ integral to a radial
-integral which can be carried out with one-dimensional quadrature:
-\begin{align}
-\int_{v_{min}}^{v_{max}} d^3v \sigma(v) e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2} \\
-	= \frac{\pi v_0^2}{v_{earth} }\int_{v_{min}}^{v_{max}} dv \sigma(v) v^2\left( g(v-v_{earth}) - g(v+v_{earth}) \right).
-\end{align}
-The Fortran code uses this equation to evaluate the event rate integral with
-quadrature. Analytic solutions exist in the form of error functions; we use
-quadrature since it makes easy to later modify the velocity distribution (as
-long as it remains spherically symmetric). For example, adding a velocity
-cut-off is as easy as changing the limit on the quadrature, with no need to
-write a whole new subroutine.
+[^quad]: While there are analytic solutions for this integral in the form of 
+    error functions; we use quadrature since it makes easy to later modify the 
+    velocity distribution. For example, adding a velocity cut-off is as easy as
+    changing the limit on the quadrature, with no need to write a whole new 
+    subroutine.
+
+### More Sophisticated Halo Models
+The SHM is actually not a very good model. For example, it ignores the annual
+modulation of the Earth's speed through the galanctic frame due to its orbit
+around the Sun. Another point is that the cut-off model where the speed
+probability drops to zero after an escape velocity is reached is not very
+realistic: actually, the cutoff should be smoother. 
+
+A semi-recent review on the subject can be found here [@RevModPhys.85.1561].
 
 ## Differential cross section
 
-The differential cross section for the target nucleus can be expressed in terms
-of either the nuclear recoil energy $E_R$, or the momentum transfer $q$:
+The differential scattering cross section is directly related to the scattering
+transition probabilities $T(v,q(E_r))$: 
 $$
-\frac{d\sigma(v,E_R)}{dE_R} = 2m_T \frac{d\sigma(v)(v,\vec{q}^2)}{d\vec{q}^2} = 2m_T\frac{1}{4\pi v^2}T(v,q),
-$$
-Where $v$ is the velocity of the dark matter particles in the lab-frame, $q$
-is the momentum transfer of the scattering event, $m_T$ is the mass of the
-target nucleus, and $T(v,q)$ is the transition or scattering probability. We
-can see here that the differential cross section has an explicit $1/v^2$
-dependence, independent of any velocity dependence of $T(v,q)$.
+    \frac{d\sigma}{dE_r}(v,E_r) = 2m_t\frac{d\sigma}{dq^2}(v,q) = 2m_T\frac{1}{4\pi v^2} T(v,q).
+$$ 
+The momentum transfer $q$ is directly related to the recoil energy by
+$q^2=2m_tE_r$, where $m_t$ is the mass of the target nucleus in GeV$/c^2$.
 
 
 ## Transition probability
-The scattering probability is
+
+The WIMP-nucleus scattering event probabilities are computed as a sum of squared
+nuclear-matrix-elements:
 $$
-T(v,q) = \frac{1}{2j_\chi+1}\frac{1}{2j_T+1}\sum_{spins}|\mathcal{M}(v,q)|^2
+    T(v,q) = \frac{1}{2j_\chi +1}\frac{1}{2j_T+1} \sum_{M_i M_f} \left |\bra{j_TM_f} \mathcal{H} \ket{j_TM_i}\right |^2.
 $$
-where $j_\chi$ is the spin of the WIMP, $j_T$ is the spin angular momentum of
-the target nucleus, and $\mathcal{M}$ Galilean invariant amplitude, which is
-defined by
-\begin{align}
-	T(v,q) = \frac{4\pi}{2j_T+1}\frac{1}{(4m_\chi)^2}
-		\sum_{x=p,n}\sum_{x'=p,n}^1\sum_{i=1}^8 R_i^{xx'}(v^2,q^2)
-		W_i^{xx'}(q)
-\end{align}
-where $m_\chi$ is the mass of the dark matter particle and $x$ is an index used
-to sum over isospin couplings. The coefficients $R_i^{x,x'}$ are dark matter
-particle response functions, to be define in another section. The operators
-$W_i^{xx'}(q)$ are nuclear response functions, which are sums over matrix
-elements of nuclear operators constructed from Bessel spherical harmonics and
-vector spherical harmonics.
+Here $v$ is the speed of the WIMP in the lab frame, $q$ is the momentum
+transferred in the collision, and $j_\chi$ and $j_T$ are the intrinsic spins of
+the WIMP and target nucleus, respectively, while  $\mathcal{H}$ is the
+WIMP-nucleus interaction,
+$$
+    \mathcal{H} = \sum_i\sum_{x=p,n}c_i^x\mathcal{O}_i^x.
+$$
+given in terms of 15 non-relativistic operators $\mathcal{O}_i$. The sum over
+$x$ indicates the separate coupling to protons and neutrons. These operators,
+listed in \ref{sec: EFT}, are those  constructed to leading order from
+$$
+    i\frac{\vec{q}}{m_N},\ \vec{v}^\perp,\ \vec{S}_\chi,\ \vec{S}_N.
+$$
+
+The transition probability is ultimately factorized to group the operators into
+forms familiar from electro-weak theory in a shell model framework
+[@DONNELLY1979103]. Doing so yields a folding of two factors: one containing
+the EFT content, labeled $R_i^{x,x'}$, and another containing the nuclear
+response functions, labeled $W_i^{x,x'}$ for each of the $i=1,...,8$ allowed
+combinations of electro-weak-theory operators, discussed in the next section.
+One obtains the following form [@Fitzpatrick_2013;@Anand_2014]:
+$$
+    T(v,q) = \frac{4\pi}{(4m_T)^2} \frac{1}{2j_T+1} \sum_{x=p,n}\sum_{x'=p,n}\sum_{i=1}^8 R_i^{x,x'}(v^2,q^2)W_i^{x,x'}(q).
+$$
 
 ## Dark matter response functions
 There are 8 dark matter response functions which group 15 operator coefficients
 $c_i^x$ according the pair of nuclear response functions which they multiply.
 
 As a shorthand, $cl(j) \equiv 4j(j+1)/3$, and $v^{\perp 2}\equiv v^2 - (q/2\mu_t)^2$.
-\begin{align}
+\begin{align*}
 R_{M}^{xx'}(v,q) &= \frac{1}{4}cl(j_\chi) [ v^{\perp 2}
         (c_5^{x}c_5^{x'}q^2 + c_8^{x}c_8^{x'}) + c_{11}^{x}c_{11}^{x'}q^2 ]\\&
         + (c_1^{x} + c_2^{x}v^{\perp 2} ) (c_1^{x'}
@@ -131,41 +155,20 @@ R_{\Delta \Sigma'}^{xx'}(v,q) &= \frac{q^2}{4m_N}cl(j_\chi)
 R_{\Phi''M}^{xx'}(v,q) &= \frac{q^2}{4m_N}cl(j_\chi)c_{11}^{x}
         (c_{12}^{x'} - c_{15}^{x'} q^2)
         + \frac{q^2}{m_N}c_{3}^{x'}  (c_{1}^{x} + c_{2}^{x} v^{\perp 2})\\
-\end{align}
+\end{align*}
 
-## Cross terms
-Previous work has focused on setting limits on a single operator coupling at a
-time. But of course, multiple couplings may exist simultaneously, and in fact,
-some nuclear response functions are only activated with specific pairs of EFT
-coefficients.
-
-To create a minimal list of inputs to validate all possible nonzero
-couplings, we need to test each coefficient on its own ($i=1,...,15$), and
-also test the following 9 unique combinations: (1,2), (1,3), (2,3), (4, 5), (5,6), (8,9),
-(11,12), (11,15), (12,15).
-
-Table of EFT coefficient interactions. Shows which coefficients
-    multiply each coefficient in addition to itself.
-
-| Coefficient | Couples to |
-| ---------- | ---------- |
-| 1           |   2, 3   |
-| 2           |   1, 3   |
-| 3           |   1, 2   |
-| 4           |   5, 6   |
-| 5           |   4      |
-| 6           |   4      |
-| 7           |          |
-| 8           |   9      |
-| 9           |   8      |
-| 10          |          |
-| 11          |   12, 15 |
-| 12          |   11, 15 |
-| 13          |          |
-| 14          |          |
-| 15          |   11, 12 |
+It should be noted that the last two dark matter responses are composed entirely
+of interference terms, which is to say, they do not come into play unless
+certain combinations  of EFT coefficients are simultaneously active.
+For example, $c_4$ and $c_5$ together will activate $R_{\Sigma' \Delta}$, but
+not alone.
 
 ## Operators
+The WIMP-nucleus interaction is defined by the user in terms of an effective
+field theory Lagrangian, specified implicitly by fifteen operator coupling
+constants $c_i^x$, (for $i=1,...,15$), where $x=p, n$ for coupling to protons or
+neutrons individually.
+
 The code uses the EFT coefficients in explicit proton-neutron couplings, i.e.
 the interaction is defined by:
 $$
@@ -173,7 +176,7 @@ $$
 $$
 and the 15 momentum-dependent operators are:
 
-\begin{align}
+\begin{align*}
     \mathcal{O} _1 &= 1_\chi 1_N\\
     \mathcal{O} _2 &= (v^\perp)^2\\
     \mathcal{O} _3 &= i\vec{S}_N \cdot \left(\frac{\vec{q}}{m_N}\times
@@ -198,7 +201,12 @@ and the 15 momentum-dependent operators are:
     \mathcal{O} _{15} &= -\left(\vec{S}_\chi \cdot \frac{\vec{q}}{m_N} \right )
         \left( \left( \vec{S}_N\times \vec{v}^\perp\right)\cdot
         \frac{\vec{q}}{m_N} \right)
-\end{align}
+\end{align*}
+
+Operator 2 is generally discarded because it is not a leading order
+non-relativistic reduction of a manifestly relativistic operator
+[@Anand_2014].  Operators 1 and 4 correspond to the naive density- and
+spin-coupling, respectively.  
 
 ## Nuclear response functions
 
@@ -444,3 +452,35 @@ For the 9-j symbol, we use the relation to the 6-j symbol:
 The 6-j symbols used to calculate the 9-j symbol are first taken from any
 tabulated values. Otherwise, they are computed as previously described.
 
+## Validation
+
+Previous work has focused on setting limits on a single operator coupling at a
+time. But of course, multiple couplings may exist simultaneously, and in fact,
+some nuclear response functions are only activated with specific pairs of EFT
+coefficients.
+
+To create a minimal list of inputs to validate all possible nonzero
+couplings, we need to test each coefficient on its own ($i=1,...,15$), and also
+test the following 9 unique combinations: (1,2), (1,3), (2,3), (4, 5), (5,6),
+(8,9), (11,12), (11,15), (12,15).
+
+Table of EFT coefficient interactions. Shows which coefficients
+    multiply each coefficient in addition to itself.
+
+| Coefficient | Couples to |
+| ---------- | ---------- |
+| 1           |   2, 3   |
+| 2           |   1, 3   |
+| 3           |   1, 2   |
+| 4           |   5, 6   |
+| 5           |   4      |
+| 6           |   4      |
+| 7           |          |
+| 8           |   9      |
+| 9           |   8      |
+| 10          |          |
+| 11          |   12, 15 |
+| 12          |   11, 15 |
+| 13          |          |
+| 14          |          |
+| 15          |   11, 12 |

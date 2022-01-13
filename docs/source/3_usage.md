@@ -1,4 +1,4 @@
-# Usage guide
+# Usage Guide
 
 DMFortFactor can be used interactively from the command line,
 where the user is guided by prompts for a small number of datafiles and
@@ -60,11 +60,9 @@ studies and comparisons of different inputs to the theory.
 - Navigate to the directory `runs/` (e.g. `cd ../runs/`)
 - Run the command: `python3 ../examples/exampleXe.py`
 
-This should generate the following figure:
+This should generate Figure 1.
 
-\centering
 ![Example output graph.](source/exampleXe.pdf){width=80%}
-\flushleft
 
 ## Compiling with make
 
@@ -159,7 +157,7 @@ printdensities 0
 #vescape 550.
 ```
 Uncommenting the last line would set the escape velocity to 550 km/s.
-A complete list of keywords is given in section \ref{cfk}.
+A complete list of keywords is given [here](#control-file-keywords).
 
 ### Nuclear density matrix file (.dres)
 We adopt the output format from the { BIGSTICK} shell-model code. The output
