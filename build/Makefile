@@ -79,3 +79,4 @@ clean:
 	touch make.o make.mod obj
 	rm *.o *.mod
 	rm -r obj
+	rm -r ../bin
