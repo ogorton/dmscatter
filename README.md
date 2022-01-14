@@ -72,8 +72,7 @@ have pandoc, you can still view the plots individually in the test directory.
 
 | Directory | Description |
 | --------- | ----------- |
-| bin       | This directory is created once you compile the code from the build
-directory. |
+| bin       | This directory is created once you compile the code from the build directory. |
 | build     | Compile the code with the included Makefile here. |
 | docs      | Manual and other documentation | 
 | dres      | Nuclear structure information: the density matrix files (.dres) |
