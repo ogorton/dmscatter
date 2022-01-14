@@ -25,7 +25,7 @@ Erkev, ER = dm.EventrateSpectra(
         cv = cv,
         cp = cp,
         cn = cn,
-        exec_path='../src/dmfortfactor')
+        exec_path='../bin/dmfortfactor')
 
 plt.xscale('log')
 plt.yscale('log')

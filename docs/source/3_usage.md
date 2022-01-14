@@ -53,34 +53,21 @@ But our API removes the need by making it easy for anyone who can use a Python
 function to write their own advanced scripts allowing them to perform parameter
 studies and comparisons of different inputs to the theory.
 
-## SuperQuickstart guide
-
-- Navigate to the `src/` directory from wherever you have stored `dmfortfactor/` (e.g. `cd src/`, or `cd ~/Downloads/dmfortfactor/src/`)
-- Run the command: `make openmp`
-- Navigate to the directory `runs/` (e.g. `cd ../runs/`)
-- Run the command: `python3 ../examples/exampleXe.py`
-
-This should generate Figure 1.
-
-![Example output graph.](source/exampleXe.pdf){width=80%}
-
 ## Compiling with make
 
 There are multiple directories in the project. All of the Fortran code which
-needs to be compiled is found in the `src/` directory.  
+needs to be compiled is found in the `src` directory.  
 
-The easiest way to get started is simply to navigate to the `src` directory and run
+The easiest way to get started is simply to navigate to the `build` directory and run
 ```
 make dmfortfactor
 ```
-
 This will compile `DMFortFactor` using `gfortran`.  If you want to use
 a different compiler, you must edit the following line in the Makefile:
 ```
-#COMP = <compiler>
-COMP = gfortran
+FC = gfortran
 ```
-changing gfortran to your compiler of choice.
+changing `gfortran` to your compiler of choice.
 
 If you want a OpenMP parallelized version of the code, you can compile with:
 ```
@@ -88,7 +75,8 @@ make openmp
 ```
 
 Both of these options will compile the source code and leave the executable,
-called `dmfortfactor` in the `src` directory.
+called `dmfortfactor` in the `bin` directory. (I.e.
+`dmfortfactor/bin/dmfortfactor`.)
 Note that if you change from a serial executable to a parallel executable (or
 vice versa) you should run:
 ```

@@ -1,7 +1,7 @@
 program dmfortfactor
 
     use main
-    use mod_spectra, only: eventrate_spectra, velocity_curve
+    use spectra, only: eventrate_spectra, velocity_curve, nucresponse_spectra
     use wigner
     use nucresponse, only: test_nucresponse
     use keywords, only: controlfile

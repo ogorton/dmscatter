@@ -17,7 +17,7 @@ Wfunc = dm.NucFormFactor(
         epmin = 0.001,
         epmax = 10.0,
         epstep = 0.001,
-        exec_path='../src/dmfortfactor')
+        exec_path='../bin/dmfortfactor')
 
 q = 0.001
 print("q = %10.5f"%q)

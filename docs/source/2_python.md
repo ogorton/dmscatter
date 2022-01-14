@@ -43,7 +43,7 @@ Erkev, ER = dm.EventrateSpectra(
             dres = "../dres/xe131gcn",
             controlwords = control_dict,
             cv = cv,
-            exec_path = "../src/dmfortfactor")
+            exec_path = "../bin/dmfortfactor")
 ```
 This will return the differential event rate spectra for recoil energies from 1
 keV to 1 MeV in 1 keV steps. 

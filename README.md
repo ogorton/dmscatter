@@ -16,17 +16,17 @@ extensible to the full capabilities of the underlying program.
 * Calvin Johnson (PI) cjohnson@sdsu.edu
 
 ## Compile
-Source code is located in `src` directory. To compile the program, you must have
-the `gfortran` compiler and `make` installed. From the `src` directory, run:
-
-    make dmfortfactor
-
-to compile a serial version of the code. To compile an OpenMP-parallel version
-of the code, instead run:
+To compile the program, you must have the `gfortran` compiler and `make`
+installed. From the `build` directory, run:
 
     make openmp
 
-Both options create the executable `dmfortfactor` in the `src` directory. (Many
+to compile an OpenMP-parallel version of the code. To compile a serial version
+of the code, instead run:
+
+    make serial
+
+Both options create the executable `dmfortfactor` in the `bin` directory. (Many
 of the example Python scripts expect to find it there.) Note that if you want to
 switch between and serial or parallel version, you must run `make clean`
 in-between compiles.
@@ -72,6 +72,9 @@ have pandoc, you can still view the plots individually in the test directory.
 
 | Directory | Description |
 | --------- | ----------- |
+| bin       | This directory is created once you compile the code from the build
+directory. |
+| build     | Compile the code with the included Makefile here. |
 | docs      | Manual and other documentation | 
 | dres      | Nuclear structure information: the density matrix files (.dres) |
 | examples  | Example Python scripts using our Python wrapper |

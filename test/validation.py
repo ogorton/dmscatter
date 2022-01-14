@@ -72,7 +72,7 @@ for coupleto in ("n","p"):
                 epmin = 1,
                 epmax = 1000.0,
                 epstep = 1.0,
-                exec_path='../src/dmfortfactor',
+                exec_path='../bin/dmfortfactor',
                 cs = cs,
                 cv = cv,
                 cp = cp,

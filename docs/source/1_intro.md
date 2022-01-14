@@ -41,3 +41,14 @@ This quantity has units of events/GeV and is implicitly multiplied by
 an effective exposure of 1 Kilogram-Day of target nuclei. This is done by
 taking $N_t = 1\ kilogram\cdot day / m_T$, where $m_T$ is the mass of the target
 nucleus in GeV. Recoil energies $E_R$ are given in keV.
+
+## SuperQuickstart guide
+
+- Navigate to the `build` directory from wherever you have stored `dmfortfactor/`
+- Run the command: `make openmp`
+- Navigate to the directory `runs` (e.g. `cd ../runs/`)
+- Run the command: `python3 ../examples/exampleXe.py`
+
+This should generate Figure 1.
+
+![Example output graph.](source/exampleXe.pdf){width=80%}

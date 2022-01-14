@@ -53,7 +53,7 @@ if compute:
             epstep = 1.0,
             controlwords = control_dict,
             cv = cv,
-            exec_path='../src/dmfortfactor')
+            exec_path='../bin/dmfortfactor')
 
         exectime = timeit.default_timer() - tstart
         tcycle = timeit.default_timer()

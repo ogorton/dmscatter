@@ -41,7 +41,7 @@ for operator in operators:
                 dres = dresfile,
                 controlwords = control_dict,
                 cn = cn,
-                exec_path='../src/dmfortfactor')
+                exec_path='../bin/dmfortfactor')
 
 
         if (first):
