@@ -2,7 +2,7 @@ manual:
 	pandoc $(DOCS) -o manual.pdf --citeproc
 
 html: 
-	pandoc $(DOCS) -o index.html --citeproc --mathjax --standalone
+	pandoc $(DOCS) -o index.html --citeproc --mathjax --standalone --toc
 
 DOCS =\
 	  source/intro.md\

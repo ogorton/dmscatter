@@ -244,7 +244,52 @@
 <p class="author">Calvin W. Johnson</p>
 </header>
 <nav id="TOC" role="doc-toc">
-
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#superquickstart-guide">SuperQuickstart guide</a></li>
+</ul></li>
+<li><a href="#python-interface">Python interface</a>
+<ul>
+<li><a href="#event-rate-spectra">Event rate spectra</a></li>
+<li><a href="#nuclear-response-functions-for-wimpydd">Nuclear response functions for WimPyDD</a></li>
+</ul></li>
+<li><a href="#usage-guide">Usage Guide</a>
+<ul>
+<li><a href="#compiling-with-make">Compiling with make</a></li>
+<li><a href="#required-files">Required files</a>
+<ul>
+<li><a href="#control-file">Control file</a></li>
+<li><a href="#nuclear-density-matrix-file-.dres">Nuclear density matrix file (.dres)</a></li>
+</ul></li>
+<li><a href="#command-line-interface">Command-line interface</a></li>
+<li><a href="#compute-options-explained">Compute options explained</a></li>
+</ul></li>
+<li><a href="#nuclear-structure-input">Nuclear Structure Input</a>
+<ul>
+<li><a href="#filling-core-orbitals-for-phenomenological-interactions">Filling core orbitals for phenomenological interactions</a></li>
+<li><a href="#nuclear-density-matrix-format">Nuclear density matrix format</a></li>
+</ul></li>
+<li><a href="#details-of-computation">Details of computation</a>
+<ul>
+<li><a href="#differential-event-rate">Differential event rate</a></li>
+<li><a href="#standard-halo-model">Standard Halo Model</a></li>
+<li><a href="#smooth-shm">Smooth SHM</a></li>
+<li><a href="#more-sophisticated-halo-models">More Sophisticated Halo Models</a></li>
+<li><a href="#differential-cross-section">Differential cross section</a></li>
+<li><a href="#transition-probability">Transition probability</a></li>
+<li><a href="#dark-matter-response-functions">Dark matter response functions</a></li>
+<li><a href="#operators">Operators</a></li>
+<li><a href="#nuclear-response-functions">Nuclear response functions</a></li>
+<li><a href="#nuclear-electroweak-operators">Nuclear (electroweak) operators</a></li>
+<li><a href="#electroweak-matrix-elements">Electroweak matrix elements</a></li>
+<li><a href="#wigner-vector-coupling-functions">Wigner vector coupling functions</a></li>
+<li><a href="#unique-couplings">Unique couplings</a></li>
+</ul></li>
+<li><a href="#control-file-keywords">Control file keywords</a></li>
+<li><a href="#references">References</a></li>
+<li><a href="#update-log">Update log</a></li>
+</ul>
 </nav>
 <h1 id="introduction">Introduction</h1>
 <p>We present here a fast modern Fortran code, DMFortFactor, for computing WIMP-nucleus scattering event rates using a previously studied theoretical framework<span class="citation" data-cites="PhysRevC.89.065501 Fitzpatrick_2013"> [<a href="#ref-PhysRevC.89.065501" role="doc-biblioref">1</a>,<a href="#ref-Fitzpatrick_2013" role="doc-biblioref">2</a>]</span>, now with advanced algorithmic and numerical implementation, including the ability to take advantage of multi-core CPUs. Furthermore, we enhance accessibility by including Python wrappers with example scripts.</p>
