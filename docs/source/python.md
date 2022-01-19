@@ -84,5 +84,54 @@ Wfunc(0.001)
 ```
 The final line returns an (8,2,2)-shaped array with the evaluate nuclear
 response functions at $q=0.001$ GeV/c. Note that, had we not set the keyword
-`usemomentum` to 1, the function input values would have been specified in
-terms of recoil energy (the default) instead of transfer momentum. 
+`usemomentum` to 1, the function input values would have been specified in terms
+of recoil energy (the default) instead of transfer momentum.  The first index
+runs over, in order, the 8 nuclear form factors:
+$$
+M_J,\Phi_J'',\tilde{\Phi}_J', \Delta_J,\Sigma_J', \Sigma_J'',M\Phi'',\Sigma'\Delta
+$$
+The second two indices are $\tau$ and $\tau'$, the isospin couplings.
+There is a simple relationship between the isospin and proton/neutron couplings:
+$$
+\begin{bmatrix}
+00\\
+01\\
+10\\
+11
+\end{bmatrix}
+= \frac{1}{4}
+\begin{bmatrix}
+1 & 1 & 1 & 1\\
+1 & -1 & 1 & -1 \\
+1 & 1 & -1 & -1 \\
+1 & -1 & -1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+pp\\
+pn\\
+np\\
+nn
+\end{bmatrix}.
+$$
+The inverse relation is simply:
+$$
+\begin{bmatrix}
+pp\\
+pn\\
+np\\
+nn
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 1 & 1 & 1\\
+1 & -1 & 1 & -1 \\
+1 & 1 & -1 & -1 \\
+1 & -1 & -1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+00\\
+01\\
+10\\
+11
+\end{bmatrix}.
+$$

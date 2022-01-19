@@ -24,7 +24,7 @@ $$
 $$ 
 where $\vec{v}_{earth}$ is the velocity of the earth in the galactic rest frame.
 
-### Standard Halo Model
+## Standard Halo Model
 
 There are many models for the dark matter distributions of galaxies
 [@RevModPhys.85.1561].  We provide the simplest model, a three-dimensional
@@ -98,7 +98,7 @@ $E_{R,max} = 265.2987$ keV.
     changing the limit on the quadrature, with no need to write a whole new 
     subroutine.
 
-### Smooth SHM
+## Smooth SHM
 This distribution appears in the Mathematica code DMFormFactor under the name 
 "MBcutoff". It is simply a smoothed version of the SHM. The distribution is:
 $$
@@ -112,7 +112,7 @@ $$
 $$
 $z=v_{esc}/v_0$.
 
-### More Sophisticated Halo Models
+## More Sophisticated Halo Models
 The SHM is actually not a very good model. For example, it ignores the annual
 modulation of the Earth's speed through the galanctic frame due to its orbit
 around the Sun. Another point is that the cut-off model where the speed
@@ -495,7 +495,7 @@ $$
 The 6-j symbols used to calculate the 9-j symbol are first taken from any
 tabulated values. Otherwise, they are computed as previously described.
 
-## Validation
+## Unique couplings
 
 Previous work has focused on setting limits on a single operator coupling at a
 time. But of course, multiple couplings may exist simultaneously, and in fact,

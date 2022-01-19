@@ -1,6 +1,9 @@
 manual:
 	pandoc $(DOCS) -o manual.pdf --citeproc
 
+html: 
+	pandoc $(DOCS) -o manual.html --citeproc --mathjax --standalone
+
 DOCS =\
 	  source/intro.md\
 	  source/python.md\
