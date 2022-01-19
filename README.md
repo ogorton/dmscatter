@@ -10,6 +10,9 @@ Can be used as a standard Fortran program via the command line, or via our
 convenient Python interfaces, which offer a minimal interface, optionally 
 extensible to the full capabilities of the underlying program.
 
+Read the manual as a [pdf](docs/manual.pdf) or
+(webpage)[https://ogorton.github.io/dmfortfactor/].
+
 **Dev Contacts**
 
 * Oliver Gorton (PhD student) ogorton@sdsu.edu
@@ -55,10 +58,6 @@ To run one of the example Python scripts, try moving to `runs` and running:
     python3 ../examples/exampleXe.py
 
 More extensive documentation can be found in the manual document.
-
-## Manual
-The manual for the code can be founds in the `docs` folder as a pdf, and can be
-viewed as a webpage [here](https://ogorton.github.io/dmfortfactor/).
 
 ## Validation plots
 We include a script for generating validation tests against data generated with
