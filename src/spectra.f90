@@ -112,7 +112,7 @@ module spectra
         
     end subroutine
     
-    subroutine eventrate_spectra(wimp, nuc_target, eft)
+    subroutine eventrate_spectra(wimp, nuc_target)
         use constants
         use types
         use eventrate, only: deventrate
@@ -123,7 +123,6 @@ module spectra
     
         type(particle) :: wimp
         type(nucleus) :: nuc_target
-        type(eftheory) :: eft
         
         integer :: calc_num
         integer :: iunit
@@ -132,7 +131,7 @@ module spectra
 
         real(dp) :: recoil_energy, momentum_transfer
         real(dp), allocatable :: event_rate_spectra(:)
-        real(dp) :: mtarget, totaleventrate, error
+        real(dp) :: mtarget, totaleventrate
     
         print*,"Computing differential event rate spectra"
     
@@ -150,7 +149,7 @@ module spectra
         !$OMP parallel do private(q) schedule(dynamic, 1)
         do i = 1, N
             q = momentum_grid(i)
-            Event_rate_spectra(i) = dEventRate(q, wimp, nuc_target, eft)
+            Event_rate_spectra(i) = dEventRate(q, wimp, nuc_target)
         end do
         !$OMP end parallel do
         !$OMP barrier        
@@ -269,14 +268,13 @@ module spectra
         use densities, only: pndens
         use settings, only: usemomentum
         implicit none
-        integer :: n_xvalues
         integer :: iunit
-        integer :: ioperator, tau, tau_prime, iy
+        integer :: ioperator, tau, tau_prime
         integer :: iqq
         type(nucleus) :: nuc_target   
     
         real(dp) :: yy, qq, xx
-        real(dp), allocatable :: xlist(:), Wlist(:,:,:,:)
+        real(dp), allocatable :: Wlist(:,:,:,:)
         real(dp) :: mtarget
         real(dp) :: tolerance
     

@@ -50,7 +50,7 @@ program dmfortfactor
       case('te')
         call totaleventrate(nuc_target)
       case('er')
-        call eventrate_spectra(wimp, nuc_target, eft)
+        call eventrate_spectra(wimp, nuc_target)
       case('cs')
         call velocity_curve(wimp, nuc_target, eft,2)
       case('tp')

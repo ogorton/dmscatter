@@ -10,7 +10,6 @@ module phi
         implicit none
         integer, intent(in) :: np,lp,jp,n,l,j,bigJ
         real(kind=8), intent(in) :: y
-        integer :: bigL
     
         real(kind=8) :: operatorME
     
@@ -23,7 +22,7 @@ module phi
                  & *(PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)    &
                  & +PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ))
         end if
-        operatorME = operatorME * PhiPPoverall(lp,jp,l,j)    
+        operatorME = operatorME * PhiPPoverall(lp,jp,j)    
     
     end function PhiPPJ
    
@@ -34,7 +33,6 @@ module phi
         implicit none
         integer, intent(in) :: np,lp,jp,n,l,j,bigJ
         real(kind=8), intent(in) :: y
-        integer :: bigL    
         real(kind=8) :: operatorME
     
         operatorME = -Qnorm(bigJ+1)*SQRT(dble(bigJ)) &
@@ -45,7 +43,7 @@ module phi
                  & *(PhiPPsummand3(y,np,lp,jp,n,l,j,bigJ)    &
                  & +PhiPPsummand4(y,np,lp,jp,n,l,j,bigJ))
         end if
-        operatorME = operatorME * PhiPPoverall(lp,jp,l,j)
+        operatorME = operatorME * PhiPPoverall(lp,jp,j)
         operatorME = operatorME + SigmaJ(y,np,lp,jp,n,l,j,bigJ,bigJ)/2d0    
     
     end function PhiTPJ    
@@ -162,10 +160,10 @@ module phi
     end function PhiPPsummand4
     
     
-    function PhiPPoverall(lp,jp,l,j)
+    function PhiPPoverall(lp,jp,j)
     
         implicit none
-        integer, intent(in) :: lp,jp,l,j
+        integer, intent(in) :: lp,jp,j
         real(kind=8) :: Pi = 3.1415926535897932
         real(kind=8) :: PhiPPoverall
     

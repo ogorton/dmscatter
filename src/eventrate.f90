@@ -5,7 +5,7 @@ module eventrate
     real(kind=8) :: ve, v0, vesc
     contains
 
-    function deventrate(q, wimp, nuc_target, eft)
+    function deventrate(q, wimp, nuc_target)
         use OMP_LIB
         use quadrature
         use kinds
@@ -17,14 +17,13 @@ module eventrate
         real(dp) :: q
         type(particle) :: wimp
         type(nucleus) :: nuc_target
-        type(eftheory) :: eft
     
         real(dp) :: mchi, muT
         real(dp) :: Nt
         real(dp) :: rhochi
     
         integer :: ind, tid
-        real(dp) :: vmin, error, vmax
+        real(dp) :: vmin, vmax
         real(dp) :: relerror
     
         tid = 1

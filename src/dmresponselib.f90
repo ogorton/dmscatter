@@ -61,7 +61,7 @@ module dmresponselib
     end function dmrMJ
     
 
-    function dmrPhiPPJ(eft, tau1, tau2, q, v, jchi, muT)
+    function dmrPhiPPJ(eft, tau1, tau2, q, jchi)
         ! O. Gorton 2020.01.
     
         implicit none
@@ -72,8 +72,7 @@ module dmresponselib
         ! inputs
         real(kind=8), allocatable, intent(in) :: eft(:,:)
         REAL(kind=8), INTENT(IN) :: q
-        REAL(kind=8), INTENT(IN) :: v
-        REAL(kind=8), INTENT(IN) :: jchi, muT
+        REAL(kind=8), INTENT(IN) :: jchi
         integer, INTENT(IN) :: tau1, tau2
     
         ! functions called
@@ -112,7 +111,7 @@ module dmresponselib
     end function dmrPhiPPJMJ
     
 
-    function dmrPhiTPJ(eft, tau1, tau2, q, v, jchi, muT)
+    function dmrPhiTPJ(eft, tau1, tau2, q, jchi)
         ! O. Gorton 2020.01.
     
         implicit none
@@ -123,8 +122,7 @@ module dmresponselib
         ! inputs
         real(kind=8), allocatable, intent(in) :: eft(:,:)
         REAL(kind=8), INTENT(IN) :: q
-        REAL(kind=8), INTENT(IN) :: v
-        REAL(kind=8), INTENT(IN) :: jchi, muT
+        REAL(kind=8), INTENT(IN) :: jchi
         integer, INTENT(IN) :: tau1, tau2
     
         ! functions called

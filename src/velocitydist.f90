@@ -2,6 +2,7 @@ module distributions
     contains
 
     function maxbolt(v,v0)
+        ! Maxwell-Boltzmann (MB) probability distribution 
         use kinds
         use constants
         implicit none
@@ -15,6 +16,9 @@ module distributions
     end function maxbolt
 
     function shm(v, v0, vesc)
+        ! Standard halo model probability distribution, i.e.
+        ! a MB distribution with a sharp cutoff to recognize the
+        ! finite escape speed of the galaxy.
         use kinds
         use constants
         implicit none
@@ -37,6 +41,8 @@ module distributions
     end function shm
 
     function sshm(v, v0, vesc)
+        ! Smooth standard halo model. Basically a SHM with an extra constant 
+        ! term meanth to smooth the distribution near vesc.
         use kinds
         use constants
         implicit none

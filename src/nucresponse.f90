@@ -55,7 +55,7 @@ module nucresponse
         use kinds
         use orbitals
         use wigner, only: threej_lookup, vector_couple
-        use densities, only: maxJt, minJt, pndens
+        use densities, only: maxJt, pndens
     
         implicit none
     
@@ -185,7 +185,6 @@ module nucresponse
     
         use kinds
         use orbitals
-        use constants, only: pi
     
         implicit none
     
@@ -194,7 +193,7 @@ module nucresponse
         real(dp) :: y
         real(dp), allocatable, intent(in) :: densmat(:,:,:,:)
     
-        integer :: Mtiso, Tiso, Jx2iso
+        integer :: Mtiso, Tiso
         real(dp) :: FF
         character(len=2) :: coupleto
     
@@ -239,7 +238,7 @@ module nucresponse
         implicit none
     
         type(nucleus) :: nuc_target
-        integer :: ioption, op1, op2, Mtiso
+        integer :: ioption
         integer :: tt1,tt2
         REAL(kind=8) :: y, q !, spOME, spOME1,spOME2
         REAL(kind=8) :: Response

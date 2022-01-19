@@ -44,7 +44,7 @@ function fspectra(q)
     real(dp), intent(in) :: q
     real(dp) :: fspectra
 
-    fspectra = q * dEventRate(q, wimp, nuc_target, eft) /(mn*nuc_target%mass)
+    fspectra = q * dEventRate(q, wimp, nuc_target) /(mn*nuc_target%mass)
 
 end function 
 

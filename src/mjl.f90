@@ -38,9 +38,9 @@ module mjl
     end function MJLDivQoverall
     
     
-    function MJLDivQsummand1(y,np,lp,jp,n,l,j,bigJ,bigL)
+    function MJLDivQsummand1(y,np,lp,n,l,bigJ,bigL)
         implicit none
-        integer, intent(in) :: np,lp,jp,n,l,j,bigJ,bigL
+        integer, intent(in) :: np,lp,n,l,bigJ,bigL
         real(kind=8), intent(in) :: y
         real(kind=8) :: MJLDivQsummand1
     
@@ -52,9 +52,9 @@ module mjl
     end function MJLDivQsummand1
     
     
-    function MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL)
+    function MJLDivQsummand2(y,np,lp,n,l,bigJ,bigL)
         implicit none
-        integer, intent(in) :: np,lp,jp,n,l,j,bigJ,bigL
+        integer, intent(in) :: np,lp,n,l,bigJ,bigL
         real(kind=8), intent(in) :: y
         real(kind=8) :: MJLDivQsummand2
     
@@ -77,8 +77,8 @@ module mjl
         real(kind=8) :: MJLDivQ
     
         MJLDivQ = MJLDivQoverall(lp,jp,l,j,bigJ,bigL) &            
-            * (MJLDivQsummand1(y,np,lp,jp,n,l,j,bigJ,bigL) &
-            + MJLDivQsummand2(y,np,lp,jp,n,l,j,bigJ,bigL))
+            * (MJLDivQsummand1(y,np,lp,n,l,bigJ,bigL) &
+            + MJLDivQsummand2(y,np,lp,n,l,bigJ,bigL))
     
     end function MJLDivQ
 

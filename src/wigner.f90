@@ -1,5 +1,29 @@
 module wigner
 
+    ! ============================================================================
+    ! MIT License
+    !
+    ! Copyright (c) 2022 Oliver C. Gorton (ogorton@sdsu.edu)
+    ! 
+    ! Permission is hereby granted, free of charge, to any person obtaining a copy
+    ! of this software and associated documentation files (the "Software"), to deal
+    ! in the Software without restriction, including without limitation the rights
+    ! to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ! copies of the Software, and to permit persons to whom the Software is
+    ! furnished to do so, subject to the following conditions:
+    ! 
+    ! The above copyright notice and this permission notice shall be included in all
+    ! copies or substantial portions of the Software.
+    ! 
+    ! THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ! IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ! FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ! AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ! LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ! OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ! SOFTWARE.
+    ! ============================================================================
+
     ! Oliver Gorton, San Diego State University, 2021.12.7
     !
     ! Library of functions for computation of Wigner 3-j, 6-j and 9-j symbols
@@ -32,7 +56,6 @@ module wigner
     ! List of subroutines:
     !     threej_table_init(min2j, max2j)
     !     sixj_table_init(min2j, max2j)
-
 
     implicit none
     real(kind=8), allocatable :: threej_table(:,:,:,:,:,:)
@@ -70,6 +93,7 @@ module wigner
             end do
             logfac = log(logfac)
             return
+
         end function logfac
 
         function logdoublefac(n)
@@ -137,6 +161,7 @@ module wigner
                 +logfac(c3/2)-logfac(c4/2+1)))
 
             return
+
         end function triangle
 
         function vector_couple(two_j1, two_m1, two_j2, &
@@ -197,13 +222,13 @@ module wigner
             do z = zmin, zmax
                 den =- (logfac(z) + logfac(t1-z) + logfac(d2-z) &
                       + logfac(d3-z) + logfac(dd1+z) + logfac(dd2+z))
-
                 fac_sum = fac_sum + (-1) ** (z) * exp(den)
             end do
 
             cg = fac_prod * fac_sum
 
             return
+
         end function vector_couple
 
         function threej(two_j1, two_j2, two_j3,&
@@ -241,7 +266,7 @@ module wigner
             call system_clock(count_rate = clock_rate)
             call system_clock(count = ti)
 
-            print*,"Initializing three-j symbol table..."
+            print '(a)',"Initializing three-j symbol table..."
             if (.not. present(min2j)) then
                 a = tablemin2j
             else
@@ -256,13 +281,12 @@ module wigner
             end if
             print*,"Table min. 2J:",a
             print*,"Table max. 2J:",b
-            print*,'Memory required (MB):',real(sizeof(dummy_real) &
-                                    * (b-a+1)**6,4)*10d0**(-6)
+            print "(a,f10.2)",'Memory required (MB):',real(sizeof(dummy_real) &
+                                    * (b - a + 1)**6d0) * 10d0 ** (-6)
 
             if (allocated(threej_table)) deallocate(threej_table)
             allocate(threej_table(a:b,a:b,a:b,a:b,a:b,a:b))
             threej_table = 0d0
-
             !$OMP PARALLEL DO private(n,m,l,k,j,i) schedule(dynamic, 1)
             do n = a, b
               do m = a, b
@@ -313,6 +337,7 @@ module wigner
             end if
 
             return
+
         end function threej_lookup
 
         function sixj(two_j1,two_j2,two_j3,two_l1,two_l2,two_l3) result(sj)
@@ -391,7 +416,7 @@ module wigner
             call system_clock(count_rate = clock_rate)
             call system_clock(count = ti)
 
-            print*,"Initializing six-j symbol table..."
+            print '(a)',"Initializing six-j symbol table..."
             if (.not. present(min2j)) then
                 a = tablemin2j
             else
@@ -406,8 +431,8 @@ module wigner
             end if
             print*,"Table min. 2J:",a
             print*,"Table max. 2J:",b
-            print*,'Memory required (MB):',real(sizeof(dummy_real) &
-                                    * (b-a+1)**6,4)*10d0**(-6)
+            print "(a,f10.2)","Memory required (MB):",real(sizeof(dummy_real) &
+                                    * (b - a + 1)**6d0,4)*10d0**(-6)
 
             if (allocated(sixj_table)) deallocate(sixj_table)
             allocate(sixj_table(a:b,a:b,a:b,a:b,a:b,a:b))
@@ -429,8 +454,9 @@ module wigner
             end do
 
             call system_clock(count = tf)
-            print*,'Table has been saved to memory.'
-            print*,'Seconds to initialize:',real((tf-ti))/real(clock_rate)
+            print '(a)', 'Table has been saved to memory.'
+            print '(a, f10.4)', 'Seconds to initialize:', real((tf-ti))/real(clock_rate)
+
         end subroutine sixj_table_init
 
         function sixj_lookup(two_j1, two_j2, two_j3,&
@@ -453,6 +479,7 @@ module wigner
             end if
 
             return
+
         end function sixj_lookup
 
         function ninej(two_j1, two_j2, two_j3,&

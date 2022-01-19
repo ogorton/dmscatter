@@ -2,10 +2,10 @@ module bessel
     use wigner
     contains
     !-------------------------------------------------------------------------------
-    function BesselF1(y,np,lp,n,l,bigL)
+    function BesselF1(y,np,n,bigL)
         implicit none
     
-        INTEGER, INTENT(IN) :: np,lp,n,l,bigL
+        INTEGER, INTENT(IN) :: np,n,bigL
         REAL(kind=8),INTENT(IN) :: y
         REAL(kind=8) :: BesselF1
     
@@ -17,10 +17,10 @@ module bessel
     
     
     !-------------------------------------------------------------------------------
-    function BesselF1_plusminus(y,np,lp,n,l,bigL)
+    function BesselF1_plusminus(y,np,n,bigL)
         implicit none
     
-        INTEGER, INTENT(IN) :: np,lp,n,l,bigL
+        INTEGER, INTENT(IN) :: np,n,bigL
         REAL(kind=8),INTENT(IN) :: y
         REAL(kind=8) :: BesselF1_plusminus
     
@@ -114,7 +114,7 @@ module bessel
         REAL(kind=8),INTENT(IN) :: y
         REAL(kind=8) :: BesselElement
     
-        BesselElement = BesselF1(y,np,lp,n,l,bigL) &
+        BesselElement = BesselF1(y,np,n,bigL) &
             * BesselF2(np,lp,n,l) * BesselF3(y,np,lp,n,l,bigL)
     
     end function BesselElement
@@ -129,7 +129,7 @@ module bessel
         REAL(kind=8),INTENT(IN) :: y
         REAL(kind=8) :: BesselElementminus
     
-        BesselElementminus = BesselF1_plusminus(y,np,lp,n,l,bigL) &
+        BesselElementminus = BesselF1_plusminus(y,np,n,bigL) &
             * BesselF2(np,lp,n,l) * BesselF3_minus(y,np,lp,n,l,bigL)
     
     end function BesselElementminus
@@ -144,7 +144,7 @@ module bessel
         REAL(kind=8),INTENT(IN) :: y
         REAL(kind=8) :: BesselElementplus
     
-        BesselElementplus = BesselF1_plusminus(y,np,lp,n,l,bigL) &
+        BesselElementplus = BesselF1_plusminus(y,np,n,bigL) &
             * BesselF2(np,lp,n,l) * BesselF3_plus(y,np,lp,n,l,bigL)
     
     end function BesselElementplus
