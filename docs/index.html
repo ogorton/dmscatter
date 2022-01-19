@@ -649,7 +649,7 @@ ORBIT      N     L   2 x J
 f_{SHM}(\vec{v}) = \frac{\Theta(v_{esc}-|\vec{v}|)}{\pi^{3/2}v_0^3N_{esc}} 
     \exp{-(\vec{v}/v_0)^2},
 \]</span> where <span class="math inline">\(N_{esc}\)</span> renormalizes due to the cutoff: <span class="math display">\[
-N_{esc} = \erf{(v_{esc}/v_0)} - \frac{2v_{esc}}{\sqrt{\pi}v_0}
+N_{esc} = erf{(v_{esc}/v_0)} - \frac{2v_{esc}}{\sqrt{\pi}v_0}
 \exp{-(v_{esc}/v_0)^2}.
 \]</span> With this distribution, the integral in the differential event-rate has the form: <span class="math display">\[
     I = \int_{v_{min}}^{v_{esc}} \frac{d\sigma(v,q)}{d{q}^2}\  e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2}\ v\ d^3v.
@@ -673,7 +673,7 @@ E_{R,max} = q_{max}^2/2m_T = 2\mu_T^2v_{max}^2/m_T.
         {N_{esc}\pi^{3/2}v_0^3}
         \left\{\exp[-(\vec{v}/v_0)^2] - \exp[-(v_{esc}/v_0)^2] \right\}.
 \]</span> The normalization factor is: <span class="math display">\[
-    N_{esc} = \erf(z) - \frac{2}{\sqrt{\pi}}z(1+\frac{2}{3}z^2)e^{-z^2},
+    N_{esc} = erf(z) - \frac{2}{\sqrt{\pi}}z(1+\frac{2}{3}z^2)e^{-z^2},
 \]</span> <span class="math inline">\(z=v_{esc}/v_0\)</span>.</p>
 <h2 id="more-sophisticated-halo-models">More Sophisticated Halo Models</h2>
 <p>The SHM is actually not a very good model. For example, it ignores the annual modulation of the Earth’s speed through the galanctic frame due to its orbit around the Sun. Another point is that the cut-off model where the speed probability drops to zero after an escape velocity is reached is not very realistic: actually, the cutoff should be smoother.</p>

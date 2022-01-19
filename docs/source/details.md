@@ -42,7 +42,7 @@ f_{SHM}(\vec{v}) = \frac{\Theta(v_{esc}-|\vec{v}|)}{\pi^{3/2}v_0^3N_{esc}}
 $$
 where $N_{esc}$ renormalizes due to the cutoff:
 $$
-N_{esc} = \erf{(v_{esc}/v_0)} - \frac{2v_{esc}}{\sqrt{\pi}v_0}
+N_{esc} = erf{(v_{esc}/v_0)} - \frac{2v_{esc}}{\sqrt{\pi}v_0}
 \exp{-(v_{esc}/v_0)^2}.
 $$
 With this distribution, the integral in the differential
@@ -108,7 +108,7 @@ $$
 $$
 The normalization factor is:
 $$
-    N_{esc} = \erf(z) - \frac{2}{\sqrt{\pi}}z(1+\frac{2}{3}z^2)e^{-z^2},
+    N_{esc} = erf(z) - \frac{2}{\sqrt{\pi}}z(1+\frac{2}{3}z^2)e^{-z^2},
 $$
 $z=v_{esc}/v_0$.
 
