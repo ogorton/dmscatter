@@ -58,7 +58,7 @@ More extensive documentation can be found in the manual document.
 
 ## Manual
 The manual for the code can be founds in the `docs` folder as a pdf, and can be
-viewed as a webpage [here](docs/manual.html).
+viewed as a webpage [here](https://ogorton.github.io/dmfortfactor/).
 
 ## Validation plots
 We include a script for generating validation tests against data generated with
