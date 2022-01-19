@@ -29,6 +29,9 @@ and numerical implementation, including the ability to take advantage of
 multi-core CPUs.  Furthermore, we enhance accessibility by including Python
 wrappers with example scripts.
 
+The code is available on the public 
+[GitHub repository](https://github.com/ogorton/dmfortfactor).
+
 This program is principally concerned with computing the dark matter-nucleus
 differential event rate as a function of the nuclear recoil energy $E_R$:
 $$
