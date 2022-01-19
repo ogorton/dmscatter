@@ -11,7 +11,7 @@ cross section over the velocity distribution of the WIMP-halo in the galactic
 frame: \begin{equation}\label{ER}
 \begin{split}
 	\frac{dR}{dE_r}(E_r)
-	 = N_T n_\chi \int_{v_{min}}^{v_{escape}} \frac{d\sigma}{dE_r}(v,E_r)\ \tilde{f}(\vec{v})\ v\ d^3v,
+	 = N_T n_\chi \int_{v_{min}}^{\infty} \frac{d\sigma}{dE_r}(v,E_r)\ \tilde{f}(\vec{v})\ v\ d^3v,
 \end{split}
 \end{equation}
 where $E_r$ is the recoil energy of the WIMP-nucleus scattering event, $N_T$ is
@@ -25,16 +25,30 @@ $$
 where $\vec{v}_{earth}$ is the velocity of the earth in the galactic rest frame.
 
 ### Standard Halo Model
-The simplest model is a three-dimensional Maxwell-Boltzmann distribution, also
-called a Standard Halo Model (SHM):
+
+There are many models for the dark matter distributions of galaxies
+[@RevModPhys.85.1561].  We provide the simplest model, a three-dimensional
+Maxwell-Boltzmann distribution,
 $$
 	f(\vec{v}) \propto e^{-\vec{v}^2/v_0^2},
 $$
-where $v_0$ is some scaling factor (typically taken to be around $220\
-\mathrm{km/s}$). With this distribution, the integral in the differential
+where $v_0$ is some scaling factor (typically taken to be around $220$ km/s).
+This is called the Simple Halo Model (SHM) when a maximum value of the speed,
+due to the galactic escape velocity $v_{escape}$, is taken into account
+[@PhysRevD.33.3495; @PhysRevD.37.3388]:
+$$
+f_{SHM}(\vec{v}) = \frac{\Theta(v_{esc}-|\vec{v}|)}{\pi^{3/2}v_0^3N_{esc}} 
+    \exp{-(\vec{v}/v_0)^2},
+$$
+where $N_{esc}$ renormalizes due to the cutoff:
+$$
+N_{esc} = \erf{(v_{esc}/v_0)} - \frac{2v_{esc}}{\sqrt{\pi}v_0}
+\exp{-(v_{esc}/v_0)^2}.
+$$
+With this distribution, the integral in the differential
 event-rate has the form: 
 $$
-	I = \int_{v_{min}}^{v_{escape}} d^3v\ \frac{d\sigma(v,q)}{d{q}^2}\  e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2}.
+	I = \int_{v_{min}}^{v_{esc}} \frac{d\sigma(v,q)}{d{q}^2}\  e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2}\ v\ d^3v.
 $$
 To reduce to a one-dimensional integral, we make the conversion to spherical
 coordinates.  Noting that $(\vec{v}+\vec{v}_{earth})^2 = \vec{v}^2 +
@@ -47,28 +61,56 @@ $$
 $$
 Making the substitutions, we obtain:
 $$
-	I =  \frac{\pi v_0^2}{v_{earth} } \int_{v_{min}}^{v_{escape}} dv\ v^2 \frac{d\sigma(v,q)}{d{q}^2} 
-		\left[ g(v-v_{earth}) - g(v+v_{earth}) \right],
+	I =  \frac{\pi v_0^2}{v_{earth} } \int_{v_{min}}^{v_{esc}} \frac{d\sigma(v,q)}{d{q}^2} 
+		\left[ g(v-v_{earth}) - g(v+v_{earth}) \right]v^2\ dv,
 $$
 where $g(x)$ is a one-dimensional Gaussian form:
 $$
-	g(v) = \frac{1}{(\pi v_0^2)^{3/2}}e^{-v^2/v_0^2}.
+	g(v) = \frac{1}{(\pi v_0^2)^{3/2}N_{esc}}e^{-v^2/v_0^2}.
 $$
 We then use Gauss-Legendre quadrature to evaluate $I$[^quad].  The limits of the
-integral, $v_{min}$ and $v_{escape}$, have physical constraints. The minimum
+integral, $v_{min}$ and $v_{esc}$, have physical constraints. The minimum
 speed is defined by the minimum recoil energy of a WIMP-nucleus collision at a
-momentum transfer $q$: $v_{min} = q/(2\mu_T)$, where $\mu_T$ is the reduced mass
-of the WIMP-nucleus system. The maximum speed could in principle be infinite,
-and in some approximations this is taken to be the limit. (Numerically, we
-approximate $\infty \approx 12 \times v_{0}$.) In more realistic models, the
-maximum speed is taken to be the galactic escape velocity: $v_{max}=v_{escape}
+momentum transfer $q$: 
+$$v_{min} = q/(2\mu_T),$$
+where $\mu_T=m_Tm_\chi/(m_T+m_\chi)$ is the reduced mass of the WIMP-nucleus system. 
+To use the simple Maxwell-Bolztmann distribution approximation, the maximum 
+speed is taken to be $\infty \approx 12 \times v_{0}$. Otherwise, the
+maximum speed is taken to be the galactic escape velocity: $v_{esc}
 \approx 550$ km/s.
+
+Note that as a function of momentum $q$, the integral is guarenteed to go to
+zero above some maximum momentum $q_{max}$. This happens when $v_{min} =
+v_{max}+v_{earth}$, which corresponds to:
+$$
+q_{max} = 2\mu_T (v_{max}+v_{earth}),
+$$
+$$
+E_{R,max} = q_{max}^2/2m_T = 2\mu_T^2v_{max}^2/m_T.
+$$
+With 150 GeV WIMPs and $^{29}$Si, for example, $\mu_T=23.031916$ GeV,
+$m_T=27.209888$ GeV, $v_{max}=550$ km/s $=0.001834602$ GeV/c:
+$E_{R,max} = 265.2987$ keV.
 
 [^quad]: While there are analytic solutions for this integral in the form of 
     error functions; we use quadrature since it makes easy to later modify the 
     velocity distribution. For example, adding a velocity cut-off is as easy as
     changing the limit on the quadrature, with no need to write a whole new 
     subroutine.
+
+### Smooth SHM
+This distribution appears in the Mathematica code DMFormFactor under the name 
+"MBcutoff". It is simply a smoothed version of the SHM. The distribution is:
+$$
+    f_{sSHM}(\vec{v}) = \frac{\Theta(v_{esc}-|\vec{v}|)}
+        {N_{esc}\pi^{3/2}v_0^3}
+        \left\{\exp[-(\vec{v}/v_0)^2] - \exp[-(v_{esc}/v_0)^2] \right\}.
+$$
+The normalization factor is:
+$$
+    N_{esc} = \erf(z) - \frac{2}{\sqrt{\pi}}z(1+\frac{2}{3}z^2)e^{-z^2},
+$$
+$z=v_{esc}/v_0$.
 
 ### More Sophisticated Halo Models
 The SHM is actually not a very good model. For example, it ignores the annual

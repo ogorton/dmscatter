@@ -53,6 +53,8 @@ subroutine printparameters(wimp,nuc_target,eft)
     print*,''
     print*,'Parameters used in this calculation:'
 
+    print'("kilometerpersecond",T30,ES20.5)',kilometerpersecond
+    print'("kilogamday",T30,ES20.5)',kilogramday
     print'("femtometer =",T30,F10.6)',femtometer
     print'("GeV = ",T30,F10.6)',gev
     print'("kev = ",T30,F10.6)',kev
@@ -68,11 +70,21 @@ subroutine printparameters(wimp,nuc_target,eft)
     print'("Target atomic mass",T30,F10.6)',nuc_target%mass
     print'("System reduced mass",T30,F10.6)',wimp%mass * nuc_target%mass * mN/(wimp%mass+nuc_target%mass*mn)!mchi * mtarget * mN / (mchi+mtarget*mN)
     print'("Target mass density (1/GeV)",T30,F10.6)',nuc_target%nt
-    print'("Target experimental mass (kg*days)",T30,F10.6)',ntscale
+    print'("Target experimental mass (kg*days)",T40,F20.6)',ntscale
     print'("Local WIMP density (GeV/cm^3)",T30,F10.6)',wimp%localdensity
     print'("v0 (km/s)",T30,F10.6)',vscale
     print'("ve (km/s)",T30,F10.6)',vearth
     print'("v escape (km/s)",T30,F15.6)',vescape
+    print'("quadtype",T30,I2)',quadrature_type
+    select case(quadrature_type)
+    case(1)
+    print'("quadrelerr",T30,F10.6)',quadrature_relerr
+    case(2)
+    print'("gaussorder",T30,I3)',gaussorder
+    case default
+     continue
+    end select
+    print'("useenergyfile",T30,L2)',useenergyfile   
 
     print*,''
     print*,'EFT coupling coefficients:'

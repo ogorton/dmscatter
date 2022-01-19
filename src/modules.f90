@@ -78,7 +78,7 @@ module constants
 
     use kinds
     implicit none
-    real(dp) :: pi = 3.14159265358979323846264338327950288419716939937510
+    real(dp) :: pi = datan(1d0)*4d0!3.14159265358979323846264338327950288419716939937510
     real(dp) :: GeV = 1d0
     real(dp) :: kev = 10d0**(-6)
     real(dp) :: femtometer = 5.0677d0 ! /GeV

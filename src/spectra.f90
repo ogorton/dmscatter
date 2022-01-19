@@ -116,6 +116,8 @@ module spectra
         use constants
         use types
         use eventrate, only: deventrate
+        use quadrature, only: boole
+        use settings, only: useenergyfile
     
         implicit none
     
@@ -126,7 +128,7 @@ module spectra
         integer :: calc_num
         integer :: iunit
         integer :: i, N
-        real(dp) :: q
+        real(dp) :: q, dq
 
         real(dp) :: recoil_energy, momentum_transfer
         real(dp), allocatable :: event_rate_spectra(:)
@@ -153,9 +155,12 @@ module spectra
         !$OMP end parallel do
         !$OMP barrier        
     
-        call boole(energy_grid_size, momentum_grid, momentum_grid*Event_rate_spectra/(mn*mtarget),&
-            totaleventrate)
-        
+        if (.not.useenergyfile) then
+            dq = abs(momentum_grid(2) - momentum_grid(1))
+            call boole(energy_grid_size, momentum_grid*Event_rate_spectra/(mn*mtarget),&
+                dq, totaleventrate)
+            print*,'Total integrated eventrate (events)',totaleventrate
+        end if 
     
         write(6,"(A,T30,A,T56,A)")" E-recoil (kev)","q-transfer (gev/c)","Eventrate (events/gev)"
         do calc_num = 1, energy_grid_size
@@ -163,8 +168,6 @@ module spectra
             recoil_energy = energy_grid(calc_num)
             print*,recoil_energy,momentum_transfer,event_rate_spectra(calc_num)
         end do
-    
-        print*,'Total integrated eventrate (events)',totaleventrate,'pm',error
     
         ! Write results to file
         open(newunit=iunit, file='eventrate_spectra.dat')
@@ -264,6 +267,7 @@ module spectra
         use types, only: nucleus
         use nucresponse, only: nucFormFactor, nucFormFactor_transform
         use densities, only: pndens
+        use settings, only: usemomentum
         implicit none
         integer :: n_xvalues
         integer :: iunit
@@ -271,7 +275,7 @@ module spectra
         integer :: iqq
         type(nucleus) :: nuc_target   
     
-        real(dp) :: yy, qq
+        real(dp) :: yy, qq, xx
         real(dp), allocatable :: xlist(:), Wlist(:,:,:,:)
         real(dp) :: mtarget
         real(dp) :: tolerance
@@ -323,13 +327,21 @@ module spectra
         write(iunit,'(a)')'# operator = 1, ..., 8:'
         write(iunit,'(a)')"# M, \Phi'', \tilde{\Phi}', \Delta, \Sigma', \Sigma'', \Phi''M, \Delta \Sigma'"  
         write(iunit,'(a)')'# tau = 0, 1 isospin coupling'
-        write(iunit,'(a)')'# q = momentum transfer'
+        if (usemomentum) then
+            write(iunit,'(a)')'# x = momentum transfer (gev/c)'
+        else
+            write(iunit,'(a)')'# x = recoil energy (kev)'
+        end if
         write(iunit,'(a)')  '# Format:'
-        write(iunit,'(a)')  '# q, { W(i, 0, 0, q) W(i, 1, 0, q) W(i, 0, 1, q) W(i, 1, 1, q); i = 1, ..., 8}'
+        write(iunit,'(a)')  '# x, { W(i, 0, 0, x) W(i, 1, 0, x) W(i, 0, 1, x) W(i, 1, 1, x); i = 1, ..., 8}'
     
         do iqq = 1, energy_grid_size
-          qq = momentum_grid(iqq)
-          write(iunit,'(ES15.5E3,32(ES15.5E3))') qq, Wlist(iqq, 1:8, 0:1, 0:1)
+          if (usemomentum) then
+              xx = momentum_grid(iqq)
+          else
+              xx = energy_grid(iqq)
+          end if
+          write(iunit,'(ES15.5E3,32(ES15.5E3))') xx, Wlist(iqq, 1:8, 0:1, 0:1)
         end do
         close(iunit)
     

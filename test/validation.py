@@ -29,11 +29,16 @@ pairs = [
         (14,14),
         (15,15)]
 
+vesc = 550.0
 cwords = {
         "wimpmass" : 150.0,
         "ntscale"  : 2500.0,
         "vearth" : 232.0,
-        "maxwellv0" : 220.0}
+        "maxwellv0" : 220.0,
+        "vescape" : vesc,
+        "quadtype" : 1,
+        "gaussorder" : 24,
+        "quadrelerr": 1e-3}
 
 log = True
 typ = "lin"
@@ -47,7 +52,10 @@ for coupleto in ("n","p"):
 
         plt.figure()
         o1, o2 = pair[:]
-        refenergy, refeventrate = np.loadtxt("data/dmformfactor.si29.%s.%i.%i.dat"%(
+        refenergy, refeventrate = np.loadtxt("data/dmformfactor.vesc550.si29.%s.%i.%i.dat"%(
+                coupleto, o1, o2), unpack=True)
+
+        e_mb, er_mb = np.loadtxt("data/dmformfactor.si29.%s.%i.%i.dat"%(
                 coupleto, o1, o2), unpack=True)
 
         for idres, dres in enumerate(("si29usd-iso", "si29nb-iso")):
@@ -121,9 +129,14 @@ for coupleto in ("n","p"):
         plt.ylabel("Event rate (1/MeV)", fontsize=12)
         if (all(eventrate==0)): plt.yscale("linear")  
 
-        plt.plot(energy, eventrate, label="dmfortfactor (this work)",lw=2)
-        plt.plot(refenergy, refeventrate,marker="o",ms=1,
-                linestyle="none", label="DMFormFactor",lw=2)            
+        plt.plot(energy, eventrate, label="dmfortfactor, MB vesc %skm/s"%vesc,lw=2)
+        emax500 = 265.2987
+        plt.axvline(x=emax500, label="$E_{R,max}$ @ 550 km/s", linestyle=":",
+                color='red')
+        plt.plot(refenergy, refeventrate,ms=1,
+                linestyle="-.", label="DMFormFactor, MB vesc 550km/s",lw=2)
+        plt.plot(e_mb, er_mb,ms=1,
+                linestyle="--", label="DMFormFactor, MB")
         plt.legend(loc=3, fontsize=12)
         plt.savefig("%s.usd.%s.%i.%i.pdf"%(typ,coupleto,o1,o2))
         plt.close()

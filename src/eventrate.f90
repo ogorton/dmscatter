@@ -2,6 +2,7 @@ module eventrate
 
     implicit none
     real(kind=8) :: qglobal(128)
+    real(kind=8) :: ve, v0, vesc
     contains
 
     function deventrate(q, wimp, nuc_target, eft)
@@ -10,8 +11,6 @@ module eventrate
         use kinds
         use constants
         use types
-        use crosssection
-        use distributions
 
         implicit none
         real(dp) :: dEventRate
@@ -21,53 +20,41 @@ module eventrate
         type(eftheory) :: eft
     
         real(dp) :: mchi, muT
-        real(dp) :: Nt, units
+        real(dp) :: Nt
         real(dp) :: rhochi
-        real(dp), allocatable :: eftsmall(:,:)
     
-        real(dp) :: v  ! DM velocity variable
-        real(dp) :: dv ! DM differential velocity / lattive spacing
-        integer, allocatable :: indx(:)
-        integer :: i, j, itmp, ind, norder
-        real(dp) :: ve, v0, vesc, vmin, error
-    
+        integer :: ind, tid
+        real(dp) :: vmin, error, vmax
         real(dp) :: relerror
-    
-        integer :: tid
     
         tid = 1
         ! Don't delete the following line; it's an openMP command, not a comment.
         !$  tid = omp_get_thread_num() + 1
         qglobal(tid) = q 
-    
-        muT = wimp%mass * nuc_target%mass * mN / (wimp%mass + nuc_target%mass * mN)
-    
+   
+        Mchi = wimp%mass 
+        muT = Mchi * nuc_target%mass * mN / (Mchi + nuc_target%mass * mN)
         ve = vearth * kilometerpersecond
         v0 = vscale * kilometerpersecond
         vesc = vescape * kilometerpersecond
+        Nt = nuc_target%Nt
+        rhochi = wimp%localdensity / centimeter**3d0
         vmin = q/(2d0*muT)
-    
-        if (vmin > vesc) then
-            dEventRate = 0d0
-            return
-        end if
-    
         relerror = quadrature_relerr
+        vmax = (vesc + ve)
     
         select case(quadrature_type)
           case(1)
-            call gaus8_threadsafe(spectraintegrand1d, vmin, vesc, &
+            call gaus8_threadsafe(spectraintegrand1d, vmin, vmax, &
                 relerror, deventrate, ind, tid )
           case(2)
-            deventrate = gaussquad(spectraintegrand1d, gaussorder, vmin, vesc, tid)
+            deventrate = gaussquad(spectraintegrand1d, gaussorder, vmin, vmax, tid)
           case default
             stop "Invalid quadrature option."
         end select
     
-        Nt = nuc_target%Nt
-        rhochi = wimp%localdensity / centimeter**3d0
-        Mchi = wimp%mass
-        dEventRate = ntscale * kilogramday * Nt * (rhochi/Mchi) * dEventRate *  (pi*v0**2/ve)
+        dEventRate = ntscale * kilogramday * Nt * (rhochi/Mchi) &
+            * dEventRate *  (pi*v0**2/ve)
       
     end function deventrate
     
@@ -80,21 +67,18 @@ module eventrate
     
         use main ! This is the only function allowed to use main.
         use kinds
-        use constants
         use crosssection
         use distributions
     
         implicit none
-        real(dp) :: vv, qq, ve, v0
+        real(dp) :: vv, qq
         real(dp) :: spectraintegrand1d
         integer tid
     
-        ve = vearth * kilometerpersecond
-        v0 = vscale * kilometerpersecond
         qq = qglobal(tid)
     
         spectraintegrand1d = diffCrossSection(vv, qq, wimp, nuc_target, eft) &
-            * vv * vv * ( maxbolt(vv-ve,v0) - maxbolt(vv+ve,v0) )
+            * (sshm(vv-ve,v0,vesc) - sshm(vv+ve,v0,vesc)) * vv**2
     
     end function
 

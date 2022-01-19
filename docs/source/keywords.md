@@ -22,8 +22,3 @@
 |  vescape | $v_{escape}$ | Galactic escape velocity. Particles moving faster than this speed will escape the galaxy, thus setting an upper limit on the WIMP velocity distribution. | km/s | 12 $\times\ v_{scale}$ |
 |  weakmscale | $m_v$ | Weak interaction mass scale. User defined EFT coefficients are divided by $m_v^2$. | GeV | 246.2 |
 |  wimpmass | $m_\chi$ | WIMP particle mass. | GeV | 50.0 |
-
-# References
-
-::: {#refs}
-:::
