@@ -35,10 +35,8 @@ cwords = {
         "ntscale"  : 2500.0,
         "vearth" : 232.0,
         "maxwellv0" : 220.0,
-        "vescape" : vesc,
-        "quadtype" : 1,
-        "gaussorder" : 24,
-        "quadrelerr": 1e-3}
+        "vescape" : vesc
+        }
 
 log = True
 typ = "lin"
@@ -52,7 +50,7 @@ for coupleto in ("n","p"):
 
         plt.figure()
         o1, o2 = pair[:]
-        refenergy, refeventrate = np.loadtxt("data/dmformfactor.vesc550.si29.%s.%i.%i.dat"%(
+        e_cut, er_cut = np.loadtxt("data/dmformfactor.vesc550.si29.%s.%i.%i.dat"%(
                 coupleto, o1, o2), unpack=True)
 
         e_mb, er_mb = np.loadtxt("data/dmformfactor.si29.%s.%i.%i.dat"%(
@@ -87,11 +85,13 @@ for coupleto in ("n","p"):
                 cn = cn)
 
             # Plot the error w.r.t. DMFormFactor V6
+            y = er_mb
+            x = e_mb
             R = interp1d(energy, eventrate)
-            Rx = R(refenergy)
-            perr = abs((refeventrate - Rx)/Rx)
+            Rx = R(x)
+            perr = abs((y - Rx)/y)
             ms=["--", ":"]
-            plt.plot(refenergy, perr, label = "%s"%dreslbl[idres],
+            plt.plot(x, perr, label = "%s"%dreslbl[idres],
                     linestyle=ms[idres])
 
             # Save dmfortfactor results
@@ -133,7 +133,7 @@ for coupleto in ("n","p"):
         emax500 = 265.2987
         plt.axvline(x=emax500, label="$E_{R,max}$ @ 550 km/s", linestyle=":",
                 color='red')
-        plt.plot(refenergy, refeventrate,ms=1,
+        plt.plot(e_cut, er_cut,ms=1,
                 linestyle="-.", label="DMFormFactor, MB vesc 550km/s",lw=2)
         plt.plot(e_mb, er_mb,ms=1,
                 linestyle="--", label="DMFormFactor, MB")
