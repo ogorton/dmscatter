@@ -20,9 +20,9 @@ matter number density, $\sigma$ is the WIMP-nucleus cross section.  The dark
 matter velocity distribution in the lab frame, $\tilde{f}(\vec{v})$, is obtained
 by boosting the Galactic-frame distribution $f(\vec{v})$:
 $$
-\tilde{f}(\vec{v}) = f(\vec{v} + \vec{v}_{earth}),
+    \tilde{f}(\vec{v}) = f(\vec{v} + \vec{v}_E),
 $$ 
-where $\vec{v}_{earth}$ is the velocity of the earth in the galactic rest frame.
+where $\vec{v}_{E}$ is the velocity of the earth in the galactic rest frame.
 
 ## Standard Halo Model
 
@@ -37,47 +37,85 @@ This is called the Simple Halo Model (SHM) when a maximum value of the speed,
 due to the galactic escape velocity $v_{escape}$, is taken into account
 [@PhysRevD.33.3495; @PhysRevD.37.3388]:
 $$
-f_{SHM}(\vec{v}) = \frac{\Theta(v_{esc}-|\vec{v}|)}{\pi^{3/2}v_0^3N_{esc}} 
-    \exp{-(\vec{v}/v_0)^2},
+    f_{SHM}(\vec{v}) = \frac{\Theta(v_{esc}-|\vec{v}|)}{\pi^{3/2}v_0^3N_{esc}} 
+    e^{-(\vec{v}/v_0)^2},
 $$
 where $N_{esc}$ renormalizes due to the cutoff:
 $$
-N_{esc} = erf{(v_{esc}/v_0)} - \frac{2v_{esc}}{\sqrt{\pi}v_0}
-\exp{-(v_{esc}/v_0)^2}.
+    N_{esc} = erf{(v_{esc}/v_0)} - \frac{2v_{esc}}{\sqrt{\pi}v_0}
+    \exp{-(v_{esc}/v_0)^2}.
 $$
 With this distribution, the integral in the differential
 event-rate has the form: 
-$$
-	I = \int_{v_{min}}^{v_{esc}} \frac{d\sigma(v,q)}{d{q}^2}\  e^{-(\vec{v}+\vec{v}_{earth})^2/v_0^2}\ v\ d^3v.
-$$
+\begin{align*}
+    I_{MB} = \int\displaylimits_{\Omega} d^3v \frac{d\sigma(v,q)}{d{q}^2}\ v\ e^{-(\vec{v}+\vec{v}_E)^2/v_0^2},
+\end{align*}
+where the constraint $\Omega$ is that $v_{min}^2<(\vec{v}+\vec{v}_E)^2<v_{esc}^2$.
+
 To reduce to a one-dimensional integral, we make the conversion to spherical
-coordinates.  Noting that $(\vec{v}+\vec{v}_{earth})^2 = \vec{v}^2 +
+coordinates. Special care has to be taken to properly handle the truncated domain. 
+Noting that $(\vec{v}+\vec{v}_{earth})^2 = \vec{v}^2 +
 \vec{v}^2_{earth} + 2vv_{earth}\cos(\theta)$, with $\theta$ defining the angle
 between the two vectors, we make the substitution $d^3v = d\phi d(\cos \theta)
-v^2 dv$. The angular part simplifies:
+v^2 dv$. 
+
+It can be shown that[^integral]:
+\begin{align*}
+    \int\displaylimits_{(\vec{v}+\vec{v}_E)^2<v_{esc}^2} d^3v = \int\displaylimits_0^{2\pi}d\phi \left[
+    \int\displaylimits_0^{v_{esc}-v_E}v^2dv\int\displaylimits_{-1}^{+1}d\cos{\theta} 
+    + \int\displaylimits_{v_{esc}-v_E}^{v_{esc}+v_E}v^2dv\int\displaylimits_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos{\theta}\right].
+\end{align*}
+Making the physically justified assumption that $v_{esc}-v_E > v_{min}$, we can
+simply shift the limit on the first integral from $0$ to $v_{min}$. Along the
+way we will need to work out the angular integrals:
 $$
-\int_0^{2\pi} d\phi \int_{-1}^1 d(\cos \theta) e^{-2vv_{earth}\cos\theta/v_0^2}
-= 2 \pi \left(-\frac{v_0^2}{2vv_{earth}} e^{-2vv_{earth}\cos\theta/v_0^2}\right)_{-1}^1.
+\int_{-1}^{+1}d\cos{\theta} e^{-2vv_E\cos\theta/v_0^2}=
+-\frac{v_0^2}{2vv_E}\left(e^{-2vv_E/v_0^2}-e^{2vv_E/v_0^2}\right);
 $$
-Making the substitutions, we obtain:
 $$
-	I =  \frac{\pi v_0^2}{v_{earth} } \int_{v_{min}}^{v_{esc}} \frac{d\sigma(v,q)}{d{q}^2} 
-		\left[ g(v-v_{earth}) - g(v+v_{earth}) \right]v^2\ dv,
+\int\displaylimits_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos\theta e^{-2vv_E\cos\theta/v_0^2}=
+-\frac{v_0^2}{2vv_E}\left(e^{-(v_{esc}^2-v^2-v_E^2)/v_0^2}-e^{2vv_e/v_0^2}\right).
 $$
-where $g(x)$ is a one-dimensional Gaussian form:
+Combining all of this together, and simplifying, we obtain a one-dimensional
+integral which we can evaluate with quadrature:
 $$
-	g(v) = \frac{1}{(\pi v_0^2)^{3/2}N_{esc}}e^{-v^2/v_0^2}.
+I_{MB} = \int\displaylimits_{v_{min}}^{v_{esc}+v_E} dv\
+\frac{d\sigma(v,q)}{d{q}^2} v^2 \frac{\pi v_0^2}{v_e}
+\left\{ \Theta_{v<v_{esc}-v_e}\left[g(v-v_E)-g(v+v_E)\right]
++ \Theta_{v>v_{esc}-v_E}\left[g(v-v_E)-g(v_{esc})\right]\right\},
 $$
-We then use Gauss-Legendre quadrature to evaluate $I$[^quad].  The limits of the
-integral, $v_{min}$ and $v_{esc}$, have physical constraints. The minimum
-speed is defined by the minimum recoil energy of a WIMP-nucleus collision at a
-momentum transfer $q$: 
-$$v_{min} = q/(2\mu_T),$$
-where $\mu_T=m_Tm_\chi/(m_T+m_\chi)$ is the reduced mass of the WIMP-nucleus system. 
-To use the simple Maxwell-Bolztmann distribution approximation, the maximum 
-speed is taken to be $\infty \approx 12 \times v_{0}$. Otherwise, the
-maximum speed is taken to be the galactic escape velocity: $v_{esc}
-\approx 550$ km/s.
+where 
+$$
+g(v) = \exp(-v^2/v_0^2).$$
+
+
+[^integral]: This can be deduced from a geometrical argument: Imagine
+    constructing $\vec{v}_E+\vec{v}$. There are three cases to consider depending
+    on the size of $\vec{v}$, and the implications for the allowed angles $\theta$
+    between $\vec{v}_E$ and $\vec{v}$ that satisfy the constraint 
+    $(\vec{v}_E+\vec{v})^2<v_{esc}^2$. Case 1: "Small v", which we define as
+    $v<v_{esc}-v_E$. Here there are no restrictions on $\theta$ since by
+    construction the magnitudes together cannot exceed $v_{esc}$, so $\cos\theta$
+    is limited only by $-1$ and $+1$. Case 2: "Medium v", in which now 
+    $v>v_{esc}-v_E$, so not all angles are allowed. To keep the sum from
+    exceeding $v_{esc}$, the angle must be restricted such that 
+    $\cos\theta<(v_{esc}^2-v_E^2-v^2)/2vv_E$. Case 2 also requires that
+    $v<v_{esc}+v_E$ because we reach... Case 3: "Big v": It becomes 
+    impossible to satisfy the restriction once $v>v_{esc}+v_E$.
+
+We then use Gauss-Legendre quadrature to evaluate $I$[^quad]. While there are
+analytic solutions for specific velocity-dependences of the cross
+section[@LEWIN199687; @PhysRevD.82.075004; @PhysRevD.82.023530], our
+implementation favors a model-independent framework without the need to lock-in
+a particular form for the WIMP-nucleus cross section. 
+
+The limits of the integral, $v_{min}$ and $v_{esc}$, have physical constraints.
+The minimum speed is defined by the minimum recoil energy of a WIMP-nucleus
+collision at a momentum transfer $q$: $$v_{min} = q/(2\mu_T),$$ where
+$\mu_T=m_Tm_\chi/(m_T+m_\chi)$ is the reduced mass of the WIMP-nucleus system.
+To use the simple Maxwell-Bolztmann distribution approximation, the maximum
+speed is taken to be $\infty \approx 12 \times v_{0}$. Otherwise, the maximum
+speed is taken to be the galactic escape velocity: $v_{esc} \approx 550$ km/s.
 
 Note that as a function of momentum $q$, the integral is guarenteed to go to
 zero above some maximum momentum $q_{max}$. This happens when $v_{min} =
@@ -108,9 +146,16 @@ $$
 $$
 The normalization factor is:
 $$
-    N_{esc} = erf(z) - \frac{2}{\sqrt{\pi}}z(1+\frac{2}{3}z^2)e^{-z^2},
+    N_{sesc} = erf(z) - \frac{2}{\sqrt{\pi}}z(1+\frac{2}{3}z^2)e^{-z^2},
 $$
 $z=v_{esc}/v_0$.
+This essentially just adds an additional term to the integral $I_{MB}$, which we
+will call $I_{S}$, so that $I=(I_{MB}-I_{S})/N_{sesc}$. Following the same steps
+as for $I_{MB}$, we find that $$
+I_{S} = \int\displaylimits_{v_{min}}^{v_{esc}+v_E} dv\
+\frac{d\sigma(v,q)}{d{q}^2} v^2 2\pi g(v_{esc})\left[\Theta_{v<v_{esc}-v_e} 2v + 
+\Theta_{v>v_{esc}-v_e} \frac{1}{2v_E}(v_{esc}^2-(v-v_E)^2)\right]
+$$
 
 ## More Sophisticated Halo Models
 The SHM is actually not a very good model. For example, it ignores the annual
