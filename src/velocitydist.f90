@@ -53,7 +53,7 @@ module distributions
 
         z = vesc / v0
 
-        Nesc = (erf(z)-2d0*z*(1d0+z*z/1.5d0)*exp(-z*z))*pi**1.5d0*v0**3d0
+        Nesc = (erf(z)-2d0*z*(1d0+z*z/1.5d0)*exp(-z*z)/sqrt(pi))*pi**1.5d0*v0**3d0
         sshm = (Imbcutoff(v, ve, v0, vesc) - Isccutoff(v, ve, v0, vesc))/Nesc
 
     end function sshm
