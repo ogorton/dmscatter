@@ -40,7 +40,11 @@ module eventrate
         rhochi = wimp%localdensity / centimeter**3d0
         vmin = q/(2d0*muT)
         relerror = quadrature_relerr
-        vmax = (vesc + ve)
+        vmax = vesc + ve
+        !if (vmin > vmax) then
+        !    deventrate = 0d0
+        !    return
+        !end if
     
         select case(quadrature_type)
           case(1)
@@ -53,7 +57,7 @@ module eventrate
         end select
     
         dEventRate = ntscale * kilogramday * Nt * (rhochi/Mchi) &
-            * dEventRate *  (pi*v0**2/ve)
+            * dEventRate
       
     end function deventrate
     
@@ -77,7 +81,7 @@ module eventrate
         qq = qglobal(tid)
     
         spectraintegrand1d = diffCrossSection(vv, qq, wimp, nuc_target, eft) &
-            * (sshm(vv-ve,v0,vesc) - sshm(vv+ve,v0,vesc)) * vv**2
+            * sshm(vv,ve,v0,vesc) * vv**2
     
     end function
 
