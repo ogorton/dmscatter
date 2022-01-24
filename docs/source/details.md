@@ -48,7 +48,7 @@ $$
 With this distribution, the integral in the differential
 event-rate has the form: 
 \begin{align*}
-    I_{MB} = \int\displaylimits_{\Omega} d^3v \frac{d\sigma(v,q)}{d{q}^2}\ v\ e^{-(\vec{v}+\vec{v}_E)^2/v_0^2},
+    I_{MB} = \int_{\Omega} d^3v \frac{d\sigma(v,q)}{d{q}^2}\ v\ e^{-(\vec{v}+\vec{v}_E)^2/v_0^2},
 \end{align*}
 where the constraint $\Omega$ is that $v_{min}^2<(\vec{v}+\vec{v}_E)^2<v_{esc}^2$.
 
@@ -61,9 +61,9 @@ v^2 dv$.
 
 It can be shown that[^integral]:
 \begin{align*}
-    \int\displaylimits_{(\vec{v}+\vec{v}_E)^2<v_{esc}^2} d^3v = \int\displaylimits_0^{2\pi}d\phi \left[
-    \int\displaylimits_0^{v_{esc}-v_E}v^2dv\int\displaylimits_{-1}^{+1}d\cos{\theta} 
-    + \int\displaylimits_{v_{esc}-v_E}^{v_{esc}+v_E}v^2dv\int\displaylimits_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos{\theta}\right].
+    \int_{(\vec{v}+\vec{v}_E)^2<v_{esc}^2} d^3v = \int_0^{2\pi}d\phi \left[
+    \int_0^{v_{esc}-v_E}v^2dv\int_{-1}^{+1}d\cos{\theta} 
+    + \int_{v_{esc}-v_E}^{v_{esc}+v_E}v^2dv\int_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos{\theta}\right].
 \end{align*}
 Making the physically justified assumption that $v_{esc}-v_E > v_{min}$, we can
 simply shift the limit on the first integral from $0$ to $v_{min}$. Along the
@@ -73,13 +73,13 @@ $$
 -\frac{v_0^2}{2vv_E}\left(e^{-2vv_E/v_0^2}-e^{2vv_E/v_0^2}\right);
 $$
 $$
-\int\displaylimits_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos\theta e^{-2vv_E\cos\theta/v_0^2}=
+\int_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos\theta e^{-2vv_E\cos\theta/v_0^2}=
 -\frac{v_0^2}{2vv_E}\left(e^{-(v_{esc}^2-v^2-v_E^2)/v_0^2}-e^{2vv_e/v_0^2}\right).
 $$
 Combining all of this together, and simplifying, we obtain a one-dimensional
 integral which we can evaluate with quadrature:
 $$
-I_{MB} = \int\displaylimits_{v_{min}}^{v_{esc}+v_E} dv\
+I_{MB} = \int_{v_{min}}^{v_{esc}+v_E} dv\
 \frac{d\sigma(v,q)}{d{q}^2} v^2 \frac{\pi v_0^2}{v_e}
 \left\{ \Theta_{v<v_{esc}-v_e}\left[g(v-v_E)-g(v+v_E)\right]
 + \Theta_{v>v_{esc}-v_E}\left[g(v-v_E)-g(v_{esc})\right]\right\},
@@ -152,7 +152,7 @@ $z=v_{esc}/v_0$.
 This essentially just adds an additional term to the integral $I_{MB}$, which we
 will call $I_{S}$, so that $I=(I_{MB}-I_{S})/N_{sesc}$. Following the same steps
 as for $I_{MB}$, we find that $$
-I_{S} = \int\displaylimits_{v_{min}}^{v_{esc}+v_E} dv\
+I_{S} = \int_{v_{min}}^{v_{esc}+v_E} dv\
 \frac{d\sigma(v,q)}{d{q}^2} v^2 2\pi g(v_{esc})\left[\Theta_{v<v_{esc}-v_e} 2v + 
 \Theta_{v>v_{esc}-v_e} \frac{1}{2v_E}(v_{esc}^2-(v-v_E)^2)\right]
 $$

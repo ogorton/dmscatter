@@ -652,21 +652,21 @@ ORBIT      N     L   2 x J
     N_{esc} = erf{(v_{esc}/v_0)} - \frac{2v_{esc}}{\sqrt{\pi}v_0}
     \exp{-(v_{esc}/v_0)^2}.
 \]</span> With this distribution, the integral in the differential event-rate has the form: <span class="math display">\[\begin{align*}
-    I_{MB} = \int\displaylimits_{\Omega} d^3v \frac{d\sigma(v,q)}{d{q}^2}\ v\ e^{-(\vec{v}+\vec{v}_E)^2/v_0^2},
+    I_{MB} = \int_{\Omega} d^3v \frac{d\sigma(v,q)}{d{q}^2}\ v\ e^{-(\vec{v}+\vec{v}_E)^2/v_0^2},
 \end{align*}\]</span> where the constraint <span class="math inline">\(\Omega\)</span> is that <span class="math inline">\(v_{min}^2&lt;(\vec{v}+\vec{v}_E)^2&lt;v_{esc}^2\)</span>.</p>
 <p>To reduce to a one-dimensional integral, we make the conversion to spherical coordinates. Special care has to be taken to properly handle the truncated domain. Noting that <span class="math inline">\((\vec{v}+\vec{v}_{earth})^2 = \vec{v}^2 + \vec{v}^2_{earth} + 2vv_{earth}\cos(\theta)\)</span>, with <span class="math inline">\(\theta\)</span> defining the angle between the two vectors, we make the substitution <span class="math inline">\(d^3v = d\phi d(\cos \theta) v^2 dv\)</span>.</p>
 <p>It can be shown that<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>: <span class="math display">\[\begin{align*}
-    \int\displaylimits_{(\vec{v}+\vec{v}_E)^2&lt;v_{esc}^2} d^3v = \int\displaylimits_0^{2\pi}d\phi \left[
-    \int\displaylimits_0^{v_{esc}-v_E}v^2dv\int\displaylimits_{-1}^{+1}d\cos{\theta} 
-    + \int\displaylimits_{v_{esc}-v_E}^{v_{esc}+v_E}v^2dv\int\displaylimits_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos{\theta}\right].
+    \int_{(\vec{v}+\vec{v}_E)^2&lt;v_{esc}^2} d^3v = \int_0^{2\pi}d\phi \left[
+    \int_0^{v_{esc}-v_E}v^2dv\int_{-1}^{+1}d\cos{\theta} 
+    + \int_{v_{esc}-v_E}^{v_{esc}+v_E}v^2dv\int_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos{\theta}\right].
 \end{align*}\]</span> Making the physically justified assumption that <span class="math inline">\(v_{esc}-v_E &gt; v_{min}\)</span>, we can simply shift the limit on the first integral from <span class="math inline">\(0\)</span> to <span class="math inline">\(v_{min}\)</span>. Along the way we will need to work out the angular integrals: <span class="math display">\[
 \int_{-1}^{+1}d\cos{\theta} e^{-2vv_E\cos\theta/v_0^2}=
 -\frac{v_0^2}{2vv_E}\left(e^{-2vv_E/v_0^2}-e^{2vv_E/v_0^2}\right);
 \]</span> <span class="math display">\[
-\int\displaylimits_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos\theta e^{-2vv_E\cos\theta/v_0^2}=
+\int_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos\theta e^{-2vv_E\cos\theta/v_0^2}=
 -\frac{v_0^2}{2vv_E}\left(e^{-(v_{esc}^2-v^2-v_E^2)/v_0^2}-e^{2vv_e/v_0^2}\right).
 \]</span> Combining all of this together, and simplifying, we obtain a one-dimensional integral which we can evaluate with quadrature: <span class="math display">\[
-I_{MB} = \int\displaylimits_{v_{min}}^{v_{esc}+v_E} dv\
+I_{MB} = \int_{v_{min}}^{v_{esc}+v_E} dv\
 \frac{d\sigma(v,q)}{d{q}^2} v^2 \frac{\pi v_0^2}{v_e}
 \left\{ \Theta_{v&lt;v_{esc}-v_e}\left[g(v-v_E)-g(v+v_E)\right]
 + \Theta_{v&gt;v_{esc}-v_E}\left[g(v-v_E)-g(v_{esc})\right]\right\},
@@ -687,7 +687,7 @@ E_{R,max} = q_{max}^2/2m_T = 2\mu_T^2v_{max}^2/m_T.
 \]</span> The normalization factor is: <span class="math display">\[
     N_{sesc} = erf(z) - \frac{2}{\sqrt{\pi}}z(1+\frac{2}{3}z^2)e^{-z^2},
 \]</span> <span class="math inline">\(z=v_{esc}/v_0\)</span>. This essentially just adds an additional term to the integral <span class="math inline">\(I_{MB}\)</span>, which we will call <span class="math inline">\(I_{S}\)</span>, so that <span class="math inline">\(I=(I_{MB}-I_{S})/N_{sesc}\)</span>. Following the same steps as for <span class="math inline">\(I_{MB}\)</span>, we find that <span class="math display">\[
-I_{S} = \int\displaylimits_{v_{min}}^{v_{esc}+v_E} dv\
+I_{S} = \int_{v_{min}}^{v_{esc}+v_E} dv\
 \frac{d\sigma(v,q)}{d{q}^2} v^2 2\pi g(v_{esc})\left[\Theta_{v&lt;v_{esc}-v_e} 2v + 
 \Theta_{v&gt;v_{esc}-v_e} \frac{1}{2v_E}(v_{esc}^2-(v-v_E)^2)\right]
 \]</span></p>
