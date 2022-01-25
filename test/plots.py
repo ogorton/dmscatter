@@ -1,5 +1,5 @@
 f = open("validation.md","w+")
-f.write("---\ngeometry:\n- margin=1in\n---\n# DMFortFactor Validation Plots for $^{29}$Si\n")
+f.write("---\ngeometry:\n- margin=.5in\n---\n# DMFortFactor Validation Plots for $^{29}$Si\n")
 pairs = [
         (1,1), (1,2), (1,3),
         (2,2), (2,3),
@@ -20,6 +20,7 @@ pairs = [
 for pair in pairs:
     o1, o2 = pair[:]
     f.write("![](log.usd.n.%i.%i.pdf){width=50%%}![](perr.log.usd.n.%i.%i.pdf){width=50%%}\n"%(o1,o2,o1,o2))
+    f.write("![](log.usd.p.%i.%i.pdf){width=50%%}![](perr.log.usd.p.%i.%i.pdf){width=50%%}\n"%(o1,o2,o1,o2))
 
 f.close()    
     

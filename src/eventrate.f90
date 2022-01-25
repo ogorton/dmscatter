@@ -18,7 +18,7 @@ module eventrate
         type(particle) :: wimp
         type(nucleus) :: nuc_target
     
-        real(dp) :: mchi, muT
+        real(dp) :: mchi, muT, mnuc
         real(dp) :: Nt
         real(dp) :: rhochi
     
@@ -32,7 +32,8 @@ module eventrate
         qglobal(tid) = q 
    
         Mchi = wimp%mass 
-        muT = Mchi * nuc_target%mass * mN / (Mchi + nuc_target%mass * mN)
+        Mnuc = nuc_target%mass * mN
+        muT = Mchi * Mnuc / (Mchi + Mnuc)
         ve = vearth * kilometerpersecond
         v0 = vscale * kilometerpersecond
         vesc = vescape * kilometerpersecond

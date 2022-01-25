@@ -49,7 +49,7 @@ function transition_probability(q,v,wimp,nucl,eft)
         end do ! tau1
 
         transition_probability = transition_probability &
-            * (4.0*pi/(nucl%groundstate%jx2+1)) / ((4.0*mN*wimp%mass)**2.0)
+            * (4d0*pi/(nucl%groundstate%jx2+1d0)) / ((4d0*mN*wimp%mass)**2)
 
     end if
 end function transition_probability

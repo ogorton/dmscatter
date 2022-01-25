@@ -28,14 +28,14 @@ pairs = [
         (13,13),
         (14,14),
         (15,15)]
-
 vesc = 550.0
 cwords = {
         "wimpmass" : 150.0,
         "ntscale"  : 2500.0,
         "vearth" : 232.0,
         "maxwellv0" : 220.0,
-        "vescape" : vesc
+        "vescape" : vesc,
+        "quadrelerr" : 1e-6
         }
 
 log = True
@@ -85,8 +85,8 @@ for coupleto in ("n","p"):
                 cn = cn)
 
             # Plot the error w.r.t. DMFormFactor V6
-            y = er_mb
-            x = e_mb
+            y = er_cut
+            x = e_cut
             R = interp1d(energy, eventrate)
             Rx = R(x)
             perr = abs((y - Rx)/y)
@@ -107,7 +107,7 @@ for coupleto in ("n","p"):
         plt.xscale("log")
         if log: plt.yscale("log")
         plt.xlabel("Recoil energy (keV)", fontsize=12)
-        plt.ylabel("Relative error in differential event rate", fontsize=12)
+        plt.ylabel("Ratio comparison of differential event rate", fontsize=12)
         plt.ylim(1e-6,1e1)
 
         if (all(eventrate==0)): plt.yscale("linear")
