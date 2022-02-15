@@ -9,11 +9,11 @@ OBJ = $(SRC:$(SRC_DIR)/%.f90=%.o)
 
 FC = gfortran
 
-F77_CFLAGS = -Ofast -Wall
-F90_CFLAGS = -Ofast -Wall
+F77_CFLAGS = -Ofast 
+F90_CFLAGS = -Ofast
 F90_LFLAGS=
 
-openmp_cflags = "-Ofast -fopenmp -Wall"
+openmp_cflags = "-Ofast -fopenmp"
 openmp_lflags = "-fopenmp"
 debug_cflags = "-Ofast -fbounds-check -Wall"
 
