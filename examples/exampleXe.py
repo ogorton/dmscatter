@@ -16,7 +16,7 @@ cp[:] = 0.0048
 Erkev, ER = dm.EventrateSpectra(
         Z = 54,
         N = 77,
-        dres = "../dres/xe131gcn",
+        dres = "../dres/Xe/xe131gcn",
         controlwords = cwords,
         epmin = 1,
         epmax = 1000.0,
@@ -33,4 +33,3 @@ plt.xlabel(r"$E_{recoil}$ (keV)")
 plt.ylabel(r"$dR/dE_r$ (1/MeV)")
 plt.plot(Erkev,ER)
 plt.savefig("exampleXe.pdf")
-plt.show()

@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 import dmfortfactor as dm
 
 dresfiles = [
-        '../dres/c12Nmax8chi20hw.dres',
-        '../dres/c12Nmax6DAEhw22.5.dres',
-        '../dres/c12Nmax6chi20hw.dres',
-        '../dres/c12Nmax8DAEhw22.5.dres', 
-        '../dres/c12ck.dres']
+        '../dres/C/c12Nmax8chi20hw.dres',
+        '../dres/C/c12Nmax6DAEhw22.5.dres',
+        '../dres/C/c12Nmax6chi20hw.dres',
+        '../dres/C/c12Nmax8DAEhw22.5.dres', 
+        '../dres/C/c12ck.dres']
 hofrequencies = [20.0, 22.5, 20.0, 22.5, "na"]
 hofrequencies = len(dresfiles) * ["na"]
 operators = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]

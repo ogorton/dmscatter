@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import dmfortfactor as dm
 
-dresfile = '../dres/c12Nmax8chi20hw'
+dresfile = '../dres/C/c12Nmax8chi20hw'
 
 hofrequencies = np.arange(15., 25., 1)
 
