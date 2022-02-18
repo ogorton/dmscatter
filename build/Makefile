@@ -36,7 +36,7 @@ $(BIN_DIR):
 # SUBROUTINE/MODULE DEPENDENCIES #
 ##################################
 
-setparameters.o : orbitals.o
+setparameters.o : orbitals.o keywords.o
 bessel.o : wigner.o norm.o
 mjl.o : bessel.o norm.o
 phi.o : bessel.o norm.o sigma.o
@@ -48,10 +48,11 @@ nucresponse.o : orbitals.o mjl.o phi.o sigma.o densities.o
 controlfile.o : modules.o orbitals.o quadrature.o
 transition.o : dmresponse.o nucresponse.o
 crosssection.o : transition.o 
-eventrate.o : quadrature.o crosssection.o velocitydist.o 
+eventrate.o : quadrature.o crosssection.o velocitydist.o main.o
 spectra.o : eventrate.o 
-totaleventrate.o : eventrate.o quadrature.o
-dmfortfactor.o : spectra.o wigner.o modules.o nucresponse.o controlfile.o 
+totaleventrate.o : eventrate.o quadrature.o settings.o
+dmfortfactor.o : spectra.o wigner.o nucresponse.o keywords.o 
+velocitydist.o: constants.o	
 
 ################
 # USER RECIPES #

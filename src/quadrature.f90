@@ -1,10 +1,10 @@
 module quadrature
 
-    use kinds
+    
     implicit none
 
     integer :: quadrature_type = 1
-    real(dp) :: quadrature_relerr = 1e-6
+    real(kind=8) :: quadrature_relerr = 1e-6
     integer :: gaussorder = 12
 
     contains

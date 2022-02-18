@@ -1,12 +1,12 @@
 module spectra
 
-    use kinds
+    
     implicit none
 
-    real(dp) :: x_start
-    real(dp) :: x_stop
-    real(dp) :: x_step
-    real(dp), allocatable :: x_grid(:), energy_grid(:), momentum_grid(:)
+    real(kind=8) :: x_start
+    real(kind=8) :: x_stop
+    real(kind=8) :: x_step
+    real(kind=8), allocatable :: x_grid(:), energy_grid(:), momentum_grid(:)
     integer :: energy_grid_size
 
     contains
@@ -16,14 +16,14 @@ module spectra
         use transition
         use types
         implicit none
-        real(dp) :: q, v
-        real(dp), dimension(:) :: vlist
+        real(kind=8) :: q, v
+        real(kind=8), dimension(:) :: vlist
         type(particle) :: wimp
         type(nucleus) :: nuc_target
         type(eftheory) :: eft
         integer :: option
     
-        real(dp), dimension(size(vlist)) :: velocitycurve
+        real(kind=8), dimension(size(vlist)) :: velocitycurve
     
         integer :: i
     
@@ -52,9 +52,9 @@ module spectra
         type(particle) :: wimp
         type(nucleus) :: nuc_target
         type(eftheory) :: eft    
-        real(dp) :: Er, Qr, vstart, vstop, vstep
+        real(kind=8) :: Er, Qr, vstart, vstop, vstep
         integer :: sizevlist, i
-        real(dp), allocatable :: vlist(:), cslist(:)
+        real(kind=8), allocatable :: vlist(:), cslist(:)
         integer :: option, iunit
     
         print*,"Enter recoil E (keV):"
@@ -127,11 +127,11 @@ module spectra
         integer :: calc_num
         integer :: iunit
         integer :: i, N
-        real(dp) :: q, dq
+        real(kind=8) :: q, dq
 
-        real(dp) :: recoil_energy, momentum_transfer
-        real(dp), allocatable :: event_rate_spectra(:)
-        real(dp) :: mtarget, totaleventrate
+        real(kind=8) :: recoil_energy, momentum_transfer
+        real(kind=8), allocatable :: event_rate_spectra(:)
+        real(kind=8) :: mtarget, totaleventrate
     
         print*,"Computing differential event rate spectra"
     
@@ -187,7 +187,7 @@ module spectra
         implicit none
         integer :: calc_num
         character(len=100) :: filename
-        real(dp) :: momentum_transfer, mtarget, recoil_energy
+        real(kind=8) :: momentum_transfer, mtarget, recoil_energy
     
         ! Get recoil energy grid from user or from file
         if (useenergyfile) then
@@ -239,7 +239,7 @@ module spectra
     
     subroutine read_energy_grid(filename)
     
-        use kinds
+        
         implicit none
         character(len=100) :: filename
         integer :: i, io, iunit
@@ -273,10 +273,10 @@ module spectra
         integer :: iqq
         type(nucleus) :: nuc_target   
     
-        real(dp) :: yy, qq, xx
-        real(dp), allocatable :: Wlist(:,:,:,:)
-        real(dp) :: mtarget
-        real(dp) :: tolerance
+        real(kind=8) :: yy, qq, xx
+        real(kind=8), allocatable :: Wlist(:,:,:,:)
+        real(kind=8) :: mtarget
+        real(kind=8) :: tolerance
     
         tolerance = epsilon(qq)
     

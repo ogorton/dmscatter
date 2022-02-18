@@ -1,12 +1,12 @@
 subroutine totaleventrate(nuc_target)
 
-    use kinds
+    
     use types, only: nucleus
     use quadrature
     implicit none
     type(nucleus) :: nuc_target
-    real(dp) :: q_start, q_stop, error, relerror, result, abserror
-    real(dp) :: fspectra, mtarget
+    real(kind=8) :: q_start, q_stop, error, relerror, result, abserror
+    real(kind=8) :: fspectra, mtarget
     integer :: ind
 
     mtarget = nuc_target%mass
@@ -37,24 +37,24 @@ function fspectra(q)
     ! integration routine used to integrate the event rate spectra.
 
     use main ! This is the only function allowed to use main.
-    use kinds
+    
     use constants
     use eventrate
     implicit none
-    real(dp), intent(in) :: q
-    real(dp) :: fspectra
+    real(kind=8), intent(in) :: q
+    real(kind=8) :: fspectra
 
     fspectra = q * dEventRate(q, wimp, nuc_target) /(mn*nuc_target%mass)
 
 end function 
 
 subroutine get_q_limits(mtarget,q_start, q_stop, error)
-    use kinds
+    
     use constants
     use settings, only: usemomentum
     implicit none
-    real(dp) :: mtarget, E_start, E_stop, error
-    real(dp) :: q_start, q_stop
+    real(kind=8) :: mtarget, E_start, E_stop, error
+    real(kind=8) :: q_start, q_stop
 
     ! Get recoil energy grid from user or from file
     if (usemomentum) then

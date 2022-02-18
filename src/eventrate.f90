@@ -8,23 +8,23 @@ module eventrate
     function deventrate(q, wimp, nuc_target)
         use OMP_LIB
         use quadrature
-        use kinds
+        
         use constants
         use types
 
         implicit none
-        real(dp) :: dEventRate
-        real(dp) :: q
+        real(kind=8) :: dEventRate
+        real(kind=8) :: q
         type(particle) :: wimp
         type(nucleus) :: nuc_target
     
-        real(dp) :: mchi, muT, mnuc
-        real(dp) :: Nt
-        real(dp) :: rhochi
+        real(kind=8) :: mchi, muT, mnuc
+        real(kind=8) :: Nt
+        real(kind=8) :: rhochi
     
         integer :: ind, tid
-        real(dp) :: vmin, vmax
-        real(dp) :: relerror
+        real(kind=8) :: vmin, vmax
+        real(kind=8) :: relerror
     
         tid = 1
         ! Don't delete the following line; it's an openMP command, not a comment.
@@ -70,13 +70,13 @@ module eventrate
         ! integration routine used to integrate the event rate spectra.
     
         use main ! This is the only function allowed to use main.
-        use kinds
+        
         use crosssection
         use distributions
     
         implicit none
-        real(dp) :: vv, qq
-        real(dp) :: spectraintegrand1d
+        real(kind=8) :: vv, qq
+        real(kind=8) :: spectraintegrand1d
         integer tid
     
         qq = qglobal(tid)

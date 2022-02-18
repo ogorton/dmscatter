@@ -52,7 +52,7 @@ module nucresponse
         ! pn-coupling (iso-coupling) using pn-formalism (iso-formalism)
         ! density matrices.
     
-        use kinds
+        
         use orbitals
         use wigner, only: threej_lookup, vector_couple
         use densities, only: maxJt, pndens
@@ -61,9 +61,9 @@ module nucresponse
     
         integer :: tau1, tau2
         integer :: term
-        real(dp) :: y
-        real(dp), allocatable, intent(in) :: densmat(:,:,:,:)
-        real(dp) :: dme1, dme2
+        real(kind=8) :: y
+        real(kind=8), allocatable, intent(in) :: densmat(:,:,:,:)
+        real(kind=8) :: dme1, dme2
     
         integer :: j,a,b!,ap,an
         integer :: jmin, jmax
@@ -73,10 +73,10 @@ module nucresponse
     
         integer :: Mtiso, Tiso
     
-        real(dp) :: dmepsilon
-        real(dp) :: spome
-        real(dp) :: wfn_me1, wfn_me2
-        real(dp) :: nucFormFactor, isofactor
+        real(kind=8) :: dmepsilon
+        real(kind=8) :: spome
+        real(kind=8) :: wfn_me1, wfn_me2
+        real(kind=8) :: nucFormFactor, isofactor
     
         jmin = -1
         jmax = -1
@@ -183,18 +183,18 @@ module nucresponse
         ! For pn -> iso, an additional factor of (1/4) is required.
         ! For iso -> pn, no additional factor is required.
     
-        use kinds
+        
         use orbitals
     
         implicit none
     
         integer :: tau1, tau2
         integer :: term
-        real(dp) :: y
-        real(dp), allocatable, intent(in) :: densmat(:,:,:,:)
+        real(kind=8) :: y
+        real(kind=8), allocatable, intent(in) :: densmat(:,:,:,:)
     
         integer :: Mtiso, Tiso
-        real(dp) :: FF
+        real(kind=8) :: FF
         character(len=2) :: coupleto
     
         write(coupleto,'(I1,I1)')tau1, tau2

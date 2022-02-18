@@ -2,14 +2,14 @@ module dmresponse
     contains
 
     function dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT)
-        use kinds
+        
         use densities, only: pndens
         implicit none
-        real(dp), allocatable, intent(in) :: eft(:,:)
+        real(kind=8), allocatable, intent(in) :: eft(:,:)
         integer :: term
         integer :: tau1, tau2
-        real(dp) :: q, v, jchi, muT
-        REAL(dp) :: dmresponsefun
+        real(kind=8) :: q, v, jchi, muT
+        REAL(kind=8) :: dmresponsefun
     
         if (pndens) then
            dmresponsefun = dmresponse_pn(eft, term, tau1, tau2, q, v, jchi, muT)

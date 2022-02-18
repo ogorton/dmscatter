@@ -1,23 +1,23 @@
 module transition
 contains
 function transition_probability(q,v,wimp,nucl,eft)
-    use kinds
+    
     use constants
     use orbitals, only: bfm
     use dmresponse, only: dmresponsefun
     use nucresponse
     use types
     implicit none
-    REAL(dp) :: q
-    REAL(dp) :: v
+    REAL(kind=8) :: q
+    REAL(kind=8) :: v
     type(particle) :: wimp
     type(nucleus) :: nucl
     type(eftheory) :: eft
     real(kind=8), allocatable :: eftsmall(:,:)
     !
-    REAL(dp) :: y
-    REAL(dp) :: muT
-    REAL(dp) :: transition_probability, tmpprod
+    REAL(kind=8) :: y
+    REAL(kind=8) :: muT
+    REAL(kind=8) :: transition_probability, tmpprod
 
     integer :: tau1, tau2, term
 

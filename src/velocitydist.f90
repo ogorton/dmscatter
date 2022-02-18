@@ -3,13 +3,13 @@ module distributions
 
     function maxbolt(v,v0)
         ! Maxwell-Boltzmann (MB) probability distribution 
-        use kinds
+        
         use constants
         implicit none
     
-        real(dp), intent(in) :: v 
-        real(dp), intent(in) :: v0
-        real(dp) :: maxbolt
+        real(kind=8), intent(in) :: v 
+        real(kind=8), intent(in) :: v0
+        real(kind=8) :: maxbolt
     
         maxbolt = exp(-(v/v0)**2.0d0) / ((pi)**1.5d0 * v0**3.0d0)
     
@@ -19,13 +19,13 @@ module distributions
         ! Standard halo model probability distribution, i.e.
         ! a MB distribution with a sharp cutoff to recognize the
         ! finite escape speed of the galaxy.
-        use kinds
+        
         use constants
         implicit none
 
-        real(dp), intent(in) :: v, v0, vesc
-        real(dp) :: shm
-        real(dp) :: Nresc, z, y
+        real(kind=8), intent(in) :: v, v0, vesc
+        real(kind=8) :: shm
+        real(kind=8) :: Nresc, z, y
 
         if (v > vesc) then
             shm = 0d0
@@ -43,13 +43,13 @@ module distributions
     function sshm(v, ve, v0, vesc)
         ! Smooth standard halo model. Basically a SHM with an extra constant 
         ! term meanth to smooth the distribution near vesc.
-        use kinds
+        
         use constants, only: pi
         implicit none
 
-        real(dp), intent(in) :: v, ve, v0, vesc
-        real(dp) :: sshm
-        real(dp) :: Nesc, z
+        real(kind=8), intent(in) :: v, ve, v0, vesc
+        real(kind=8) :: sshm
+        real(kind=8) :: Nesc, z
 
         z = vesc / v0
 
@@ -60,12 +60,12 @@ module distributions
 
     function Imbcutoff(v, ve, v0, vesc)
         ! Integrand for radial part of Maxwell Boltzmann distribution with cutoff
-        use kinds
+        
         use constants, only: pi
         implicit none
 
-        real(dp), intent(in) :: v, ve, v0, vesc
-        real(dp) :: Imbcutoff
+        real(kind=8), intent(in) :: v, ve, v0, vesc
+        real(kind=8) :: Imbcutoff
 
         if (v<vesc-ve) then
             Imbcutoff = g(v-ve,v0)-g(v+ve,v0)
@@ -78,12 +78,12 @@ module distributions
 
     function Isccutoff(v, ve, v0, vesc)
         ! Integrand for radial part of smooth component with cutoff
-        use kinds
+        
         use constants, only: pi
         implicit none
 
-        real(dp), intent(in) :: v, ve, v0, vesc
-        real(dp) :: Isccutoff
+        real(kind=8), intent(in) :: v, ve, v0, vesc
+        real(kind=8) :: Isccutoff
 
         if (v<vesc-ve) then
             Isccutoff = 2d0 * v
@@ -96,12 +96,12 @@ module distributions
 
     function g(v, v0)
         ! Gaussian term
-        use kinds
+        
         implicit none
 
-        real(dp), intent(in) :: v
-        real(dp), intent(in) :: v0
-        real(dp) :: g
+        real(kind=8), intent(in) :: v
+        real(kind=8), intent(in) :: v0
+        real(kind=8) :: g
 
         g = exp(-(v/v0)**2d0) 
 

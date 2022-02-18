@@ -100,11 +100,11 @@ end subroutine
 subroutine normalizecoeffs(eft, wimp)
     use types
     use constants
-    use kinds
+    
     implicit none
     type(particle) :: wimp
     type(eftheory) :: eft
-    real(dp) :: mchi
+    real(kind=8) :: mchi
     integer :: i, j, op, mNdenomOps(7), mNmNdenomOps(2)
 
     print*,'Normalizing EFT coefficients.'

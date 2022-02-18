@@ -121,7 +121,7 @@ module keywords
     !=============================================
     subroutine setkeyword(keyword, keyvalue, wimp)
     
-        use kinds
+        
         
         use constants
         use settings 
@@ -135,7 +135,7 @@ module keywords
         type(particle) :: wimp
     
         character (len=20) :: keyword
-        real(dp) :: keyvalue
+        real(kind=8) :: keyvalue
     
         select case (keyword)
     
