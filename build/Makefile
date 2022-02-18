@@ -42,14 +42,14 @@ mjl.o : bessel.o norm.o
 phi.o : bessel.o norm.o sigma.o
 sigma.o : bessel.o norm.o
 operme.o : sigma.o phi.o mjl.o
-densities.o : orbitals.o
+densities.o : orbitals.o types.o
 dmresponse.o : dmresponselib.o densities.o
 nucresponse.o : orbitals.o mjl.o phi.o sigma.o densities.o
 controlfile.o : modules.o orbitals.o quadrature.o
 transition.o : dmresponse.o nucresponse.o
 crosssection.o : transition.o 
 eventrate.o : quadrature.o crosssection.o velocitydist.o main.o
-spectra.o : eventrate.o 
+spectra.o : eventrate.o settings.o
 totaleventrate.o : eventrate.o quadrature.o settings.o
 dmfortfactor.o : spectra.o wigner.o nucresponse.o keywords.o 
 velocitydist.o: constants.o	
