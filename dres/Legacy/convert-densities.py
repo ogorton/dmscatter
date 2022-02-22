@@ -88,6 +88,25 @@ spaces = {
         "sdgXe132" :"sdg",
         "sdgXe134" :"sdg",
         "sdgXe136" :"sdg"}        
+particles = {
+        "sdF"      : (9,10),
+        "sdSi28"   : (14,14),
+        "sdSi29"   : (14,15),
+        "sdSi30"   : (14,16),
+        "sdgI"     : (53,74),
+        "pfGe70"   : (32,38),
+        "pfGe72"   : (32,40),
+        "pfGe73"   : (32,41),
+        "pfGe74"   : (32,42),
+        "pfGe76"   : (32,44),
+        "sdNa"     : (11,12),
+        "sdgXe128" : (54,74),
+        "sdgXe129" : (54,75),
+        "sdgXe130" : (54,76),
+        "sdgXe131" : (54,77),
+        "sdgXe132" : (54,78),
+        "sdgXe134" : (54,80),
+        "sdgXe136" : (54,82)}        
 class dres:
     def __init__(self,name):
         self.name = name
@@ -174,6 +193,8 @@ for iso in elements:
     nme = 0    
     print("Converting dres data for %s..."%obj.name)
     fdres.write("Legacy dres file for %s\n"%obj.name)
+    Z, N = particles[obj.name]
+    fdres.write("  %3i  %3i\n"%(Z, N))
     fdres.write("Converted from legacy format by automated script.\n")
     fdres.write("The following data is not provided in the legacy files:\n")
     fdres.write("  Nuclear state Energy, 2xJ, 2xT\n")
