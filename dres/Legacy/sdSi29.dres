@@ -1,0 +1,36 @@
+Legacy dres file for sdSi29
+Converted from legacy format by automated script.
+The following data is not provided in the legacy files:
+  Nuclear state Energy, 2xJ, 2xT
+  Single particle state N, L quantum numbers
+
+
+
+  Single particle state quantum numbers
+ORBIT      N     L   2 x J
+     1     0    -1     1
+     2     1    -1     1
+     3     1    -1     3
+     4     2    -1     1
+     5     2    -1     3
+     6     2    -1     5
+
+
+
+ Initial state #    1 E = 0.0 2xJ, 2xT =   -1  -1
+ Final state   #    1 E = 0.0 2xJ, 2xT =   -1  -1
+ Jt =    0, Tt = 0        1
+   1     1  4.00000000  0.00000000
+   2     2  4.00000000  0.00000000
+   3     3  5.65685000  0.00000000
+   4     4  1.67912660  0.50650780
+   5     5  0.85893580  0.12429740
+   6     6  5.83447450  0.18336350
+ Jt =    1, Tt = 0        1
+   4     4  0.57208140  0.55280340
+   4     5  -0.02490740  -0.01421320
+   5     4  0.02490740  0.01421320
+   5     5  -0.08032810  -0.08753900
+   5     6  -0.19662180  -0.18562070
+   6     5  0.19662180  0.18562070
+   6     6  0.11525540  0.11104960
