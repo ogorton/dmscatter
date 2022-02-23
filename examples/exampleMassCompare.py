@@ -20,7 +20,7 @@ for wimp_mass in (50.,150.0, 500.,5000.):
     RecoilE, EventRate = dm.EventrateSpectra(
         Z = 54,
         N = 77,
-        dres = "../Xe/dres/xe131gcn",
+        dres = "../dres/Xe/xe131gcn",
         controlwords = cwords,
         epmin = 1,
         epmax = 1000.0,
