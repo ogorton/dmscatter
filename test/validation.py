@@ -35,14 +35,15 @@ cwords = {
         "vearth" : 232.0,
         "maxwellv0" : 220.0,
         "vescape" : vesc,
-        "quadrelerr" : 1e-6
+        "quadrelerr" : 1e-6,
+        "printdensities": 1
         }
 
 log = True
 typ = "lin"
 if log: typ="log"
 
-dreslbl = ("5 decimal .dres","7 decimal .dres")
+dreslbl = ("5 decimal .dres","7 decimal .dres","Legacy .dres")
 
 for coupleto in ("n","p"):
 
@@ -56,7 +57,7 @@ for coupleto in ("n","p"):
         e_mb, er_mb = np.loadtxt("data/dmformfactor.si29.%s.%i.%i.dat"%(
                 coupleto, o1, o2), unpack=True)
 
-        for idres, dres in enumerate(("si29usd-iso", "si29nb-iso")):
+        for idres, dres in enumerate(("Si/si29usd-iso","Si/si29nb-iso","Legacy/sdSi29")):
 
             print("%s-coupling, operator %i-%i, density %s"%(coupleto,o1,o2,dres))
             cv = np.zeros(15)
@@ -90,9 +91,9 @@ for coupleto in ("n","p"):
             R = interp1d(energy, eventrate)
             Rx = R(x)
             perr = abs((y - Rx)/y)
-            ms=["--", ":"]
+            ms=["--", ":", "-."]
             plt.plot(x, perr, label = "%s"%dreslbl[idres],
-                    linestyle=ms[idres])
+                    linestyle=ms[idres],marker="x")
 
             # Save dmfortfactor results
             shutil.copy("eventrate_spectra.dat",

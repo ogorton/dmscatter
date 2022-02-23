@@ -107,6 +107,25 @@ particles = {
         "sdgXe132" : (54,78),
         "sdgXe134" : (54,80),
         "sdgXe136" : (54,82)}        
+spins = {
+        "sdF"      : 0.5,
+        "sdSi28"   : 0.0,
+        "sdSi29"   : 0.5,
+        "sdSi30"   : 0.0,
+        "sdgI"     : 2.5,
+        "pfGe70"   : 0.0,
+        "pfGe72"   : 0.0,
+        "pfGe73"   : 4.5,
+        "pfGe74"   : 0.0,
+        "pfGe76"   : 0.0,
+        "sdNa"     : 1.5,
+        "sdgXe128" : 0.0,
+        "sdgXe129" : 0.5,
+        "sdgXe130" : 0.0,
+        "sdgXe131" : 1.5,
+        "sdgXe132" : 0.0,
+        "sdgXe134" : 0.0,
+        "sdgXe136" : 0.0}
 class dres:
     def __init__(self,name):
         self.name = name
@@ -120,45 +139,44 @@ class dres:
         self.matrixby2j = np.zeros((self.n,self.n,self.n,self.n))
         self.matrixbyspo = np.zeros((self.n,self.n,self.nspo,self.nspo))        
     def setme(self,datastring):
-        jt, tt, nf, jf, ni, ji = [int(i) for i in datastring[4:10]]
+        jt, tt, lf, jf, li, ji = [int(i) for i in datastring[4:10]]
         self.maxjt = max(self.maxjt,jt)
         self.minjt = min(self.minjt,jt)
         me = float(datastring[3])
         self.matrixby2j[jt, tt, jf, ji] = me
-        a = self.idspo(nf, jf)
-        b = self.idspo(ni, ji)
+        a = self.idspo(lf, jf)
+        b = self.idspo(li, ji)
         self.matrixbyspo[jt,tt,a,b] = me
     def addspo(self,spo):
         self.spos.append(spo)
-    def idspo(self,nr,jx2):
+    def idspo(self,l,jx2):
         ID = -1
         for a, spo in enumerate(self.spos):
-            if spo.matches(nr,jx2): 
+            if spo.matches(l,jx2): 
                 ID = a
         return ID
 
 class spo:
-    def __init__(self,nr,jx2,):
-        self.nr = nr
+    def __init__(self,l,jx2,):
+        self.l = l
         self.jx2 = jx2
         self.j = jx2 / 2.0
         self.weight = 1
-        self.l = -1
-    def matches(self,nr,jx2):
-        if (self.nr==nr and self.jx2==jx2) :
+    def matches(self,l,jx2):
+        if (self.l==l and self.jx2==jx2) :
             return True
         else: 
             return False
 def parsespo(datastring,fi):
-    jt, tt, nf, jf, ni, ji = [int(i) for i in datastring[4:10]]
+    jt, tt, lf, jf, li, ji = [int(i) for i in datastring[4:10]]
     if fi=='i': 
-        return ni, ji
+        return li, ji
     elif fi=='f':
-        return nf, jf
+        return lf, jf
     else:
         return -1
 def parsetransition(datastring):
-    jt, tt, nf, jf, ni, ji = [int(i) for i in datastring[4:10]]
+    jt, tt, lf, jf, li, ji = [int(i) for i in datastring[4:10]]
     return jt, tt
 
 alldres = {}
@@ -178,10 +196,10 @@ with open("legacy.data") as f:
             alldres[iso].declaredlength = words[2]
             continue        
         for fi in ('f', 'i'):
-            nr, jx2 = parsespo(words,fi)
-            spoid = alldres[iso].idspo(nr,jx2)
+            l, jx2 = parsespo(words,fi)
+            spoid = alldres[iso].idspo(l,jx2)
             if spoid == -1:
-                alldres[iso].addspo(spo(nr,jx2))
+                alldres[iso].addspo(spo(l,jx2))
         alldres[iso].setme(words)
 
 nme = 0
@@ -194,23 +212,30 @@ for iso in elements:
     print("Converting dres data for %s..."%obj.name)
     fdres.write("Legacy dres file for %s\n"%obj.name)
     Z, N = particles[obj.name]
+    T = (N - Z)/2.0
+    gsj = int(2*spins[obj.name])
+    gst = int(2*T)    
     fdres.write("  %3i  %3i\n"%(Z, N))
-    fdres.write("Converted from legacy format by automated script.\n")
-    fdres.write("The following data is not provided in the legacy files:\n")
-    fdres.write("  Nuclear state Energy, 2xJ, 2xT\n")
-    fdres.write("  Single particle state N, L quantum numbers\n")
+#    fdres.write("Converted from legacy format by automated script.\n")
+#    fdres.write("The following data is not provided in the legacy files:\n")
+#    fdres.write("  Nuclear state Energy, 2xJ, 2xT\n")
+#    fdres.write("  Single particle state N, L quantum numbers\n")
+    fdres.write("\n")
+    fdres.write("  State      E        Ex         J       T\n")
+    fdres.write("    1      0.0      0.00000     %s      %s\n"%(spins[obj.name],T))
     fdres.write("\n\n\n")
+
     fdres.write("  Single particle state quantum numbers\n")
     fdres.write("ORBIT      N     L   2 x J\n")
     for a in range(0,nspos):
         spoa = obj.spos[a]
-        fdres.write("%6i  %4i  %4i  %4i\n"%(a+1, spoa.nr, spoa.l, spoa.jx2)) 
+        fdres.write("%6i  %4i  %4i  %4i\n"%(a+1, 0, spoa.l, spoa.jx2)) 
 
     fdres.write("\n\n\n")
-    fdres.write(" Initial state #    1 E = 0.0 2xJ, 2xT =   -1  -1\n")
-    fdres.write(" Final state   #    1 E = 0.0 2xJ, 2xT =   -1  -1\n")
+    fdres.write(" Initial state #    1 E = 0.0 2xJ, 2xT =   %2i  %2i\n"%(gsj,gst))
+    fdres.write(" Final state   #    1 E = 0.0 2xJ, 2xT =   %2i  %2i\n"%(gsj,gst))
     for jt in range(obj.minjt,obj.maxjt+1):
-        fdres.write(" Jt = %4i, Tt = 0        1\n"%jt)
+        fdres.write(" Jt =%4i, Tt = 0        1\n"%jt)
         for a in range(0,nspos):
             for b in range(0,nspos):
                 x = obj.matrixbyspo[jt,0,a,b]
@@ -218,7 +243,7 @@ for iso in elements:
                 if (x==y and y==0): 
                     continue
                 nme += np.count_nonzero((x,y))
-                fdres.write("%4i  %4i  %10.8f  %10.8f\n"%(a+1,b+1,x,y))
+                fdres.write("%5i  %5i  %10.8f  %10.8f\n"%(a+1,b+1,x,y))
     fdres.close()
     print("Number of declared matrix elements: %s"%obj.declaredlength)
     print("Number of found matrix elements:    %s"%nme)
