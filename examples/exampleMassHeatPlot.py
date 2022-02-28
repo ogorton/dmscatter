@@ -58,8 +58,8 @@ if compute:
         exectime = timeit.default_timer() - tstart
         tcycle = timeit.default_timer()
         
-        print("DMFortFactor exec time: %s s"%(exectime))
-        print("Python exec time:       %s s"%(tcycle - tzero - exectime))
+        print("DMFortFactor exec time: %10.5f s"%(exectime))
+        print("Python exec time:       %10.5f s"%(tcycle - tzero - exectime))
         tzero = tcycle 
 
         f = open(str(WIMPMASS)+filename_base, "w+")

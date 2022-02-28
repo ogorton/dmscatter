@@ -2,8 +2,8 @@ module phi
     use norm
     use bessel
     use wigner
+    use sigma, only: SigmaJ
     contains
-
 
     function PhiPPJ(y,np,lp,jp,n,l,j,bigJ) result(operatorME)
     
@@ -29,7 +29,6 @@ module phi
 
     function PhiTPJ(y,np,lp,jp,n,l,j,bigJ) result(operatorME)
 
-        use sigma, only: SigmaJ
         implicit none
         integer, intent(in) :: np,lp,jp,n,l,j,bigJ
         real(kind=8), intent(in) :: y

@@ -1,22 +1,21 @@
 module eventrate
+    use OMP_LIB
+    use quadrature
+    use constants
+    use crosssection
+    use distributions
+    use main
 
     implicit none
     real(kind=8) :: qglobal(128)
     real(kind=8) :: ve, v0, vesc
     contains
 
-    function deventrate(q, wimp, nuc_target)
-        use OMP_LIB
-        use quadrature
-        
-        use constants
-        use types
+    function deventrate(q)
 
         implicit none
         real(kind=8) :: dEventRate
         real(kind=8) :: q
-        type(particle) :: wimp
-        type(nucleus) :: nuc_target
     
         real(kind=8) :: mchi, muT, mnuc
         real(kind=8) :: Nt
@@ -69,11 +68,6 @@ module eventrate
         ! was made for this fuction for compatibility with the adaptive
         ! integration routine used to integrate the event rate spectra.
     
-        use main ! This is the only function allowed to use main.
-        
-        use crosssection
-        use distributions
-    
         implicit none
         real(kind=8) :: vv, qq
         real(kind=8) :: spectraintegrand1d
@@ -81,7 +75,7 @@ module eventrate
     
         qq = qglobal(tid)
     
-        spectraintegrand1d = diffCrossSection(vv, qq, wimp, nuc_target, eft) &
+        spectraintegrand1d = diffCrossSection(vv, qq) &
             * sshm(vv,ve,v0,vesc) * vv**2
     
     end function

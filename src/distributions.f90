@@ -1,10 +1,11 @@
 module distributions
+    use constants
+
     contains
 
     function maxbolt(v,v0)
         ! Maxwell-Boltzmann (MB) probability distribution 
         
-        use constants
         implicit none
     
         real(kind=8), intent(in) :: v 
@@ -20,7 +21,6 @@ module distributions
         ! a MB distribution with a sharp cutoff to recognize the
         ! finite escape speed of the galaxy.
         
-        use constants
         implicit none
 
         real(kind=8), intent(in) :: v, v0, vesc
@@ -44,7 +44,6 @@ module distributions
         ! Smooth standard halo model. Basically a SHM with an extra constant 
         ! term meanth to smooth the distribution near vesc.
         
-        use constants, only: pi
         implicit none
 
         real(kind=8), intent(in) :: v, ve, v0, vesc
@@ -61,7 +60,6 @@ module distributions
     function Imbcutoff(v, ve, v0, vesc)
         ! Integrand for radial part of Maxwell Boltzmann distribution with cutoff
         
-        use constants, only: pi
         implicit none
 
         real(kind=8), intent(in) :: v, ve, v0, vesc
@@ -79,7 +77,6 @@ module distributions
     function Isccutoff(v, ve, v0, vesc)
         ! Integrand for radial part of smooth component with cutoff
         
-        use constants, only: pi
         implicit none
 
         real(kind=8), intent(in) :: v, ve, v0, vesc

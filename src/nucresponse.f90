@@ -1,13 +1,17 @@
 module nucresponse
+    use main
+    use mjl
+    use norm
+    use phi 
+    use sigma
+    use orbitals
+    use types
+    use wigner
+    use densities, only: maxJt, pndens
+
     contains
 
     function OperME(opid,y,a,b,bigJ) result(operatorME)
-    
-        use mjl
-        use norm
-        use phi
-        use sigma
-        use orbitals, only: nodal, lorb, jorb
     
         implicit none
     
@@ -51,11 +55,6 @@ module nucresponse
         ! Computes the nuclear form factor terms for a given 
         ! pn-coupling (iso-coupling) using pn-formalism (iso-formalism)
         ! density matrices.
-    
-        
-        use orbitals
-        use wigner, only: threej_lookup, vector_couple
-        use densities, only: maxJt, pndens
     
         implicit none
     
@@ -183,9 +182,6 @@ module nucresponse
         ! For pn -> iso, an additional factor of (1/4) is required.
         ! For iso -> pn, no additional factor is required.
     
-        
-        use orbitals
-    
         implicit none
     
         integer :: tau1, tau2
@@ -230,11 +226,8 @@ module nucresponse
     end function nucFormFactor_transform
     
 
-    subroutine test_nucresponse(nuc_target)
-    
-        use orbitals, only: bfm
-        use types, only: nucleus
-        use densities, only: pndens
+    subroutine test_nucresponse()
+   
         implicit none
     
         type(nucleus) :: nuc_target

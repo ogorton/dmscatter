@@ -1,4 +1,12 @@
 module keywords
+    use types
+    use constants
+    use settings
+    use quadrature
+    use wigner
+    use orbitals
+    use coefficients
+    use main
 
     implicit none
     type keywordpair
@@ -12,18 +20,15 @@ module keywords
 
     contains
 
-    subroutine controlfile(eft, wimp)
+    subroutine controlfile()
 
-        use types, only: eftheory, particle
         implicit none
-        type(eftheory) :: eft
-        type(particle) :: wimp
 
-        call setupcoef(eft)
+        call setupcoef()
         call opencontrolfile()
-        call readcontrolfile(eft, wimp)
-        call convertisospinform(eft)
-        call normalizecoeffs(eft, wimp)        
+        call readcontrolfile()
+        call convertisospinform()
+        call normalizecoeffs()        
 
     end subroutine controlfile
 
@@ -60,12 +65,9 @@ module keywords
     
     end subroutine opencontrolfile
     
-    subroutine readcontrolfile(eft, wimp)
+    subroutine readcontrolfile()
         
-        use types, only: particle, eftheory
         implicit none
-        type(particle) :: wimp
-        type(eftheory) :: eft
         character(100) :: line
         character(20) :: keyword
         integer :: op
@@ -94,10 +96,10 @@ module keywords
                 ! Go back to read them.
                 backspace(controlfileid)
                 read(controlfileid,*,end=111)keyword, op, coupling, coef
-                call setpncoeffsnonrel(eft, coupling, op, coef)
+                call setpncoeffsnonrel(coupling, op, coef)
             else
                 call addKeywordpair(keyword, keyvalue)
-                call setkeyword(keyword,keyvalue, wimp)
+                call setkeyword(keyword,keyvalue)
             endif
     
         end do
@@ -119,21 +121,9 @@ module keywords
     end subroutine readcontrolfile
     
     !=============================================
-    subroutine setkeyword(keyword, keyvalue, wimp)
-    
+    subroutine setkeyword(keyword, keyvalue)
         
-        
-        use constants
-        use settings 
-        use quadrature
-        use types, only: particle
-        use wigner, only: tablemin2j, tablemax2j
-        use orbitals, only: bfm
-    
         implicit none
-    
-        type(particle) :: wimp
-    
         character (len=20) :: keyword
         real(kind=8) :: keyvalue
     

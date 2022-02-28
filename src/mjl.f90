@@ -6,6 +6,7 @@ module mjl
     use norm
     use wigner
     use bessel
+    use constants, only: pi
     contains
 
     function MJ(y,np,lp,jp,n,l,j,bigJ)
@@ -26,7 +27,6 @@ module mjl
     
     
     function MJLDivQoverall(lp,jp,l,j,bigJ,bigL)
-        use constants, only: pi
         implicit none
         integer, intent(in) :: lp,jp,l,j,bigJ,bigL
         real(kind=8) :: MJLDivQoverall

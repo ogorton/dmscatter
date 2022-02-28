@@ -1,9 +1,10 @@
 module dmresponse
+    use dmresponselib
+    use densities, only: pndens
     contains
 
     function dmresponsefun(eft, term, tau1, tau2, q, v, jchi, muT)
         
-        use densities, only: pndens
         implicit none
         real(kind=8), allocatable, intent(in) :: eft(:,:)
         integer :: term
@@ -89,7 +90,6 @@ module dmresponse
     
     !----------------------------------------------------------------------------80
     function dmresponse_pn(eft, ifunc, tau1, tau2, q, v, jchi, muT) 
-        use dmresponselib
         implicit none
         ! output
         real(kind=8) :: dmresponse_pn
