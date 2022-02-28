@@ -20,12 +20,12 @@ Read the manual as a [pdf](docs/manual.pdf) or
 
 ## Compile
 To compile the program, you must have the `gfortran` compiler and `make`
-installed. From the `build` directory, run:
+installed. to compile an OpenMP-parallel version of the code, navigate to the 
+`build` directory and run:
 
     make openmp
 
-to compile an OpenMP-parallel version of the code. To compile a serial version
-of the code, instead run:
+To compile a serial version of the code, instead run:
 
     make serial
 

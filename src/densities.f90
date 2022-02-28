@@ -1,4 +1,6 @@
 module densities
+    use main
+    use orbitals
     implicit none
     integer :: jt, tt
     integer :: maxJt=-1
@@ -40,13 +42,9 @@ module densities
     
     
     !===================================================================
-    subroutine setupdensities(nuc_target)
+    subroutine setupdensities
     
-        use orbitals
-        use types, only: nucleus
         implicit none
-    
-        type(nucleus) :: nuc_target
     
         ! densities(J,iso,a,b)
         allocate(nuc_target%densitymats%rho( 0:10,0:1,1:ntotal(1),1:ntotal(1)) )
@@ -57,13 +55,10 @@ module densities
     
     
     !===================================================================
-    subroutine coredensity(nuc_target)
+    subroutine coredensity
     
-      use orbitals
-      use types, only: nucleus
       implicit none
     
-      type(nucleus) :: nuc_target
       integer :: i
       integer :: Jiso, Tiso
     
@@ -89,11 +84,8 @@ module densities
     end subroutine coredensity
     
     
-    subroutine printdensities(nuc_target)
-        use types, only: nucleus
-        use orbitals
+    subroutine printdensities
         implicit none
-        type(nucleus) :: nuc_target
         integer J,a, b
         print*,'Printing density matrix.'
         print*,"PN-format:",pndens
@@ -139,10 +131,8 @@ module densities
     end function closest2J
     
     
-    subroutine readheaderv2(nuc_target, resfile)
-        use types, only: nucleus
+    subroutine readheaderv2(resfile)
        implicit none
-       type(nucleus) :: nuc_target
        integer resfile
        character(23) :: tmpline
        integer i,j,n
@@ -269,11 +259,8 @@ module densities
     end subroutine read2Jtrans
     
     
-    subroutine readdensity(nuc_target, resfile,success)
-       use orbitals
-       use types, only: nucleus
+    subroutine readdensity(resfile, success)
        implicit none
-       type(nucleus) :: nuc_target
        integer resfile
        integer a,b,i
        real(kind=8) ops,opv
@@ -302,12 +289,8 @@ module densities
     end subroutine readdensity
     
     
-    subroutine readalldensities(nuc_target,resfile)
-    !   use op_info
-    !   use spspace
-       use types, only: nucleus
+    subroutine readalldensities(resfile)
        implicit none
-       type(nucleus) :: nuc_target
        integer resfile
        integer istate,fstate
        logical foundi,foundf,foundjt
@@ -344,7 +327,7 @@ module densities
                   exit
               end if
     
-              call readdensity(nuc_target, resfile,success)
+              call readdensity(resfile, success)
               if(success)nodensities=.false.
           end do ! endoflist
           exit

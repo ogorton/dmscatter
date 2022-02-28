@@ -1,6 +1,5 @@
 module types
 
-    
     implicit none
 
     ! Nonrelativistic operator coefficients

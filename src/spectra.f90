@@ -1,6 +1,16 @@
 module spectra
 
-    
+    use main
+    use crosssection
+    use transition
+    use constants, only: kev, mN, kilometerpersecond
+    use eventrate, only: deventrate
+    use quadrature, only: boole
+    use settings
+    use orbitals, only: bfm
+    use nucresponse, only: nucFormFactor, nucFormFactor_transform
+    use densities, only: pndens
+        
     implicit none
 
     real(kind=8) :: x_start
@@ -11,16 +21,10 @@ module spectra
 
     contains
 
-    function velocitycurve(vlist, q, wimp, nuc_target, eft, option)
-        use crosssection
-        use transition
-        use types
+    function velocitycurve(vlist, q, option)
         implicit none
         real(kind=8) :: q, v
         real(kind=8), dimension(:) :: vlist
-        type(particle) :: wimp
-        type(nucleus) :: nuc_target
-        type(eftheory) :: eft
         integer :: option
     
         real(kind=8), dimension(size(vlist)) :: velocitycurve
@@ -31,12 +35,12 @@ module spectra
         case(3)
             do i = 1, size(vlist)
                 v = vlist(i)
-                velocitycurve(i) = transition_probability(q, v, wimp, nuc_target, eft)
+                velocitycurve(i) = transition_probability(v, q)
             end do
         case(2)
             do i = 1, size(vlist)
                 v = vlist(i)
-                velocitycurve(i) = diffCrossSection(v, q, wimp, nuc_target, eft)
+                velocitycurve(i) = diffCrossSection(v, q)
             end do        
         case default
             stop "Not a velocity curve option."
@@ -44,14 +48,9 @@ module spectra
     end function velocitycurve
     
     
-    subroutine velocity_curve(wimp, nuc_target, eft, option)
-        use types
-        use constants, only: kev, mN, kilometerpersecond
+    subroutine velocity_curve(option)
         implicit none
     
-        type(particle) :: wimp
-        type(nucleus) :: nuc_target
-        type(eftheory) :: eft    
         real(kind=8) :: Er, Qr, vstart, vstop, vstep
         integer :: sizevlist, i
         real(kind=8), allocatable :: vlist(:), cslist(:)
@@ -91,7 +90,7 @@ module spectra
         end do
     
     
-        cslist = velocitycurve(vlist, qr, wimp, nuc_target, eft, option)
+        cslist = velocitycurve(vlist, qr, option)
     
         select case(option)
         case(3)
@@ -112,18 +111,10 @@ module spectra
         
     end subroutine
     
-    subroutine eventrate_spectra(wimp, nuc_target)
-        use constants
-        use types
-        use eventrate, only: deventrate
-        use quadrature, only: boole
-        use settings, only: useenergyfile
+    subroutine eventrate_spectra
     
         implicit none
     
-        type(particle) :: wimp
-        type(nucleus) :: nuc_target
-        
         integer :: calc_num
         integer :: iunit
         integer :: i, N
@@ -149,7 +140,7 @@ module spectra
         !$OMP parallel do private(q) schedule(dynamic, 1)
         do i = 1, N
             q = momentum_grid(i)
-            Event_rate_spectra(i) = dEventRate(q, wimp, nuc_target)
+            Event_rate_spectra(i) = dEventRate(q)
         end do
         !$OMP end parallel do
         !$OMP barrier        
@@ -182,8 +173,6 @@ module spectra
     end subroutine eventrate_spectra
     
     subroutine get_energy_grid(mtarget)
-        use settings
-        use constants, only: kev, mN
         implicit none
         integer :: calc_num
         character(len=100) :: filename
@@ -261,17 +250,12 @@ module spectra
     end subroutine read_energy_grid
     
     !-----------------------------------------------------------------------------80
-    subroutine nucresponse_spectra(nuc_target)
-        use orbitals, only: bfm
-        use types, only: nucleus
-        use nucresponse, only: nucFormFactor, nucFormFactor_transform
-        use densities, only: pndens
-        use settings, only: usemomentum
+    subroutine nucresponse_spectra
+
         implicit none
         integer :: iunit
         integer :: ioperator, tau, tau_prime
         integer :: iqq
-        type(nucleus) :: nuc_target   
     
         real(kind=8) :: yy, qq, xx
         real(kind=8), allocatable :: Wlist(:,:,:,:)

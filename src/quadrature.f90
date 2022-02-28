@@ -1,5 +1,4 @@
 module quadrature
-
     
     implicit none
 

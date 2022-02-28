@@ -1,13 +1,11 @@
-subroutine setup_nuclearinputs(nuc_target)
+subroutine nucinputs
 
-    use types, only: nucleus
-    use settings
+    use main
+    use settings, only: fillcore, printdens
     use orbitals
-    use constants
     use densities
     implicit none
 
-    type(nucleus) :: nuc_target
     integer :: resfile = 100
     integer :: Atarget
 
@@ -15,14 +13,14 @@ subroutine setup_nuclearinputs(nuc_target)
 
     call openresults(resfile)
     call getorbitals(resfile,Atarget)
-    call setupdensities(nuc_target)
-    call readheaderv2(nuc_target,resfile)
-    call readalldensities(nuc_target,resfile)
+    call setupdensities
+    call readheaderv2(resfile)
+    call readalldensities(resfile)
 
     if (fillcore) then
-        call coredensity(nuc_target)
+        call coredensity
     end if
  
-    if (printdens) call printdensities(nuc_target)
+    if (printdens) call printdensities
 
 end subroutine

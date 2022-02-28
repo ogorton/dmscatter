@@ -1,5 +1,4 @@
 module constants
-
     
     implicit none
     real(kind=8) :: pi = datan(1d0)*4d0!3.14159265358979323846264338327950288419716939937510
