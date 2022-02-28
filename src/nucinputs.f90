@@ -1,7 +1,6 @@
-subroutine setup_nuclearinputs
+subroutine nucinputs
 
     use main
-    use types, only: nucleus
     use settings, only: fillcore, printdens
     use orbitals
     use densities

@@ -41,7 +41,7 @@ program dmfortfactor
 
     call setparameters
     call controlfile
-    call setup_nuclearinputs
+    call nucinputs
 
     call printparameters
 

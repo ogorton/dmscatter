@@ -1,6 +1,5 @@
 module distributions
     use constants
-
     contains
 
     function maxbolt(v,v0)

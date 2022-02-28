@@ -1,5 +1,4 @@
 module keywords
-    use types
     use constants
     use settings
     use quadrature

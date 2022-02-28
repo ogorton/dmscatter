@@ -5,7 +5,6 @@ module nucresponse
     use phi 
     use sigma
     use orbitals
-    use types
     use wigner
     use densities, only: maxJt, pndens
 
