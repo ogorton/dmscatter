@@ -43,8 +43,8 @@ distributions.o:    constants.o
 dmfortfactor.o:     spectra.o wigner.o nucresponse.o keywords.o totaleventrate.o parameters.o
 dmresponse.o:       dmresponselib.o densities.o
 dmresponselib.o:    constants.o
-eventrate.o:        quadrature.o constants.o crosssection.o distributions.o main.o
-keywords.o:         constants.o settings.o quadrature.o wigner.o orbitals.o coefficients.o main.o
+eventrate.o:        main.o quadrature.o constants.o crosssection.o distributions.o
+keywords.o:         main.o constants.o settings.o quadrature.o wigner.o orbitals.o coefficients.o
 main.o:             types.o
 mjl.o:              norm.o constants.o wigner.o bessel.o
 norm.o:     
