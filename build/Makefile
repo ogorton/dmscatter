@@ -37,7 +37,7 @@ $(BIN_DIR):
 bessel.o:           wigner.o
 constants.o:        
 crosssection.o:     main.o constants.o transition.o
-densities.o:        orbitals.o
+densities.o:        main.o orbitals.o
 dmfortfactor.o:     main.o spectra.o wigner.o nucresponse.o keywords.o totaleventrate.o parameters.o
 dmresponse.o:       dmresponselib.o densities.o
 dmresponselib.o:    constants.o
