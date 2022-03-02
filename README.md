@@ -10,13 +10,14 @@ Can be used as a standard Fortran program via the command line, or via our
 convenient Python interfaces, which offer a minimal interface, optionally 
 extensible to the full capabilities of the underlying program.
 
-Read the manual as a [pdf](docs/manual.pdf) or
-[webpage](https://ogorton.github.io/dmfortfactor/).
+Read the manual:
+* [PDF](docs/manual.pdf)
+* [Webpage](https://ogorton.github.io/dmfortfactor/).
 
 **Dev Contacts**
 
-* Oliver Gorton (PhD student) ogorton@sdsu.edu
-* Calvin Johnson (PI) cjohnson@sdsu.edu
+* Oliver Gorton, PhD student (email: ogorton@sdsu.edu)
+* Calvin Johnson, PI (email: cjohnson@sdsu.edu)
 
 ## Compile
 To compile the program, you must have the `gfortran` compiler and `make`
