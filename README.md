@@ -27,7 +27,7 @@ installed. to compile an OpenMP-parallel version of the code, navigate to the
 
 To compile a serial version of the code, instead run:
 
-    make serial
+    make dmfortfactor
 
 Both options create the executable `dmfortfactor` in the `bin` directory. (Many
 of the example Python scripts expect to find it there.) Note that if you want to
