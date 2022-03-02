@@ -10,9 +10,9 @@ Can be used as a standard Fortran program via the command line, or via our
 convenient Python interfaces, which offer a minimal interface, optionally 
 extensible to the full capabilities of the underlying program.
 
-Read the manual:
+Read the documentation:
 * [PDF](docs/manual.pdf)
-* [Webpage](https://ogorton.github.io/dmfortfactor/).
+* [Webpage](https://ogorton.github.io/dmfortfactor/)
 
 **Dev Contacts**
 
