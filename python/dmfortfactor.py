@@ -23,12 +23,15 @@ def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1,
 
     Optional arguments:
         epmin
-            Recoil energy minimum (keV)
+            Recoil energy minimum (keV). Or, transfer momentum (gev/c) if 
+            usemomentum control word set to 1.
         epmax
-            Recoil energy maximum (keV)
+            Recoil energy maximum (keV). Or, transfer momentum (gev/c) if
+            usemomentum control word set to 1.
         epstep
-            Recoil energy step size (keV). Spectra will be produced for recoil
-            energies from epmin to epmax in steps of epstep.
+            Recoil energy step size (keV). Or, transfer momentum (gev/c) if 
+            usemomentum control word set to 1. Spectra will be produced for 
+            recoil energies from epmin to epmax in steps of epstep.    
         controlwords
             Dictionary of control words. Keys must be valid dmfortfactor
             control keywords, and values must be numbers.
