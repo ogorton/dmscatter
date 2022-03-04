@@ -5,14 +5,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import dmfortfactor as dm
 
-dresfiles = [
-        '../dres/C/c12Nmax8chi20hw.dres',
-        '../dres/C/c12Nmax6DAEhw22.5.dres',
-        '../dres/C/c12Nmax6chi20hw.dres',
-        '../dres/C/c12Nmax8DAEhw22.5.dres', 
-        '../dres/C/c12ck.dres']
+datafiles = [
+        '../data/C/c12Nmax8chi20hw.data',
+        '../data/C/c12Nmax6DAEhw22.5.data',
+        '../data/C/c12Nmax6chi20hw.data',
+        '../data/C/c12Nmax8DAEhw22.5.data', 
+        '../data/C/c12ck.data']
 hofrequencies = [20.0, 22.5, 20.0, 22.5, "na"]
-hofrequencies = len(dresfiles) * ["na"]
+hofrequencies = len(datafiles) * ["na"]
 operators = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 with open("operators.txt") as f: operatorsymbols = f.readlines()
@@ -24,7 +24,7 @@ for opi,operator in enumerate(operators):
     plt.clf()
     plt.figure(2)
     plt.clf()
-    for i, dresfile in enumerate(dresfiles):
+    for i, datafile in enumerate(datafiles):
 
         rlabel = 'run_%s_%s'%(operator,hofrequencies[i])
         
@@ -44,7 +44,7 @@ for opi,operator in enumerate(operators):
         E, R = dm.EventrateSpectra(
                 Z = 6,
                 N = 6,
-                dres = dresfile[:-5],
+                dres = datafile[:-5],
                 controlwords = control_dict,
                 cn = cn,
                 exec_path='../bin/dmfortfactor')
@@ -54,9 +54,9 @@ for opi,operator in enumerate(operators):
             first=False
             R0 = R
         plt.figure(1)
-        plt.plot(E,R,label=dresfile[3:-5])
+        plt.plot(E,R,label=datafile[3:-5])
         plt.figure(2)
-        plt.plot(E,abs(R - R0)/R0,label=dresfile[3:-5])
+        plt.plot(E,abs(R - R0)/R0,label=datafile[3:-5])
     plt.figure(1) 
     plt.title("C-12, 500 GeV WIMP, Op: %s, neutron 4.8E-4"%operator) 
     plt.xlabel('$E_{recoil}$ (keV)')

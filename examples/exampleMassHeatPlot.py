@@ -47,7 +47,7 @@ if compute:
         E, R = dm.EventrateSpectra(
             Z = 54, 
             N = 77, 
-            dres = "../dres/Xe/xe131gcn", 
+            dres = "../data/Xe/xe131gcn", 
             epmin = 1.0, 
             epmax = 1000.0, 
             epstep = 1.0,
