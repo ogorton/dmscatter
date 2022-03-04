@@ -51,7 +51,7 @@ spectra, can be called like this:
 Recoilenergykev, Eventrate = dm.EventrateSpectra(
             Z = 54,
             N = 77,
-            dres = "../data/xe131gcn",
+            dres = "../data/Xe/xe131gcn",
             cn = [0.00048, 0,0,0,0,0,0,0,0,0,0,0,0,0,0] )
 ```
 To run one of the example Python scripts, try moving to `runs` and running:
