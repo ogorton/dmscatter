@@ -21,6 +21,27 @@ to generate the wave function data:
 |C      | 12       |  [@cohen1965effective] |
 |He     | 4        | |
 
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l | p{3cm} | c}
+    \hline
+    \hline
+        Nuclei & Isotopes & Source \\
+        \hline\hline
+        He & 4 & \cite{PhysRevC.68.041001,shirokov2016n3lo}\\
+        C  & 12 &  \cite{cohen1965effective,PhysRevC.68.041001,shirokov2016n3lo}\\
+        F & 19 & \cite{PhysRevC.74.034315}\\
+        Si & 28, 29 & \cite{PhysRevC.74.034315}\\
+        Ar & 40 &  \cite{PhysRevC.86.051301}\\
+        Ge & 70, 72, 73, 74, 76 & \cite{PhysRevC.80.064323} \\
+        I & 127 &  \cite{GCN5082}, used in \cite{PhysRevLett.100.052503,PhysRevC.82.064304}\\ 
+        Xe & 128, 129, 130, 131, 132, 134, 136 & \cite{GCN5082}, used in \cite{PhysRevLett.100.052503,PhysRevC.82.064304} \\
+    \end{tabular}
+    \caption{Table of nuclear data we include with the program. Each corresponds to a (.dres) density matrix file in the dres directory. The source indicates the nuclear Hamiltonian that was used to generate the wave function data. See the manual and GitHub repository 
+    for updates and full information on provenance.}
+    \label{tab:includednuclei}
+\end{table}
+
 
 ## Filling core orbitals for phenomenological interactions
 Since standard one-body density matrices in phenomenological model spaces

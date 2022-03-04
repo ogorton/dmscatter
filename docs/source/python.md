@@ -30,6 +30,62 @@ coefficient: `cp[0]`$= c_1^p$, etc.  Finally, the user can also pass a
 dictionary of valid control keywords and values to the function in order to set
 any of the control words defined in the manual.
 
+The template for this function is as follows:
+```Python
+def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1,
+        controlwords={}, cp=None, cn=None, cs=None, cv=None,
+        exec_path='dmfortfactor', name=".eventratespectra")
+    '''
+    Calls the dmfortfactor eventrate spectra function, which computes the
+    differential WIMP-nucleus scattering event rate as a function of nuclear
+    recoil energy.
+
+    Required arguments:
+        Z 
+            Number of protons in the target nucleus
+        N   
+            Number of neutron in the target nucleus
+        dres
+            Filename ending in .dres (not including .dres) for the file
+            containing the reduced one-body density matrices for the target
+            nucleus wave function
+
+    Optional arguments:
+        epmin
+            Recoil energy minimum (keV). Or, transfer momentum (gev/c) if
+            usemomentum control word set to 1.
+        epmax
+            Recoil energy maximum (keV). Or, transfer momentum (gev/c) if 
+            usemomentum control word set to 1.
+        epstep
+            Recoil energy step size (keV). Or, transfer momentum (gev/c) if 
+            usemomentum control word set to 1. Spectra will be produced for 
+            recoil energies from epmin to epmax in steps of epstep.
+        controlwords
+            Dictionary of control words. Keys must be valid dmfortfactor
+            control keywords, and values must be numbers.
+        cp
+            Length-15 array of nonrelativistic proton- coupling coefficients
+        cn
+            Length-15 array of nonrelativistic neutron- coupling coefficients
+        cs
+            Length-15 array of nonrelativistic isoscalar- coupling coefficients
+        cv
+            Length-15 array of nonrelativistic isotor- coupling coefficients
+        exec_path
+            Path to the executable for dmfortfactor
+        name
+            Name string assigned to temporary files
+
+    Returns:
+        RecoilE
+            Array of recoil energies (keV)
+        EventRate
+            Array of differential event rates (events/GeV)
+    '''
+```
+
+
 To compute the event-rate spectra for $^{131}$Xe with a WIMP mass of 50 GeV and
 a $c_3^v=0.0048$ coupling, one might call: 
 ```Python
@@ -40,7 +96,7 @@ cv[2] = 0.0048
 Erkev, ER = dm.EventrateSpectra(
             Z = 54,
             N = 77,
-            dres = "../dres/xe131gcn",
+            dres = "../data/Xe/xe131gcn",
             controlwords = control_dict,
             cv = cv,
             exec_path = "../bin/dmfortfactor")
@@ -49,7 +105,7 @@ This will return the differential event rate spectra for recoil energies from 1
 keV to 1 MeV in 1 keV steps. 
 
 The file `xe131gcn.dres` must be accessible at the relative or absolute path
-name specified (in this case `../dres/`), and contain a valid one-body density
+name specified (in this case `../data/Xe/`), and contain a valid one-body density
 matrix for $^{131}$Xe. Similarly, the DMFortFactor executable (`dmfortfactor`) 
 should be accessible from the user's default path - or else the
 path to the executable should be specified, as in the above example (`
@@ -75,7 +131,7 @@ cwords = {
 Wfunc = dm.NucFormFactor(
         Z = 54,
         N = 77,
-        dres = "../dres/xe131gcn",
+        dres = "../data/Xe/xe131gcn",
         controlwords = cwords,
         epmin = 0.001,
         epmax = 10.0,

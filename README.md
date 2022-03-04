@@ -51,7 +51,7 @@ spectra, can be called like this:
 Recoilenergykev, Eventrate = dm.EventrateSpectra(
             Z = 54,
             N = 77,
-            dres = "../dres/xe131gcn",
+            dres = "../data/xe131gcn",
             cn = [0.00048, 0,0,0,0,0,0,0,0,0,0,0,0,0,0] )
 ```
 To run one of the example Python scripts, try moving to `runs` and running:
@@ -79,7 +79,7 @@ have pandoc, you can still view the plots individually in the test directory.
 | bin       | This directory is created once you compile the code from the build directory. |
 | build     | Compile the code with the included Makefile here. |
 | docs      | Manual and other documentation | 
-| dres      | Nuclear structure information: the density matrix files (.dres) |
+| data      | Nuclear structure information: the density matrix files (.dres) |
 | examples  | Example Python scripts using our Python wrapper |
 | python    | Python modules containing the wrapper for DMFortFactor |
 | runs      | A good place to run the code and example scripts. (Some of the examples expect to be run here. |

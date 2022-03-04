@@ -211,7 +211,7 @@ are six further lines of input. These will be explained by an example:
 xe131
 ...
   Enter name of one-body density file (.dres)
-xe131gcn
+../data/Xe/xe131gcn
 ...
  What is the range of recoil energies in kev?
  Enter starting energy, stoping energy, step size:

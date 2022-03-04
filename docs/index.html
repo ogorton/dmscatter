@@ -326,35 +326,87 @@
 </ol>
 <h2 id="event-rate-spectra">Event rate spectra</h2>
 <p>To calculate an event rate with a nonzero interaction, the user should also provide one or more of the optional EFT coupling coefficient arrays: <code>cp, cn, cs, cv</code>. These set the couplings to protons, neutrons, isoscalar, and isovector, respectively. The <span class="math inline">\(0^{th}\)</span> index sets the first operator coefficient: <code>cp[0]</code><span class="math inline">\(= c_1^p\)</span>, etc. Finally, the user can also pass a dictionary of valid control keywords and values to the function in order to set any of the control words defined in the manual.</p>
+<p>The template for this function is as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> EventrateSpectra(Z, N, dres, epmin<span class="op">=</span><span class="dv">1</span>, epmax<span class="op">=</span><span class="dv">1000</span>, epstep<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        controlwords<span class="op">=</span>{}, cp<span class="op">=</span><span class="va">None</span>, cn<span class="op">=</span><span class="va">None</span>, cs<span class="op">=</span><span class="va">None</span>, cv<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        exec_path<span class="op">=</span><span class="st">&#39;dmfortfactor&#39;</span>, name<span class="op">=</span><span class="st">&quot;.eventratespectra&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&#39;&#39;&#39;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Calls the dmfortfactor eventrate spectra function, which computes the</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">    differential WIMP-nucleus scattering event rate as a function of nuclear</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    recoil energy.</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Required arguments:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">        Z </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">            Number of protons in the target nucleus</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">        N   </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">            Number of neutron in the target nucleus</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">        dres</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">            Filename ending in .dres (not including .dres) for the file</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">            containing the reduced one-body density matrices for the target</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">            nucleus wave function</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Optional arguments:</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">        epmin</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">            Recoil energy minimum (keV). Or, transfer momentum (gev/c) if</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">            usemomentum control word set to 1.</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">        epmax</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">            Recoil energy maximum (keV). Or, transfer momentum (gev/c) if </span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">            usemomentum control word set to 1.</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">        epstep</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">            Recoil energy step size (keV). Or, transfer momentum (gev/c) if </span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">            usemomentum control word set to 1. Spectra will be produced for </span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">            recoil energies from epmin to epmax in steps of epstep.</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">        controlwords</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">            Dictionary of control words. Keys must be valid dmfortfactor</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">            control keywords, and values must be numbers.</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co">        cp</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">            Length-15 array of nonrelativistic proton- coupling coefficients</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">        cn</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co">            Length-15 array of nonrelativistic neutron- coupling coefficients</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co">        cs</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co">            Length-15 array of nonrelativistic isoscalar- coupling coefficients</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co">        cv</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">            Length-15 array of nonrelativistic isotor- coupling coefficients</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">        exec_path</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">            Path to the executable for dmfortfactor</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">        name</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">            Name string assigned to temporary files</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">        RecoilE</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co">            Array of recoil energies (keV)</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co">        EventRate</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co">            Array of differential event rates (events/GeV)</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co">    &#39;&#39;&#39;</span></span></code></pre></div>
 <p>To compute the event-rate spectra for <span class="math inline">\(^{131}\)</span>Xe with a WIMP mass of 50 GeV and a <span class="math inline">\(c_3^v=0.0048\)</span> coupling, one might call:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dmfortfactor <span class="im">as</span> dm</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>control_dict <span class="op">=</span> {<span class="st">&quot;wimpmass&quot;</span> : <span class="fl">50.0</span>}</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>cv <span class="op">=</span> np.zeros(<span class="dv">15</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cv[<span class="dv">2</span>] <span class="op">=</span> <span class="fl">0.0048</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>Erkev, ER <span class="op">=</span> dm.EventrateSpectra(</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            Z <span class="op">=</span> <span class="dv">54</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            N <span class="op">=</span> <span class="dv">77</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            dres <span class="op">=</span> <span class="st">&quot;../dres/xe131gcn&quot;</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            controlwords <span class="op">=</span> control_dict,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            cv <span class="op">=</span> cv,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            exec_path <span class="op">=</span> <span class="st">&quot;../bin/dmfortfactor&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dmfortfactor <span class="im">as</span> dm</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>control_dict <span class="op">=</span> {<span class="st">&quot;wimpmass&quot;</span> : <span class="fl">50.0</span>}</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cv <span class="op">=</span> np.zeros(<span class="dv">15</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cv[<span class="dv">2</span>] <span class="op">=</span> <span class="fl">0.0048</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Erkev, ER <span class="op">=</span> dm.EventrateSpectra(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            Z <span class="op">=</span> <span class="dv">54</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            N <span class="op">=</span> <span class="dv">77</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            dres <span class="op">=</span> <span class="st">&quot;../data/Xe/xe131gcn&quot;</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            controlwords <span class="op">=</span> control_dict,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            cv <span class="op">=</span> cv,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            exec_path <span class="op">=</span> <span class="st">&quot;../bin/dmfortfactor&quot;</span>)</span></code></pre></div>
 <p>This will return the differential event rate spectra for recoil energies from 1 keV to 1 MeV in 1 keV steps.</p>
-<p>The file <code>xe131gcn.dres</code> must be accessible at the relative or absolute path name specified (in this case <code>../dres/</code>), and contain a valid one-body density matrix for <span class="math inline">\(^{131}\)</span>Xe. Similarly, the DMFortFactor executable (<code>dmfortfactor</code>) should be accessible from the user’s default path - or else the path to the executable should be specified, as in the above example (<code>exec_path = "../build/dmfortfactor"</code>).</p>
+<p>The file <code>xe131gcn.dres</code> must be accessible at the relative or absolute path name specified (in this case <code>../data/Xe/</code>), and contain a valid one-body density matrix for <span class="math inline">\(^{131}\)</span>Xe. Similarly, the DMFortFactor executable (<code>dmfortfactor</code>) should be accessible from the user’s default path - or else the path to the executable should be specified, as in the above example (<code>exec_path = "../build/dmfortfactor"</code>).</p>
 <h2 id="nuclear-response-functions-for-wimpydd">Nuclear response functions for WimPyDD</h2>
 <p>There are published codes which compute the WIMP-nucleus event rate spectra, etc., but which rely on nuclear form factors from an external source. Once such code is WimPyDD <span class="citation" data-cites="jeong2021wimpydd"> [<a href="#ref-jeong2021wimpydd" role="doc-biblioref">3</a>]</span>. We have provided an additional option in DMFortFactor which computes these nuclear form factors from the target density-matrix and exports the results to a data file.</p>
 <p>The Python wrapper-function <code>NucFormFactor</code> runs the DMFortFactor option to export the nuclear response functions to file, and additionally creates and returns an interpolation function <span class="math inline">\(W(q)\)</span> which can be called. In the following code listing, the nuclear response function for <span class="math inline">\(^{131}\)</span>Xe is generated for transfer momentum from 0.001 to 10.0 GeV/c. </p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dmfortfactor <span class="im">as</span> dm</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cwords <span class="op">=</span> {</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;usemomentum&quot;</span>: <span class="dv">1</span>} <span class="co"># epmin/max/step sets momentum instead of energy</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Wfunc <span class="op">=</span> dm.NucFormFactor(</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        Z <span class="op">=</span> <span class="dv">54</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        N <span class="op">=</span> <span class="dv">77</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        dres <span class="op">=</span> <span class="st">&quot;../dres/xe131gcn&quot;</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        controlwords <span class="op">=</span> cwords,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        epmin <span class="op">=</span> <span class="fl">0.001</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        epmax <span class="op">=</span> <span class="fl">10.0</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        epstep <span class="op">=</span> <span class="fl">0.001</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>Wfunc(<span class="fl">0.001</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dmfortfactor <span class="im">as</span> dm</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cwords <span class="op">=</span> {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;usemomentum&quot;</span>: <span class="dv">1</span>} <span class="co"># epmin/max/step sets momentum instead of energy</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Wfunc <span class="op">=</span> dm.NucFormFactor(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        Z <span class="op">=</span> <span class="dv">54</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        N <span class="op">=</span> <span class="dv">77</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        dres <span class="op">=</span> <span class="st">&quot;../data/Xe/xe131gcn&quot;</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        controlwords <span class="op">=</span> cwords,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        epmin <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        epmax <span class="op">=</span> <span class="fl">10.0</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        epstep <span class="op">=</span> <span class="fl">0.001</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>Wfunc(<span class="fl">0.001</span>)</span></code></pre></div>
 <p>The final line returns an (8,2,2)-shaped array with the evaluate nuclear response functions at <span class="math inline">\(q=0.001\)</span> GeV/c. Note that, had we not set the keyword <code>usemomentum</code> to 1, the function input values would have been specified in terms of recoil energy (the default) instead of transfer momentum. The first index runs over, in order, the 8 nuclear form factors: <span class="math display">\[
 M_J,\Phi_J&#39;&#39;,\tilde{\Phi}_J&#39;, \Delta_J,\Sigma_J&#39;, \Sigma_J&#39;&#39;,M\Phi&#39;&#39;,\Sigma&#39;\Delta
 \]</span> The second two indices are <span class="math inline">\(\tau\)</span> and <span class="math inline">\(\tau&#39;\)</span>, the isospin couplings. There is a simple relationship between the isospin and proton/neutron couplings: <span class="math display">\[
@@ -491,7 +543,7 @@ ORBIT      N     L   2 x J
 xe131
 ...
   Enter name of one-body density file (.dres)
-xe131gcn
+../data/Xe/xe131gcn
 ...
  What is the range of recoil energies in kev?
  Enter starting energy, stoping energy, step size:
@@ -1070,69 +1122,76 @@ M_{JM}\ \ &amp;\\
 <td>1.0</td>
 </tr>
 <tr class="odd">
+<td>printdensities</td>
+<td></td>
+<td>Option to print the nuclear one-body density matrices to screen.</td>
+<td></td>
+<td>0 (false)</td>
+</tr>
+<tr class="even">
 <td>quadrelerr</td>
 <td></td>
 <td>Desired relative error for the adaptive numerical quadrature routine (quadtype 1).</td>
 <td></td>
 <td><span class="math inline">\(10^{-6}\)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>quadtype</td>
 <td></td>
 <td>Option for type of numerical quadrature. (Type 1 = adaptive 8th order Gauss-Legendre quadrature. Type 2 = static n-th order Gauss-Legendre quadrature.)</td>
 <td></td>
 <td>1 (type 1)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>sj2tablemax</td>
 <td></td>
 <td>Maximum value of <span class="math inline">\(2\times J\)</span> used when caching Wigner 3-J and 6-J functions into memory.</td>
 <td></td>
 <td>12</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>sj2tablemin</td>
 <td></td>
 <td>Minimum value of <span class="math inline">\(2\times J\)</span> used when caching Wigner 3-J and 6-J functions into memory.</td>
 <td></td>
 <td>-2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>useenergyfile</td>
 <td></td>
 <td>Logical flag (enter 0 for False, 1 for True) to read energy grid used for calculation from a user-provided file intead of specifying a range.</td>
 <td></td>
 <td>0 (false)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>usemomentum</td>
 <td></td>
 <td>Logical flag (enter 0 for False, 1 for True) to use momentum transfer intead of recoil energy as the independent variable.</td>
 <td></td>
 <td>0 (false)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>vearth</td>
 <td><span class="math inline">\(v_{earth}\)</span></td>
 <td>Speed of the earth in the galactic frame.</td>
 <td>km/s</td>
 <td>232.0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>vescape</td>
 <td><span class="math inline">\(v_{escape}\)</span></td>
 <td>Galactic escape velocity. Particles moving faster than this speed will escape the galaxy, thus setting an upper limit on the WIMP velocity distribution.</td>
 <td>km/s</td>
 <td>12 <span class="math inline">\(\times\ v_{scale}\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>weakmscale</td>
 <td><span class="math inline">\(m_v\)</span></td>
 <td>Weak interaction mass scale. User defined EFT coefficients are divided by <span class="math inline">\(m_v^2\)</span>.</td>
 <td>GeV</td>
 <td>246.2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>wimpmass</td>
 <td><span class="math inline">\(m_\chi\)</span></td>
 <td>WIMP particle mass.</td>
@@ -1196,7 +1255,12 @@ M_{JM}\ \ &amp;\\
 </div>
 </div>
 <h1 id="update-log">Update log</h1>
-<p><strong>Version 0.10 update (Jan. 12, 2021)</strong></p>
+<p><strong>Version 0.11 update (Feb. 28, 2022)</strong></p>
+<ul>
+<li>More robust module dependencies</li>
+<li>Legacy density matrices with conversion script</li>
+</ul>
+<p><strong>Version 0.10 update (Jan. 12, 2022)</strong></p>
 <ul>
 <li>Validation test scripts</li>
 <li>Improved organization of code</li>

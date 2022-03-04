@@ -1,6 +1,11 @@
 # Update log
 
-__Version 0.10 update (Jan. 12, 2021)__
+__Version 0.11 update (Feb. 28, 2022)__
+
+* More robust module dependencies
+* Legacy density matrices with conversion script
+
+__Version 0.10 update (Jan. 12, 2022)__
 
 * Validation test scripts
 * Improved organization of code

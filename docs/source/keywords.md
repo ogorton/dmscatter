@@ -12,6 +12,7 @@
 |  mnucleon | $m_N$ | Mass of a nucleon. It's assumed that $m_p\approx m_n$. |
   GeV | 0.938272 |
 |  ntscale | $N_t$ | Effective number of target nuclei scaling factor. The differential event rate is multiplied by this constant in units of kilogram-days. For example, if the detector had a total effective exposure of 2500 kg days, one might enter 2500 for this value. | kg days | 1.0 |
+| printdensities | | Option to print the nuclear one-body density matrices to screen. | | 0 (false) |
 |  quadrelerr |  | Desired relative error for the adaptive numerical quadrature routine (quadtype 1).  | | $10^{-6}$ |
 |  quadtype | | Option for type of numerical quadrature. (Type 1 = adaptive 8th order Gauss-Legendre quadrature.  Type 2 = static n-th order Gauss-Legendre quadrature.) || 1 (type 1) |
 |  sj2tablemax | | Maximum value of $2\times J$ used when caching Wigner 3-J and 6-J functions into memory. | | 12 |
