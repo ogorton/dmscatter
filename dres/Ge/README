@@ -1,0 +1,4 @@
+The Ge-73 calculation produced the incorrect ordering of states. The ground
+state and first excited states are very close in energy. Therefore, the .dres
+file was edited by hand in order to provide the correct ground state with
+Jpi=9/2+.
