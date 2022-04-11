@@ -11,5 +11,4 @@ DOCS =\
 	  source/nuclear.md\
 	  source/details.md\
 	  source/keywords.md\
-	  source/references.md\
-	  source/updates.md
+	  source/references.md

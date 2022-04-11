@@ -111,6 +111,13 @@ def NucFormFactor(Z, N, dres, epmin=1, epmax=1000, epstep=1,
 ## Helper funtions
 ##
 def writeinput(option, name, Z, N, dres, epmin, epmax, epstep):
+
+    # Error traps
+    if not os.path.exists(dres+".dres"):
+        print("dmfortfactor.py WARNING: %s can't be found!"%(dres+".dres"))
+        exit()
+
+
     # Create input file
     CSspectra_inputfilename = name + ".input"
     CSspectra_inputfile = open(CSspectra_inputfilename, "w+")

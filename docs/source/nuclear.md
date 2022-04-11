@@ -1,9 +1,9 @@
 # Nuclear Structure Input
 
 Users must provide nuclear one-body density matrix elements of the form:
-$$
+\begin{equation}
     \rho_{K,T}^{\Psi}(a,b) = \langle \Psi| [\hat{c}_a^\dagger \hat{c}_b]_{K,T}|\Psi \rangle ,
-$$
+\end{equation}
 where $\Psi$ is the nuclear-target wave function and $\hat{c}^\dagger$,
 $\hat{c}$ are the one-body creation, destruction operators. The matrix elements
 must be stored in a file in a standard format produced by shell-model codes like
@@ -13,34 +13,18 @@ Table of nuclear data we include with the program. Each corresponds to a (.dres)
 density matrix file. The source indicates the nuclear Hamiltonian that was used
 to generate the wave function data:
 
-|Nuclei | Isotopes | Source |
-| ----- | ------------ | ------ |
-|Si     | 28, 29   | [@PhysRevC.74.034315] |
-|Xe     | 128, 129, 130, 131, 132, 134, 136 | |
-|Ar     | 40       | |
-|C      | 12       |  [@cohen1965effective] |
-|He     | 4        | |
+| Nuclei | Isotopes | Source |
+| -- | -- | ------ |
+| He | 4 | [@PhysRevC.68.041001;@shirokov2016n3lo]|
+| C  | 12 |  [@cohen1965effective; @PhysRevC.68.041001; @shirokov2016n3lo]|
+| F | 19 | [@PhysRevC.74.034315]|
+| Si | 28, 29 | [@PhysRevC.74.034315]|
+| Ar | 40 |  [@PhysRevC.86.051301]|
+| Ge | 70, 72, 73, 74, 76 | [@PhysRevC.80.064323] |
+| I | 127 |  [@GCN5082], used in [@PhysRevLett.100.052503;@PhysRevC.82.064304]|
+| Xe | 128, 129, 130, 131, 132, 134, 136 | [@GCN5082], used in [@PhysRevLett.100.052503; @PhysRevC.82.064304] |
 
-\begin{table}[ht]
-    \centering
-    \begin{tabular}{l | p{3cm} | c}
-    \hline
-    \hline
-        Nuclei & Isotopes & Source \\
-        \hline\hline
-        He & 4 & \cite{PhysRevC.68.041001,shirokov2016n3lo}\\
-        C  & 12 &  \cite{cohen1965effective,PhysRevC.68.041001,shirokov2016n3lo}\\
-        F & 19 & \cite{PhysRevC.74.034315}\\
-        Si & 28, 29 & \cite{PhysRevC.74.034315}\\
-        Ar & 40 &  \cite{PhysRevC.86.051301}\\
-        Ge & 70, 72, 73, 74, 76 & \cite{PhysRevC.80.064323} \\
-        I & 127 &  \cite{GCN5082}, used in \cite{PhysRevLett.100.052503,PhysRevC.82.064304}\\ 
-        Xe & 128, 129, 130, 131, 132, 134, 136 & \cite{GCN5082}, used in \cite{PhysRevLett.100.052503,PhysRevC.82.064304} \\
-    \end{tabular}
-    \caption{Table of nuclear data we include with the program. Each corresponds to a (.dres) density matrix file in the dres directory. The source indicates the nuclear Hamiltonian that was used to generate the wave function data. See the manual and GitHub repository 
-    for updates and full information on provenance.}
-    \label{tab:includednuclei}
-\end{table}
+Table of nuclear data we include with the program. Each corresponds to a (.dres) density matrix file in the dres directory. The source indicates the nuclear Hamiltonian that was used to generate the wave function data. See the manual and GitHub repository for updates and full information on provenance.
 
 
 ## Filling core orbitals for phenomenological interactions
@@ -65,17 +49,17 @@ possible cores: He-4, O-16, Ca-40, Ni-56, Sn-100.
 The one-body density matrix elements for the core orbitals are then determined
 from the (full) occupation of the core orbitals. In proton-neutron format:
 
-$$
+\begin{equation}
 \rho_{J,x=p,n}^{\Psi}(a,b)_{(core)} = \delta_{a,b}[j_a][J],
-$$
+\end{equation}
 
 where $[y] \equiv \sqrt{2y+1}$ and $j_a$ is the angular momentum of $a$-orbit.
 $J$ is the total spin of the nuclear target state $\Psi$. And in isospin format
 for a target state with total isospin $T$:
-\begin{align*}
+\begin{align}
     \rho_{J,\tau=0}^{\Psi}(a,b)_{(core)} &= \delta_{a,b} [1/2][j_a][J][T],\\
     \rho_{J,\tau=1}^{\Psi}(a,b)_{(core)} &= 0.0.
-\end{align*}
+\end{align}
 
 ## Nuclear density matrix format
 We adopt the output format from the BIGSTICK shell-model code. The output

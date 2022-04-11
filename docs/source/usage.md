@@ -101,12 +101,12 @@ coefficient value. For example,
 coefnonrel    1    s     3.1
 ```
 would set $c_1^{\tau=0} = 3.1$. We take the isospin convention:
-$$
+\begin{equation}
 		c^0 = c^p + c^n
-$$
-$$
+\end{equation}
+\begin{equation}
 		c^1 = c^p - c^n
-$$
+\end{equation}
 Thus, the previous example is equivalent to:
 ```
 coefnonrel    1    p     1.55

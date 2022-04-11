@@ -12,8 +12,6 @@ numbersections: true
 header-includes: |
     \usepackage{amsmath}
     \usepackage{physics}
-    \def\be{\begin{align}}
-    \def\ee{\end{align}}
 bibliography: source/refs.bib
 csl: source/american-physics-society.csl
 linkcolor: blue
@@ -32,18 +30,13 @@ wrappers with example scripts.
 The code is available on the public 
 [GitHub repository](https://github.com/ogorton/dmfortfactor).
 
-This program is principally concerned with computing the dark matter-nucleus
-differential event rate as a function of the nuclear recoil energy $E_R$:
-$$
-\frac{dR_D}{dE_R}
-	= N_T\frac{\rho_\chi}{m_\chi}\int_{v_{min}}^{v_{escape}}
-	\frac{2m_T}{4\pi v^2}\frac{1}{2j_\chi+1}\frac{1}{2j_T+1}
-	\sum_{spins}|\mathcal{M}(v,q)|^2  \tilde{f}(\vec{v})vd^3v
-$$
-This quantity has units of events/GeV and is implicitly multiplied by
-an effective exposure of 1 Kilogram-Day of target nuclei. This is done by
-taking $N_t = 1\ kilogram\cdot day / m_T$, where $m_T$ is the mass of the target
-nucleus in GeV. Recoil energies $E_R$ are given in keV.
+The key product of the code is the differential event rate for WIMP-nucleus scattering events in number of events per MeV. This is obtained by integrating the differential WIMP-nucleus cross section over the velocity distribution of the WIMP-halo in the galactic frame:
+\begin{equation}\label{ER}
+	\frac{dR}{dE_r}(E_r)
+	 = N_T n_\chi \int \frac{d\sigma}{dE_r}(v,E_r)\ \tilde{f}(\vec{v})\ v\ d^3v,
+\end{equation}
+where $E_r$ is the recoil energy of the WIMP-nucleus scattering event, $N_T$ is the number of target nuclei, $n_\chi = \rho_\chi/m_\chi$ is the local dark matter number density, $\sigma$ is the WIMP-nucleus cross section.  The dark matter velocity distribution in the lab frame,
+$\tilde{f}(\vec{v})$, is obtained by boosting the Galactic-frame distribution $f(\vec{v})$: $\tilde{f}(\vec{v}) = f(\vec{v} + \vec{v}_{earth})$, where $\vec{v}_{earth}$ is the velocity of the earth in the galactic rest frame. 
 
 ## SuperQuickstart guide
 

@@ -6,7 +6,7 @@ header-includes: |
 
 # Details of computation
 
-We present the aligns necessary to reproduce the code. For a more complete
+We present the equations necessary to reproduce the code. For a more complete
 description of the theory, see[@PhysRevC.89.065501].
 
 ## Differential event rate
@@ -14,19 +14,20 @@ description of the theory, see[@PhysRevC.89.065501].
 The main computation of the code is the differential event rate for WIMP-nucleus
 scattering events. This is obtained by integrating the differential WIMP-nucleus
 cross section over the velocity distribution of the WIMP-halo in the galactic
-frame: 
-\begin{align}\label{ER}
+frame: \begin{equation}\label{ER}
+\begin{split}
 	\frac{dR}{dE_r}(E_r)
 	 = N_T n_\chi \int_{v_{min}}^{\infty} \frac{d\sigma}{dE_r}(v,E_r)\ \tilde{f}(\vec{v})\ v\ d^3v,
-\end{align}
+\end{split}
+\end{equation}
 where $E_r$ is the recoil energy of the WIMP-nucleus scattering event, $N_T$ is
 the number of target nuclei, $n_\chi = \rho_\chi/m_\chi$ is the local dark
 matter number density, $\sigma$ is the WIMP-nucleus cross section.  The dark
 matter velocity distribution in the lab frame, $\tilde{f}(\vec{v})$, is obtained
 by boosting the Galactic-frame distribution $f(\vec{v})$:
-\begin{align}
+\begin{equation}
     \tilde{f}(\vec{v}) = f(\vec{v} + \vec{v}_E),
-\end{align} 
+\end{equation} 
 where $\vec{v}_{E}$ is the velocity of the earth in the galactic rest frame.
 
 ## Standard Halo Model
@@ -34,27 +35,27 @@ where $\vec{v}_{E}$ is the velocity of the earth in the galactic rest frame.
 There are many models for the dark matter distributions of galaxies
 [@RevModPhys.85.1561].  We provide the simplest model, a three-dimensional
 Maxwell-Boltzmann distribution,
-\begin{align}
+\begin{equation}
 	f(\vec{v}) \propto e^{-\vec{v}^2/v_0^2},
-\end{align}
+\end{equation}
 where $v_0$ is some scaling factor (typically taken to be around $220$ km/s).
 This is called the Simple Halo Model (SHM) when a maximum value of the speed,
 due to the galactic escape velocity $v_{escape}$, is taken into account
 [@PhysRevD.33.3495; @PhysRevD.37.3388]:
-\begin{align}
+\begin{equation}
     f_{SHM}(\vec{v}) = \frac{\Theta(v_{esc}-|\vec{v}|)}{\pi^{3/2}v_0^3N_{esc}} 
     e^{-(\vec{v}/v_0)^2},
-\end{align}
+\end{equation}
 where $N_{esc}$ renormalizes due to the cutoff:
-\begin{align}
+\begin{equation}
     N_{esc} = erf{(v_{esc}/v_0)} - \frac{2v_{esc}}{\sqrt{\pi}v_0}
     \exp{-(v_{esc}/v_0)^2}.
-\end{align}
+\end{equation}
 With this distribution, the integral in the differential
 event-rate has the form: 
-\begin{align}
+\begin{equation}
     I_{MB} = \int_{\Omega} d^3v \frac{d\sigma(v,q)}{d{q}^2}\ v\ e^{-(\vec{v}+\vec{v}_E)^2/v_0^2},
-\end{align}
+\end{equation}
 where the constraint $\Omega$ is that $v_{min}^2<(\vec{v}+\vec{v}_E)^2<v_{esc}^2$.
 
 To reduce to a one-dimensional integral, we make the conversion to spherical
@@ -65,31 +66,31 @@ between the two vectors, we make the substitution $d^3v = d\phi d(\cos \theta)
 v^2 dv$. 
 
 It can be shown that[^integral]:
-\begin{align}
+\begin{equation}
     \int_{(\vec{v}+\vec{v}_E)^2<v_{esc}^2} d^3v = \int_0^{2\pi}d\phi \left[
     \int_0^{v_{esc}-v_E}v^2dv\int_{-1}^{+1}d\cos{\theta} 
     + \int_{v_{esc}-v_E}^{v_{esc}+v_E}v^2dv\int_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos{\theta}\right].
-\end{align}
+\end{equation}
 Making the physically justified assumption that $v_{esc}-v_E > v_{min}$, we can
 simply shift the limit on the first integral from $0$ to $v_{min}$. Along the
 way we will need to work out the angular integrals:
-\begin{align}
+\begin{equation}
 \int_{-1}^{+1}d\cos{\theta} e^{-2vv_E\cos\theta/v_0^2}=
 -\frac{v_0^2}{2vv_E}\left(e^{-2vv_E/v_0^2}-e^{2vv_E/v_0^2}\right);
-\end{align}
-\begin{align}
+\end{equation}
+\begin{equation}
 \int_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos\theta e^{-2vv_E\cos\theta/v_0^2}=
 -\frac{v_0^2}{2vv_E}\left(e^{-(v_{esc}^2-v^2-v_E^2)/v_0^2}-e^{2vv_e/v_0^2}\right).
-\end{align}
+\end{equation}
 Combining all of this together, and simplifying, we obtain a one-dimensional
 integral which we can evaluate with quadrature:
-\begin{align}
+\begin{equation}
 I_{MB} = \int_{v_{min}}^{v_{esc}+v_E} dv\ \frac{d\sigma(v,q)}{d{q}^2} v^2 \frac{\pi v_0^2}{v_e} \left\{ \Theta_{v<v_{esc}-v_e}\left[g(v-v_E)-g(v+v_E)\right] + \Theta_{v>v_{esc}-v_E}\left[g(v-v_E)-g(v_{esc})\right]\right\},
-\end{align}
+\end{equation}
 where 
-\begin{align}
+\begin{equation}
 g(v) = \exp(-v^2/v_0^2).
-\end{align}
+\end{equation}
 
 
 [^integral]: This can be deduced from a geometrical argument: Imagine
@@ -115,9 +116,9 @@ a particular form for the WIMP-nucleus cross section.
 The limits of the integral, $v_{min}$ and $v_{esc}$, have physical constraints.
 The minimum speed is defined by the minimum recoil energy of a WIMP-nucleus
 collision at a momentum transfer $q$: 
-\begin{align} 
+\begin{equation} 
 v_{min} = q/(2\mu_T),
-\end{align} where
+\end{equation} where
 $\mu_T=m_Tm_\chi/(m_T+m_\chi)$ is the reduced mass of the WIMP-nucleus system.
 To use the simple Maxwell-Bolztmann distribution approximation, the maximum
 speed is taken to be $\infty \approx 12 \times v_{0}$. Otherwise, the maximum
@@ -126,12 +127,12 @@ speed is taken to be the galactic escape velocity: $v_{esc} \approx 550$ km/s.
 Note that as a function of momentum $q$, the integral is guarenteed to go to
 zero above some maximum momentum $q_{max}$. This happens when $v_{min} =
 v_{max}+v_{earth}$, which corresponds to:
-\begin{align}
+\begin{equation}
 q_{max} = 2\mu_T (v_{max}+v_{earth}),
-\end{align}
-\begin{align}
+\end{equation}
+\begin{equation}
 E_{R,max} = q_{max}^2/2m_T = 2\mu_T^2v_{max}^2/m_T.
-\end{align}
+\end{equation}
 With 150 GeV WIMPs and $^{29}$Si, for example, $\mu_T=23.031916$ GeV,
 $m_T=27.209888$ GeV, $v_{max}=550$ km/s $=0.001834602$ GeV/c:
 $E_{R,max} = 265.2987$ keV.
@@ -145,22 +146,22 @@ $E_{R,max} = 265.2987$ keV.
 ## Smooth SHM
 This distribution appears in the Mathematica code DMFormFactor under the name 
 "MBcutoff". It is simply a smoothed version of the SHM. The distribution is:
-\begin{align}
+\begin{equation}
     f_{sSHM}(\vec{v}) = \frac{\Theta(v_{esc}-|\vec{v}|)}
         {N_{esc}\pi^{3/2}v_0^3}
         \left\{\exp[-(\vec{v}/v_0)^2] - \exp[-(v_{esc}/v_0)^2] \right\}.
-\end{align}
+\end{equation}
 Thbeginormalization factor is:
-\begin{align}
+\begin{equation}
     N_{sesc} = erf(z) - \frac{2}{\sqrt{\pi}}z(1+\frac{2}{3}z^2)e^{-z^2},
-\end{align}
+\end{equation}
 $z=v_{esc}/v_0$.
 This essentially just adds an additional term to the integral $I_{MB}$, which we
 will call $I_{S}$, so that $I=(I_{MB}-I_{S})/N_{sesc}$. Following the same steps
 as for $I_{MB}$, we find that 
-\begin{align}
+\begin{equation}
 I_{S} = \int_{v_{min}}^{v_{esc}+v_E} dv\ \frac{d\sigma(v,q)}{d{q}^2} v^2 2\pi g(v_{esc})\left[\Theta_{v<v_{esc}-v_e} 2v + \Theta_{v>v_{esc}-v_e} \frac{1}{2v_E}(v_{esc}^2-(v-v_E)^2)\right]
-\end{align}
+\end{equation}
 
 ## More Sophisticated Halo Models
 The SHM is actually not a very good model. For example, it ignores the annual
@@ -175,9 +176,9 @@ A semi-recent review on the subject can be found here[@RevModPhys.85.1561].
 
 The differential scattering cross section is directly related to the scattering
 transition probabilities $T(v,q(E_r))$: 
-\begin{align}
+\begin{equation}
     \frac{d\sigma}{dE_r}(v,E_r) = 2m_t\frac{d\sigma}{dq^2}(v,q) = 2m_T\frac{1}{4\pi v^2} T(v,q).
-\end{align} 
+\end{equation} 
 The momentum transfer $q$ is directly related to the recoil energy by
 $q^2=2m_tE_r$, where $m_t$ is the mass of the target nucleus in GeV$/c^2$.
 
@@ -186,22 +187,22 @@ $q^2=2m_tE_r$, where $m_t$ is the mass of the target nucleus in GeV$/c^2$.
 
 The WIMP-nucleus scattering event probabilities are computed as a sum of squared
 nuclear-matrix-elements:
-\begin{align}
+\begin{equation}
     T(v,q) = \frac{1}{2j_\chi +1}\frac{1}{2j_T+1} \sum_{M_i M_f} \left |\bra{j_TM_f} \mathcal{H} \ket{j_TM_i}\right |^2.
-\end{align}
+\end{equation}
 Here $v$ is the speed of the WIMP in the lab frame, $q$ is the momentum
 transferred in the collision, and $j_\chi$ and $j_T$ are the intrinsic spins of
 the WIMP and target nucleus, respectively, while  $\mathcal{H}$ is the
 WIMP-nucleus interaction,
-\begin{align}
+\begin{equation}
     \mathcal{H} = \sum_i\sum_{x=p,n}c_i^x\mathcal{O}_i^x.
-\end{align}
+\end{equation}
 given in terms of 15 non-relativistic operators $\mathcal{O}_i$. The sum over
 $x$ indicates the separate coupling to protons and neutrons. These operators,
 listed in \ref{sec: EFT}, are those  constructed to leading order from
-\begin{align}
+\begin{equation}
     i\frac{\vec{q}}{m_N},\ \vec{v}^\perp,\ \vec{S}_\chi,\ \vec{S}_N.
-\end{align}
+\end{equation}
 
 The transition probability is ultimately factorized to group the operators into
 forms familiar from electro-weak theory in a shell model framework
@@ -210,44 +211,44 @@ the EFT content, labeled $R_i^{x,x'}$, and another containing the nuclear
 response functions, labeled $W_i^{x,x'}$ for each of the $i=1,...,8$ allowed
 combinations of electro-weak-theory operators, discussed in the next section.
 One obtains the following form[@Fitzpatrick_2013;@Anand_2014]:
-\begin{align}
+\begin{equation}
     T(v,q) = \frac{4\pi}{(4m_T)^2} \frac{1}{2j_T+1} \sum_{x=p,n}\sum_{x'=p,n}\sum_{i=1}^8 R_i^{x,x'}(v^2,q^2)W_i^{x,x'}(q).
-\end{align}
+\end{equation}
 
 ## Dark matter response functions
-\begin{align}
+\begin{equation}
    R_{M}^{xx'}(v,q) = \frac{1}{4}cl(j_\chi) [ v^{\perp 2} (c_5^{x}c_5^{x'}q^2 + c_8^{x}c_8^{x'}) + c_{11}^{x}c_{11}^{x'}q^2 ]\\
     + (c_1^{x} + c_2^{x}v^{\perp 2} ) (c_1^{x'} + c_2^{x'}v^{\perp 2} )  
-\end{align}
+\end{equation}
  
-\begin{align}             
+\begin{equation}             
 R_{\Sigma''}^{xx'}(v,q) = \frac{1}{16}cl(j_\chi) [c_6^{x}c_6^{x'}q^4 + (c_{13}^{x}c_{13}^{x'}q^2 + c_{12}^{x} c_{12}^{x'} ) v^{\perp 2}\\
     + 2c_4^xc_6^{x'}q^2 + c_4^xc_4^{x'}] + \frac{1}{4}c_{10}^xc_{10}^{x '}q^2
-\end{align}    
-\begin{align}    
+\end{equation}    
+\begin{equation}    
 R_{\Sigma'}^{xx'}(v,q) = \frac{1}{32} cl(j_\chi) [ 2c_{9}^{x}c_{9}^{x'}q^2 + ( c_{15}^{x}c_{15}^{x'}q^4 + c_{14}^{x}c_{14}^{x'}q^2 \\
     - 2c_{12}^{x}c_{15}^{x'} q^2 + c_{12}^{x}c_{12}^{x'}) v^{\perp 2} + 2c_{4}^{x}c_{4}^{x'} ]\\
     +\frac{1}{8}(c_{3}^{x}c_3^{x'}q^2 + c_{7}^{x}c_{7}^{x'})v^{\perp 2}
-\end{align}        
-\begin{align}        
+\end{equation}        
+\begin{equation}        
 R_{\Phi''}^{xx'}(v,q) = \frac{q^2}{16m_N^2}cl(j_\chi) (c_{12}^x - c_{15}^{x}q^2)(c_{12}^{x '}-c_{15}^{x '}q^2 ) \\
     + \frac{q^4}{4m_N^2}c_3^x c_3^{x'} 
-\end{align}    
-\begin{align}    
+\end{equation}    
+\begin{equation}    
 R_{\tilde{\Phi}'}^{xx'}(v,q) = \frac{q^2}{16m_N^2}cl(j_\chi)(c_{13}^xc_{13}^{x'}q^2 + c_{12}^x c_{12}^{x'})
-\end{align}        
-\begin{align}        
+\end{equation}        
+\begin{equation}        
 R_{\Delta}^{xx'}(v,q) = \frac{q^2}{4m_N^2}cl(j_\chi) (c_{5}^{x}c_{5}^{x'}q^2 + c_{8}^{x}c_{8}^{x'}) \\
     + 2\frac{q^2}{m_N^2}c_{2}^{x}c_{2}^{x'}v^{\perp 2}
-\end{align}        
-\begin{align}        
+\end{equation}        
+\begin{equation}        
 R_{\Sigma' \Delta}^{xx'}(v,q) = \frac{q^2}{4m_N}cl(j_\chi) (c_{4}^{x}c_{5}^{x'} - c_{8}^{x}c_{9}^{x'}) - \frac{q^2}{m_N} c_{2}^{x}c_{3}^{x'} v^{\perp 2}
-\end{align}        
-\begin{align}        
+\end{equation}        
+\begin{equation}        
 R_{M\Phi''}^{xx'}(v,q) = \frac{q^2}{4m_N}cl(j_\chi)c_{11}^{x} (c_{12}^{x'} - c_{15}^{x'} q^2) \\
     + \frac{q^2}{m_N}c_{3}^{x'}  (c_{1}^{x} + c_{2}^{x} v^{\perp 2})
-\end{align}        
-It should be noted that the last two dark matter responses are composed entirely of interference terms, which is to say, they do not come into play unless certain combinations  of EFT coefficients are simultaneously active. For example, $c_4$ and $c_5$ together will activate $R_{\Sigma' \Delta}$, but not alone.
+\end{equation}        
+It should be noted that the last two dark matter responses are composed entirely of interference terms, which is to say, they do not come into play unless certain combinations  of EFT coefficients are simultaneously active. These are the coefficient pairs listed in Section \ref{validate}. For example, $c_4$ and $c_5$ together will activate $R_{\Sigma' \Delta}$, but not alone.
 
 ## Operators
 The WIMP-nucleus interaction is defined by the user in terms of an effective
@@ -257,9 +258,9 @@ neutrons individually.
 
 The code uses the EFT coefficients in explicit proton-neutron couplings, i.e.
 the interaction is defined by:
-\begin{align}
+\begin{equation}
     \mathcal{H} = \sum_{x=p,n}\sum_{i=1,15} c^x_i \mathcal{O} _i
-\end{align}
+\end{equation}
 and the 15 momentum-dependent operators are:
 
 \begin{align}
@@ -300,28 +301,28 @@ The EFT physics has been grouped into eight WIMP response functions
 $R_i^{x,x'}$, and eight nuclear response functions $W_i^{x,x'}$.
 The first six nuclear response functions have
 the following form:
-\begin{align}
+\begin{equation}
     W_{X}^{x,x'} = \sum_{J}\bra{\Psi} X^{x}_J \ket{\Psi}\bra{\Psi} X^{x'}_J \ket{\Psi},
-\end{align}
+\end{equation}
 with $X$ selecting one of the six electroweak operators,
-\begin{align}
+\begin{equation}
     X_J=M_J, \Delta_J, \Sigma_J', \Sigma_J'', \tilde{\Phi}_J', \Phi_J'',
-\end{align}
+\end{equation}
 and $\Psi$ being the nuclear wave function for the ground state of the target
 nucleus.  The sum over operators spins $J$ is restricted to even or odd values
 of $J$, depending on restrictions from conservation of parity and charge
 conjugation parity (CP) symmetry.
 
 Two additional response functions add interference-terms:
-\begin{align}
+\begin{equation}
 W_{M\Phi''}^{x,x'} =
 \sum_{J}\bra{\Psi} M_{J}^{x} \ket{\Psi}\bra{\Psi} \Phi_{J}^{''x'} \ket{\Psi},
-\end{align}
-\begin{align}
+\end{equation}
+\begin{equation}
 W_{\Delta\Sigma'}^{x,x'} = 
 \sum_{J}\bra{\Psi} \Sigma_{J}^{'x} \ket{\Psi}\bra{\Psi} \Delta_{J}^{x'} \ket{\Psi}.
-\end{align}
-The indices $i$ in align (\ref{eq:T2}) correspond to these operators as:
+\end{equation}
+The indices $i$ in equation (\ref{eq:T2}) correspond to these operators as:
 $i\to X$ for $i=1,..,6$, and $i=7 \to M\Phi''$, $i=8\to \Delta\Sigma'$.
 
 DMFortFactor can print the nuclear form factors to a file over a range of either
@@ -332,34 +333,36 @@ There are six parity-and-CP-conserving nuclear operators, $M_J, \Delta_J,
 \Sigma_J', \Sigma_J'', \tilde{\Phi}_J', \Phi_J''$, describing the electro-weak
 coupling of the WIMPs to the nucleon degrees of freedom.  These are constructed
 from Bessel spherical and vector harmonics[@DONNELLY1979103]:
-\begin{align}
+\begin{equation}
     M_{JM}(q\vec{x})\equiv j_J(qx)Y_{JM}(\Omega_x)
-\end{align}
-\begin{align}
+\end{equation}
+\begin{equation}
     \vec{M}_{JML}(q\vec{x}) \equiv j_L(qx) \vec{Y}_{JLM}(\Omega_x),
-\end{align}
+\end{equation}
 where, using unit vectors $\vec{e}_{\lambda = -1, 0, +1}$,
-\begin{align}
+\begin{equation}
     Y_{JLM}(\Omega_x) = \sum_{m\lambda} \bra{Lm1\lambda}\ket{(L1)JM_J} Y_{Lm}(\Omega_x)\vec{e}_\lambda.
-\end{align}
+\end{equation}
 The six multipole operators are defined as:
-\begin{align}
+\begin{equation}
+\begin{split}
 M_{JM}\ \ &\\
 \Delta_{JM} \equiv& \vec{M}_{JJM}\cdot \frac{1}{q}\vec{\nabla}\\
 \Sigma'_{JM} \equiv& -i \left \{\frac{1}{q}\vec{\nabla}\times \vec{M}_{JJM}  \right\}\cdot \vec{\sigma}\\
 \Sigma''_{JM} \equiv& \left \{ \frac{1}{q}\vec{\nabla}M_{JM} \right \}\cdot \vec{\sigma}\\
 \tilde{\Phi}'_{JM} \equiv& \left( \frac{1}{q} \vec{\nabla} \times \vec{M}_{JJM}\right)\cdot \left(\vec{\sigma}\times \frac{1}{q}\vec{\nabla} \right) + \frac{1}{2}\vec{M}_{JJM}\cdot \vec{\sigma}\\
 \Phi''_{JM}\equiv& i\left(\frac{1}{q}\vec{\nabla}M_{JM} \right)\cdot \left(\vec{\sigma}\times \frac{1}{q}\vec{\nabla} \right)
-\end{align}
+\end{split}
+\end{equation}
 
 The matrix elements of these operators can be calculated for standard wave
 functions from second-quantized shell model calculations:
-\begin{align}
+\begin{equation}
     \bra{\Psi_f} X_J \ket{\Psi_i} = \Tr(X_J \rho^{f,i}_J )
-\end{align}
-\begin{align}
+\end{equation}
+\begin{equation}
  = \sum_{a,b} \bra{a} |X_J| \ket{b} \rho^{fi}_J(ab),
-\end{align}
+\end{equation}
 where single-particle orbital labels $a$ imply shell model quantum number $n_a,
 l_a, j_a$, and the double-bar $||$ indicates reduced matrix
 elements[@edmonds1996angular]. For elastic collisions, only the ground
@@ -376,10 +379,10 @@ functions[@DONNELLY1979103].
 
 The nuclear structure input is in the form of one-body density matrices between
 many-body eigenstates,
-\begin{align}
+\begin{equation}
 \rho^{fi}_J(ab) = \frac{1}{\sqrt{2J+1} }\langle \Psi_f || [ \hat{c}^\dagger_a \otimes \tilde{c}_b ]_J
 || \Psi_i \rangle, \label{eqn:denmat}
-\end{align}
+\end{equation}
 where $\hat{c}^\dagger_a$ is the fermion creation operator (with good angular
 momentum quantum numbers), $\tilde{c}_b$ is the
 time-reversed[@edmonds1996angular] fermion destruction operator.  Here the
@@ -392,22 +395,22 @@ one-body density matrices, appropriately formatted, from any many-body code.
 ## Electroweak matrix elements
 To compute the matrix elements of the electroweak operators in a harmonic
 oscillator basis, we use the derivations from[@DONNELLY1979103]. Namely,
-aligns (1a) - (1f) and (3a) - (3d), which express the necessary geometric
+equations (1a) - (1f) and (3a) - (3d), which express the necessary geometric
 matrix elements in terms of matrix elements of the spherical Bessel functions.
 Here, we write out the remaining explicit formulas for obtaining matrix elements
 of the Bessel functions $j_L(y)$ in a harmonic oscillator basis in terms of the
 confluent hypergeometric function:
-\begin{align}
+\begin{equation}
     _1F_1(a,b,z) = \sum_{n=0}^\infty \frac{a^{(n)}z^n}{b^{(n)}n!},
-\end{align}
+\end{equation}
 which makes use of the rising factorial function:
-\begin{align}
+\begin{equation}
     m^{(n)} = \frac{(m+n-1)!}{(m-1)!}.
-\end{align}
+\end{equation}
 
 The first additional relation is computed in DMFortFactor by the function
 `BesselElement`:
-\begin{align}
+\begin{equation}
 \bra{n'l'j'} j_L(y) \ket{nlj} = \frac{2^L}{(2L+1)!!} y^{L/2} e^{-y}
     \sqrt{(n'-1)!(n-1)!}
     \sqrt{\Gamma(n'+l'+1/2)\Gamma(n+l+1/2)}\\
@@ -417,9 +420,9 @@ The first additional relation is computed in DMFortFactor by the function
     \times
     \frac{\Gamma[(l+l'+L+2m+2m'+3)/2]}{\Gamma(l+m+3/2)\Gamma(l'+m'+3/2)}
     \ _1F_1[(L-l'-l-2m'-2m)/2; L+3/2; y].
-\end{align}
+\end{equation}
 The two additional relations are needed. As computed by `BesselElementMinus`:
-\begin{align}
+\begin{equation}
 \bra{n'l'j'} j_L(y) (\frac{d}{dy}-\frac{l}{y}) \ket{nlj}
     = \frac{2^(L-1)}{(2L+1)!!} y^{(L-1)/2} e^{-y}
     \sqrt{(n'-1)!(n-1)!}
@@ -431,9 +434,9 @@ The two additional relations are needed. As computed by `BesselElementMinus`:
     \times
     \Big\{ -\frac{1}{2}(l+l'+L+2m+2m'+2)\ _1F_1[(L-l'-l-2m'-2m-1)/2; L+3/2; y]\\
     + 2m\ _1F_1[(L-l'-l-2m'-2m+1)/2; L+3/2; y] \Big\}.
-\end{align}
+\end{equation}
 As computed by `BesselElementPlus`:
-\begin{align}
+\begin{equation}
 \bra{n'l'j'} j_L(y) (\frac{d}{dy}+\frac{l}{y}) \ket{nlj}
     = \frac{2^(L-1)}{(2L+1)!!} y^{(L-1)/2} e^{-y}
     \sqrt{(n'-1)!(n-1)!}
@@ -445,7 +448,7 @@ As computed by `BesselElementPlus`:
     \times
     \Big\{ -\frac{1}{2}(l+l'+L+2m+2m'+2)\ _1F_1[(L-l'-l-2m'-2m-1)/2; L+3/2; y]\\
     + (2l+2m+1)\ _1F_1[(L-l'-l-2m'-2m+1)/2; L+3/2; y] \Big\}.
-\end{align}
+\end{equation}
 
 All remaining electroweak matrix elements can be computed in terms of these
 Bessel elements, combined with vector coupling coefficients, etc., as layed out
@@ -471,52 +474,54 @@ with the keywords `sj2tablemin` and `sj2tablemax`.
 
 For the 3-j symbol, we use the relation to the Clebsh-Gordon vector-coupling
 coefficients:
-\begin{align}
+\begin{equation}
     \begin{pmatrix}
         j_1 & j_2 & J\\
         m_1 & m_1 & M
     \end{pmatrix}
     = (-1)^{j_1-j_2-M}(2J+1)^{-1/2}
     (j_1j_2m_1m_2 | j_1 j_2; J, -M).
-\end{align}
+\end{equation}
 The vector coupling coefficients are computed as:
-\begin{align}
+\begin{equation}
     (j_1j_2  m_1m_2 | j_1 j_2; J, M) = \delta(m_1+m_1,m) (2J+1)^{1/2}\Delta(j_1j_2J)\\
      \times[(j_1+m_1)(j_1-m_1)(j_2+m_2)(j_2-m_2)(J+M)(J-M)]^{1/2}\sum_z (-1)^z \frac{1}{f(z)},
-\end{align}
+\end{equation}
 where
-\begin{align}
+\begin{equation}
     f(z) = z!(j_1+j_2-J-z)!(j_1-m_2-z)!
     (j_2+m_2-z)!(J-j_2+m_1+z)!(J-m_1-m_2+z)!,
-\end{align}
+\end{equation}
 and
-\begin{align}
+\begin{equation}
     \Delta(abc) = \left[\frac{(a+b-c)!(a-b+c)!(-a+b+c)!}{(a+b+c+1)!} \right]^{1/2}.
-\end{align}
+\end{equation}
 The sum over $z$ is over all integers such that the factorials are well-defined
 (non-negative-integer arguments).
 
 Similarly, for the 6-j symbols:
-\begin{align}
+\begin{equation}
     \begin{Bmatrix}
         j_1 & j_2 & j_3\\
         m_1 & m_1 & m_3
     \end{Bmatrix}
     = \Delta(j_1j_2j_3)\Delta(j_1m_2m_3)\Delta(m_1j_2m_3)
      \Delta(m_1m_2j_3) \sum_z (-1)^z\frac{(z+1)!}{g(z)},
-\end{align}
+\end{equation}
 with
 $g(z) = (\alpha - z)!(\beta-z)!(\gamma-z)!(z-\delta)!(z-\epsilon)!(z-\zeta)!(z-\eta)!$ 
 and
-\begin{align}
+\begin{equation}
+\begin{split}
     \alpha &= j_1+j_1+m_1+m_2 & \beta  &= j_2+j_3+m_2+m_3\\
     \gamma &= j_3+j_1+m_3+m_1 \\
     \delta &= j_1+j_2+j_3 & \epsilon &= j_1+m_2+m_3 \\
     \zeta &= m_1+j_2+m_3 & \eta &= m_1+m_2+j_3.
-\end{align}
+\end{split}
+\end{equation}
 
 For the 9-j symbol, we use the relation to the 6-j symbol:
-\begin{align}
+\begin{equation}
     \begin{Bmatrix}
         j_1 & j_2 & j_3\\
         j_4 & j_5 & j_6\\
@@ -535,7 +540,7 @@ For the 9-j symbol, we use the relation to the 6-j symbol:
         j_3 & j_6 & j_9\\
         z & j_1 & j_2
       \end{Bmatrix}.        
-\end{align}
+\end{equation}
 The 6-j symbols used to calculate the 9-j symbol are first taken from any
 tabulated values. Otherwise, they are computed as previously described.
 
