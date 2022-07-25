@@ -176,10 +176,10 @@ A semi-recent review on the subject can be found here[@RevModPhys.85.1561].
 The differential scattering cross section is directly related to the scattering
 transition probabilities $T(v,q(E_r))$: 
 \begin{align}
-    \frac{d\sigma}{dE_r}(v,E_r) = 2m_t\frac{d\sigma}{dq^2}(v,q) = 2m_T\frac{1}{4\pi v^2} T(v,q).
+    \frac{d\sigma}{dE_r}(v,E_r) = 2m_T\frac{d\sigma}{dq^2}(v,q) = 2m_T\frac{1}{4\pi v^2} T(v,q).
 \end{align} 
 The momentum transfer $q$ is directly related to the recoil energy by
-$q^2=2m_tE_r$, where $m_t$ is the mass of the target nucleus in GeV$/c^2$.
+$q^2=2m_TE_r$, where $m_T$ is the mass of the target nucleus in GeV$/c^2$.
 
 
 ## Transition probability
@@ -211,7 +211,7 @@ response functions, labeled $W_i^{x,x'}$ for each of the $i=1,...,8$ allowed
 combinations of electro-weak-theory operators, discussed in the next section.
 One obtains the following form[@Fitzpatrick_2013;@Anand_2014]:
 \begin{align}
-    T(v,q) = \frac{4\pi}{(4m_T)^2} \frac{1}{2j_T+1} \sum_{x=p,n}\sum_{x'=p,n}\sum_{i=1}^8 R_i^{x,x'}(v^2,q^2)W_i^{x,x'}(q).
+    T(v,q) = \frac{4\pi}{2j_T+1} \sum_{x=p,n}\sum_{x'=p,n}\sum_{i=1}^8 R_i^{x,x'}(v^2,q^2)W_i^{x,x'}(q).
 \end{align}
 
 ## Dark matter response functions

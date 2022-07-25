@@ -33,6 +33,9 @@
         font-size: 0.9em;
         padding: 1em;
       }
+      h1 {
+        font-size: 1.8em;
+      }
     }
     @media print {
       body {
@@ -137,6 +140,12 @@
     #TOC li {
       list-style: none;
     }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
     #TOC a:not(:hover) {
       text-decoration: none;
     }
@@ -229,105 +238,188 @@
       margin-left: 2em;
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
-  
 </head>
 <body>
 <header id="title-block-header">
 <h1 class="title">User Manual for DMFortFactor</h1>
-<p class="subtitle">A Fast Fortran Code for WIMP-Nucleus Form Factors</p>
+<p class="subtitle">A Fast Fortran Code for WIMP-Nucleus Form
+Factors</p>
 <p class="author">Oliver C. Gorton</p>
 <p class="author">Changfeng Jiao</p>
 <p class="author">Calvin W. Johnson</p>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#introduction">Introduction</a>
+<li><a href="#introduction" id="toc-introduction">Introduction</a>
 <ul>
-<li><a href="#superquickstart-guide">SuperQuickstart guide</a></li>
+<li><a href="#superquickstart-guide"
+id="toc-superquickstart-guide">SuperQuickstart guide</a></li>
 </ul></li>
-<li><a href="#python-interface">Python interface</a>
+<li><a href="#python-interface" id="toc-python-interface">Python
+interface</a>
 <ul>
-<li><a href="#event-rate-spectra">Event rate spectra</a></li>
-<li><a href="#nuclear-response-functions-for-wimpydd">Nuclear response functions for WimPyDD</a></li>
+<li><a href="#event-rate-spectra" id="toc-event-rate-spectra">Event rate
+spectra</a></li>
+<li><a href="#nuclear-response-functions-for-wimpydd"
+id="toc-nuclear-response-functions-for-wimpydd">Nuclear response
+functions for WimPyDD</a></li>
 </ul></li>
-<li><a href="#usage-guide">Usage Guide</a>
+<li><a href="#usage-guide" id="toc-usage-guide">Usage Guide</a>
 <ul>
-<li><a href="#compiling-with-make">Compiling with make</a></li>
-<li><a href="#required-files">Required files</a>
+<li><a href="#compiling-with-make"
+id="toc-compiling-with-make">Compiling with make</a></li>
+<li><a href="#required-files" id="toc-required-files">Required files</a>
 <ul>
-<li><a href="#control-file">Control file</a></li>
-<li><a href="#nuclear-density-matrix-file-.dres">Nuclear density matrix file (.dres)</a></li>
+<li><a href="#control-file" id="toc-control-file">Control file</a></li>
+<li><a href="#nuclear-density-matrix-file-.dres"
+id="toc-nuclear-density-matrix-file-.dres">Nuclear density matrix file
+(.dres)</a></li>
 </ul></li>
-<li><a href="#command-line-interface">Command-line interface</a></li>
-<li><a href="#compute-options-explained">Compute options explained</a></li>
+<li><a href="#command-line-interface"
+id="toc-command-line-interface">Command-line interface</a></li>
+<li><a href="#compute-options-explained"
+id="toc-compute-options-explained">Compute options explained</a></li>
 </ul></li>
-<li><a href="#nuclear-structure-input">Nuclear Structure Input</a>
+<li><a href="#nuclear-structure-input"
+id="toc-nuclear-structure-input">Nuclear Structure Input</a>
 <ul>
-<li><a href="#filling-core-orbitals-for-phenomenological-interactions">Filling core orbitals for phenomenological interactions</a></li>
-<li><a href="#nuclear-density-matrix-format">Nuclear density matrix format</a></li>
+<li><a href="#filling-core-orbitals-for-phenomenological-interactions"
+id="toc-filling-core-orbitals-for-phenomenological-interactions">Filling
+core orbitals for phenomenological interactions</a></li>
+<li><a href="#nuclear-density-matrix-format"
+id="toc-nuclear-density-matrix-format">Nuclear density matrix
+format</a></li>
 </ul></li>
-<li><a href="#details-of-computation">Details of computation</a>
+<li><a href="#details-of-computation"
+id="toc-details-of-computation">Details of computation</a>
 <ul>
-<li><a href="#differential-event-rate">Differential event rate</a></li>
-<li><a href="#standard-halo-model">Standard Halo Model</a></li>
-<li><a href="#smooth-shm">Smooth SHM</a></li>
-<li><a href="#more-sophisticated-halo-models">More Sophisticated Halo Models</a></li>
-<li><a href="#differential-cross-section">Differential cross section</a></li>
-<li><a href="#transition-probability">Transition probability</a></li>
-<li><a href="#dark-matter-response-functions">Dark matter response functions</a></li>
-<li><a href="#operators">Operators</a></li>
-<li><a href="#nuclear-response-functions">Nuclear response functions</a></li>
-<li><a href="#nuclear-electroweak-operators">Nuclear (electroweak) operators</a></li>
-<li><a href="#electroweak-matrix-elements">Electroweak matrix elements</a></li>
-<li><a href="#wigner-vector-coupling-functions">Wigner vector coupling functions</a></li>
-<li><a href="#unique-couplings">Unique couplings</a></li>
+<li><a href="#differential-event-rate"
+id="toc-differential-event-rate">Differential event rate</a></li>
+<li><a href="#standard-halo-model" id="toc-standard-halo-model">Standard
+Halo Model</a></li>
+<li><a href="#smooth-shm" id="toc-smooth-shm">Smooth SHM</a></li>
+<li><a href="#more-sophisticated-halo-models"
+id="toc-more-sophisticated-halo-models">More Sophisticated Halo
+Models</a></li>
+<li><a href="#differential-cross-section"
+id="toc-differential-cross-section">Differential cross section</a></li>
+<li><a href="#transition-probability"
+id="toc-transition-probability">Transition probability</a></li>
+<li><a href="#dark-matter-response-functions"
+id="toc-dark-matter-response-functions">Dark matter response
+functions</a></li>
+<li><a href="#operators" id="toc-operators">Operators</a></li>
+<li><a href="#nuclear-response-functions"
+id="toc-nuclear-response-functions">Nuclear response functions</a></li>
+<li><a href="#nuclear-electroweak-operators"
+id="toc-nuclear-electroweak-operators">Nuclear (electroweak)
+operators</a></li>
+<li><a href="#electroweak-matrix-elements"
+id="toc-electroweak-matrix-elements">Electroweak matrix
+elements</a></li>
+<li><a href="#wigner-vector-coupling-functions"
+id="toc-wigner-vector-coupling-functions">Wigner vector coupling
+functions</a></li>
+<li><a href="#unique-couplings" id="toc-unique-couplings">Unique
+couplings</a></li>
 </ul></li>
-<li><a href="#control-file-keywords">Control file keywords</a></li>
-<li><a href="#references">References</a></li>
-<li><a href="#update-log">Update log</a></li>
+<li><a href="#control-file-keywords"
+id="toc-control-file-keywords">Control file keywords</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </nav>
 <h1 id="introduction">Introduction</h1>
-<p>We present here a fast modern Fortran code, DMFortFactor, for computing WIMP-nucleus scattering event rates using a previously studied theoretical framework<span class="citation" data-cites="PhysRevC.89.065501 Fitzpatrick_2013"> [<a href="#ref-PhysRevC.89.065501" role="doc-biblioref">1</a>,<a href="#ref-Fitzpatrick_2013" role="doc-biblioref">2</a>]</span>, now with advanced algorithmic and numerical implementation, including the ability to take advantage of multi-core CPUs. Furthermore, we enhance accessibility by including Python wrappers with example scripts.</p>
-<p>The code is available on the public <a href="https://github.com/ogorton/dmfortfactor">GitHub repository</a>.</p>
-<p>This program is principally concerned with computing the dark matter-nucleus differential event rate as a function of the nuclear recoil energy <span class="math inline">\(E_R\)</span>: <span class="math display">\[
-\frac{dR_D}{dE_R}
-    = N_T\frac{\rho_\chi}{m_\chi}\int_{v_{min}}^{v_{escape}}
-    \frac{2m_T}{4\pi v^2}\frac{1}{2j_\chi+1}\frac{1}{2j_T+1}
-    \sum_{spins}|\mathcal{M}(v,q)|^2  \tilde{f}(\vec{v})vd^3v
-\]</span> This quantity has units of events/GeV and is implicitly multiplied by an effective exposure of 1 Kilogram-Day of target nuclei. This is done by taking <span class="math inline">\(N_t = 1\ kilogram\cdot day / m_T\)</span>, where <span class="math inline">\(m_T\)</span> is the mass of the target nucleus in GeV. Recoil energies <span class="math inline">\(E_R\)</span> are given in keV.</p>
+<p>We present here a fast modern Fortran code, DMFortFactor, for
+computing WIMP-nucleus scattering event rates using a previously studied
+theoretical framework<span class="citation"
+data-cites="PhysRevC.89.065501 Fitzpatrick_2013"> [<a
+href="#ref-PhysRevC.89.065501" role="doc-biblioref">1</a>,<a
+href="#ref-Fitzpatrick_2013" role="doc-biblioref">2</a>]</span>, now
+with advanced algorithmic and numerical implementation, including the
+ability to take advantage of multi-core CPUs. Furthermore, we enhance
+accessibility by including Python wrappers with example scripts.</p>
+<p>The code is available on the public <a
+href="https://github.com/ogorton/dmfortfactor">GitHub
+repository</a>.</p>
+<p>The key product of the code is the differential event rate for
+WIMP-nucleus scattering events in number of events per MeV. This is
+obtained by integrating the differential WIMP-nucleus cross section over
+the velocity distribution of the WIMP-halo in the galactic frame: <span
+class="math display">\[\begin{equation}\label{ER}
+    \frac{dR}{dE_r}(E_r)
+     = N_T n_\chi \int \frac{d\sigma}{dE_r}(v,E_r)\ \tilde{f}(\vec{v})\
+v\ d^3v,
+\end{equation}\]</span> where <span class="math inline">\(E_r\)</span>
+is the recoil energy of the WIMP-nucleus scattering event, <span
+class="math inline">\(N_T\)</span> is the number of target nuclei, <span
+class="math inline">\(n_\chi = \rho_\chi/m_\chi\)</span> is the local
+dark matter number density, <span class="math inline">\(\sigma\)</span>
+is the WIMP-nucleus cross section. The dark matter velocity distribution
+in the lab frame, <span
+class="math inline">\(\tilde{f}(\vec{v})\)</span>, is obtained by
+boosting the Galactic-frame distribution <span
+class="math inline">\(f(\vec{v})\)</span>: <span
+class="math inline">\(\tilde{f}(\vec{v}) = f(\vec{v} +
+\vec{v}_{earth})\)</span>, where <span
+class="math inline">\(\vec{v}_{earth}\)</span> is the velocity of the
+earth in the galactic rest frame.</p>
 <h2 id="superquickstart-guide">SuperQuickstart guide</h2>
 <ul>
-<li>Navigate to the <code>build</code> directory from wherever you have stored <code>dmfortfactor/</code></li>
+<li>Navigate to the <code>build</code> directory from wherever you have
+stored <code>dmfortfactor/</code></li>
 <li>Run the command: <code>make openmp</code></li>
-<li>Navigate to the directory <code>runs</code> (e.g. <code>cd ../runs/</code>)</li>
+<li>Navigate to the directory <code>runs</code>
+(e.g. <code>cd ../runs/</code>)</li>
 <li>Run the command: <code>python3 ../examples/exampleXe.py</code></li>
 </ul>
 <p>This should generate Figure 1.</p>
 <figure>
-<embed src="source/exampleXe.pdf" style="width:80.0%" /><figcaption aria-hidden="true">Example output graph.</figcaption>
+<embed src="source/exampleXe.pdf" style="width:80.0%" />
+<figcaption aria-hidden="true">Example output graph.</figcaption>
 </figure>
 <h1 id="python-interface">Python interface</h1>
-<p>We provide a Python interface (a wrapper) for the Fortran code and a number of example scripts demonstrating its use. The wrapper comes with two Python functions <code>EventrateSpectra</code>, and <code>NucFormFactor</code> which can be imported from <code>dmfortfactor.py</code> in the Python directory.</p>
-<p>To include this module in your own code, add the following lines of code:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<p>We provide a Python interface (a wrapper) for the Fortran code and a
+number of example scripts demonstrating its use. The wrapper comes with
+two Python functions <code>EventrateSpectra</code>, and
+<code>NucFormFactor</code> which can be imported from
+<code>dmfortfactor.py</code> in the Python directory.</p>
+<p>To include this module in your own code, add the following lines of
+code:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">&quot;../python&quot;</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dmfortfactor <span class="im">as</span> dm</span></code></pre></div>
-<p>Replace “../python” with the path to the <code>dmfortfactor/python</code> diretory on your system.</p>
+<p>Replace “../python” with the path to the
+<code>dmfortfactor/python</code> diretory on your system.</p>
 <p>Each function has three required arguments:</p>
 <ol type="1">
 <li>Z the number of protons in the target nucleus,</li>
 <li>N the number of neutrons in the target nucleus, and</li>
-<li>The filename for the one-body density matrix file describing the nuclear structure. If no other arguments are provided, default values will be used for all of the remaining necessary parameters, including zero interaction strength.</li>
+<li>The filename for the one-body density matrix file describing the
+nuclear structure. If no other arguments are provided, default values
+will be used for all of the remaining necessary parameters, including
+zero interaction strength.</li>
 </ol>
 <h2 id="event-rate-spectra">Event rate spectra</h2>
-<p>To calculate an event rate with a nonzero interaction, the user should also provide one or more of the optional EFT coupling coefficient arrays: <code>cp, cn, cs, cv</code>. These set the couplings to protons, neutrons, isoscalar, and isovector, respectively. The <span class="math inline">\(0^{th}\)</span> index sets the first operator coefficient: <code>cp[0]</code><span class="math inline">\(= c_1^p\)</span>, etc. Finally, the user can also pass a dictionary of valid control keywords and values to the function in order to set any of the control words defined in the manual.</p>
+<p>To calculate an event rate with a nonzero interaction, the user
+should also provide one or more of the optional EFT coupling coefficient
+arrays: <code>cp, cn, cs, cv</code>. These set the couplings to protons,
+neutrons, isoscalar, and isovector, respectively. The <span
+class="math inline">\(0^{th}\)</span> index sets the first operator
+coefficient: <code>cp[0]</code><span class="math inline">\(=
+c_1^p\)</span>, etc. Finally, the user can also pass a dictionary of
+valid control keywords and values to the function in order to set any of
+the control words defined in the manual.</p>
 <p>The template for this function is as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> EventrateSpectra(Z, N, dres, epmin<span class="op">=</span><span class="dv">1</span>, epmax<span class="op">=</span><span class="dv">1000</span>, epstep<span class="op">=</span><span class="dv">1</span>,</span>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> EventrateSpectra(Z, N, dres, epmin<span class="op">=</span><span class="dv">1</span>, epmax<span class="op">=</span><span class="dv">1000</span>, epstep<span class="op">=</span><span class="dv">1</span>,</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        controlwords<span class="op">=</span>{}, cp<span class="op">=</span><span class="va">None</span>, cn<span class="op">=</span><span class="va">None</span>, cs<span class="op">=</span><span class="va">None</span>, cv<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        exec_path<span class="op">=</span><span class="st">&#39;dmfortfactor&#39;</span>, name<span class="op">=</span><span class="st">&quot;.eventratespectra&quot;</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&#39;&#39;&#39;</span></span>
@@ -378,8 +470,12 @@
 <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co">        EventRate</span></span>
 <span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co">            Array of differential event rates (events/GeV)</span></span>
 <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co">    &#39;&#39;&#39;</span></span></code></pre></div>
-<p>To compute the event-rate spectra for <span class="math inline">\(^{131}\)</span>Xe with a WIMP mass of 50 GeV and a <span class="math inline">\(c_3^v=0.0048\)</span> coupling, one might call:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dmfortfactor <span class="im">as</span> dm</span>
+<p>To compute the event-rate spectra for <span
+class="math inline">\(^{131}\)</span>Xe with a WIMP mass of 50 GeV and a
+<span class="math inline">\(c_3^v=0.0048\)</span> coupling, one might
+call:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dmfortfactor <span class="im">as</span> dm</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>control_dict <span class="op">=</span> {<span class="st">&quot;wimpmass&quot;</span> : <span class="fl">50.0</span>}</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cv <span class="op">=</span> np.zeros(<span class="dv">15</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cv[<span class="dv">2</span>] <span class="op">=</span> <span class="fl">0.0048</span> </span>
@@ -390,12 +486,34 @@
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            controlwords <span class="op">=</span> control_dict,</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            cv <span class="op">=</span> cv,</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            exec_path <span class="op">=</span> <span class="st">&quot;../bin/dmfortfactor&quot;</span>)</span></code></pre></div>
-<p>This will return the differential event rate spectra for recoil energies from 1 keV to 1 MeV in 1 keV steps.</p>
-<p>The file <code>xe131gcn.dres</code> must be accessible at the relative or absolute path name specified (in this case <code>../data/Xe/</code>), and contain a valid one-body density matrix for <span class="math inline">\(^{131}\)</span>Xe. Similarly, the DMFortFactor executable (<code>dmfortfactor</code>) should be accessible from the user’s default path - or else the path to the executable should be specified, as in the above example (<code>exec_path = "../build/dmfortfactor"</code>).</p>
-<h2 id="nuclear-response-functions-for-wimpydd">Nuclear response functions for WimPyDD</h2>
-<p>There are published codes which compute the WIMP-nucleus event rate spectra, etc., but which rely on nuclear form factors from an external source. Once such code is WimPyDD <span class="citation" data-cites="jeong2021wimpydd"> [<a href="#ref-jeong2021wimpydd" role="doc-biblioref">3</a>]</span>. We have provided an additional option in DMFortFactor which computes these nuclear form factors from the target density-matrix and exports the results to a data file.</p>
-<p>The Python wrapper-function <code>NucFormFactor</code> runs the DMFortFactor option to export the nuclear response functions to file, and additionally creates and returns an interpolation function <span class="math inline">\(W(q)\)</span> which can be called. In the following code listing, the nuclear response function for <span class="math inline">\(^{131}\)</span>Xe is generated for transfer momentum from 0.001 to 10.0 GeV/c. </p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dmfortfactor <span class="im">as</span> dm</span>
+<p>This will return the differential event rate spectra for recoil
+energies from 1 keV to 1 MeV in 1 keV steps.</p>
+<p>The file <code>xe131gcn.dres</code> must be accessible at the
+relative or absolute path name specified (in this case
+<code>../data/Xe/</code>), and contain a valid one-body density matrix
+for <span class="math inline">\(^{131}\)</span>Xe. Similarly, the
+DMFortFactor executable (<code>dmfortfactor</code>) should be accessible
+from the user’s default path - or else the path to the executable should
+be specified, as in the above example
+(<code>exec_path = "../build/dmfortfactor"</code>).</p>
+<h2 id="nuclear-response-functions-for-wimpydd">Nuclear response
+functions for WimPyDD</h2>
+<p>There are published codes which compute the WIMP-nucleus event rate
+spectra, etc., but which rely on nuclear form factors from an external
+source. Once such code is WimPyDD <span class="citation"
+data-cites="jeong2021wimpydd"> [<a href="#ref-jeong2021wimpydd"
+role="doc-biblioref">3</a>]</span>. We have provided an additional
+option in DMFortFactor which computes these nuclear form factors from
+the target density-matrix and exports the results to a data file.</p>
+<p>The Python wrapper-function <code>NucFormFactor</code> runs the
+DMFortFactor option to export the nuclear response functions to file,
+and additionally creates and returns an interpolation function <span
+class="math inline">\(W(q)\)</span> which can be called. In the
+following code listing, the nuclear response function for <span
+class="math inline">\(^{131}\)</span>Xe is generated for transfer
+momentum from 0.001 to 10.0 GeV/c. </p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dmfortfactor <span class="im">as</span> dm</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cwords <span class="op">=</span> {</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;usemomentum&quot;</span>: <span class="dv">1</span>} <span class="co"># epmin/max/step sets momentum instead of energy</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Wfunc <span class="op">=</span> dm.NucFormFactor(</span>
@@ -407,9 +525,20 @@
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        epmax <span class="op">=</span> <span class="fl">10.0</span>,</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        epstep <span class="op">=</span> <span class="fl">0.001</span>)</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>Wfunc(<span class="fl">0.001</span>)</span></code></pre></div>
-<p>The final line returns an (8,2,2)-shaped array with the evaluate nuclear response functions at <span class="math inline">\(q=0.001\)</span> GeV/c. Note that, had we not set the keyword <code>usemomentum</code> to 1, the function input values would have been specified in terms of recoil energy (the default) instead of transfer momentum. The first index runs over, in order, the 8 nuclear form factors: <span class="math display">\[
-M_J,\Phi_J&#39;&#39;,\tilde{\Phi}_J&#39;, \Delta_J,\Sigma_J&#39;, \Sigma_J&#39;&#39;,M\Phi&#39;&#39;,\Sigma&#39;\Delta
-\]</span> The second two indices are <span class="math inline">\(\tau\)</span> and <span class="math inline">\(\tau&#39;\)</span>, the isospin couplings. There is a simple relationship between the isospin and proton/neutron couplings: <span class="math display">\[
+<p>The final line returns an (8,2,2)-shaped array with the evaluate
+nuclear response functions at <span
+class="math inline">\(q=0.001\)</span> GeV/c. Note that, had we not set
+the keyword <code>usemomentum</code> to 1, the function input values
+would have been specified in terms of recoil energy (the default)
+instead of transfer momentum. The first index runs over, in order, the 8
+nuclear form factors: <span class="math display">\[\begin{equation}
+M_J,\Phi_J&#39;&#39;,\tilde{\Phi}_J&#39;, \Delta_J,\Sigma_J&#39;,
+\Sigma_J&#39;&#39;,M\Phi&#39;&#39;,\Sigma&#39;\Delta
+\end{equation}\]</span> The second two indices are <span
+class="math inline">\(\tau\)</span> and <span
+class="math inline">\(\tau&#39;\)</span>, the isospin couplings. There
+is a simple relationship between the isospin and proton/neutron
+couplings: <span class="math display">\[\begin{equation}
 \begin{bmatrix}
 00\\
 01\\
@@ -429,7 +558,8 @@ pn\\
 np\\
 nn
 \end{bmatrix}.
-\]</span> The inverse relation is simply: <span class="math display">\[
+\end{equation}\]</span> The inverse relation is simply: <span
+class="math display">\[\begin{equation}
 \begin{bmatrix}
 pp\\
 pn\\
@@ -449,29 +579,77 @@ nn
 10\\
 11
 \end{bmatrix}.
-\]</span></p>
+\end{equation}\]</span></p>
 <h1 id="usage-guide">Usage Guide</h1>
-<p>DMFortFactor can be used interactively from the command line, where the user is guided by prompts for a small number of datafiles and parameters. Naturally, this interactive process can be expedited by piping a pre-written input file into the command line interface (CLI).</p>
-<p>The command line interface (CLI) to the code prompts the user for the type of calculation they wish to perform from a menu of options, then the target nucleus, given by the number of protons <span class="math inline">\(Z\)</span> and neutrons <span class="math inline">\(N\)</span>, two input files, and finally other CLI inputs depending on the compute-option chosen. These final inputs are typically three numbers specifying the range of recoil energies or momentum for which to compute the output. After running, the code prints the results to a plain text file in tabulated format.</p>
+<p>DMFortFactor can be used interactively from the command line, where
+the user is guided by prompts for a small number of datafiles and
+parameters. Naturally, this interactive process can be expedited by
+piping a pre-written input file into the command line interface
+(CLI).</p>
+<p>The command line interface (CLI) to the code prompts the user for the
+type of calculation they wish to perform from a menu of options, then
+the target nucleus, given by the number of protons <span
+class="math inline">\(Z\)</span> and neutrons <span
+class="math inline">\(N\)</span>, two input files, and finally other CLI
+inputs depending on the compute-option chosen. These final inputs are
+typically three numbers specifying the range of recoil energies or
+momentum for which to compute the output. After running, the code prints
+the results to a plain text file in tabulated format.</p>
 <p>The two files are:</p>
 <ol type="1">
 <li>Control file</li>
 <li>Nuclear structure input</li>
 </ol>
-<p>The control file specifies the EFT interaction and any optional settings desired.</p>
-<p>The nuclear structure inputs needed are one-body density matrices, defined below. We supply a library of density matrices for many of the common expected targets, as listed <a href="#nuclear-structure-input">here</a>. The density matrix files are written in plain ASCII, using the format output by the nuclear configuration-interaction code BIGSTICK <span class="citation" data-cites="BIGSTICK1 BIGSTICK2"> [<a href="#ref-BIGSTICK1" role="doc-biblioref">4</a>,<a href="#ref-BIGSTICK2" role="doc-biblioref">5</a>]</span>. The only assumption is that the single-particle basis states are harmonic oscillator states; the user must supply the harmonic oscillator single particle basis frequency <span class="math inline">\(\Omega\)</span>, typically given in MeV as <span class="math inline">\(\hbar \Omega\)</span>, or the related length parameter <span class="math inline">\(b= \sqrt{\hbar/M\Omega}\)</span>, where <span class="math inline">\(M\)</span> is the nucleon mass. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>While the DMFortFactor executable can be run by itself, we provide Python APIs for integrating the Fortran program into Python work flows; see section .</p>
-<p>We also provide a generic application programming interface (API) for the Python language. This API essentially offers a prescribed and easy-to-use way to run DMFortFactor in a programmatic way. Any sufficiently experienced linux user could probably write a script to produce any possible set of inputs to our code. But our API removes the need by making it easy for anyone who can use a Python function to write their own advanced scripts allowing them to perform parameter studies and comparisons of different inputs to the theory.</p>
+<p>The control file specifies the EFT interaction and any optional
+settings desired.</p>
+<p>The nuclear structure inputs needed are one-body density matrices,
+defined below. We supply a library of density matrices for many of the
+common expected targets, as listed <a
+href="#nuclear-structure-input">here</a>. The density matrix files are
+written in plain ASCII, using the format output by the nuclear
+configuration-interaction code BIGSTICK <span class="citation"
+data-cites="BIGSTICK1 BIGSTICK2"> [<a href="#ref-BIGSTICK1"
+role="doc-biblioref">4</a>,<a href="#ref-BIGSTICK2"
+role="doc-biblioref">5</a>]</span>. The only assumption is that the
+single-particle basis states are harmonic oscillator states; the user
+must supply the harmonic oscillator single particle basis frequency
+<span class="math inline">\(\Omega\)</span>, typically given in MeV as
+<span class="math inline">\(\hbar \Omega\)</span>, or the related length
+parameter <span class="math inline">\(b= \sqrt{\hbar/M\Omega}\)</span>,
+where <span class="math inline">\(M\)</span> is the nucleon mass. <a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p>
+<p>While the DMFortFactor executable can be run by itself, we provide
+Python APIs for integrating the Fortran program into Python work flows;
+see section .</p>
+<p>We also provide a generic application programming interface (API) for
+the Python language. This API essentially offers a prescribed and
+easy-to-use way to run DMFortFactor in a programmatic way. Any
+sufficiently experienced linux user could probably write a script to
+produce any possible set of inputs to our code. But our API removes the
+need by making it easy for anyone who can use a Python function to write
+their own advanced scripts allowing them to perform parameter studies
+and comparisons of different inputs to the theory.</p>
 <h2 id="compiling-with-make">Compiling with make</h2>
-<p>There are multiple directories in the project. All of the Fortran code which needs to be compiled is found in the <code>src</code> directory.</p>
-<p>The easiest way to get started is simply to navigate to the <code>build</code> directory and run</p>
+<p>There are multiple directories in the project. All of the Fortran
+code which needs to be compiled is found in the <code>src</code>
+directory.</p>
+<p>The easiest way to get started is simply to navigate to the
+<code>build</code> directory and run</p>
 <pre><code>make dmfortfactor</code></pre>
-<p>This will compile <code>DMFortFactor</code> using <code>gfortran</code>. If you want to use a different compiler, you must edit the following line in the Makefile:</p>
+<p>This will compile <code>DMFortFactor</code> using
+<code>gfortran</code>. If you want to use a different compiler, you must
+edit the following line in the Makefile:</p>
 <pre><code>FC = gfortran</code></pre>
 <p>changing <code>gfortran</code> to your compiler of choice.</p>
-<p>If you want a OpenMP parallelized version of the code, you can compile with:</p>
+<p>If you want a OpenMP parallelized version of the code, you can
+compile with:</p>
 <pre><code>make openmp</code></pre>
-<p>Both of these options will compile the source code and leave the executable, called <code>dmfortfactor</code> in the <code>bin</code> directory. (I.e. <code>dmfortfactor/bin/dmfortfactor</code>.) Note that if you change from a serial executable to a parallel executable (or vice versa) you should run:</p>
+<p>Both of these options will compile the source code and leave the
+executable, called <code>dmfortfactor</code> in the <code>bin</code>
+directory. (I.e. <code>dmfortfactor/bin/dmfortfactor</code>.) Note that
+if you change from a serial executable to a parallel executable (or vice
+versa) you should run:</p>
 <pre><code>make clean</code></pre>
 <h2 id="required-files">Required files</h2>
 <p>There are two files required for any calculation:</p>
@@ -479,21 +657,36 @@ nn
 <li>Control file (.control)</li>
 <li>Nuclear density matrix file (.dres)</li>
 </ol>
-<p>Additionally, if the user enables the option <code>usenergyfile</code>, then a file containing the input energies or momentum will also be required.</p>
+<p>Additionally, if the user enables the option
+<code>usenergyfile</code>, then a file containing the input energies or
+momentum will also be required.</p>
 <h3 id="control-file">Control file</h3>
-<p>Each EFT parameter is written on its own line in [mycontrolfile].control, with four values: the keyword “coefnonrel”, the operator number (integer 1..16), the coupling type (“p”=proton, “n”=neutron, “s”=scalar, “v”=vecctor), and the coefficient value. For example,</p>
+<p>Each EFT parameter is written on its own line in
+[mycontrolfile].control, with four values: the keyword “coefnonrel”, the
+operator number (integer 1..16), the coupling type (“p”=proton,
+“n”=neutron, “s”=scalar, “v”=vecctor), and the coefficient value. For
+example,</p>
 <pre><code>coefnonrel    1    s     3.1</code></pre>
-<p>would set <span class="math inline">\(c_1^{\tau=0} = 3.1\)</span>. We take the isospin convention: <span class="math display">\[
+<p>would set <span class="math inline">\(c_1^{\tau=0} = 3.1\)</span>. We
+take the isospin convention: <span
+class="math display">\[\begin{equation}
         c^0 = c^p + c^n
-\]</span> <span class="math display">\[
+\end{equation}\]</span> <span class="math display">\[\begin{equation}
         c^1 = c^p - c^n
-\]</span> Thus, the previous example is equivalent to:</p>
+\end{equation}\]</span> Thus, the previous example is equivalent to:</p>
 <pre><code>coefnonrel    1    p     1.55
 coefnonrel    1    n     1.55</code></pre>
-<p>The control file also serves a more general but optional function: to set any parameter in the program to a custom value.<br />
-Simply add an entry to the control file with two values: the first should be the keyword for the parameter and the second should be the value to set that parameter to. For example, to set the velocity of the earth in the galactic frame to <span class="math inline">\(240\ km/s\)</span>, you should add the line:</p>
+<p>The control file also serves a more general but optional function: to
+set any parameter in the program to a custom value.<br />
+Simply add an entry to the control file with two values: the first
+should be the keyword for the parameter and the second should be the
+value to set that parameter to. For example, to set the velocity of the
+earth in the galactic frame to <span class="math inline">\(240\
+km/s\)</span>, you should add the line:</p>
 <pre><code>vearth  240.0</code></pre>
-<p>As an example, here is the complete control file used to calculate the event rate for the <span class="math inline">\(c^n_1\)</span> coupling to <span class="math inline">\(^{131}\)</span>Xe:</p>
+<p>As an example, here is the complete control file used to calculate
+the event rate for the <span class="math inline">\(c^n_1\)</span>
+coupling to <span class="math inline">\(^{131}\)</span>Xe:</p>
 <pre><code># Coefficient matrix (non-relativistic)
 # Ommitted values are assumed to be 0.0.
 # c_i^t
@@ -509,9 +702,16 @@ useenergyfile 0
 ntscale  2500.0
 printdensities 0
 #vescape 550.</code></pre>
-<p>Uncommenting the last line would set the escape velocity to 550 km/s. A complete list of keywords is given <a href="#control-file-keywords">here</a>.</p>
-<h3 id="nuclear-density-matrix-file-.dres">Nuclear density matrix file (.dres)</h3>
-<p>We adopt the output format from the { BIGSTICK} shell-model code. The output one-body densities are written to a file with extension { .dres}. We provide a full specification of this plain-text-file format in the { docs} directory. Here, we show the form of the file and explain its contents.</p>
+<p>Uncommenting the last line would set the escape velocity to 550 km/s.
+A complete list of keywords is given <a
+href="#control-file-keywords">here</a>.</p>
+<h3 id="nuclear-density-matrix-file-.dres">Nuclear density matrix file
+(.dres)</h3>
+<p>We adopt the output format from the { BIGSTICK} shell-model code. The
+output one-body densities are written to a file with extension { .dres}.
+We provide a full specification of this plain-text-file format in the {
+docs} directory. Here, we show the form of the file and explain its
+contents.</p>
 <pre><code>  State      E        Ex         J       T
     1   -330.17116   0.00000     1.500  11.500
   Single particle state quantum numbers
@@ -529,12 +729,37 @@ ORBIT      N     L   2 x J
 <li>single-particle state quantum numbers</li>
 <li>density matrix element blocks</li>
 </ol>
-<p>Only the ground state is needed for inelastic WIMP-nucleus scattering calculations. The single-particle state quantum numbers specify the quantum numbers for the simple-harmonic oscillator states involved in the one-body operators.</p>
-<p>Finally, the one-body density matrix elements are listed in nested blocks with three layers: i. the initial and final state specification (corresponding to the many-body states listed in section (1) of the file), ii. the angular momentum carried by the one-body density matrix operator, labeled { Jt} here, and iii. the single-particle state labels { a}, { b} in columns 1 and 2 (corresponding to the single-particle state labels listed in section (2) of the file) and the proton and neutron (isospin-0 and isospin-1) density matrix elements in columns 3 and 4.</p>
-<p>Both (i) and (ii) must be specified along with columns 1 and 2 of (iii) in order to fully determine a matrix element <span class="math inline">\(\rho^{f,i}_K(a,b)\)</span>, where <span class="math inline">\(K=J_t\)</span>. Note that the values of <span class="math inline">\(K\)</span> are restricted by conservation of angular momentum; both between the many-body states labeled <span class="math inline">\(i\)</span> and <span class="math inline">\(f\)</span>, and the single-particle states labeled <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.</p>
+<p>Only the ground state is needed for inelastic WIMP-nucleus scattering
+calculations. The single-particle state quantum numbers specify the
+quantum numbers for the simple-harmonic oscillator states involved in
+the one-body operators.</p>
+<p>Finally, the one-body density matrix elements are listed in nested
+blocks with three layers: i. the initial and final state specification
+(corresponding to the many-body states listed in section (1) of the
+file), ii. the angular momentum carried by the one-body density matrix
+operator, labeled { Jt} here, and iii. the single-particle state labels
+{ a}, { b} in columns 1 and 2 (corresponding to the single-particle
+state labels listed in section (2) of the file) and the proton and
+neutron (isospin-0 and isospin-1) density matrix elements in columns 3
+and 4.</p>
+<p>Both (i) and (ii) must be specified along with columns 1 and 2 of
+(iii) in order to fully determine a matrix element <span
+class="math inline">\(\rho^{f,i}_K(a,b)\)</span>, where <span
+class="math inline">\(K=J_t\)</span>. Note that the values of <span
+class="math inline">\(K\)</span> are restricted by conservation of
+angular momentum; both between the many-body states labeled <span
+class="math inline">\(i\)</span> and <span
+class="math inline">\(f\)</span>, and the single-particle states labeled
+<span class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>.</p>
 <h2 id="command-line-interface">Command-line interface</h2>
-<p>The program will prompt the user for the minimum necessary inputs to run a calculation with default parameter values, including the name of a control file which contains the EFT coefficients, and optionally, additional changes to the calculation parameters.</p>
-<p>After selecting the option {[er]} to compute an event rate spectra, there are six further lines of input. These will be explained by an example:</p>
+<p>The program will prompt the user for the minimum necessary inputs to
+run a calculation with default parameter values, including the name of a
+control file which contains the EFT coefficients, and optionally,
+additional changes to the calculation parameters.</p>
+<p>After selecting the option {[er]} to compute an event rate spectra,
+there are six further lines of input. These will be explained by an
+example:</p>
 <pre><code> Enter the target proton number
 54
  Enter the target neutron number
@@ -548,24 +773,47 @@ xe131
  What is the range of recoil energies in kev?
  Enter starting energy, stoping energy, step size:
 0.0001 250. 1.0</code></pre>
-<p>The first two entries are self-evident: we specifiy the number of protons and neutrons in the target nucleus. In this case, 54 and 74, respectively, for <span class="math inline">\(^{131}\)</span>Xe.</p>
-<p>Third is the name of the control file containing the EFT coefficients and other, optional, settings. The `.control’ file extension should be omitted. This contents of this file will be explained in more detail later.</p>
-<p>Fourth is the file containing the nuclear wave functions in the form of one-body density matrices. Only the ground-state need be included. The ‘.dres’ file extension is omitted.</p>
-<p>Fifth and finally are three numbers specifying the range of recoil energies <span class="math inline">\(E_R\)</span> that the differential scattering rate should be computed for.</p>
-<p>The event rate spectra will be written to a file, and as a side effect of the calculation, the total event rate for the energy range requested will be estimated by numerical integration. Note that the accuracy of this result will depend on the choice of the step size.</p>
+<p>The first two entries are self-evident: we specifiy the number of
+protons and neutrons in the target nucleus. In this case, 54 and 74,
+respectively, for <span class="math inline">\(^{131}\)</span>Xe.</p>
+<p>Third is the name of the control file containing the EFT coefficients
+and other, optional, settings. The `.control’ file extension should be
+omitted. This contents of this file will be explained in more detail
+later.</p>
+<p>Fourth is the file containing the nuclear wave functions in the form
+of one-body density matrices. Only the ground-state need be included.
+The ‘.dres’ file extension is omitted.</p>
+<p>Fifth and finally are three numbers specifying the range of recoil
+energies <span class="math inline">\(E_R\)</span> that the differential
+scattering rate should be computed for.</p>
+<p>The event rate spectra will be written to a file, and as a side
+effect of the calculation, the total event rate for the energy range
+requested will be estimated by numerical integration. Note that the
+accuracy of this result will depend on the choice of the step size.</p>
 <h2 id="compute-options-explained">Compute options explained</h2>
-<p>There are a handful of options available from the main menu of the code:</p>
+<p>There are a handful of options available from the main menu of the
+code:</p>
 <ul>
-<li>[er] Differential event rate, for a range of recoil energies or transfer momenta</li>
-<li>[cs] Differential cross section at a fixed recoil energy over a range of speeds</li>
-<li>[tp] Transition/scattering probability at a fixed recoil energy over a range of speeds</li>
+<li>[er] Differential event rate, for a range of recoil energies or
+transfer momenta</li>
+<li>[cs] Differential cross section at a fixed recoil energy over a
+range of speeds</li>
+<li>[tp] Transition/scattering probability at a fixed recoil energy over
+a range of speeds</li>
 <li>[te] Total integrated events (without producing spectra file)</li>
-<li>[wd] Nuclear response functions at a given value of <span class="math inline">\(y=(qb/2)^2\)</span></li>
-<li>[ws] Nuclear response function spectra (for a range of <span class="math inline">\(q\)</span> or <span class="math inline">\(E\)</span>)</li>
+<li>[wd] Nuclear response functions at a given value of <span
+class="math inline">\(y=(qb/2)^2\)</span></li>
+<li>[ws] Nuclear response function spectra (for a range of <span
+class="math inline">\(q\)</span> or <span
+class="math inline">\(E\)</span>)</li>
 </ul>
-<p>The string in square brackets [x] is the compute-option. Once a compute-option is chosen, subsequent CLI inputs are the same up until the density matrix file (.dres) has been read-in. Then, the inputs depend on the compute-option chosen.</p>
+<p>The string in square brackets [x] is the compute-option. Once a
+compute-option is chosen, subsequent CLI inputs are the same up until
+the density matrix file (.dres) has been read-in. Then, the inputs
+depend on the compute-option chosen.</p>
 <ul>
-<li>[cs] Differential cross section per recoil energy. Four additional inputs:
+<li>[cs] Differential cross section per recoil energy. Four additional
+inputs:
 <ol type="1">
 <li>E-recoil (keV)</li>
 <li>v-start (km/s)</li>
@@ -573,36 +821,71 @@ xe131
 <li>v-step (km/s)</li>
 </ol></li>
 <li>[tp] Scattering probability. Same as [2].</li>
-<li>[te] Total scattering events per detector (does not produce spectra data). This option uses adaptive quadrature to perform the integral of the event rate spectra with the fewest number of evaluations to reach the desired relative error. This will be much faster than the result from options [1]. Three additional inputs:
+<li>[te] Total scattering events per detector (does not produce spectra
+data). This option uses adaptive quadrature to perform the integral of
+the event rate spectra with the fewest number of evaluations to reach
+the desired relative error. This will be much faster than the result
+from options [1]. Three additional inputs:
 <ol type="1">
 <li>E-start (keV)</li>
 <li>E-stop (keV)</li>
 <li>Desired relative error (decimal value)</li>
 </ol></li>
-<li>[wd] Nuclear response function test. This compute-option allows the user to evaluate the nuclear response functions <span class="math inline">\(W_i^{x,x&#39;}(y)\)</span> for a provided value of <span class="math inline">\(y\)</span>. All combinations of <span class="math inline">\(x\)</span> and <span class="math inline">\(x&#39;\)</span> will be printed for both isospin and proton-neutron couplings. Two additional inputs are required:
+<li>[wd] Nuclear response function test. This compute-option allows the
+user to evaluate the nuclear response functions <span
+class="math inline">\(W_i^{x,x&#39;}(y)\)</span> for a provided value of
+<span class="math inline">\(y\)</span>. All combinations of <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(x&#39;\)</span> will be printed for both isospin
+and proton-neutron couplings. Two additional inputs are required:
 <ol type="1">
 <li>Function number (1 - 8)</li>
-<li>Value of <span class="math inline">\(y=(qb/2)^2\)</span> (dimensionless)</li>
+<li>Value of <span class="math inline">\(y=(qb/2)^2\)</span>
+(dimensionless)</li>
 </ol></li>
-<li>[ws] Nuclear response function spectra. Enter a range of recoil energy or momentum values to evaluate the nuclear response funcions on. Tabulates the data to a file - one momentum per line or energy per line. Momentum/energy is written to the first column. The inputs are:
+<li>[ws] Nuclear response function spectra. Enter a range of recoil
+energy or momentum values to evaluate the nuclear response funcions on.
+Tabulates the data to a file - one momentum per line or energy per line.
+Momentum/energy is written to the first column. The inputs are:
 <ol type="1">
 <li>E-start (keV)</li>
 <li>E-stop (keV)</li>
 <li>E-step (keV)</li>
 </ol></li>
 </ul>
-<p>The following 32 columns store the (8,2,2)-dimensional response functions <span class="math inline">\(W_i^{x,x&#39;}\)</span>:</p>
+<p>The following 32 columns store the (8,2,2)-dimensional response
+functions <span class="math inline">\(W_i^{x,x&#39;}\)</span>:</p>
 <pre><code>q_1  W_1^00 W_2^00 ... W_8^00 W_1^10 ... W_8^11
 q_2  W_1^00 W_2^00 ... W_8^00 W_1^10 ... W_8^11
 ...
 q_m  W_1^00 W_2^00 ... W_8^00 W_1^10 ... W_8^11</code></pre>
-<p>For the event-rate spectra [er] and for the nuclear response function spectra [ws], the range of values is either over recoil energy <span class="math inline">\(E_r\)</span> (kev) (the default) or over the transfer momentum <span class="math inline">\(q\)</span> (Gev/c). To use <span class="math inline">\(q\)</span> instead of <span class="math inline">\(E_r\)</span>, use the control word { usemomentum} set to 1.</p>
+<p>For the event-rate spectra [er] and for the nuclear response function
+spectra [ws], the range of values is either over recoil energy <span
+class="math inline">\(E_r\)</span> (kev) (the default) or over the
+transfer momentum <span class="math inline">\(q\)</span> (Gev/c). To use
+<span class="math inline">\(q\)</span> instead of <span
+class="math inline">\(E_r\)</span>, use the control word { usemomentum}
+set to 1.</p>
 <h1 id="nuclear-structure-input">Nuclear Structure Input</h1>
-<p>Users must provide nuclear one-body density matrix elements of the form: <span class="math display">\[
-    \rho_{K,T}^{\Psi}(a,b) = \langle \Psi| [\hat{c}_a^\dagger \hat{c}_b]_{K,T}|\Psi \rangle ,
-\]</span> where <span class="math inline">\(\Psi\)</span> is the nuclear-target wave function and <span class="math inline">\(\hat{c}^\dagger\)</span>, <span class="math inline">\(\hat{c}\)</span> are the one-body creation, destruction operators. The matrix elements must be stored in a file in a standard format produced by shell-model codes like BIGSTICK.</p>
-<p>Table of nuclear data we include with the program. Each corresponds to a (.dres) density matrix file. The source indicates the nuclear Hamiltonian that was used to generate the wave function data:</p>
+<p>Users must provide nuclear one-body density matrix elements of the
+form: <span class="math display">\[\begin{equation}
+    \rho_{K,T}^{\Psi}(a,b) = \langle \Psi| [\hat{c}_a^\dagger
+\hat{c}_b]_{K,T}|\Psi \rangle ,
+\end{equation}\]</span> where <span class="math inline">\(\Psi\)</span>
+is the nuclear-target wave function and <span
+class="math inline">\(\hat{c}^\dagger\)</span>, <span
+class="math inline">\(\hat{c}\)</span> are the one-body creation,
+destruction operators. The matrix elements must be stored in a file in a
+standard format produced by shell-model codes like BIGSTICK.</p>
+<p>Table of nuclear data we include with the program. Each corresponds
+to a (.dres) density matrix file. The source indicates the nuclear
+Hamiltonian that was used to generate the wave function data:</p>
 <table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 60%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Nuclei</th>
@@ -612,46 +895,113 @@ q_m  W_1^00 W_2^00 ... W_8^00 W_1^10 ... W_8^11</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Si</td>
-<td>28, 29</td>
-<td><span class="citation" data-cites="PhysRevC.74.034315"> [<a href="#ref-PhysRevC.74.034315" role="doc-biblioref">8</a>]</span></td>
-</tr>
-<tr class="even">
-<td>Xe</td>
-<td>128, 129, 130, 131, 132, 134, 136</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Ar</td>
-<td>40</td>
-<td></td>
+<td>He</td>
+<td>4</td>
+<td><span class="citation"
+data-cites="PhysRevC.68.041001 shirokov2016n3lo"> [<a
+href="#ref-PhysRevC.68.041001" role="doc-biblioref">7</a>,<a
+href="#ref-shirokov2016n3lo" role="doc-biblioref">8</a>]</span></td>
 </tr>
 <tr class="even">
 <td>C</td>
 <td>12</td>
-<td><span class="citation" data-cites="cohen1965effective"> [<a href="#ref-cohen1965effective" role="doc-biblioref">6</a>]</span></td>
+<td><span class="citation"
+data-cites="cohen1965effective PhysRevC.68.041001 shirokov2016n3lo"> [<a
+href="#ref-cohen1965effective" role="doc-biblioref">6</a>–<a
+href="#ref-shirokov2016n3lo" role="doc-biblioref">8</a>]</span></td>
 </tr>
 <tr class="odd">
-<td>He</td>
-<td>4</td>
-<td></td>
+<td>F</td>
+<td>19</td>
+<td><span class="citation" data-cites="PhysRevC.74.034315"> [<a
+href="#ref-PhysRevC.74.034315" role="doc-biblioref">9</a>]</span></td>
+</tr>
+<tr class="even">
+<td>Si</td>
+<td>28, 29</td>
+<td><span class="citation" data-cites="PhysRevC.74.034315"> [<a
+href="#ref-PhysRevC.74.034315" role="doc-biblioref">9</a>]</span></td>
+</tr>
+<tr class="odd">
+<td>Ar</td>
+<td>40</td>
+<td><span class="citation" data-cites="PhysRevC.86.051301"> [<a
+href="#ref-PhysRevC.86.051301" role="doc-biblioref">10</a>]</span></td>
+</tr>
+<tr class="even">
+<td>Ge</td>
+<td>70, 72, 73, 74, 76</td>
+<td><span class="citation" data-cites="PhysRevC.80.064323"> [<a
+href="#ref-PhysRevC.80.064323" role="doc-biblioref">11</a>]</span></td>
+</tr>
+<tr class="odd">
+<td>I</td>
+<td>127</td>
+<td><span class="citation" data-cites="GCN5082"> [<a href="#ref-GCN5082"
+role="doc-biblioref">12</a>]</span>, used in <span class="citation"
+data-cites="PhysRevLett.100.052503 PhysRevC.82.064304"> [<a
+href="#ref-PhysRevLett.100.052503" role="doc-biblioref">13</a>,<a
+href="#ref-PhysRevC.82.064304" role="doc-biblioref">14</a>]</span></td>
+</tr>
+<tr class="even">
+<td>Xe</td>
+<td>128, 129, 130, 131, 132, 134, 136</td>
+<td><span class="citation" data-cites="GCN5082"> [<a href="#ref-GCN5082"
+role="doc-biblioref">12</a>]</span>, used in <span class="citation"
+data-cites="PhysRevLett.100.052503 PhysRevC.82.064304"> [<a
+href="#ref-PhysRevLett.100.052503" role="doc-biblioref">13</a>,<a
+href="#ref-PhysRevC.82.064304" role="doc-biblioref">14</a>]</span></td>
 </tr>
 </tbody>
 </table>
-<h2 id="filling-core-orbitals-for-phenomenological-interactions">Filling core orbitals for phenomenological interactions</h2>
-<p>Since standard one-body density matrices in phenomenological model spaces contain only matrix elements for orbitals in the valence space, it is necessary to infer the matrix elements for the core orbitals. Our code does this by default, but the user can disable this option using the <code>fillnuclearcore</code> control word.</p>
-<p>For phenomenological interactions one typically has a `frozen’ core of nucleons which do not participate in the two-body forces of the Hamiltonian. In such cases the single-particle space listed in the .dres file consists only of the valence orbitals and the one-body density matrices are only specified for the valence orbitals.</p>
-<p>DMFormFactor reads the valence space orbitals from the .dres file and infers the number of core nucleons by subtracting the number of valence protons and neutrons from the number of nucleons in the target nucleus. The core orbitals are assumed to be one of the standard shell model orbital sets associated with possible cores: He-4, O-16, Ca-40, Ni-56, Sn-100.</p>
-<p>The one-body density matrix elements for the core orbitals are then determined from the (full) occupation of the core orbitals. In proton-neutron format:</p>
-<p><span class="math display">\[
+<p>Table of nuclear data we include with the program. Each corresponds
+to a (.dres) density matrix file in the dres directory. The source
+indicates the nuclear Hamiltonian that was used to generate the wave
+function data. See the manual and GitHub repository for updates and full
+information on provenance.</p>
+<h2 id="filling-core-orbitals-for-phenomenological-interactions">Filling
+core orbitals for phenomenological interactions</h2>
+<p>Since standard one-body density matrices in phenomenological model
+spaces contain only matrix elements for orbitals in the valence space,
+it is necessary to infer the matrix elements for the core orbitals. Our
+code does this by default, but the user can disable this option using
+the <code>fillnuclearcore</code> control word.</p>
+<p>For phenomenological interactions one typically has a `frozen’ core
+of nucleons which do not participate in the two-body forces of the
+Hamiltonian. In such cases the single-particle space listed in the .dres
+file consists only of the valence orbitals and the one-body density
+matrices are only specified for the valence orbitals.</p>
+<p>DMFormFactor reads the valence space orbitals from the .dres file and
+infers the number of core nucleons by subtracting the number of valence
+protons and neutrons from the number of nucleons in the target nucleus.
+The core orbitals are assumed to be one of the standard shell model
+orbital sets associated with possible cores: He-4, O-16, Ca-40, Ni-56,
+Sn-100.</p>
+<p>The one-body density matrix elements for the core orbitals are then
+determined from the (full) occupation of the core orbitals. In
+proton-neutron format:</p>
+<p><span class="math display">\[\begin{equation}
 \rho_{J,x=p,n}^{\Psi}(a,b)_{(core)} = \delta_{a,b}[j_a][J],
-\]</span></p>
-<p>where <span class="math inline">\([y] \equiv \sqrt{2y+1}\)</span> and <span class="math inline">\(j_a\)</span> is the angular momentum of <span class="math inline">\(a\)</span>-orbit. <span class="math inline">\(J\)</span> is the total spin of the nuclear target state <span class="math inline">\(\Psi\)</span>. And in isospin format for a target state with total isospin <span class="math inline">\(T\)</span>: <span class="math display">\[\begin{align*}
-    \rho_{J,\tau=0}^{\Psi}(a,b)_{(core)} &amp;= \delta_{a,b} [1/2][j_a][J][T],\\
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\([y] \equiv \sqrt{2y+1}\)</span> and
+<span class="math inline">\(j_a\)</span> is the angular momentum of
+<span class="math inline">\(a\)</span>-orbit. <span
+class="math inline">\(J\)</span> is the total spin of the nuclear target
+state <span class="math inline">\(\Psi\)</span>. And in isospin format
+for a target state with total isospin <span
+class="math inline">\(T\)</span>: <span
+class="math display">\[\begin{align}
+    \rho_{J,\tau=0}^{\Psi}(a,b)_{(core)} &amp;= \delta_{a,b}
+[1/2][j_a][J][T],\\
     \rho_{J,\tau=1}^{\Psi}(a,b)_{(core)} &amp;= 0.0.
-\end{align*}\]</span></p>
-<h2 id="nuclear-density-matrix-format">Nuclear density matrix format</h2>
-<p>We adopt the output format from the BIGSTICK shell-model code. The output one-body densities are written to a file with extension <code>.dres</code>. We provide a full specification of this plain-text-file format in the <code>docs</code> directory. Here, we show the form of the file and explain its contents.</p>
+\end{align}\]</span></p>
+<h2 id="nuclear-density-matrix-format">Nuclear density matrix
+format</h2>
+<p>We adopt the output format from the BIGSTICK shell-model code. The
+output one-body densities are written to a file with extension
+<code>.dres</code>. We provide a full specification of this
+plain-text-file format in the <code>docs</code> directory. Here, we show
+the form of the file and explain its contents.</p>
 <pre><code>  State      E        Ex         J       T
     1   -330.17116   0.00000     1.500  11.500
   Single particle state quantum numbers
@@ -669,144 +1019,348 @@ ORBIT      N     L   2 x J
 <li>Single-particle state quantum numbers</li>
 <li>Density matrix element blocks</li>
 </ol>
-<p>Only the ground state is needed for inelastic WIMP-nucleus scattering calculations. The single-particle state quantum numbers specify the quantum numbers for the simple-harmonic oscillator states involved in the one-body operators.</p>
-<p>Finally, the one-body density matrix elements are listed in nested blocks with three layers:</p>
+<p>Only the ground state is needed for inelastic WIMP-nucleus scattering
+calculations. The single-particle state quantum numbers specify the
+quantum numbers for the simple-harmonic oscillator states involved in
+the one-body operators.</p>
+<p>Finally, the one-body density matrix elements are listed in nested
+blocks with three layers:</p>
 <ul>
 <li><ol type="i">
-<li>the initial and final state specification (corresponding to the many-body states listed in section (1) of the file),</li>
+<li>the initial and final state specification (corresponding to the
+many-body states listed in section (1) of the file),</li>
 </ol></li>
 <li><ol start="2" type="i">
-<li>the angular momentum carried by the one-body density matrix operator, labeled {} here,</li>
+<li>the angular momentum carried by the one-body density matrix
+operator, labeled {} here,</li>
 </ol></li>
 <li><ol start="3" type="i">
-<li>the single-particle state labels <code>a</code>, <code>b</code> in columns 1 and 2 (corresponding to the single-particle state labels listed in section (2) of the file) and the proton and neutron (isospin-0 and isospin-1) density matrix elements in columns 3 and 4.</li>
+<li>the single-particle state labels <code>a</code>, <code>b</code> in
+columns 1 and 2 (corresponding to the single-particle state labels
+listed in section (2) of the file) and the proton and neutron (isospin-0
+and isospin-1) density matrix elements in columns 3 and 4.</li>
 </ol></li>
 </ul>
-<p>Both (i) and (ii) must be specified along with columns 1 and 2 of (iii) in order to fully determine a matrix element <span class="math inline">\(\rho^{f,i}_K(a,b)\)</span>, where <span class="math inline">\(K=J_t\)</span>. Note that the values of <span class="math inline">\(K\)</span> are restricted by conservation of angular momentum; both between the many-body states labeled <span class="math inline">\(i\)</span> and <span class="math inline">\(f\)</span>, and the single-particle states labeled <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.</p>
+<p>Both (i) and (ii) must be specified along with columns 1 and 2 of
+(iii) in order to fully determine a matrix element <span
+class="math inline">\(\rho^{f,i}_K(a,b)\)</span>, where <span
+class="math inline">\(K=J_t\)</span>. Note that the values of <span
+class="math inline">\(K\)</span> are restricted by conservation of
+angular momentum; both between the many-body states labeled <span
+class="math inline">\(i\)</span> and <span
+class="math inline">\(f\)</span>, and the single-particle states labeled
+<span class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>.</p>
 <h1 id="details-of-computation">Details of computation</h1>
-<p>We present the equations necessary to reproduce the code. For a more complete description of the theory, see<span class="citation" data-cites="PhysRevC.89.065501"> [<a href="#ref-PhysRevC.89.065501" role="doc-biblioref">1</a>]</span>.</p>
+<p>We present the aligns necessary to reproduce the code. For a more
+complete description of the theory, see<span class="citation"
+data-cites="PhysRevC.89.065501"> [<a href="#ref-PhysRevC.89.065501"
+role="doc-biblioref">1</a>]</span>.</p>
 <h2 id="differential-event-rate">Differential event rate</h2>
-<p>The main computation of the code is the differential event rate for WIMP-nucleus scattering events. This is obtained by integrating the differential WIMP-nucleus cross section over the velocity distribution of the WIMP-halo in the galactic frame: <span class="math display">\[\begin{equation}\label{ER}
-\begin{split}
+<p>The main computation of the code is the differential event rate for
+WIMP-nucleus scattering events. This is obtained by integrating the
+differential WIMP-nucleus cross section over the velocity distribution
+of the WIMP-halo in the galactic frame: <span
+class="math display">\[\begin{align}\label{ER}
     \frac{dR}{dE_r}(E_r)
-     = N_T n_\chi \int_{v_{min}}^{\infty} \frac{d\sigma}{dE_r}(v,E_r)\ \tilde{f}(\vec{v})\ v\ d^3v,
-\end{split}
-\end{equation}\]</span> where <span class="math inline">\(E_r\)</span> is the recoil energy of the WIMP-nucleus scattering event, <span class="math inline">\(N_T\)</span> is the number of target nuclei, <span class="math inline">\(n_\chi = \rho_\chi/m_\chi\)</span> is the local dark matter number density, <span class="math inline">\(\sigma\)</span> is the WIMP-nucleus cross section. The dark matter velocity distribution in the lab frame, <span class="math inline">\(\tilde{f}(\vec{v})\)</span>, is obtained by boosting the Galactic-frame distribution <span class="math inline">\(f(\vec{v})\)</span>: <span class="math display">\[
+     = N_T n_\chi \int_{v_{min}}^{\infty} \frac{d\sigma}{dE_r}(v,E_r)\
+\tilde{f}(\vec{v})\ v\ d^3v,
+\end{align}\]</span> where <span class="math inline">\(E_r\)</span> is
+the recoil energy of the WIMP-nucleus scattering event, <span
+class="math inline">\(N_T\)</span> is the number of target nuclei, <span
+class="math inline">\(n_\chi = \rho_\chi/m_\chi\)</span> is the local
+dark matter number density, <span class="math inline">\(\sigma\)</span>
+is the WIMP-nucleus cross section. The dark matter velocity distribution
+in the lab frame, <span
+class="math inline">\(\tilde{f}(\vec{v})\)</span>, is obtained by
+boosting the Galactic-frame distribution <span
+class="math inline">\(f(\vec{v})\)</span>: <span
+class="math display">\[\begin{align}
     \tilde{f}(\vec{v}) = f(\vec{v} + \vec{v}_E),
-\]</span> where <span class="math inline">\(\vec{v}_{E}\)</span> is the velocity of the earth in the galactic rest frame.</p>
+\end{align}\]</span> where <span
+class="math inline">\(\vec{v}_{E}\)</span> is the velocity of the earth
+in the galactic rest frame.</p>
 <h2 id="standard-halo-model">Standard Halo Model</h2>
-<p>There are many models for the dark matter distributions of galaxies <span class="citation" data-cites="RevModPhys.85.1561"> [<a href="#ref-RevModPhys.85.1561" role="doc-biblioref">9</a>]</span>. We provide the simplest model, a three-dimensional Maxwell-Boltzmann distribution, <span class="math display">\[
+<p>There are many models for the dark matter distributions of galaxies
+<span class="citation" data-cites="RevModPhys.85.1561"> [<a
+href="#ref-RevModPhys.85.1561" role="doc-biblioref">15</a>]</span>. We
+provide the simplest model, a three-dimensional Maxwell-Boltzmann
+distribution, <span class="math display">\[\begin{align}
     f(\vec{v}) \propto e^{-\vec{v}^2/v_0^2},
-\]</span> where <span class="math inline">\(v_0\)</span> is some scaling factor (typically taken to be around <span class="math inline">\(220\)</span> km/s). This is called the Simple Halo Model (SHM) when a maximum value of the speed, due to the galactic escape velocity <span class="math inline">\(v_{escape}\)</span>, is taken into account <span class="citation" data-cites="PhysRevD.33.3495 PhysRevD.37.3388"> [<a href="#ref-PhysRevD.33.3495" role="doc-biblioref">10</a>,<a href="#ref-PhysRevD.37.3388" role="doc-biblioref">11</a>]</span>: <span class="math display">\[
-    f_{SHM}(\vec{v}) = \frac{\Theta(v_{esc}-|\vec{v}|)}{\pi^{3/2}v_0^3N_{esc}} 
+\end{align}\]</span> where <span class="math inline">\(v_0\)</span> is
+some scaling factor (typically taken to be around <span
+class="math inline">\(220\)</span> km/s). This is called the Simple Halo
+Model (SHM) when a maximum value of the speed, due to the galactic
+escape velocity <span class="math inline">\(v_{escape}\)</span>, is
+taken into account <span class="citation"
+data-cites="PhysRevD.33.3495 PhysRevD.37.3388"> [<a
+href="#ref-PhysRevD.33.3495" role="doc-biblioref">16</a>,<a
+href="#ref-PhysRevD.37.3388" role="doc-biblioref">17</a>]</span>: <span
+class="math display">\[\begin{align}
+    f_{SHM}(\vec{v}) =
+\frac{\Theta(v_{esc}-|\vec{v}|)}{\pi^{3/2}v_0^3N_{esc}}
     e^{-(\vec{v}/v_0)^2},
-\]</span> where <span class="math inline">\(N_{esc}\)</span> renormalizes due to the cutoff: <span class="math display">\[
+\end{align}\]</span> where <span class="math inline">\(N_{esc}\)</span>
+renormalizes due to the cutoff: <span
+class="math display">\[\begin{align}
     N_{esc} = erf{(v_{esc}/v_0)} - \frac{2v_{esc}}{\sqrt{\pi}v_0}
     \exp{-(v_{esc}/v_0)^2}.
-\]</span> With this distribution, the integral in the differential event-rate has the form: <span class="math display">\[\begin{align*}
-    I_{MB} = \int_{\Omega} d^3v \frac{d\sigma(v,q)}{d{q}^2}\ v\ e^{-(\vec{v}+\vec{v}_E)^2/v_0^2},
-\end{align*}\]</span> where the constraint <span class="math inline">\(\Omega\)</span> is that <span class="math inline">\(v_{min}^2&lt;(\vec{v}+\vec{v}_E)^2&lt;v_{esc}^2\)</span>.</p>
-<p>To reduce to a one-dimensional integral, we make the conversion to spherical coordinates. Special care has to be taken to properly handle the truncated domain. Noting that <span class="math inline">\((\vec{v}+\vec{v}_{earth})^2 = \vec{v}^2 + \vec{v}^2_{earth} + 2vv_{earth}\cos(\theta)\)</span>, with <span class="math inline">\(\theta\)</span> defining the angle between the two vectors, we make the substitution <span class="math inline">\(d^3v = d\phi d(\cos \theta) v^2 dv\)</span>.</p>
-<p>It can be shown that<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>: <span class="math display">\[\begin{align*}
-    \int_{(\vec{v}+\vec{v}_E)^2&lt;v_{esc}^2} d^3v = \int_0^{2\pi}d\phi \left[
-    \int_0^{v_{esc}-v_E}v^2dv\int_{-1}^{+1}d\cos{\theta} 
-    + \int_{v_{esc}-v_E}^{v_{esc}+v_E}v^2dv\int_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos{\theta}\right].
-\end{align*}\]</span> Making the physically justified assumption that <span class="math inline">\(v_{esc}-v_E &gt; v_{min}\)</span>, we can simply shift the limit on the first integral from <span class="math inline">\(0\)</span> to <span class="math inline">\(v_{min}\)</span>. Along the way we will need to work out the angular integrals: <span class="math display">\[
+\end{align}\]</span> With this distribution, the integral in the
+differential event-rate has the form: <span
+class="math display">\[\begin{align}
+    I_{MB} = \int_{\Omega} d^3v \frac{d\sigma(v,q)}{d{q}^2}\ v\
+e^{-(\vec{v}+\vec{v}_E)^2/v_0^2},
+\end{align}\]</span> where the constraint <span
+class="math inline">\(\Omega\)</span> is that <span
+class="math inline">\(v_{min}^2&lt;(\vec{v}+\vec{v}_E)^2&lt;v_{esc}^2\)</span>.</p>
+<p>To reduce to a one-dimensional integral, we make the conversion to
+spherical coordinates. Special care has to be taken to properly handle
+the truncated domain. Noting that <span
+class="math inline">\((\vec{v}+\vec{v}_{earth})^2 = \vec{v}^2 +
+\vec{v}^2_{earth} + 2vv_{earth}\cos(\theta)\)</span>, with <span
+class="math inline">\(\theta\)</span> defining the angle between the two
+vectors, we make the substitution <span class="math inline">\(d^3v =
+d\phi d(\cos \theta) v^2 dv\)</span>.</p>
+<p>It can be shown that<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>: <span
+class="math display">\[\begin{align}
+    \int_{(\vec{v}+\vec{v}_E)^2&lt;v_{esc}^2} d^3v = \int_0^{2\pi}d\phi
+\left[
+    \int_0^{v_{esc}-v_E}v^2dv\int_{-1}^{+1}d\cos{\theta}
+    +
+\int_{v_{esc}-v_E}^{v_{esc}+v_E}v^2dv\int_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos{\theta}\right].
+\end{align}\]</span> Making the physically justified assumption that
+<span class="math inline">\(v_{esc}-v_E &gt; v_{min}\)</span>, we can
+simply shift the limit on the first integral from <span
+class="math inline">\(0\)</span> to <span
+class="math inline">\(v_{min}\)</span>. Along the way we will need to
+work out the angular integrals: <span
+class="math display">\[\begin{align}
 \int_{-1}^{+1}d\cos{\theta} e^{-2vv_E\cos\theta/v_0^2}=
 -\frac{v_0^2}{2vv_E}\left(e^{-2vv_E/v_0^2}-e^{2vv_E/v_0^2}\right);
-\]</span> <span class="math display">\[
-\int_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos\theta e^{-2vv_E\cos\theta/v_0^2}=
+\end{align}\]</span> <span class="math display">\[\begin{align}
+\int_{-1}^{(v_{esc}^2-v_E^2-v^2)/2vv_E}d\cos\theta
+e^{-2vv_E\cos\theta/v_0^2}=
 -\frac{v_0^2}{2vv_E}\left(e^{-(v_{esc}^2-v^2-v_E^2)/v_0^2}-e^{2vv_e/v_0^2}\right).
-\]</span> Combining all of this together, and simplifying, we obtain a one-dimensional integral which we can evaluate with quadrature: <span class="math display">\[
-I_{MB} = \int_{v_{min}}^{v_{esc}+v_E} dv\
-\frac{d\sigma(v,q)}{d{q}^2} v^2 \frac{\pi v_0^2}{v_e}
-\left\{ \Theta_{v&lt;v_{esc}-v_e}\left[g(v-v_E)-g(v+v_E)\right]
-+ \Theta_{v&gt;v_{esc}-v_E}\left[g(v-v_E)-g(v_{esc})\right]\right\},
-\]</span> where <span class="math display">\[
-g(v) = \exp(-v^2/v_0^2).\]</span></p>
-<p>We then use Gauss-Legendre quadrature to evaluate <span class="math inline">\(I\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. While there are analytic solutions for specific velocity-dependences of the cross section<span class="citation" data-cites="LEWIN199687 PhysRevD.82.075004 PhysRevD.82.023530"> [<a href="#ref-LEWIN199687" role="doc-biblioref">12</a>–<a href="#ref-PhysRevD.82.023530" role="doc-biblioref">14</a>]</span>, our implementation favors a model-independent framework without the need to lock-in a particular form for the WIMP-nucleus cross section.</p>
-<p>The limits of the integral, <span class="math inline">\(v_{min}\)</span> and <span class="math inline">\(v_{esc}\)</span>, have physical constraints. The minimum speed is defined by the minimum recoil energy of a WIMP-nucleus collision at a momentum transfer <span class="math inline">\(q\)</span>: <span class="math display">\[v_{min} = q/(2\mu_T),\]</span> where <span class="math inline">\(\mu_T=m_Tm_\chi/(m_T+m_\chi)\)</span> is the reduced mass of the WIMP-nucleus system. To use the simple Maxwell-Bolztmann distribution approximation, the maximum speed is taken to be <span class="math inline">\(\infty \approx 12 \times v_{0}\)</span>. Otherwise, the maximum speed is taken to be the galactic escape velocity: <span class="math inline">\(v_{esc} \approx 550\)</span> km/s.</p>
-<p>Note that as a function of momentum <span class="math inline">\(q\)</span>, the integral is guarenteed to go to zero above some maximum momentum <span class="math inline">\(q_{max}\)</span>. This happens when <span class="math inline">\(v_{min} = v_{max}+v_{earth}\)</span>, which corresponds to: <span class="math display">\[
+\end{align}\]</span> Combining all of this together, and simplifying, we
+obtain a one-dimensional integral which we can evaluate with quadrature:
+<span class="math display">\[\begin{align}
+I_{MB} = \int_{v_{min}}^{v_{esc}+v_E} dv\ \frac{d\sigma(v,q)}{d{q}^2}
+v^2 \frac{\pi v_0^2}{v_e} \left\{
+\Theta_{v&lt;v_{esc}-v_e}\left[g(v-v_E)-g(v+v_E)\right] +
+\Theta_{v&gt;v_{esc}-v_E}\left[g(v-v_E)-g(v_{esc})\right]\right\},
+\end{align}\]</span> where <span class="math display">\[\begin{align}
+g(v) = \exp(-v^2/v_0^2).
+\end{align}\]</span></p>
+<p>We then use Gauss-Legendre quadrature to evaluate <span
+class="math inline">\(I\)</span><a href="#fn3" class="footnote-ref"
+id="fnref3" role="doc-noteref"><sup>3</sup></a>. While there are
+analytic solutions for specific velocity-dependences of the cross
+section<span class="citation"
+data-cites="LEWIN199687 PhysRevD.82.075004 PhysRevD.82.023530"> [<a
+href="#ref-LEWIN199687" role="doc-biblioref">18</a>–<a
+href="#ref-PhysRevD.82.023530" role="doc-biblioref">20</a>]</span>, our
+implementation favors a model-independent framework without the need to
+lock-in a particular form for the WIMP-nucleus cross section.</p>
+<p>The limits of the integral, <span
+class="math inline">\(v_{min}\)</span> and <span
+class="math inline">\(v_{esc}\)</span>, have physical constraints. The
+minimum speed is defined by the minimum recoil energy of a WIMP-nucleus
+collision at a momentum transfer <span class="math inline">\(q\)</span>:
+<span class="math display">\[\begin{align}
+v_{min} = q/(2\mu_T),
+\end{align}\]</span> where <span
+class="math inline">\(\mu_T=m_Tm_\chi/(m_T+m_\chi)\)</span> is the
+reduced mass of the WIMP-nucleus system. To use the simple
+Maxwell-Bolztmann distribution approximation, the maximum speed is taken
+to be <span class="math inline">\(\infty \approx 12 \times
+v_{0}\)</span>. Otherwise, the maximum speed is taken to be the galactic
+escape velocity: <span class="math inline">\(v_{esc} \approx
+550\)</span> km/s.</p>
+<p>Note that as a function of momentum <span
+class="math inline">\(q\)</span>, the integral is guarenteed to go to
+zero above some maximum momentum <span
+class="math inline">\(q_{max}\)</span>. This happens when <span
+class="math inline">\(v_{min} = v_{max}+v_{earth}\)</span>, which
+corresponds to: <span class="math display">\[\begin{align}
 q_{max} = 2\mu_T (v_{max}+v_{earth}),
-\]</span> <span class="math display">\[
+\end{align}\]</span> <span class="math display">\[\begin{align}
 E_{R,max} = q_{max}^2/2m_T = 2\mu_T^2v_{max}^2/m_T.
-\]</span> With 150 GeV WIMPs and <span class="math inline">\(^{29}\)</span>Si, for example, <span class="math inline">\(\mu_T=23.031916\)</span> GeV, <span class="math inline">\(m_T=27.209888\)</span> GeV, <span class="math inline">\(v_{max}=550\)</span> km/s <span class="math inline">\(=0.001834602\)</span> GeV/c: <span class="math inline">\(E_{R,max} = 265.2987\)</span> keV.</p>
+\end{align}\]</span> With 150 GeV WIMPs and <span
+class="math inline">\(^{29}\)</span>Si, for example, <span
+class="math inline">\(\mu_T=23.031916\)</span> GeV, <span
+class="math inline">\(m_T=27.209888\)</span> GeV, <span
+class="math inline">\(v_{max}=550\)</span> km/s <span
+class="math inline">\(=0.001834602\)</span> GeV/c: <span
+class="math inline">\(E_{R,max} = 265.2987\)</span> keV.</p>
 <h2 id="smooth-shm">Smooth SHM</h2>
-<p>This distribution appears in the Mathematica code DMFormFactor under the name “MBcutoff”. It is simply a smoothed version of the SHM. The distribution is: <span class="math display">\[
+<p>This distribution appears in the Mathematica code DMFormFactor under
+the name “MBcutoff”. It is simply a smoothed version of the SHM. The
+distribution is: <span class="math display">\[\begin{align}
     f_{sSHM}(\vec{v}) = \frac{\Theta(v_{esc}-|\vec{v}|)}
         {N_{esc}\pi^{3/2}v_0^3}
         \left\{\exp[-(\vec{v}/v_0)^2] - \exp[-(v_{esc}/v_0)^2] \right\}.
-\]</span> The normalization factor is: <span class="math display">\[
+\end{align}\]</span> Thbeginormalization factor is: <span
+class="math display">\[\begin{align}
     N_{sesc} = erf(z) - \frac{2}{\sqrt{\pi}}z(1+\frac{2}{3}z^2)e^{-z^2},
-\]</span> <span class="math inline">\(z=v_{esc}/v_0\)</span>. This essentially just adds an additional term to the integral <span class="math inline">\(I_{MB}\)</span>, which we will call <span class="math inline">\(I_{S}\)</span>, so that <span class="math inline">\(I=(I_{MB}-I_{S})/N_{sesc}\)</span>. Following the same steps as for <span class="math inline">\(I_{MB}\)</span>, we find that <span class="math display">\[
-I_{S} = \int_{v_{min}}^{v_{esc}+v_E} dv\
-\frac{d\sigma(v,q)}{d{q}^2} v^2 2\pi g(v_{esc})\left[\Theta_{v&lt;v_{esc}-v_e} 2v + 
+\end{align}\]</span> <span class="math inline">\(z=v_{esc}/v_0\)</span>.
+This essentially just adds an additional term to the integral <span
+class="math inline">\(I_{MB}\)</span>, which we will call <span
+class="math inline">\(I_{S}\)</span>, so that <span
+class="math inline">\(I=(I_{MB}-I_{S})/N_{sesc}\)</span>. Following the
+same steps as for <span class="math inline">\(I_{MB}\)</span>, we find
+that <span class="math display">\[\begin{align}
+I_{S} = \int_{v_{min}}^{v_{esc}+v_E} dv\ \frac{d\sigma(v,q)}{d{q}^2} v^2
+2\pi g(v_{esc})\left[\Theta_{v&lt;v_{esc}-v_e} 2v +
 \Theta_{v&gt;v_{esc}-v_e} \frac{1}{2v_E}(v_{esc}^2-(v-v_E)^2)\right]
-\]</span></p>
-<h2 id="more-sophisticated-halo-models">More Sophisticated Halo Models</h2>
-<p>The SHM is actually not a very good model. For example, it ignores the annual modulation of the Earth’s speed through the galanctic frame due to its orbit around the Sun. Another point is that the cut-off model where the speed probability drops to zero after an escape velocity is reached is not very realistic: actually, the cutoff should be smoother.</p>
-<p>A semi-recent review on the subject can be found here<span class="citation" data-cites="RevModPhys.85.1561"> [<a href="#ref-RevModPhys.85.1561" role="doc-biblioref">9</a>]</span>.</p>
+\end{align}\]</span></p>
+<h2 id="more-sophisticated-halo-models">More Sophisticated Halo
+Models</h2>
+<p>The SHM is actually not a very good model. For example, it ignores
+the annual modulation of the Earth’s speed through the galanctic frame
+due to its orbit around the Sun. Another point is that the cut-off model
+where the speed probability drops to zero after an escape velocity is
+reached is not very realistic: actually, the cutoff should be
+smoother.</p>
+<p>A semi-recent review on the subject can be found here<span
+class="citation" data-cites="RevModPhys.85.1561"> [<a
+href="#ref-RevModPhys.85.1561" role="doc-biblioref">15</a>]</span>.</p>
 <h2 id="differential-cross-section">Differential cross section</h2>
-<p>The differential scattering cross section is directly related to the scattering transition probabilities <span class="math inline">\(T(v,q(E_r))\)</span>: <span class="math display">\[
-    \frac{d\sigma}{dE_r}(v,E_r) = 2m_t\frac{d\sigma}{dq^2}(v,q) = 2m_T\frac{1}{4\pi v^2} T(v,q).
-\]</span> The momentum transfer <span class="math inline">\(q\)</span> is directly related to the recoil energy by <span class="math inline">\(q^2=2m_tE_r\)</span>, where <span class="math inline">\(m_t\)</span> is the mass of the target nucleus in GeV<span class="math inline">\(/c^2\)</span>.</p>
+<p>The differential scattering cross section is directly related to the
+scattering transition probabilities <span
+class="math inline">\(T(v,q(E_r))\)</span>: <span
+class="math display">\[\begin{align}
+    \frac{d\sigma}{dE_r}(v,E_r) = 2m_T\frac{d\sigma}{dq^2}(v,q) =
+2m_T\frac{1}{4\pi v^2} T(v,q).
+\end{align}\]</span> The momentum transfer <span
+class="math inline">\(q\)</span> is directly related to the recoil
+energy by <span class="math inline">\(q^2=2m_TE_r\)</span>, where <span
+class="math inline">\(m_T\)</span> is the mass of the target nucleus in
+GeV<span class="math inline">\(/c^2\)</span>.</p>
 <h2 id="transition-probability">Transition probability</h2>
-<p>The WIMP-nucleus scattering event probabilities are computed as a sum of squared nuclear-matrix-elements: <span class="math display">\[
-    T(v,q) = \frac{1}{2j_\chi +1}\frac{1}{2j_T+1} \sum_{M_i M_f} \left |\bra{j_TM_f} \mathcal{H} \ket{j_TM_i}\right |^2.
-\]</span> Here <span class="math inline">\(v\)</span> is the speed of the WIMP in the lab frame, <span class="math inline">\(q\)</span> is the momentum transferred in the collision, and <span class="math inline">\(j_\chi\)</span> and <span class="math inline">\(j_T\)</span> are the intrinsic spins of the WIMP and target nucleus, respectively, while <span class="math inline">\(\mathcal{H}\)</span> is the WIMP-nucleus interaction, <span class="math display">\[
+<p>The WIMP-nucleus scattering event probabilities are computed as a sum
+of squared nuclear-matrix-elements: <span
+class="math display">\[\begin{align}
+    T(v,q) = \frac{1}{2j_\chi +1}\frac{1}{2j_T+1} \sum_{M_i M_f} \left
+|\bra{j_TM_f} \mathcal{H} \ket{j_TM_i}\right |^2.
+\end{align}\]</span> Here <span class="math inline">\(v\)</span> is the
+speed of the WIMP in the lab frame, <span
+class="math inline">\(q\)</span> is the momentum transferred in the
+collision, and <span class="math inline">\(j_\chi\)</span> and <span
+class="math inline">\(j_T\)</span> are the intrinsic spins of the WIMP
+and target nucleus, respectively, while <span
+class="math inline">\(\mathcal{H}\)</span> is the WIMP-nucleus
+interaction, <span class="math display">\[\begin{align}
     \mathcal{H} = \sum_i\sum_{x=p,n}c_i^x\mathcal{O}_i^x.
-\]</span> given in terms of 15 non-relativistic operators <span class="math inline">\(\mathcal{O}_i\)</span>. The sum over <span class="math inline">\(x\)</span> indicates the separate coupling to protons and neutrons. These operators, listed in <span class="math inline">\(\ref{sec: EFT}\)</span>, are those constructed to leading order from <span class="math display">\[
+\end{align}\]</span> given in terms of 15 non-relativistic operators
+<span class="math inline">\(\mathcal{O}_i\)</span>. The sum over <span
+class="math inline">\(x\)</span> indicates the separate coupling to
+protons and neutrons. These operators, listed in <span
+class="math inline">\(\ref{sec: EFT}\)</span>, are those constructed to
+leading order from <span class="math display">\[\begin{align}
     i\frac{\vec{q}}{m_N},\ \vec{v}^\perp,\ \vec{S}_\chi,\ \vec{S}_N.
-\]</span></p>
-<p>The transition probability is ultimately factorized to group the operators into forms familiar from electro-weak theory in a shell model framework <span class="citation" data-cites="DONNELLY1979103"> [<a href="#ref-DONNELLY1979103" role="doc-biblioref">15</a>]</span>. Doing so yields a folding of two factors: one containing the EFT content, labeled <span class="math inline">\(R_i^{x,x&#39;}\)</span>, and another containing the nuclear response functions, labeled <span class="math inline">\(W_i^{x,x&#39;}\)</span> for each of the <span class="math inline">\(i=1,...,8\)</span> allowed combinations of electro-weak-theory operators, discussed in the next section. One obtains the following form<span class="citation" data-cites="Fitzpatrick_2013 Anand_2014"> [<a href="#ref-Fitzpatrick_2013" role="doc-biblioref">2</a>,<a href="#ref-Anand_2014" role="doc-biblioref">16</a>]</span>: <span class="math display">\[
-    T(v,q) = \frac{4\pi}{(4m_T)^2} \frac{1}{2j_T+1} \sum_{x=p,n}\sum_{x&#39;=p,n}\sum_{i=1}^8 R_i^{x,x&#39;}(v^2,q^2)W_i^{x,x&#39;}(q).
-\]</span></p>
-<h2 id="dark-matter-response-functions">Dark matter response functions</h2>
-<p>There are 8 dark matter response functions which group 15 operator coefficients <span class="math inline">\(c_i^x\)</span> according the pair of nuclear response functions which they multiply.</p>
-<p>As a shorthand, <span class="math inline">\(cl(j) \equiv 4j(j+1)/3\)</span>, and <span class="math inline">\(v^{\perp 2}\equiv v^2 - (q/2\mu_t)^2\)</span>. <span class="math display">\[\begin{align*}
-R_{M}^{xx&#39;}(v,q) &amp;= \frac{1}{4}cl(j_\chi) [ v^{\perp 2}
-        (c_5^{x}c_5^{x&#39;}q^2 + c_8^{x}c_8^{x&#39;}) + c_{11}^{x}c_{11}^{x&#39;}q^2 ]\\&amp;
-        + (c_1^{x} + c_2^{x}v^{\perp 2} ) (c_1^{x&#39;}
-        + c_2^{x&#39;}v^{\perp 2} ) \\
-R_{\Sigma&#39;&#39;}^{xx&#39;}(v,q) &amp;= \frac{1}{16}cl(j_\chi) [c_6^{x}c_6^{x&#39;}q^4
-    + (c_{13}^{x}c_{13}^{x&#39;}q^2 + c_{12}^{x} c_{12}^{x&#39;} ) v^{\perp 2} + 2c_4^xc_6^{x&#39;}q^2 + c_4^xc_4^{x&#39;}]
-    + \frac{1}{4}c_{10}^xc_{10}^{x &#39;}q^2\\
-R_{\Sigma&#39;}^{xx&#39;}(v,q) &amp;= \frac{1}{32} cl(j_\chi) [ 2c_{9}^{x}c_{9}^{x&#39;}q^2
-        + ( c_{15}^{x}c_{15}^{x&#39;}q^4 + c_{14}^{x}c_{14}^{x&#39;}q^2 \\&amp;
-        - 2c_{12}^{x}c_{15}^{x&#39;} q^2 + c_{12}^{x}c_{12}^{x&#39;}) v^{\perp 2}
-        + 2c_{4}^{x}c_{4}^{x&#39;} ]
-        +\frac{1}{8}(c_{3}^{x}c_3^{x&#39;}q^2 + c_{7}^{x}c_{7}^{x&#39;})v^{\perp 2}\\
-R_{\Phi&#39;&#39;}^{xx&#39;}(v,q) &amp;= \frac{q^2}{16m_N^2}cl(j_\chi) (c_{12}^x - c_{15}^{x}q^2
-        )(c_{12}^{x &#39;}-c_{15}^{x &#39;}q^2 )
-    + \frac{q^4}{4m_N^2}c_3^x c_3^{x&#39;} \\
-R_{\tilde{\Phi}&#39;}^{xx&#39;}(v,q) &amp;= \frac{q^2}{16m_N^2}cl(j_\chi)(
-        c_{13}^xc_{13}^{x&#39;}q^2 + c_{12}^x c_{12}^{x&#39;})\\
-        %was erroneously c13c12q^2\\
-R_{\Delta}^{xx&#39;}(v,q) &amp;= \frac{q^2}{4m_N^2}cl(j_\chi) (c_{5}^{x}c_{5}^{x&#39;}q^2
-        + c_{8}^{x}c_{8}^{x&#39;})
-        + 2\frac{q^2}{m_N^2}c_{2}^{x}c_{2}^{x&#39;}v^{\perp 2}\\
-R_{\Delta \Sigma&#39;}^{xx&#39;}(v,q) &amp;= \frac{q^2}{4m_N}cl(j_\chi)
-        (c_{4}^{x}c_{5}^{x&#39;} - c_{8}^{x}c_{9}^{x&#39;})
-        - \frac{q^2}{m_N} c_{2}^{x}c_{3}^{x&#39;} v^{\perp 2}\\
-R_{\Phi&#39;&#39;M}^{xx&#39;}(v,q) &amp;= \frac{q^2}{4m_N}cl(j_\chi)c_{11}^{x}
-        (c_{12}^{x&#39;} - c_{15}^{x&#39;} q^2)
-        + \frac{q^2}{m_N}c_{3}^{x&#39;}  (c_{1}^{x} + c_{2}^{x} v^{\perp 2})\\
-\end{align*}\]</span></p>
-<p>It should be noted that the last two dark matter responses are composed entirely of interference terms, which is to say, they do not come into play unless certain combinations of EFT coefficients are simultaneously active. For example, <span class="math inline">\(c_4\)</span> and <span class="math inline">\(c_5\)</span> together will activate <span class="math inline">\(R_{\Sigma&#39; \Delta}\)</span>, but not alone.</p>
+\end{align}\]</span></p>
+<p>The transition probability is ultimately factorized to group the
+operators into forms familiar from electro-weak theory in a shell model
+framework <span class="citation" data-cites="DONNELLY1979103"> [<a
+href="#ref-DONNELLY1979103" role="doc-biblioref">21</a>]</span>. Doing
+so yields a folding of two factors: one containing the EFT content,
+labeled <span class="math inline">\(R_i^{x,x&#39;}\)</span>, and another
+containing the nuclear response functions, labeled <span
+class="math inline">\(W_i^{x,x&#39;}\)</span> for each of the <span
+class="math inline">\(i=1,...,8\)</span> allowed combinations of
+electro-weak-theory operators, discussed in the next section. One
+obtains the following form<span class="citation"
+data-cites="Fitzpatrick_2013 Anand_2014"> [<a
+href="#ref-Fitzpatrick_2013" role="doc-biblioref">2</a>,<a
+href="#ref-Anand_2014" role="doc-biblioref">22</a>]</span>: <span
+class="math display">\[\begin{align}
+    T(v,q) = \frac{4\pi}{2j_T+1}
+\sum_{x=p,n}\sum_{x&#39;=p,n}\sum_{i=1}^8
+R_i^{x,x&#39;}(v^2,q^2)W_i^{x,x&#39;}(q).
+\end{align}\]</span></p>
+<h2 id="dark-matter-response-functions">Dark matter response
+functions</h2>
+<p><span class="math display">\[\begin{align}
+   R_{M}^{xx&#39;}(v,q) = \frac{1}{4}cl(j_\chi) [ v^{\perp 2}
+(c_5^{x}c_5^{x&#39;}q^2 + c_8^{x}c_8^{x&#39;}) +
+c_{11}^{x}c_{11}^{x&#39;}q^2 ]\\
+    + (c_1^{x} + c_2^{x}v^{\perp 2} ) (c_1^{x&#39;} +
+c_2^{x&#39;}v^{\perp 2} )  
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}             
+R_{\Sigma&#39;&#39;}^{xx&#39;}(v,q) = \frac{1}{16}cl(j_\chi)
+[c_6^{x}c_6^{x&#39;}q^4 + (c_{13}^{x}c_{13}^{x&#39;}q^2 + c_{12}^{x}
+c_{12}^{x&#39;} ) v^{\perp 2}\\
+    + 2c_4^xc_6^{x&#39;}q^2 + c_4^xc_4^{x&#39;}] +
+\frac{1}{4}c_{10}^xc_{10}^{x &#39;}q^2
+\end{align}\]</span><br />
+<span class="math display">\[\begin{align}    
+R_{\Sigma&#39;}^{xx&#39;}(v,q) = \frac{1}{32} cl(j_\chi) [
+2c_{9}^{x}c_{9}^{x&#39;}q^2 + ( c_{15}^{x}c_{15}^{x&#39;}q^4 +
+c_{14}^{x}c_{14}^{x&#39;}q^2 \\
+    - 2c_{12}^{x}c_{15}^{x&#39;} q^2 + c_{12}^{x}c_{12}^{x&#39;})
+v^{\perp 2} + 2c_{4}^{x}c_{4}^{x&#39;} ]\\
+    +\frac{1}{8}(c_{3}^{x}c_3^{x&#39;}q^2 +
+c_{7}^{x}c_{7}^{x&#39;})v^{\perp 2}
+\end{align}\]</span><br />
+<span class="math display">\[\begin{align}        
+R_{\Phi&#39;&#39;}^{xx&#39;}(v,q) = \frac{q^2}{16m_N^2}cl(j_\chi)
+(c_{12}^x - c_{15}^{x}q^2)(c_{12}^{x &#39;}-c_{15}^{x &#39;}q^2 ) \\
+    + \frac{q^4}{4m_N^2}c_3^x c_3^{x&#39;}
+\end{align}\]</span><br />
+<span class="math display">\[\begin{align}    
+R_{\tilde{\Phi}&#39;}^{xx&#39;}(v,q) =
+\frac{q^2}{16m_N^2}cl(j_\chi)(c_{13}^xc_{13}^{x&#39;}q^2 + c_{12}^x
+c_{12}^{x&#39;})
+\end{align}\]</span><br />
+<span class="math display">\[\begin{align}        
+R_{\Delta}^{xx&#39;}(v,q) = \frac{q^2}{4m_N^2}cl(j_\chi)
+(c_{5}^{x}c_{5}^{x&#39;}q^2 + c_{8}^{x}c_{8}^{x&#39;}) \\
+    + 2\frac{q^2}{m_N^2}c_{2}^{x}c_{2}^{x&#39;}v^{\perp 2}
+\end{align}\]</span><br />
+<span class="math display">\[\begin{align}        
+R_{\Sigma&#39; \Delta}^{xx&#39;}(v,q) = \frac{q^2}{4m_N}cl(j_\chi)
+(c_{4}^{x}c_{5}^{x&#39;} - c_{8}^{x}c_{9}^{x&#39;}) - \frac{q^2}{m_N}
+c_{2}^{x}c_{3}^{x&#39;} v^{\perp 2}
+\end{align}\]</span><br />
+<span class="math display">\[\begin{align}        
+R_{M\Phi&#39;&#39;}^{xx&#39;}(v,q) =
+\frac{q^2}{4m_N}cl(j_\chi)c_{11}^{x} (c_{12}^{x&#39;} - c_{15}^{x&#39;}
+q^2) \\
+    + \frac{q^2}{m_N}c_{3}^{x&#39;}  (c_{1}^{x} + c_{2}^{x} v^{\perp 2})
+\end{align}\]</span><br />
+It should be noted that the last two dark matter responses are composed
+entirely of interference terms, which is to say, they do not come into
+play unless certain combinations of EFT coefficients are simultaneously
+active. For example, <span class="math inline">\(c_4\)</span> and <span
+class="math inline">\(c_5\)</span> together will activate <span
+class="math inline">\(R_{\Sigma&#39; \Delta}\)</span>, but not
+alone.</p>
 <h2 id="operators">Operators</h2>
-<p>The WIMP-nucleus interaction is defined by the user in terms of an effective field theory Lagrangian, specified implicitly by fifteen operator coupling constants <span class="math inline">\(c_i^x\)</span>, (for <span class="math inline">\(i=1,...,15\)</span>), where <span class="math inline">\(x=p, n\)</span> for coupling to protons or neutrons individually.</p>
-<p>The code uses the EFT coefficients in explicit proton-neutron couplings, i.e. the interaction is defined by: <span class="math display">\[
+<p>The WIMP-nucleus interaction is defined by the user in terms of an
+effective field theory Lagrangian, specified implicitly by fifteen
+operator coupling constants <span class="math inline">\(c_i^x\)</span>,
+(for <span class="math inline">\(i=1,...,15\)</span>), where <span
+class="math inline">\(x=p, n\)</span> for coupling to protons or
+neutrons individually.</p>
+<p>The code uses the EFT coefficients in explicit proton-neutron
+couplings, i.e. the interaction is defined by: <span
+class="math display">\[\begin{align}
     \mathcal{H} = \sum_{x=p,n}\sum_{i=1,15} c^x_i \mathcal{O} _i
-\]</span> and the 15 momentum-dependent operators are:</p>
-<p><span class="math display">\[\begin{align*}
+\end{align}\]</span> and the 15 momentum-dependent operators are:</p>
+<p><span class="math display">\[\begin{align}
     \mathcal{O} _1 &amp;= 1_\chi 1_N\\
     \mathcal{O} _2 &amp;= (v^\perp)^2\\
-    \mathcal{O} _3 &amp;= i\vec{S}_N \cdot \left(\frac{\vec{q}}{m_N}\times
+    \mathcal{O} _3 &amp;= i\vec{S}_N \cdot
+\left(\frac{\vec{q}}{m_N}\times
         \vec{v}^\perp\right)\\
     \mathcal{O} _4 &amp;= \vec{S}_\chi \cdot \vec{S}_N\\
-    \mathcal{O} _5 &amp;= i\vec{S}_\chi \cdot \left(\frac{\vec{q}}{m_N}\times
+    \mathcal{O} _5 &amp;= i\vec{S}_\chi \cdot
+\left(\frac{\vec{q}}{m_N}\times
         \vec{v}^\perp\right)\\
-    \mathcal{O} _6 &amp;= \left(\vec{S}_\chi \cdot \frac{\vec{q}}{m_N} \right)
+    \mathcal{O} _6 &amp;= \left(\vec{S}_\chi \cdot \frac{\vec{q}}{m_N}
+\right)
         \left(\vec{S}_N \cdot \frac{\vec{q}}{m_N} \right) \\
     \mathcal{O} _7 &amp;= \vec{S}_N\cdot \vec{v}^\perp \\
     \mathcal{O} _8 &amp;= \vec{S}_\chi\cdot \vec{v}^\perp \\
@@ -816,62 +1370,158 @@ R_{\Phi&#39;&#39;M}^{xx&#39;}(v,q) &amp;= \frac{q^2}{4m_N}cl(j_\chi)c_{11}^{x}
     \mathcal{O} _{11} &amp;= i\vec{S}_\chi \cdot \frac{\vec{q}}{m_N}\\
     \mathcal{O} _{12} &amp;= \vec{S}_\chi \cdot \left( \vec{S}_N\times
         \vec{v}^\perp\right)\\
-    \mathcal{O} _{13} &amp;= i\left( \vec{S}_\chi \cdot \vec{v}^\perp \right)
+    \mathcal{O} _{13} &amp;= i\left( \vec{S}_\chi \cdot \vec{v}^\perp
+\right)
         \left(\vec{S}_N\cdot \frac{\vec{q}}{m_N}\right )\\
-    \mathcal{O} _{14} &amp;= i\left( \vec{S}_\chi \cdot \frac{\vec{q}}{m_N} \right)
+    \mathcal{O} _{14} &amp;= i\left( \vec{S}_\chi \cdot
+\frac{\vec{q}}{m_N} \right)
         \left(\vec{S}_N\cdot \vec{v}^\perp \right )\\
-    \mathcal{O} _{15} &amp;= -\left(\vec{S}_\chi \cdot \frac{\vec{q}}{m_N} \right )
+    \mathcal{O} _{15} &amp;= -\left(\vec{S}_\chi \cdot
+\frac{\vec{q}}{m_N} \right )
         \left( \left( \vec{S}_N\times \vec{v}^\perp\right)\cdot
         \frac{\vec{q}}{m_N} \right)
-\end{align*}\]</span></p>
-<p>Operator 2 is generally discarded because it is not a leading order non-relativistic reduction of a manifestly relativistic operator <span class="citation" data-cites="Anand_2014"> [<a href="#ref-Anand_2014" role="doc-biblioref">16</a>]</span>. Operators 1 and 4 correspond to the naive density- and spin-coupling, respectively.</p>
+\end{align}\]</span></p>
+<p>Operator 2 is generally discarded because it is not a leading order
+non-relativistic reduction of a manifestly relativistic operator <span
+class="citation" data-cites="Anand_2014"> [<a href="#ref-Anand_2014"
+role="doc-biblioref">22</a>]</span>. Operators 1 and 4 correspond to the
+naive density- and spin-coupling, respectively.</p>
 <h2 id="nuclear-response-functions">Nuclear response functions</h2>
-<p>The EFT physics has been grouped into eight WIMP response functions <span class="math inline">\(R_i^{x,x&#39;}\)</span>, and eight nuclear response functions <span class="math inline">\(W_i^{x,x&#39;}\)</span>. The first six nuclear response functions have the following form: <span class="math display">\[
-    W_{X}^{x,x&#39;} = \sum_{J}\bra{\Psi} X^{x}_J \ket{\Psi}\bra{\Psi} X^{x&#39;}_J \ket{\Psi},
-\]</span> with <span class="math inline">\(X\)</span> selecting one of the six electroweak operators, <span class="math display">\[
-    X_J=M_J, \Delta_J, \Sigma_J&#39;, \Sigma_J&#39;&#39;, \tilde{\Phi}_J&#39;, \Phi_J&#39;&#39;,
-\]</span> and <span class="math inline">\(\Psi\)</span> being the nuclear wave function for the ground state of the target nucleus. The sum over operators spins <span class="math inline">\(J\)</span> is restricted to even or odd values of <span class="math inline">\(J\)</span>, depending on restrictions from conservation of parity and charge conjugation parity (CP) symmetry.</p>
-<p>Two additional response functions add interference-terms: <span class="math display">\[
+<p>The EFT physics has been grouped into eight WIMP response functions
+<span class="math inline">\(R_i^{x,x&#39;}\)</span>, and eight nuclear
+response functions <span class="math inline">\(W_i^{x,x&#39;}\)</span>.
+The first six nuclear response functions have the following form: <span
+class="math display">\[\begin{align}
+    W_{X}^{x,x&#39;} = \sum_{J}\bra{\Psi} X^{x}_J \ket{\Psi}\bra{\Psi}
+X^{x&#39;}_J \ket{\Psi},
+\end{align}\]</span> with <span class="math inline">\(X\)</span>
+selecting one of the six electroweak operators, <span
+class="math display">\[\begin{align}
+    X_J=M_J, \Delta_J, \Sigma_J&#39;, \Sigma_J&#39;&#39;,
+\tilde{\Phi}_J&#39;, \Phi_J&#39;&#39;,
+\end{align}\]</span> and <span class="math inline">\(\Psi\)</span> being
+the nuclear wave function for the ground state of the target nucleus.
+The sum over operators spins <span class="math inline">\(J\)</span> is
+restricted to even or odd values of <span
+class="math inline">\(J\)</span>, depending on restrictions from
+conservation of parity and charge conjugation parity (CP) symmetry.</p>
+<p>Two additional response functions add interference-terms: <span
+class="math display">\[\begin{align}
 W_{M\Phi&#39;&#39;}^{x,x&#39;} =
-\sum_{J}\bra{\Psi} M_{J}^{x} \ket{\Psi}\bra{\Psi} \Phi_{J}^{&#39;&#39;x&#39;} \ket{\Psi},
-\]</span> <span class="math display">\[
-W_{\Delta\Sigma&#39;}^{x,x&#39;} = 
-\sum_{J}\bra{\Psi} \Sigma_{J}^{&#39;x} \ket{\Psi}\bra{\Psi} \Delta_{J}^{x&#39;} \ket{\Psi}.
-\]</span> The indices <span class="math inline">\(i\)</span> in equation (<span class="math inline">\(\ref{eq:T2}\)</span>) correspond to these operators as: <span class="math inline">\(i\to X\)</span> for <span class="math inline">\(i=1,..,6\)</span>, and <span class="math inline">\(i=7 \to M\Phi&#39;&#39;\)</span>, <span class="math inline">\(i=8\to \Delta\Sigma&#39;\)</span>.</p>
-<p>DMFortFactor can print the nuclear form factors to a file over a range of either transfer momenta or recoil energy.</p>
-<h2 id="nuclear-electroweak-operators">Nuclear (electroweak) operators</h2>
-<p>There are six parity-and-CP-conserving nuclear operators, <span class="math inline">\(M_J, \Delta_J, \Sigma_J&#39;, \Sigma_J&#39;&#39;, \tilde{\Phi}_J&#39;, \Phi_J&#39;&#39;\)</span>, describing the electro-weak coupling of the WIMPs to the nucleon degrees of freedom. These are constructed from Bessel spherical and vector harmonics<span class="citation" data-cites="DONNELLY1979103"> [<a href="#ref-DONNELLY1979103" role="doc-biblioref">15</a>]</span>: <span class="math display">\[
+\sum_{J}\bra{\Psi} M_{J}^{x} \ket{\Psi}\bra{\Psi}
+\Phi_{J}^{&#39;&#39;x&#39;} \ket{\Psi},
+\end{align}\]</span> <span class="math display">\[\begin{align}
+W_{\Delta\Sigma&#39;}^{x,x&#39;} =
+\sum_{J}\bra{\Psi} \Sigma_{J}^{&#39;x} \ket{\Psi}\bra{\Psi}
+\Delta_{J}^{x&#39;} \ket{\Psi}.
+\end{align}\]</span> The indices <span class="math inline">\(i\)</span>
+in align (<span class="math inline">\(\ref{eq:T2}\)</span>) correspond
+to these operators as: <span class="math inline">\(i\to X\)</span> for
+<span class="math inline">\(i=1,..,6\)</span>, and <span
+class="math inline">\(i=7 \to M\Phi&#39;&#39;\)</span>, <span
+class="math inline">\(i=8\to \Delta\Sigma&#39;\)</span>.</p>
+<p>DMFortFactor can print the nuclear form factors to a file over a
+range of either transfer momenta or recoil energy.</p>
+<h2 id="nuclear-electroweak-operators">Nuclear (electroweak)
+operators</h2>
+<p>There are six parity-and-CP-conserving nuclear operators, <span
+class="math inline">\(M_J, \Delta_J, \Sigma_J&#39;, \Sigma_J&#39;&#39;,
+\tilde{\Phi}_J&#39;, \Phi_J&#39;&#39;\)</span>, describing the
+electro-weak coupling of the WIMPs to the nucleon degrees of freedom.
+These are constructed from Bessel spherical and vector harmonics<span
+class="citation" data-cites="DONNELLY1979103"> [<a
+href="#ref-DONNELLY1979103" role="doc-biblioref">21</a>]</span>: <span
+class="math display">\[\begin{align}
     M_{JM}(q\vec{x})\equiv j_J(qx)Y_{JM}(\Omega_x)
-\]</span> <span class="math display">\[
+\end{align}\]</span> <span class="math display">\[\begin{align}
     \vec{M}_{JML}(q\vec{x}) \equiv j_L(qx) \vec{Y}_{JLM}(\Omega_x),
-\]</span> where, using unit vectors <span class="math inline">\(\vec{e}_{\lambda = -1, 0, +1}\)</span>, <span class="math display">\[
-    Y_{JLM}(\Omega_x) = \sum_{m\lambda} \bra{Lm1\lambda}\ket{(L1)JM_J} Y_{Lm}(\Omega_x)\vec{e}_\lambda.
-\]</span> The six multipole operators are defined as: <span class="math display">\[\begin{align*}
+\end{align}\]</span> where, using unit vectors <span
+class="math inline">\(\vec{e}_{\lambda = -1, 0, +1}\)</span>, <span
+class="math display">\[\begin{align}
+    Y_{JLM}(\Omega_x) = \sum_{m\lambda} \bra{Lm1\lambda}\ket{(L1)JM_J}
+Y_{Lm}(\Omega_x)\vec{e}_\lambda.
+\end{align}\]</span> The six multipole operators are defined as: <span
+class="math display">\[\begin{align}
 M_{JM}\ \ &amp;\\
 \Delta_{JM} \equiv&amp; \vec{M}_{JJM}\cdot \frac{1}{q}\vec{\nabla}\\
-\Sigma&#39;_{JM} \equiv&amp; -i \left \{\frac{1}{q}\vec{\nabla}\times \vec{M}_{JJM}  \right\}\cdot \vec{\sigma}\\
-\Sigma&#39;&#39;_{JM} \equiv&amp; \left \{ \frac{1}{q}\vec{\nabla}M_{JM} \right \}\cdot \vec{\sigma}\\
-\tilde{\Phi}&#39;_{JM} \equiv&amp; \left( \frac{1}{q} \vec{\nabla} \times \vec{M}_{JJM}\right)\cdot \left(\vec{\sigma}\times \frac{1}{q}\vec{\nabla} \right) + \frac{1}{2}\vec{M}_{JJM}\cdot \vec{\sigma}\\
-\Phi&#39;&#39;_{JM}\equiv&amp; i\left(\frac{1}{q}\vec{\nabla}M_{JM} \right)\cdot \left(\vec{\sigma}\times \frac{1}{q}\vec{\nabla} \right)
-\end{align*}\]</span></p>
-<p>The matrix elements of these operators can be calculated for standard wave functions from second-quantized shell model calculations: <span class="math display">\[
+\Sigma&#39;_{JM} \equiv&amp; -i \left \{\frac{1}{q}\vec{\nabla}\times
+\vec{M}_{JJM}  \right\}\cdot \vec{\sigma}\\
+\Sigma&#39;&#39;_{JM} \equiv&amp; \left \{ \frac{1}{q}\vec{\nabla}M_{JM}
+\right \}\cdot \vec{\sigma}\\
+\tilde{\Phi}&#39;_{JM} \equiv&amp; \left( \frac{1}{q} \vec{\nabla}
+\times \vec{M}_{JJM}\right)\cdot \left(\vec{\sigma}\times
+\frac{1}{q}\vec{\nabla} \right) + \frac{1}{2}\vec{M}_{JJM}\cdot
+\vec{\sigma}\\
+\Phi&#39;&#39;_{JM}\equiv&amp; i\left(\frac{1}{q}\vec{\nabla}M_{JM}
+\right)\cdot \left(\vec{\sigma}\times \frac{1}{q}\vec{\nabla} \right)
+\end{align}\]</span></p>
+<p>The matrix elements of these operators can be calculated for standard
+wave functions from second-quantized shell model calculations: <span
+class="math display">\[\begin{align}
     \bra{\Psi_f} X_J \ket{\Psi_i} = \Tr(X_J \rho^{f,i}_J )
-\]</span> <span class="math display">\[
- = \sum_{a,b} \bra{a} |X_J| \ket{b} \rho^{fi}_J(ab),
-\]</span> where single-particle orbital labels <span class="math inline">\(a\)</span> imply shell model quantum number <span class="math inline">\(n_a, l_a, j_a\)</span>, and the double-bar <span class="math inline">\(||\)</span> indicates reduced matrix elements<span class="citation" data-cites="edmonds1996angular"> [<a href="#ref-edmonds1996angular" role="doc-biblioref">17</a>]</span>. For elastic collisions, only the ground state is involved, i.e. <span class="math inline">\(\Psi_f=\Psi_i=\Psi_{g.s.}\)</span>.</p>
-<p>We assume a harmonic oscillator single-particle basis, with the important convention that the radial nodal quantum number <span class="math inline">\(n_a\)</span> starts at 0, that is, we label the orbitals as <span class="math inline">\(0s, 0p, 1s0d\)</span>, etc.., and <em>not</em> starting with <span class="math inline">\(1s, 1p,\)</span> etc. Then, the one-body matrix elements for operators <span class="math inline">\(\bra{a} |X^{(f)}_J| \ket{b}\)</span>, built from spherical Bessel functions and vector spherical harmonics, have closed-form expressions in terms of confluent hypergeometric functions<span class="citation" data-cites="DONNELLY1979103"> [<a href="#ref-DONNELLY1979103" role="doc-biblioref">15</a>]</span>.</p>
-<p>The nuclear structure input is in the form of one-body density matrices between many-body eigenstates, <span class="math display">\[
-\rho^{fi}_J(ab) = \frac{1}{\sqrt{2J+1} }\langle \Psi_f || [ \hat{c}^\dagger_a \otimes \tilde{c}_b ]_J
+\end{align}\]</span> <span class="math display">\[\begin{align}
+= \sum_{a,b} \bra{a} |X_J| \ket{b} \rho^{fi}_J(ab),
+\end{align}\]</span> where single-particle orbital labels <span
+class="math inline">\(a\)</span> imply shell model quantum number <span
+class="math inline">\(n_a, l_a, j_a\)</span>, and the double-bar <span
+class="math inline">\(||\)</span> indicates reduced matrix elements<span
+class="citation" data-cites="edmonds1996angular"> [<a
+href="#ref-edmonds1996angular" role="doc-biblioref">23</a>]</span>. For
+elastic collisions, only the ground state is involved, i.e. <span
+class="math inline">\(\Psi_f=\Psi_i=\Psi_{g.s.}\)</span>.</p>
+<p>We assume a harmonic oscillator single-particle basis, with the
+important convention that the radial nodal quantum number <span
+class="math inline">\(n_a\)</span> starts at 0, that is, we label the
+orbitals as <span class="math inline">\(0s, 0p, 1s0d\)</span>, etc..,
+and <em>not</em> starting with <span class="math inline">\(1s,
+1p,\)</span> etc. Then, the one-body matrix elements for operators <span
+class="math inline">\(\bra{a} |X^{(f)}_J| \ket{b}\)</span>, built from
+spherical Bessel functions and vector spherical harmonics, have
+closed-form expressions in terms of confluent hypergeometric
+functions<span class="citation" data-cites="DONNELLY1979103"> [<a
+href="#ref-DONNELLY1979103" role="doc-biblioref">21</a>]</span>.</p>
+<p>The nuclear structure input is in the form of one-body density
+matrices between many-body eigenstates, <span
+class="math display">\[\begin{align}
+\rho^{fi}_J(ab) = \frac{1}{\sqrt{2J+1} }\langle \Psi_f || [
+\hat{c}^\dagger_a \otimes \tilde{c}_b ]_J
 || \Psi_i \rangle, \label{eqn:denmat}
-\]</span> where <span class="math inline">\(\hat{c}^\dagger_a\)</span> is the fermion creation operator (with good angular momentum quantum numbers), <span class="math inline">\(\tilde{c}_b\)</span> is the time-reversed<span class="citation" data-cites="edmonds1996angular"> [<a href="#ref-edmonds1996angular" role="doc-biblioref">17</a>]</span> fermion destruction operator. Here the matrix element is reduced in angular momentum but not isospin, and so are in proton-neutron format. These density matrices are the product of a many-body code, in our case BIGSTICK<span class="citation" data-cites="BIGSTICK1 BIGSTICK2"> [<a href="#ref-BIGSTICK1" role="doc-biblioref">4</a>,<a href="#ref-BIGSTICK2" role="doc-biblioref">5</a>]</span>, although one could use one-body density matrices, appropriately formatted, from any many-body code.</p>
+\end{align}\]</span> where <span
+class="math inline">\(\hat{c}^\dagger_a\)</span> is the fermion creation
+operator (with good angular momentum quantum numbers), <span
+class="math inline">\(\tilde{c}_b\)</span> is the time-reversed<span
+class="citation" data-cites="edmonds1996angular"> [<a
+href="#ref-edmonds1996angular" role="doc-biblioref">23</a>]</span>
+fermion destruction operator. Here the matrix element is reduced in
+angular momentum but not isospin, and so are in proton-neutron format.
+These density matrices are the product of a many-body code, in our case
+BIGSTICK<span class="citation" data-cites="BIGSTICK1 BIGSTICK2"> [<a
+href="#ref-BIGSTICK1" role="doc-biblioref">4</a>,<a
+href="#ref-BIGSTICK2" role="doc-biblioref">5</a>]</span>, although one
+could use one-body density matrices, appropriately formatted, from any
+many-body code.</p>
 <h2 id="electroweak-matrix-elements">Electroweak matrix elements</h2>
-<p>To compute the matrix elements of the electroweak operators in a harmonic oscillator basis, we use the derivations from<span class="citation" data-cites="DONNELLY1979103"> [<a href="#ref-DONNELLY1979103" role="doc-biblioref">15</a>]</span>. Namely, equations (1a) - (1f) and (3a) - (3d), which express the necessary geometric matrix elements in terms of matrix elements of the spherical Bessel functions. Here, we write out the remaining explicit formulas for obtaining matrix elements of the Bessel functions <span class="math inline">\(j_L(y)\)</span> in a harmonic oscillator basis in terms of the confluent hypergeometric function: <span class="math display">\[
+<p>To compute the matrix elements of the electroweak operators in a
+harmonic oscillator basis, we use the derivations from<span
+class="citation" data-cites="DONNELLY1979103"> [<a
+href="#ref-DONNELLY1979103" role="doc-biblioref">21</a>]</span>. Namely,
+aligns (1a) - (1f) and (3a) - (3d), which express the necessary
+geometric matrix elements in terms of matrix elements of the spherical
+Bessel functions. Here, we write out the remaining explicit formulas for
+obtaining matrix elements of the Bessel functions <span
+class="math inline">\(j_L(y)\)</span> in a harmonic oscillator basis in
+terms of the confluent hypergeometric function: <span
+class="math display">\[\begin{align}
     _1F_1(a,b,z) = \sum_{n=0}^\infty \frac{a^{(n)}z^n}{b^{(n)}n!},
-\]</span> which makes use of the rising factorial function: <span class="math display">\[
+\end{align}\]</span> which makes use of the rising factorial function:
+<span class="math display">\[\begin{align}
     m^{(n)} = \frac{(m+n-1)!}{(m-1)!}.
-\]</span></p>
-<p>The first additional relation is computed in DMFortFactor by the function <code>BesselElement</code>: <span class="math display">\[\begin{align*}
-\bra{n&#39;l&#39;j&#39;} j_L(y) \ket{nlj} = \frac{2^L}{(2L+1)!!} y^{L/2} e^{-y}
+\end{align}\]</span></p>
+<p>The first additional relation is computed in DMFortFactor by the
+function <code>BesselElement</code>: <span
+class="math display">\[\begin{align}
+\bra{n&#39;l&#39;j&#39;} j_L(y) \ket{nlj} = \frac{2^L}{(2L+1)!!} y^{L/2}
+e^{-y}
     \sqrt{(n&#39;-1)!(n-1)!}
     \sqrt{\Gamma(n&#39;+l&#39;+1/2)\Gamma(n+l+1/2)}\\
     \times
@@ -880,7 +1530,9 @@ M_{JM}\ \ &amp;\\
     \times
     \frac{\Gamma[(l+l&#39;+L+2m+2m&#39;+3)/2]}{\Gamma(l+m+3/2)\Gamma(l&#39;+m&#39;+3/2)}
     \ _1F_1[(L-l&#39;-l-2m&#39;-2m)/2; L+3/2; y].
-\end{align*}\]</span> The two additional relations are needed. As computed by <code>BesselElementMinus</code>: <span class="math display">\[\begin{align*}
+\end{align}\]</span> The two additional relations are needed. As
+computed by <code>BesselElementMinus</code>: <span
+class="math display">\[\begin{align}
 \bra{n&#39;l&#39;j&#39;} j_L(y) (\frac{d}{dy}-\frac{l}{y}) \ket{nlj}
     = \frac{2^(L-1)}{(2L+1)!!} y^{(L-1)/2} e^{-y}
     \sqrt{(n&#39;-1)!(n-1)!}
@@ -888,11 +1540,14 @@ M_{JM}\ \ &amp;\\
     \times
     \sum_{m=0}^{n-1}\sum_{m&#39;=0}^{n&#39;-1}
     \frac{(-1)^{m+m&#39;}}{m!m&#39;!(n-m-1)!(n&#39;-m&#39;-1)!}
-    \frac{\Gamma[(l+l&#39;+L+2m+2m&#39;+2)/2]}{\Gamma(l+m+3/2)\Gamma(l&#39;+m&#39;+3/2)} \\
+    \frac{\Gamma[(l+l&#39;+L+2m+2m&#39;+2)/2]}{\Gamma(l+m+3/2)\Gamma(l&#39;+m&#39;+3/2)}
+\\
     \times
-    \Big\{ -\frac{1}{2}(l+l&#39;+L+2m+2m&#39;+2)\ _1F_1[(L-l&#39;-l-2m&#39;-2m-1)/2; L+3/2; y]\\
+    \Big\{ -\frac{1}{2}(l+l&#39;+L+2m+2m&#39;+2)\
+_1F_1[(L-l&#39;-l-2m&#39;-2m-1)/2; L+3/2; y]\\
     + 2m\ _1F_1[(L-l&#39;-l-2m&#39;-2m+1)/2; L+3/2; y] \Big\}.
-\end{align*}\]</span> As computed by <code>BesselElementPlus</code>: <span class="math display">\[\begin{align*}
+\end{align}\]</span> As computed by <code>BesselElementPlus</code>:
+<span class="math display">\[\begin{align}
 \bra{n&#39;l&#39;j&#39;} j_L(y) (\frac{d}{dy}+\frac{l}{y}) \ket{nlj}
     = \frac{2^(L-1)}{(2L+1)!!} y^{(L-1)/2} e^{-y}
     \sqrt{(n&#39;-1)!(n-1)!}
@@ -900,46 +1555,82 @@ M_{JM}\ \ &amp;\\
     \times
     \sum_{m=0}^{n-1}\sum_{m&#39;=0}^{n&#39;-1}
     \frac{(-1)^{m+m&#39;}}{m!m&#39;!(n-m-1)!(n&#39;-m&#39;-1)!}
-    \frac{\Gamma[(l+l&#39;+L+2m+2m&#39;+2)/2]}{\Gamma(l+m+3/2)\Gamma(l&#39;+m&#39;+3/2)} \\
+    \frac{\Gamma[(l+l&#39;+L+2m+2m&#39;+2)/2]}{\Gamma(l+m+3/2)\Gamma(l&#39;+m&#39;+3/2)}
+\\
     \times
-    \Big\{ -\frac{1}{2}(l+l&#39;+L+2m+2m&#39;+2)\ _1F_1[(L-l&#39;-l-2m&#39;-2m-1)/2; L+3/2; y]\\
+    \Big\{ -\frac{1}{2}(l+l&#39;+L+2m+2m&#39;+2)\
+_1F_1[(L-l&#39;-l-2m&#39;-2m-1)/2; L+3/2; y]\\
     + (2l+2m+1)\ _1F_1[(L-l&#39;-l-2m&#39;-2m+1)/2; L+3/2; y] \Big\}.
-\end{align*}\]</span></p>
-<p>All remaining electroweak matrix elements can be computed in terms of these Bessel elements, combined with vector coupling coefficients, etc., as layed out in the aforementioned reference.</p>
-<h2 id="wigner-vector-coupling-functions">Wigner vector coupling functions</h2>
-<p>We implement a standard set of functions and subroutines for computing the vector-coupling 3-j, 6-j, and 9-j symbols using the Racah alebraic expressions <span class="citation" data-cites="edmonds1996angular"> [<a href="#ref-edmonds1996angular" role="doc-biblioref">17</a>]</span>. We distribute the Fortran library for these functions in their own <a href="https://github.com/ogorton/wigner">Github project</a> as well.</p>
-<p>One method we use to improve compute time is to cache Wigner 3-<span class="math inline">\(j\)</span> and 6-<span class="math inline">\(j\)</span> symbols<span class="citation" data-cites="edmonds1996angular"> [<a href="#ref-edmonds1996angular" role="doc-biblioref">17</a>]</span> (used to evaluate electro-weak matrix elements) in memory at the start of run-time. As a side effect, our tests show that this adds a constant compute time to any given calculation of roughly 0.3 seconds in serial execution and uses roughly 39 MB of memory (for the default table size). As a point of comparison, the <span class="math inline">\(^{131}\)</span>Xe example with all-nonzero EFT coefficients has a run-time of 30 seconds in parallel execution. If we disable the table caching, the run-time is roughly 150 seconds, 5 times longer. The size of the table stored in memory can be controlled via the control file with the keywords <code>sj2tablemin</code> and <code>sj2tablemax</code>.</p>
-<p>For the 3-j symbol, we use the relation to the Clebsh-Gordon vector-coupling coefficients: <span class="math display">\[
+\end{align}\]</span></p>
+<p>All remaining electroweak matrix elements can be computed in terms of
+these Bessel elements, combined with vector coupling coefficients, etc.,
+as layed out in the aforementioned reference.</p>
+<h2 id="wigner-vector-coupling-functions">Wigner vector coupling
+functions</h2>
+<p>We implement a standard set of functions and subroutines for
+computing the vector-coupling 3-j, 6-j, and 9-j symbols using the Racah
+alebraic expressions <span class="citation"
+data-cites="edmonds1996angular"> [<a href="#ref-edmonds1996angular"
+role="doc-biblioref">23</a>]</span>. We distribute the Fortran library
+for these functions in their own <a
+href="https://github.com/ogorton/wigner">Github project</a> as well.</p>
+<p>One method we use to improve compute time is to cache Wigner 3-<span
+class="math inline">\(j\)</span> and 6-<span
+class="math inline">\(j\)</span> symbols<span class="citation"
+data-cites="edmonds1996angular"> [<a href="#ref-edmonds1996angular"
+role="doc-biblioref">23</a>]</span> (used to evaluate electro-weak
+matrix elements) in memory at the start of run-time. As a side effect,
+our tests show that this adds a constant compute time to any given
+calculation of roughly 0.3 seconds in serial execution and uses roughly
+39 MB of memory (for the default table size). As a point of comparison,
+the <span class="math inline">\(^{131}\)</span>Xe example with
+all-nonzero EFT coefficients has a run-time of 30 seconds in parallel
+execution. If we disable the table caching, the run-time is roughly 150
+seconds, 5 times longer. The size of the table stored in memory can be
+controlled via the control file with the keywords
+<code>sj2tablemin</code> and <code>sj2tablemax</code>.</p>
+<p>For the 3-j symbol, we use the relation to the Clebsh-Gordon
+vector-coupling coefficients: <span class="math display">\[\begin{align}
     \begin{pmatrix}
         j_1 &amp; j_2 &amp; J\\
         m_1 &amp; m_1 &amp; M
     \end{pmatrix}
     = (-1)^{j_1-j_2-M}(2J+1)^{-1/2}
     (j_1j_2m_1m_2 | j_1 j_2; J, -M).
-\]</span> The vector coupling coefficients are computed as: <span class="math display">\[\begin{align*}
-    (j_1j_2 &amp; m_1m_2 | j_1 j_2; J, M) = \delta(m_1+m_1,m) (2J+1)^{1/2}\Delta(j_1j_2J)\\
-    &amp; \times[(j_1+m_1)(j_1-m_1)(j_2+m_2)(j_2-m_2)(J+M)(J-M)]^{1/2}\sum_z (-1)^z \frac{1}{f(z)},
-\end{align*}\]</span> where <span class="math display">\[
+\end{align}\]</span> The vector coupling coefficients are computed as:
+<span class="math display">\[\begin{align}
+    (j_1j_2  m_1m_2 | j_1 j_2; J, M) = \delta(m_1+m_1,m)
+(2J+1)^{1/2}\Delta(j_1j_2J)\\
+     \times[(j_1+m_1)(j_1-m_1)(j_2+m_2)(j_2-m_2)(J+M)(J-M)]^{1/2}\sum_z
+(-1)^z \frac{1}{f(z)},
+\end{align}\]</span> where <span class="math display">\[\begin{align}
     f(z) = z!(j_1+j_2-J-z)!(j_1-m_2-z)!
     (j_2+m_2-z)!(J-j_2+m_1+z)!(J-m_1-m_2+z)!,
-\]</span> and <span class="math display">\[
-    \Delta(abc) = \left[\frac{(a+b-c)!(a-b+c)!(-a+b+c)!}{(a+b+c+1)!} \right]^{1/2}.
-\]</span> The sum over <span class="math inline">\(z\)</span> is over all integers such that the factorials are well-defined (non-negative-integer arguments).</p>
-<p>Similarly, for the 6-j symbols: <span class="math display">\[
+\end{align}\]</span> and <span class="math display">\[\begin{align}
+    \Delta(abc) = \left[\frac{(a+b-c)!(a-b+c)!(-a+b+c)!}{(a+b+c+1)!}
+\right]^{1/2}.
+\end{align}\]</span> The sum over <span class="math inline">\(z\)</span>
+is over all integers such that the factorials are well-defined
+(non-negative-integer arguments).</p>
+<p>Similarly, for the 6-j symbols: <span
+class="math display">\[\begin{align}
     \begin{Bmatrix}
         j_1 &amp; j_2 &amp; j_3\\
         m_1 &amp; m_1 &amp; m_3
     \end{Bmatrix}
     = \Delta(j_1j_2j_3)\Delta(j_1m_2m_3)\Delta(m_1j_2m_3)
      \Delta(m_1m_2j_3) \sum_z (-1)^z\frac{(z+1)!}{g(z)},
-\]</span> with <span class="math inline">\(g(z) = (\alpha - z)!(\beta-z)!(\gamma-z)!(z-\delta)!(z-\epsilon)!(z-\zeta)!(z-\eta)!\)</span> and <span class="math display">\[\begin{align*}
+\end{align}\]</span> with <span class="math inline">\(g(z) = (\alpha -
+z)!(\beta-z)!(\gamma-z)!(z-\delta)!(z-\epsilon)!(z-\zeta)!(z-\eta)!\)</span>
+and <span class="math display">\[\begin{align}
     \alpha &amp;= j_1+j_1+m_1+m_2 &amp; \beta  &amp;= j_2+j_3+m_2+m_3\\
     \gamma &amp;= j_3+j_1+m_3+m_1 \\
     \delta &amp;= j_1+j_2+j_3 &amp; \epsilon &amp;= j_1+m_2+m_3 \\
     \zeta &amp;= m_1+j_2+m_3 &amp; \eta &amp;= m_1+m_2+j_3.
-\end{align*}\]</span></p>
-<p>For the 9-j symbol, we use the relation to the 6-j symbol: <span class="math display">\[
-        \begin{Bmatrix}
+\end{align}\]</span></p>
+<p>For the 9-j symbol, we use the relation to the 6-j symbol: <span
+class="math display">\[\begin{align}
+    \begin{Bmatrix}
         j_1 &amp; j_2 &amp; j_3\\
         j_4 &amp; j_5 &amp; j_6\\
         j_7 &amp; j_8 &amp; j_9
@@ -948,20 +1639,30 @@ M_{JM}\ \ &amp;\\
       \begin{Bmatrix}
         j_1 &amp; j_4 &amp; j_7\\
         j_8 &amp; j_9 &amp; z
-        \end{Bmatrix}
-        \begin{Bmatrix}
+      \end{Bmatrix}
+      \begin{Bmatrix}
         j_2 &amp; j_5 &amp; j_8\\
         j_4 &amp; z &amp; j_6
-        \end{Bmatrix}
-        \begin{Bmatrix}
+      \end{Bmatrix}
+      \begin{Bmatrix}
         j_3 &amp; j_6 &amp; j_9\\
         z &amp; j_1 &amp; j_2
-        \end{Bmatrix}.        
-\]</span> The 6-j symbols used to calculate the 9-j symbol are first taken from any tabulated values. Otherwise, they are computed as previously described.</p>
+      \end{Bmatrix}.        
+\end{align}\]</span> The 6-j symbols used to calculate the 9-j symbol
+are first taken from any tabulated values. Otherwise, they are computed
+as previously described.</p>
 <h2 id="unique-couplings">Unique couplings</h2>
-<p>Previous work has focused on setting limits on a single operator coupling at a time. But of course, multiple couplings may exist simultaneously, and in fact, some nuclear response functions are only activated with specific pairs of EFT coefficients.</p>
-<p>To create a minimal list of inputs to validate all possible nonzero couplings, we need to test each coefficient on its own (<span class="math inline">\(i=1,...,15\)</span>), and also test the following 9 unique combinations: (1,2), (1,3), (2,3), (4, 5), (5,6), (8,9), (11,12), (11,15), (12,15).</p>
-<p>Table of EFT coefficient interactions. Shows which coefficients multiply each coefficient in addition to itself.</p>
+<p>Previous work has focused on setting limits on a single operator
+coupling at a time. But of course, multiple couplings may exist
+simultaneously, and in fact, some nuclear response functions are only
+activated with specific pairs of EFT coefficients.</p>
+<p>To create a minimal list of inputs to validate all possible nonzero
+couplings, we need to test each coefficient on its own (<span
+class="math inline">\(i=1,...,15\)</span>), and also test the following
+9 unique combinations: (1,2), (1,3), (2,3), (4, 5), (5,6), (8,9),
+(11,12), (11,15), (12,15).</p>
+<p>Table of EFT coefficient interactions. Shows which coefficients
+multiply each coefficient in addition to itself.</p>
 <table>
 <thead>
 <tr class="header">
@@ -1068,28 +1769,41 @@ M_{JM}\ \ &amp;\\
 <tr class="odd">
 <td>fillnuclearcore</td>
 <td></td>
-<td>Logical flag (enter 0 for False, 1 for True) to fill the inert-core single-particle orbitals in the nuclear level densities. Phenomenological shell model calculations typically provide only the density matrices for the active valence-space orbitals, leaving it to the user to infer the core-orbital densities. This option automatically assigns these empty matrix elements assuming a totally filled core.</td>
+<td>Logical flag (enter 0 for False, 1 for True) to fill the inert-core
+single-particle orbitals in the nuclear level densities.
+Phenomenological shell model calculations typically provide only the
+density matrices for the active valence-space orbitals, leaving it to
+the user to infer the core-orbital densities. This option automatically
+assigns these empty matrix elements assuming a totally filled core.</td>
 <td></td>
 <td>1 (true)</td>
 </tr>
 <tr class="even">
 <td>gaussorder</td>
 <td></td>
-<td>Order of the Gauss-Legendre quadrature to use when using Type 2 quadrature. (See quadtype.) An n-th order routine will perform n function evaluations. Naturally, a higher order will result in higher precision, but longer compute time.</td>
+<td>Order of the Gauss-Legendre quadrature to use when using Type 2
+quadrature. (See quadtype.) An n-th order routine will perform n
+function evaluations. Naturally, a higher order will result in higher
+precision, but longer compute time.</td>
 <td></td>
 <td>12</td>
 </tr>
 <tr class="odd">
 <td>hofrequency</td>
 <td><span class="math inline">\(\hbar \omega\)</span></td>
-<td>Set the harmonic oscillator length by specifying the harmonic oscillator frequency. (b = 6.43/sqrt(<span class="math inline">\(\hbar\omega\)</span>)). If using an  interaction, <span class="math inline">\(\hbar \omega\)</span> should be set to match the value used in the interaction.</td>
+<td>Set the harmonic oscillator length by specifying the harmonic
+oscillator frequency. (b = 6.43/sqrt(<span
+class="math inline">\(\hbar\omega\)</span>)). If using an interaction,
+<span class="math inline">\(\hbar \omega\)</span> should be set to match
+the value used in the interaction.</td>
 <td>MeV</td>
 <td>See hoparameter.</td>
 </tr>
 <tr class="even">
 <td>hoparameter</td>
 <td><span class="math inline">\(b\)</span></td>
-<td>Harmonic oscillator length. Determines the scale of the nuclear wavefunction interaction.</td>
+<td>Harmonic oscillator length. Determines the scale of the nuclear
+wavefunction interaction.</td>
 <td>fm</td>
 <td>See eqn. (<span class="math inline">\(\ref{bho}\)</span>).</td>
 </tr>
@@ -1103,7 +1817,8 @@ M_{JM}\ \ &amp;\\
 <tr class="even">
 <td>mnucleon</td>
 <td><span class="math inline">\(m_N\)</span></td>
-<td>Mass of a nucleon. It’s assumed that <span class="math inline">\(m_p\approx m_n\)</span>.</td>
+<td>Mass of a nucleon. It’s assumed that <span
+class="math inline">\(m_p\approx m_n\)</span>.</td>
 <td></td>
 <td></td>
 </tr>
@@ -1117,56 +1832,68 @@ M_{JM}\ \ &amp;\\
 <tr class="even">
 <td>ntscale</td>
 <td><span class="math inline">\(N_t\)</span></td>
-<td>Effective number of target nuclei scaling factor. The differential event rate is multiplied by this constant in units of kilogram-days. For example, if the detector had a total effective exposure of 2500 kg days, one might enter 2500 for this value.</td>
+<td>Effective number of target nuclei scaling factor. The differential
+event rate is multiplied by this constant in units of kilogram-days. For
+example, if the detector had a total effective exposure of 2500 kg days,
+one might enter 2500 for this value.</td>
 <td>kg days</td>
 <td>1.0</td>
 </tr>
 <tr class="odd">
 <td>printdensities</td>
 <td></td>
-<td>Option to print the nuclear one-body density matrices to screen.</td>
+<td>Option to print the nuclear one-body density matrices to
+screen.</td>
 <td></td>
 <td>0 (false)</td>
 </tr>
 <tr class="even">
 <td>quadrelerr</td>
 <td></td>
-<td>Desired relative error for the adaptive numerical quadrature routine (quadtype 1).</td>
+<td>Desired relative error for the adaptive numerical quadrature routine
+(quadtype 1).</td>
 <td></td>
 <td><span class="math inline">\(10^{-6}\)</span></td>
 </tr>
 <tr class="odd">
 <td>quadtype</td>
 <td></td>
-<td>Option for type of numerical quadrature. (Type 1 = adaptive 8th order Gauss-Legendre quadrature. Type 2 = static n-th order Gauss-Legendre quadrature.)</td>
+<td>Option for type of numerical quadrature. (Type 1 = adaptive 8th
+order Gauss-Legendre quadrature. Type 2 = static n-th order
+Gauss-Legendre quadrature.)</td>
 <td></td>
 <td>1 (type 1)</td>
 </tr>
 <tr class="even">
 <td>sj2tablemax</td>
 <td></td>
-<td>Maximum value of <span class="math inline">\(2\times J\)</span> used when caching Wigner 3-J and 6-J functions into memory.</td>
+<td>Maximum value of <span class="math inline">\(2\times J\)</span> used
+when caching Wigner 3-J and 6-J functions into memory.</td>
 <td></td>
 <td>12</td>
 </tr>
 <tr class="odd">
 <td>sj2tablemin</td>
 <td></td>
-<td>Minimum value of <span class="math inline">\(2\times J\)</span> used when caching Wigner 3-J and 6-J functions into memory.</td>
+<td>Minimum value of <span class="math inline">\(2\times J\)</span> used
+when caching Wigner 3-J and 6-J functions into memory.</td>
 <td></td>
 <td>-2</td>
 </tr>
 <tr class="even">
 <td>useenergyfile</td>
 <td></td>
-<td>Logical flag (enter 0 for False, 1 for True) to read energy grid used for calculation from a user-provided file intead of specifying a range.</td>
+<td>Logical flag (enter 0 for False, 1 for True) to read energy grid
+used for calculation from a user-provided file intead of specifying a
+range.</td>
 <td></td>
 <td>0 (false)</td>
 </tr>
 <tr class="odd">
 <td>usemomentum</td>
 <td></td>
-<td>Logical flag (enter 0 for False, 1 for True) to use momentum transfer intead of recoil energy as the independent variable.</td>
+<td>Logical flag (enter 0 for False, 1 for True) to use momentum
+transfer intead of recoil energy as the independent variable.</td>
 <td></td>
 <td>0 (false)</td>
 </tr>
@@ -1180,14 +1907,17 @@ M_{JM}\ \ &amp;\\
 <tr class="odd">
 <td>vescape</td>
 <td><span class="math inline">\(v_{escape}\)</span></td>
-<td>Galactic escape velocity. Particles moving faster than this speed will escape the galaxy, thus setting an upper limit on the WIMP velocity distribution.</td>
+<td>Galactic escape velocity. Particles moving faster than this speed
+will escape the galaxy, thus setting an upper limit on the WIMP velocity
+distribution.</td>
 <td>km/s</td>
 <td>12 <span class="math inline">\(\times\ v_{scale}\)</span></td>
 </tr>
 <tr class="even">
 <td>weakmscale</td>
 <td><span class="math inline">\(m_v\)</span></td>
-<td>Weak interaction mass scale. User defined EFT coefficients are divided by <span class="math inline">\(m_v^2\)</span>.</td>
+<td>Weak interaction mass scale. User defined EFT coefficients are
+divided by <span class="math inline">\(m_v^2\)</span>.</td>
 <td>GeV</td>
 <td>246.2</td>
 </tr>
@@ -1202,129 +1932,229 @@ M_{JM}\ \ &amp;\\
 </table>
 <h1 id="references">References</h1>
 <div id="refs" class="references csl-bib-body" role="doc-bibliography">
-<div id="ref-PhysRevC.89.065501" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">N. Anand, A. L. Fitzpatrick, and W. C. Haxton, <em><a href="https://doi.org/10.1103/PhysRevC.89.065501">Weakly Interacting Massive Particle-Nucleus Elastic Scattering Response</a></em>, Phys. Rev. C <strong>89</strong>, 065501 (2014).</div>
+<div id="ref-PhysRevC.89.065501" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">N.
+Anand, A. L. Fitzpatrick, and W. C. Haxton, <em><a
+href="https://doi.org/10.1103/PhysRevC.89.065501">Weakly Interacting
+Massive Particle-Nucleus Elastic Scattering Response</a></em>, Phys.
+Rev. C <strong>89</strong>, 065501 (2014).</div>
 </div>
 <div id="ref-Fitzpatrick_2013" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">A. L. Fitzpatrick, W. Haxton, E. Katz, N. Lubbers, and Y. Xu, <em><a href="https://doi.org/10.1088/1475-7516/2013/02/004">The Effective Field Theory of Dark Matter Direct Detection</a></em>, Journal of Cosmology and Astroparticle Physics <strong>2013</strong>, 004 (2013).</div>
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">A.
+L. Fitzpatrick, W. Haxton, E. Katz, N. Lubbers, and Y. Xu, <em><a
+href="https://doi.org/10.1088/1475-7516/2013/02/004">The Effective Field
+Theory of Dark Matter Direct Detection</a></em>, Journal of Cosmology
+and Astroparticle Physics <strong>2013</strong>, 004 (2013).</div>
 </div>
 <div id="ref-jeong2021wimpydd" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">I. Jeong, S. Kang, S. Scopel, and G. Tomar, <em>WimPyDD: An Object-Oriented Python Code for the Calculation of WIMP Direct Detection Signals</em>, arXiv Preprint arXiv:2106.06207 (2021).</div>
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">I.
+Jeong, S. Kang, S. Scopel, and G. Tomar, <em>WimPyDD: An Object-Oriented
+Python Code for the Calculation of WIMP Direct Detection Signals</em>,
+arXiv Preprint arXiv:2106.06207 (2021).</div>
 </div>
 <div id="ref-BIGSTICK1" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">C. W. Johnson, W. E. Ormand, and P. G. Krastev, <em>Factorization in Large-Scale Many-Body Calculations</em>, Computer Physics Communications <strong>184</strong>, 2761 (2013).</div>
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">C.
+W. Johnson, W. E. Ormand, and P. G. Krastev, <em>Factorization in
+Large-Scale Many-Body Calculations</em>, Computer Physics Communications
+<strong>184</strong>, 2761 (2013).</div>
 </div>
 <div id="ref-BIGSTICK2" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[5] </div><div class="csl-right-inline">C. W. Johnson, W. E. Ormand, K. S. McElvain, and H. Shan, <em><a href="https://arxiv.org/abs/1801.08432v1">BIGSTICK: A Flexible Configuration-Interaction Shell-Model Code</a></em>, (2018).</div>
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">C.
+W. Johnson, W. E. Ormand, K. S. McElvain, and H. Shan, <em><a
+href="https://arxiv.org/abs/1801.08432v1">BIGSTICK: A Flexible
+Configuration-Interaction Shell-Model Code</a></em>, (2018).</div>
 </div>
-<div id="ref-cohen1965effective" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[6] </div><div class="csl-right-inline">S. Cohen and D. Kurath, <em>Effective Interactions for the 1p Shell</em>, Nuclear Physics <strong>73</strong>, 1 (1965).</div>
+<div id="ref-cohen1965effective" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">S.
+Cohen and D. Kurath, <em>Effective Interactions for the 1p Shell</em>,
+Nuclear Physics <strong>73</strong>, 1 (1965).</div>
 </div>
-<div id="ref-PhysRevC.68.041001" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[7] </div><div class="csl-right-inline">D. R. Entem and R. Machleidt, <em><a href="https://doi.org/10.1103/PhysRevC.68.041001">Accurate Charge-Dependent Nucleon-Nucleon Potential at Fourth Order of Chiral Perturbation Theory</a></em>, Phys. Rev. C <strong>68</strong>, 041001 (2003).</div>
+<div id="ref-PhysRevC.68.041001" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">D.
+R. Entem and R. Machleidt, <em><a
+href="https://doi.org/10.1103/PhysRevC.68.041001">Accurate
+Charge-Dependent Nucleon-Nucleon Potential at Fourth Order of Chiral
+Perturbation Theory</a></em>, Phys. Rev. C <strong>68</strong>, 041001
+(2003).</div>
 </div>
-<div id="ref-PhysRevC.74.034315" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[8] </div><div class="csl-right-inline">B. A. Brown and W. A. Richter, <em><a href="https://doi.org/10.1103/PhysRevC.74.034315">New <span>“<span>USD</span>”</span> Hamiltonians for the <span class="math inline">\(\mathit{sd}\)</span> Shell</a></em>, Phys. Rev. C <strong>74</strong>, 034315 (2006).</div>
+<div id="ref-shirokov2016n3lo" class="csl-entry" role="doc-biblioentry">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">A.
+Shirokov, I. Shin, Y. Kim, M. Sosonkina, P. Maris, and J. Vary, <em>N3lo
+NN Interaction Adjusted to Light Nuclei in Ab Exitu Approach</em>,
+Physics Letters B <strong>761</strong>, 87 (2016).</div>
 </div>
-<div id="ref-RevModPhys.85.1561" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[9] </div><div class="csl-right-inline">K. Freese, M. Lisanti, and C. Savage, <em><a href="https://doi.org/10.1103/RevModPhys.85.1561">Colloquium: Annual Modulation of Dark Matter</a></em>, Rev. Mod. Phys. <strong>85</strong>, 1561 (2013).</div>
+<div id="ref-PhysRevC.74.034315" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">B.
+A. Brown and W. A. Richter, <em><a
+href="https://doi.org/10.1103/PhysRevC.74.034315">New
+<span>“<span>USD</span>”</span> Hamiltonians for the <span
+class="math inline">\(\mathit{sd}\)</span> Shell</a></em>, Phys. Rev. C
+<strong>74</strong>, 034315 (2006).</div>
+</div>
+<div id="ref-PhysRevC.86.051301" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">Y.
+Utsuno, T. Otsuka, B. A. Brown, M. Honma, T. Mizusaki, and N. Shimizu,
+<em><a href="https://doi.org/10.1103/PhysRevC.86.051301">Shape
+Transitions in Exotic Si and s Isotopes and Tensor-Force-Driven
+<span>J</span>ahn-<span>T</span>eller Effect</a></em>, Phys. Rev. C
+<strong>86</strong>, 051301 (2012).</div>
+</div>
+<div id="ref-PhysRevC.80.064323" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">M.
+Honma, T. Otsuka, T. Mizusaki, and M. Hjorth-Jensen, <em><a
+href="https://doi.org/10.1103/PhysRevC.80.064323">New Effective
+Interaction for <span
+class="math inline">\({f}_{5}{\mathit{pg}}_{9}\)</span>-Shell
+Nuclei</a></em>, Phys. Rev. C <strong>80</strong>, 064323 (2009).</div>
+</div>
+<div id="ref-GCN5082" class="csl-entry" role="doc-biblioentry">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">A.
+Gniady, E. Caurier, and F. Nowacki, <em>Unpublished</em>, (n.d.).</div>
+</div>
+<div id="ref-PhysRevLett.100.052503" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">E.
+Caurier, J. Menéndez, F. Nowacki, and A. Poves, <em><a
+href="https://doi.org/10.1103/PhysRevLett.100.052503">Influence of
+Pairing on the Nuclear Matrix Elements of the Neutrinoless <span
+class="math inline">\(\ensuremath{\beta}\ensuremath{\beta}\)</span>
+Decays</a></em>, Phys. Rev. Lett. <strong>100</strong>, 052503
+(2008).</div>
+</div>
+<div id="ref-PhysRevC.82.064304" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">E.
+Caurier, F. Nowacki, A. Poves, and K. Sieja, <em><a
+href="https://doi.org/10.1103/PhysRevC.82.064304">Collectivity in the
+Light Xenon Isotopes: A Shell Model Study</a></em>, Phys. Rev. C
+<strong>82</strong>, 064304 (2010).</div>
+</div>
+<div id="ref-RevModPhys.85.1561" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">K.
+Freese, M. Lisanti, and C. Savage, <em><a
+href="https://doi.org/10.1103/RevModPhys.85.1561">Colloquium: Annual
+Modulation of Dark Matter</a></em>, Rev. Mod. Phys. <strong>85</strong>,
+1561 (2013).</div>
 </div>
 <div id="ref-PhysRevD.33.3495" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[10] </div><div class="csl-right-inline">A. K. Drukier, K. Freese, and D. N. Spergel, <em><a href="https://doi.org/10.1103/PhysRevD.33.3495">Detecting Cold Dark-Matter Candidates</a></em>, Phys. Rev. D <strong>33</strong>, 3495 (1986).</div>
+<div class="csl-left-margin">[16] </div><div class="csl-right-inline">A.
+K. Drukier, K. Freese, and D. N. Spergel, <em><a
+href="https://doi.org/10.1103/PhysRevD.33.3495">Detecting Cold
+Dark-Matter Candidates</a></em>, Phys. Rev. D <strong>33</strong>, 3495
+(1986).</div>
 </div>
 <div id="ref-PhysRevD.37.3388" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[11] </div><div class="csl-right-inline">K. Freese, J. Frieman, and A. Gould, <em><a href="https://doi.org/10.1103/PhysRevD.37.3388">Signal Modulation in Cold-Dark-Matter Detection</a></em>, Phys. Rev. D <strong>37</strong>, 3388 (1988).</div>
+<div class="csl-left-margin">[17] </div><div class="csl-right-inline">K.
+Freese, J. Frieman, and A. Gould, <em><a
+href="https://doi.org/10.1103/PhysRevD.37.3388">Signal Modulation in
+Cold-Dark-Matter Detection</a></em>, Phys. Rev. D <strong>37</strong>,
+3388 (1988).</div>
 </div>
 <div id="ref-LEWIN199687" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[12] </div><div class="csl-right-inline">J. D. Lewin and P. F. Smith, <em><a href="https://doi.org/10.1016/S0927-6505(96)00047-3">Review of Mathematics, Numerical Factors, and Corrections for Dark Matter Experiments Based on Elastic Nuclear Recoil</a></em>, Astroparticle Physics <strong>6</strong>, 87 (1996).</div>
+<div class="csl-left-margin">[18] </div><div class="csl-right-inline">J.
+D. Lewin and P. F. Smith, <em><a
+href="https://doi.org/10.1016/S0927-6505(96)00047-3">Review of
+Mathematics, Numerical Factors, and Corrections for Dark Matter
+Experiments Based on Elastic Nuclear Recoil</a></em>, Astroparticle
+Physics <strong>6</strong>, 87 (1996).</div>
 </div>
-<div id="ref-PhysRevD.82.075004" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[13] </div><div class="csl-right-inline">A. L. Fitzpatrick and K. M. Zurek, <em><a href="https://doi.org/10.1103/PhysRevD.82.075004">Dark Moments and the DAMA-CoGeNT Puzzle</a></em>, Phys. Rev. D <strong>82</strong>, 075004 (2010).</div>
+<div id="ref-PhysRevD.82.075004" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[19] </div><div class="csl-right-inline">A.
+L. Fitzpatrick and K. M. Zurek, <em><a
+href="https://doi.org/10.1103/PhysRevD.82.075004">Dark Moments and the
+DAMA-CoGeNT Puzzle</a></em>, Phys. Rev. D <strong>82</strong>, 075004
+(2010).</div>
 </div>
-<div id="ref-PhysRevD.82.023530" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[14] </div><div class="csl-right-inline">C. McCabe, <em><a href="https://doi.org/10.1103/PhysRevD.82.023530">Astrophysical Uncertainties of Dark Matter Direct Detection Experiments</a></em>, Phys. Rev. D <strong>82</strong>, 023530 (2010).</div>
+<div id="ref-PhysRevD.82.023530" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[20] </div><div class="csl-right-inline">C.
+McCabe, <em><a
+href="https://doi.org/10.1103/PhysRevD.82.023530">Astrophysical
+Uncertainties of Dark Matter Direct Detection Experiments</a></em>,
+Phys. Rev. D <strong>82</strong>, 023530 (2010).</div>
 </div>
 <div id="ref-DONNELLY1979103" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[15] </div><div class="csl-right-inline">T. W. Donnelly and W. C. Haxton, <em><a href="https://doi.org/10.1016/0092-640X(79)90003-2">Multipole Operators in Semileptonic Weak and Electromagnetic Interactions with Nuclei: Harmonic Oscillator Single-Particle Matrix Elements</a></em>, Atomic Data and Nuclear Data Tables <strong>23</strong>, 103 (1979).</div>
+<div class="csl-left-margin">[21] </div><div class="csl-right-inline">T.
+W. Donnelly and W. C. Haxton, <em><a
+href="https://doi.org/10.1016/0092-640X(79)90003-2">Multipole Operators
+in Semileptonic Weak and Electromagnetic Interactions with Nuclei:
+Harmonic Oscillator Single-Particle Matrix Elements</a></em>, Atomic
+Data and Nuclear Data Tables <strong>23</strong>, 103 (1979).</div>
 </div>
 <div id="ref-Anand_2014" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[16] </div><div class="csl-right-inline">N. Anand, A. L. Fitzpatrick, and W. C. Haxton, <em><a href="https://doi.org/10.1103/physrevc.89.065501">Weakly Interacting Massive Particle-Nucleus Elastic Scattering Response</a></em>, Physical Review C <strong>89</strong>, (2014).</div>
+<div class="csl-left-margin">[22] </div><div class="csl-right-inline">N.
+Anand, A. L. Fitzpatrick, and W. C. Haxton, <em><a
+href="https://doi.org/10.1103/physrevc.89.065501">Weakly Interacting
+Massive Particle-Nucleus Elastic Scattering Response</a></em>, Physical
+Review C <strong>89</strong>, (2014).</div>
 </div>
-<div id="ref-edmonds1996angular" class="csl-entry" role="doc-biblioentry">
-<div class="csl-left-margin">[17] </div><div class="csl-right-inline">A. R. Edmonds, <em>Angular Momentum in Quantum Mechanics</em> (Princeton University Press, 1996).</div>
+<div id="ref-edmonds1996angular" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[23] </div><div class="csl-right-inline">A.
+R. Edmonds, <em>Angular Momentum in Quantum Mechanics</em> (Princeton
+University Press, 1996).</div>
 </div>
 </div>
-<h1 id="update-log">Update log</h1>
-<p><strong>Version 0.11 update (Feb. 28, 2022)</strong></p>
-<ul>
-<li>More robust module dependencies</li>
-<li>Legacy density matrices with conversion script</li>
-</ul>
-<p><strong>Version 0.10 update (Jan. 12, 2022)</strong></p>
-<ul>
-<li>Validation test scripts</li>
-<li>Improved organization of code</li>
-<li>Comprehensive documentation</li>
-</ul>
-<p><strong>Version 0.7 update (May 5, 2021)</strong></p>
-<ul>
-<li>Improved speed by re-writing Gaussian-Legendre routine in modern fortran with fixed (non-adaptive) number of evaluation points. The new implementation also supports parallelization, which the previously referenced library did not.</li>
-</ul>
-<p><strong>Version 0.6 update (Apr. 19, 2021)</strong></p>
-<ul>
-<li>Improved speed by caching Wigner coefficients in memory</li>
-<li>Added options to compute transition probabilities and differential cross sections. (For fixed recoil energy, for a range of velocities.)</li>
-<li>More options in the Makefile</li>
-<li>Previous versions claimed compatibility with isospin-formalism density matrices. This turns out not to be the case. An appropriate error trap has been added.</li>
-</ul>
-<p><strong>Version 0.5 update (Feb. 22, 2021)</strong></p>
-<ul>
-<li>Renamed executable to dmf90factor.x (previously darkmatter.x)</li>
-<li>A “.sps” file is no longer required; the code now deduces this information using data provided by the (still required) “.dres” file.</li>
-<li>Manual now has quick-start guides for the Fortran and Python interfaces</li>
-</ul>
-<p><strong>Version 0.4 update (Jan. 14, 2021)</strong></p>
-<p>New features:</p>
-<ul>
-<li>Compute integrated event rate spectra (total events) using adaptive integration routine</li>
-<li>Computing an event rate spectra will also report the total integrated event rate</li>
-<li>EFT coefficients can now be provided as either proton/neutron couplings, or as scaler/vector isospin couplings</li>
-</ul>
-<p>Bugfixes:</p>
-<ul>
-<li>Updated definition of proton-neutron to isospin transformation to be consistent with Mathematica script definition (script, not paper)</li>
-</ul>
-<p><strong>Version 0.3 update (Jan. 13, 2021)</strong></p>
-<p>New features:</p>
-<ul>
-<li><del>Now supports nuclear density matrix files in either isospin or proton-neutron formalism</del> <em>see Version 0.6 notes.</em></li>
-<li>Inputs and outputs now carry specified units</li>
-</ul>
-<p>Bugfixes:</p>
-<ul>
-<li>Fixed bug involving illegal sqrt() evaluations</li>
-<li>Updated numerical quadrature routine to library (instead of ‘homebrew’)</li>
-<li>Fixed error in denisty-matrix core-filler</li>
-</ul>
-<p><strong>Version 0.2 update (Nov. 24, 2020)</strong></p>
-<ul>
-<li><p>Data reorganized to support future extension to multiple target species.</p></li>
-<li><p>Added python script which easily compares event rate spectra for different dark matter masses. To run the example, cd to sample/ and run:</p>
-<pre><code>  python ../python/masscompare.py</code></pre>
-<p>Script is general and can be used to compare runs for any variable which can be modified in the control file.</p></li>
-</ul>
-<p><strong>Version 0.1 update (Nov. 20, 2020)</strong></p>
-<ul>
-<li>Now supports computing event rate spectra (event rate versus recoil energy in kev)</li>
-<li>Energy range is entered either (a) as a linear grid by specifying Emin, Emax, Estep, or (b) from a file specifying energies</li>
-<li>Now takes advantage of multi-core systems using openMP</li>
-</ul>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>If density matrices are generated in some other single-particle basis, such as those from a Woods-Saxon potential or a Hartree-Fock calculation, that basis must be expanded into harmonic oscillator states. By using harmonic oscillator basis states one can efficiently compute the matrix elements. One can use either phenomenological or <em>ab initio</em> model spaces and interactions; as an example, we provide density matrices for <span class="math inline">\(^{12}\)</span>C, both from the phenomenological Cohen-Kurath shell model interaction <span class="citation" data-cites="cohen1965effective"> [<a href="#ref-cohen1965effective" role="doc-biblioref">6</a>]</span>, and from an interaction derived from chiral effective field theory <span class="citation" data-cites="PhysRevC.68.041001"> [<a href="#ref-PhysRevC.68.041001" role="doc-biblioref">7</a>]</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>This can be deduced from a geometrical argument: Imagine constructing <span class="math inline">\(\vec{v}_E+\vec{v}\)</span>. There are three cases to consider depending on the size of <span class="math inline">\(\vec{v}\)</span>, and the implications for the allowed angles <span class="math inline">\(\theta\)</span> between <span class="math inline">\(\vec{v}_E\)</span> and <span class="math inline">\(\vec{v}\)</span> that satisfy the constraint <span class="math inline">\((\vec{v}_E+\vec{v})^2&lt;v_{esc}^2\)</span>. Case 1: “Small v”, which we define as <span class="math inline">\(v&lt;v_{esc}-v_E\)</span>. Here there are no restrictions on <span class="math inline">\(\theta\)</span> since by construction the magnitudes together cannot exceed <span class="math inline">\(v_{esc}\)</span>, so <span class="math inline">\(\cos\theta\)</span> is limited only by <span class="math inline">\(-1\)</span> and <span class="math inline">\(+1\)</span>. Case 2: “Medium v”, in which now <span class="math inline">\(v&gt;v_{esc}-v_E\)</span>, so not all angles are allowed. To keep the sum from exceeding <span class="math inline">\(v_{esc}\)</span>, the angle must be restricted such that <span class="math inline">\(\cos\theta&lt;(v_{esc}^2-v_E^2-v^2)/2vv_E\)</span>. Case 2 also requires that <span class="math inline">\(v&lt;v_{esc}+v_E\)</span> because we reach… Case 3: “Big v”: It becomes impossible to satisfy the restriction once <span class="math inline">\(v&gt;v_{esc}+v_E\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>While there are analytic solutions for this integral in the form of error functions; we use quadrature since it makes easy to later modify the velocity distribution. For example, adding a velocity cut-off is as easy as changing the limit on the quadrature, with no need to write a whole new subroutine.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>If density matrices are generated in
+some other single-particle basis, such as those from a Woods-Saxon
+potential or a Hartree-Fock calculation, that basis must be expanded
+into harmonic oscillator states. By using harmonic oscillator basis
+states one can efficiently compute the matrix elements. One can use
+either phenomenological or <em>ab initio</em> model spaces and
+interactions; as an example, we provide density matrices for <span
+class="math inline">\(^{12}\)</span>C, both from the phenomenological
+Cohen-Kurath shell model interaction <span class="citation"
+data-cites="cohen1965effective"> [<a href="#ref-cohen1965effective"
+role="doc-biblioref">6</a>]</span>, and from an interaction derived from
+chiral effective field theory <span class="citation"
+data-cites="PhysRevC.68.041001"> [<a href="#ref-PhysRevC.68.041001"
+role="doc-biblioref">7</a>]</span>.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>This can be deduced from a
+geometrical argument: Imagine constructing <span
+class="math inline">\(\vec{v}_E+\vec{v}\)</span>. There are three cases
+to consider depending on the size of <span
+class="math inline">\(\vec{v}\)</span>, and the implications for the
+allowed angles <span class="math inline">\(\theta\)</span> between <span
+class="math inline">\(\vec{v}_E\)</span> and <span
+class="math inline">\(\vec{v}\)</span> that satisfy the constraint <span
+class="math inline">\((\vec{v}_E+\vec{v})^2&lt;v_{esc}^2\)</span>. Case
+1: “Small v”, which we define as <span
+class="math inline">\(v&lt;v_{esc}-v_E\)</span>. Here there are no
+restrictions on <span class="math inline">\(\theta\)</span> since by
+construction the magnitudes together cannot exceed <span
+class="math inline">\(v_{esc}\)</span>, so <span
+class="math inline">\(\cos\theta\)</span> is limited only by <span
+class="math inline">\(-1\)</span> and <span
+class="math inline">\(+1\)</span>. Case 2: “Medium v”, in which now
+<span class="math inline">\(v&gt;v_{esc}-v_E\)</span>, so not all angles
+are allowed. To keep the sum from exceeding <span
+class="math inline">\(v_{esc}\)</span>, the angle must be restricted
+such that <span
+class="math inline">\(\cos\theta&lt;(v_{esc}^2-v_E^2-v^2)/2vv_E\)</span>.
+Case 2 also requires that <span
+class="math inline">\(v&lt;v_{esc}+v_E\)</span> because we reach… Case
+3: “Big v”: It becomes impossible to satisfy the restriction once <span
+class="math inline">\(v&gt;v_{esc}+v_E\)</span>.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>While there are analytic solutions
+for this integral in the form of error functions; we use quadrature
+since it makes easy to later modify the velocity distribution. For
+example, adding a velocity cut-off is as easy as changing the limit on
+the quadrature, with no need to write a whole new subroutine.<a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </body>

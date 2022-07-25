@@ -12,3 +12,8 @@ DOCS =\
 	  source/details.md\
 	  source/keywords.md\
 	  source/references.md
+
+help:
+	@echo make options
+	@echo     manual -- makes the pdf manual
+	@echo     html   -- makes the html docs page
