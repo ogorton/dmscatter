@@ -74,7 +74,7 @@ for coupleto in ("n","p"):
             energy, eventrate = dm.EventrateSpectra(
                 Z = 14,
                 N = 15,
-                dres = "../dres/%s"%dres,
+                dres = "../data/%s"%dres,
                 controlwords = cwords,
                 epmin = 1,
                 epmax = 1000.0,

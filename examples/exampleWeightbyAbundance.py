@@ -9,40 +9,40 @@ Z = 54
 isotopes = [128, 129, 130, 131, 132, 134, 136]
 weights = [.01910, .26401, .04071, .21232, .26909, .10436, .08857]
 weightedsum = 0.0
+mchi = 1000.
+vesc = 550.
+paths = ("../data/Xe/xe","../data/Xe/xe","../data/Legacy/sdgXe")
+ints =  ("jj55","gcn","")
 
-for i,isotope in enumerate(isotopes):
-    N = isotope - Z
-    controls = {
-            "wimpmass" :500.0,
-            "vescape" : 550.0}
-    cp = np.zeros(15)
-    cp[0] = 1
-    RecoilE, EventRate = dm.EventrateSpectra(
-            Z,
-            N,
-            dres = "../data/Xe/xe%igcn"%isotope,
-            controlwords = controls,
-            cp = cp,
-            exec_path='../bin/dmfortfactor')
+plt.title(r"Differential event rate spectra by natural abundances"+
+        " m$_{\chi}$=%sGeV"%mchi+"\n"+r"$v_{esc} = %s$km/s, $O_8$"%vesc+
+        "$(c_s=1)$")
+for j in range(len(ints)):
 
-    weightedsum += EventRate * weights[i]
+    weightedsum = 0.0
 
-    label = "xe"+str(isotope)
-    plt.plot(RecoilE, EventRate, label="$^{%s}$Xe"%isotope)
-
-plt.xlabel("Recoil energy [kev]")
-plt.ylabel("Event rate/MeV")
-plt.yscale('log')
-plt.xscale('log')
-plt.legend()
-plt.savefig("isotopecompare.pdf")
-plt.figure()
-plt.title(r"Differential event rate spectra by natural abundances m$_{\chi}$=50GeV")
-plt.plot(RecoilE, weightedsum)
+    for i,isotope in enumerate(isotopes):
+        N = isotope - Z
+        controls = {
+                "wimpmass" :mchi,
+                "vescape" : vesc}
+        cs = np.zeros(15)
+        cs[0] = 1
+        dres = paths[j]+"%s"%isotope+ints[j]
+        RecoilE, EventRate = dm.EventrateSpectra(
+                Z,
+                N,
+                dres = dres,
+                controlwords = controls,
+                cs = cs,
+                exec_path='../bin/dmfortfactor')
+    
+        weightedsum += EventRate * weights[i]
+    plt.plot(RecoilE, weightedsum, label=paths[j]+ints[j])
+    
 plt.xlabel("Recoil energy [kev]")
 plt.ylabel("Event rate/MeV")
 plt.yscale('log')
 plt.xscale('log')
 plt.legend()
 plt.savefig("weightedspectra.pdf")
-plt.show()

@@ -33,7 +33,7 @@ module densities
            success = .true.
            return
     2      continue
-           print*,filename(1:ilast),'.res does not exist '
+           print*,filename(1:ilast),'.dres does not exist '
     
        end do
     

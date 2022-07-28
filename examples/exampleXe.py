@@ -4,14 +4,13 @@ import dmfortfactor as dm
 import numpy as np
 import matplotlib.pyplot as plt
 
-cwords = {"wimpmass" : 150.0}
+cwords = {"wimpmass" : 1000.0}
 cv = np.zeros(15)
 cs = np.zeros(15)
 cp = np.zeros(15)
 cn = np.zeros(15)
 
-cn[:] = 0.0048
-cp[:] = 0.0048
+cs[1] = 1.0
 
 Erkev, ER = dm.EventrateSpectra(
         Z = 54,
