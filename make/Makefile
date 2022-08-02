@@ -13,7 +13,7 @@ OBJ = $(SRC:$(SRC_DIR)/%.f90=%.o)
 # To use a different Fortran compiler, edit the following line:
 FC = gfortran
 
-F90_CFLAGS =-Ofast
+F90_CFLAGS =-Ofast -fbounds-check
 F90_LFLAGS =
 
 OPENMP_CFLAGS = "-Ofast -fopenmp"
