@@ -14,11 +14,11 @@ import timeit
 
 masses = np.arange(1.0, 300., 1) # GeV
 
-# Options to do compute the data and plot the data independently
+# Options to do compute the targets and plot the targets independently
 compute =  True
 plot = True
 
-# I will store the data we compute in files ending in this
+# I will store the targets we compute in files ending in this
 filename_base = "GeV-rate.dat"
 
 if compute:
@@ -47,7 +47,7 @@ if compute:
         E, R = dm.EventrateSpectra(
             Z = 54, 
             N = 77, 
-            dres = "../data/Xe/xe131gcn", 
+            dres = "../targets/Xe/xe131gcn", 
             epmin = 1.0, 
             epmax = 1000.0, 
             epstep = 1.0,

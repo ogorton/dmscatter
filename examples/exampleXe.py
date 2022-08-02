@@ -15,7 +15,7 @@ cs[1] = 1.0
 Erkev, ER = dm.EventrateSpectra(
         Z = 54,
         N = 77,
-        dres = "../data/Xe/xe131gcn",
+        dres = "../targets/Xe/xe131gcn",
         controlwords = cwords,
         epmin = 1,
         epmax = 1000.0,
@@ -30,7 +30,7 @@ plt.plot(Erkev,ER, label="Xe131, GCN", linestyle=":")
 Erkev, ER = dm.EventrateSpectra(
         Z = 54,
         N = 77,
-        dres = "../data/Xe/xe131jj55",
+        dres = "../targets/Xe/xe131jj55",
         controlwords = cwords,
         epmin = 1,
         epmax = 1000.0,
@@ -44,7 +44,7 @@ plt.plot(Erkev,ER, label="Xe131, jj55", linestyle="-")
 Erkev, ER = dm.EventrateSpectra(
         Z = 54,
         N = 77,
-        dres = "../data/Legacy/sdgXe131",
+        dres = "../targets/Legacy/sdgXe131",
         controlwords = cwords,
         epmin = 1,
         epmax = 1000.0,

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import dmfortfactor as dm
 
 dresfiles = [
-        '../data/He/he4nmax16hw26den.dres']
+        '../targets/He/he4nmax16hw26den.dres']
 hofrequencies = [26.0]
 operators = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 

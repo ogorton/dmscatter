@@ -11,7 +11,7 @@ weights = [.01910, .26401, .04071, .21232, .26909, .10436, .08857]
 weightedsum = 0.0
 mchi = 1000.
 vesc = 550.
-paths = ("../data/Xe/xe","../data/Xe/xe","../data/Legacy/sdgXe")
+paths = ("../targets/Xe/xe","../targets/Xe/xe","../targets/Legacy/sdgXe")
 ints =  ("jj55","gcn","")
 
 plt.title(r"Differential event rate spectra by natural abundances"+
