@@ -188,6 +188,15 @@ module keywords
                 print*,trim(keyword),': Set to not print density matrix.'
             end if            
 
+        case('pnresponse')
+            if (keyvalue==1) then
+                pnresponse = .true.
+                print*,trim(keyword),': Set to pn-coupling of printed response functions.'
+            else
+                pnresponse = .false.
+                print*,trim(keyword),': Set to iso-coupling of printed response functions.'
+            end if          
+
         case('quadrelerr')
             quadrature_relerr = dble( keyvalue )
             print*,trim(keyword),": Set adaptive quadrature routine to seek relative error:",keyvalue

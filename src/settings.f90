@@ -4,6 +4,7 @@ module settings
     logical :: useenergyfile = .false.
     logical :: fillcore = .true.
     logical :: printdens = .false.
+    logical :: pnresponse = .false.
     integer :: nlocalstates !,maxlocalstates
     integer :: nsporb   ! # of single-particle orbits
 

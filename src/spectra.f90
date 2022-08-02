@@ -261,6 +261,7 @@ module spectra
         real(kind=8), allocatable :: Wlist(:,:,:,:)
         real(kind=8) :: mtarget
         real(kind=8) :: tolerance
+        logical :: dotransform
     
         tolerance = epsilon(qq)
     
@@ -269,8 +270,10 @@ module spectra
     
         
         allocate(Wlist(energy_grid_size, 8, 0:1, 0:1))
+
+        dotransform = (pndens .neqv. pnresponse)
     
-        if (pndens) then
+        if (dotransform) then
           !$OMP parallel do private(qq, yy, tau, tau_prime, ioperator) schedule(dynamic, 10)
           do iqq = 1, energy_grid_size
             qq = momentum_grid(iqq)
