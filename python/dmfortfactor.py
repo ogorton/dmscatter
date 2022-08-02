@@ -56,7 +56,8 @@ def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1,
             Array of differential event rates (events/GeV)
     '''
     if name==None:
-        name = time.strftime("%Y,%m,%d,%H,%M,%S",time.localtime())
+        #name = time.strftime("%Y,%m,%d,%H,%M,%S",time.localtime())
+        name = str(time.time())
 
     inputfile = writeinput('er', name, Z, N, dres, epmin, epmax, epstep)
     controlfile = writecontrol(name, controlwords, cp, cn, cs, cv)
