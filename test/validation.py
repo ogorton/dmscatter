@@ -43,7 +43,7 @@ log = True
 typ = "lin"
 if log: typ="log"
 
-dreslbl = ("5 decimal .dres","7 decimal .dres","Legacy .dres")
+dreslbl = ("5 decimal .dres","7 decimal .dres")
 
 for coupleto in ("n","p"):
 
@@ -57,7 +57,7 @@ for coupleto in ("n","p"):
         e_mb, er_mb = np.loadtxt("data/dmformfactor.si29.%s.%i.%i.dat"%(
                 coupleto, o1, o2), unpack=True)
 
-        for idres, dres in enumerate(("Si/si29usd-iso","Si/si29nb-iso","Legacy/sdSi29")):
+        for idres, dres in enumerate(("Si/si29usd-iso","Si/si29nb-iso")):
 
             print("%s-coupling, operator %i-%i, density %s"%(coupleto,o1,o2,dres))
             cv = np.zeros(15)
@@ -74,7 +74,7 @@ for coupleto in ("n","p"):
             energy, eventrate = dm.EventrateSpectra(
                 Z = 14,
                 N = 15,
-                dres = "../data/%s"%dres,
+                dres = "../targets/%s"%dres,
                 controlwords = cwords,
                 epmin = 1,
                 epmax = 1000.0,
@@ -90,7 +90,7 @@ for coupleto in ("n","p"):
             x = e_cut
             R = interp1d(energy, eventrate)
             Rx = R(x)
-            perr = abs((y - Rx)/y)
+            perr = np.where(y!=0,abs((y - Rx)/y),0)
             ms=["--", ":", "-."]
             plt.plot(x, perr, label = "%s"%dreslbl[idres],
                     linestyle=ms[idres],marker="x")
