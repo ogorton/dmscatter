@@ -9,6 +9,8 @@ $\hat{c}$ are the one-body creation, destruction operators. The matrix elements
 must be stored in a file in a standard format produced by shell-model codes like
 BIGSTICK.
 
+## List of nuclear targets
+
 Table of nuclear data we include with the program. Each corresponds to a (.dres)
 density matrix file. The source indicates the nuclear Hamiltonian that was used
 to generate the wave function data:
@@ -24,7 +26,6 @@ to generate the wave function data:
 | I | 127 |  [@GCN5082], used in [@PhysRevLett.100.052503;@PhysRevC.82.064304]|
 | Xe | 128, 129, 130, 131, 132, 134, 136 | [@GCN5082], used in [@PhysRevLett.100.052503; @PhysRevC.82.064304] |
 
-Table of nuclear data we include with the program. Each corresponds to a (.dres) density matrix file in the dres directory. The source indicates the nuclear Hamiltonian that was used to generate the wave function data. See the manual and GitHub repository for updates and full information on provenance.
 
 
 ## Filling core orbitals for phenomenological interactions
@@ -95,7 +96,10 @@ three layers:
 
 * (i) the initial and final state specification (corresponding to the many-body states listed in section (1) of the file), 
 * (ii) the angular momentum carried by the one-body density matrix operator, labeled {\tt Jt} here, 
-* (iii) the single-particle state labels `a`, `b` in columns 1 and 2 (corresponding to the single-particle state labels listed in section (2) of the file) and the proton and neutron (isospin-0 and isospin-1) density matrix elements in columns 3 and 4. 
+* (iii) the single-particle state labels `a`, `b` in columns 1 and 2
+  (corresponding to the single-particle state labels listed in section (2) of
+  the file) and the proton and neutron (isospin-0 and isospin-1) density matrix
+  elements in columns 3 and 4. 
 
 Both (i) and (ii) must be specified along with columns 1 and 2 of (iii) in order
 to fully determine a matrix element $\rho^{f,i}_K(a,b)$, where $K=J_t$. Note

@@ -296,36 +296,36 @@ spin-coupling, respectively.
 
 ## Nuclear response functions
 
-The EFT physics has been grouped into eight WIMP response functions
-$R_i^{x,x'}$, and eight nuclear response functions $W_i^{x,x'}$.
-The first six nuclear response functions have
-the following form:
-\begin{align}
+There are eight nuclear response functions $W_i^{x,x'}$ considered here. The
+first six nuclear response functions have the following form:
+\begin{equation}
+\label{responsefunctions}
     W_{X}^{x,x'} = \sum_{J}\bra{\Psi} X^{x}_J \ket{\Psi}\bra{\Psi} X^{x'}_J \ket{\Psi},
-\end{align}
-with $X$ selecting one of the six electroweak operators,
-\begin{align}
-    X_J=M_J, \Delta_J, \Sigma_J', \Sigma_J'', \tilde{\Phi}_J', \Phi_J'',
-\end{align}
+\end{equation}
+with $X$ selecting one of the six electroweak operators:
+\begin{equation}
+    X_J=M_J, \Delta_J, \Sigma_J', \Sigma_J'', \tilde{\Phi}_J', \Phi_J''.
+\end{equation} 
 and $\Psi$ being the nuclear wave function for the ground state of the target
 nucleus.  The sum over operators spins $J$ is restricted to even or odd values
 of $J$, depending on restrictions from conservation of parity and charge
 conjugation parity (CP) symmetry.
 
 Two additional response functions add interference-terms:
-\begin{align}
-W_{M\Phi''}^{x,x'} =
-\sum_{J}\bra{\Psi} M_{J}^{x} \ket{\Psi}\bra{\Psi} \Phi_{J}^{''x'} \ket{\Psi},
-\end{align}
-\begin{align}
-W_{\Delta\Sigma'}^{x,x'} = 
-\sum_{J}\bra{\Psi} \Sigma_{J}^{'x} \ket{\Psi}\bra{\Psi} \Delta_{J}^{x'} \ket{\Psi}.
-\end{align}
-The indices $i$ in align (\ref{eq:T2}) correspond to these operators as:
-$i\to X$ for $i=1,..,6$, and $i=7 \to M\Phi''$, $i=8\to \Delta\Sigma'$.
+\begin{equation}
+    W_{M\Phi''}^{x,x'} = 
+    \sum_{J}\bra{\Psi} M_{J}^{x} \ket{\Psi}\bra{\Psi} \Phi_{J}^{''x'} \ket{\Psi}
+    ,
+\end{equation}   
+\begin{equation}
+    W_{\Delta\Sigma'}^{x,x'} = \sum_{J}\bra{\Psi} \Sigma_{J}^{'x} \ket{\Psi}\bra{\Psi} \Delta_{J}^{x'} \ket{\Psi} .
+\end{equation}
+The transition probability is thus [@Fitzpatrick_2013;@Anand_2014]:
+\begin{equation}\label{eq:T2}
+    T(v,q) =\frac{4\pi}{2j_T+1} \sum_{x=p,n}\sum_{x'=p,n}\sum_{i=1}^8 R_i^{x,x'}(v^2,q^2)W_i^{x,x'}(q),
+\end{equation}
+where $i\to X$ for $i=1,..,6$, and $i=7 \to M\Phi''$, $i=8\to \Delta\Sigma'$.
 
-DMFortFactor can print the nuclear form factors to a file over a range of either
-transfer momenta or recoil energy.
 
 ## Nuclear (electroweak) operators
 There are six parity-and-CP-conserving nuclear operators, $M_J, \Delta_J,
