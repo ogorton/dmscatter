@@ -1,10 +1,11 @@
 import os
 import subprocess
 import numpy as np
+import time
 
 def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1, 
         controlwords={}, cp=None, cn=None, cs=None, cv=None,
-        exec_path='dmfortfactor', name=".eventratespectra"):
+        exec_path='dmfortfactor', name=None):
 
     '''
     Calls the dmfortfactor eventrate spectra function, which computes the
@@ -54,6 +55,8 @@ def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1,
         EventRate
             Array of differential event rates (events/GeV)
     '''
+    if name==None:
+        name = time.strftime("%Y,%m,%d,%H,%M,%S",time.localtime())
 
     inputfile = writeinput('er', name, Z, N, dres, epmin, epmax, epstep)
     controlfile = writecontrol(name, controlwords, cp, cn, cs, cv)
@@ -87,20 +90,24 @@ def NucFormFactor(Z, N, dres, epmin=1, epmax=1000, epstep=1,
     q = columns[0]
     W = columns[1:]
 
+
     function_lst = []
     for operator in range(0,8):
-        for tau in range(0,2):
-            for tau_prime in range(0,2):
-                windx = operator + tau * 8 + tau_prime * 8 * 2
+        for tau_prime in range(0,2):
+            for tau in range(0,2):
+                windx = operator + tau* 8 + tau_prime * 8 * 2
+                windx = operator + tau_prime * 8 + tau * 8 * 2
+                windx = tau + 2*tau_prime + 4*operator
                 function_lst.append(interp1d(q, W[windx,:]))
 
     def Wfunc(qq):
-
         result = np.zeros((8,2,2))
         for operator in range(0,8):
-            for tau in range(0,2):
-                for tau_prime in range(0,2):
-                    windx = operator + tau * 8 + tau_prime * 8 * 2
+            for tau_prime in range(0,2):
+                for tau in range(0,2):
+                    windx = operator + tau_prime * 8 + tau * 8 * 2
+                    #windx = operator + tau* 8 + tau_prime * 8 * 2
+                    windx = tau + 2*tau_prime + 4*operator
                     f = function_lst[windx]
                     result[operator, tau, tau_prime] = f(qq)
         return result

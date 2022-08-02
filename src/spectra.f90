@@ -323,7 +323,15 @@ module spectra
           else
               xx = energy_grid(iqq)
           end if
-          write(iunit,'(ES15.5E3,32(ES15.5E3))') xx, Wlist(iqq, 1:8, 0:1, 0:1)
+            write(iunit,'(ES15.5E3,32(ES15.5E3))') xx,  Wlist(iqq, 1, 0:1, 0:1),&
+                                                        Wlist(iqq, 2, 0:1, 0:1),&
+                                                        Wlist(iqq, 3, 0:1, 0:1),&
+                                                        Wlist(iqq, 4, 0:1, 0:1),&
+                                                        Wlist(iqq, 5, 0:1, 0:1),&
+                                                        Wlist(iqq, 6, 0:1, 0:1),&
+                                                        Wlist(iqq, 7, 0:1, 0:1),&
+                                                        Wlist(iqq, 8, 0:1, 0:1)
+          print*,Wlist(iqq, 1, 0, 0),Wlist(iqq, 1, 1, 0),Wlist(iqq, 1, 0, 1),Wlist(iqq, 1, 1, 1)
         end do
         close(iunit)
     
