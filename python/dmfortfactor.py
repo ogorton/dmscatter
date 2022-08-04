@@ -3,7 +3,7 @@ import subprocess
 import numpy as np
 import time
 
-def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1, 
+def EventrateSpectra(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1, 
         controlwords={}, cp=None, cn=None, cs=None, cv=None,
         exec_path='dmfortfactor', name=None):
 
@@ -58,6 +58,8 @@ def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1,
     if name==None:
         #name = time.strftime("%Y,%m,%d,%H,%M,%S",time.localtime())
         name = str(time.time())
+ 
+    if dres==None: dres = target
 
     inputfile = writeinput('er', name, Z, N, dres, epmin, epmax, epstep)
     controlfile = writecontrol(name, controlwords, cp, cn, cs, cv)
@@ -71,10 +73,12 @@ def EventrateSpectra(Z, N, dres, epmin=1, epmax=1000, epstep=1,
 
     return RecoilE, EventRate
 
-def NucFormFactor(Z, N, dres, epmin=1, epmax=1000, epstep=1,
+def NucFormFactor(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1,
     controlwords={}, exec_path='dmfortfactor', name=".nucFFspectra"):
 
     from scipy.interpolate import interp1d
+
+    if dres==None: dres = target
     
     inputfile = writeinput('ws', name, Z, N, dres, epmin, epmax, epstep)
     controlfile = writecontrol(name, controlwords)

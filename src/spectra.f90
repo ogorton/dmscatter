@@ -260,7 +260,7 @@ module spectra
         real(kind=8) :: yy, qq, xx
         real(kind=8), allocatable :: Wlist(:,:,:,:)
         real(kind=8) :: mtarget
-        real(kind=8) :: tolerance
+        real(kind=8) :: tolerance, factor
         logical :: dotransform
     
         tolerance = epsilon(qq)
@@ -272,6 +272,11 @@ module spectra
         allocate(Wlist(energy_grid_size, 8, 0:1, 0:1))
 
         dotransform = (pndens .neqv. pnresponse)
+        if (pndens .and. dotransform) then
+          factor = 0.25d0
+        else
+          factor = 1d0
+        end if
     
         if (dotransform) then
           !$OMP parallel do private(qq, yy, tau, tau_prime, ioperator) schedule(dynamic, 10)
@@ -281,7 +286,7 @@ module spectra
             do tau = 0, 1
               do tau_prime = 0, 1
                 do ioperator = 1, 8
-                  Wlist(iqq, ioperator, tau, tau_prime) = 0.25d0 * nucFormFactor_transform(&
+                  Wlist(iqq, ioperator, tau, tau_prime) = factor * nucFormFactor_transform(&
                       tau, tau_prime, ioperator, yy, nuc_target%densitymats%rho,&
                       nuc_target%groundstate%Tx2, nuc_target%Mt )
                 end do
@@ -296,7 +301,7 @@ module spectra
             do tau = 0, 1
               do tau_prime = 0, 1
                 do ioperator = 1, 8
-                  Wlist(iqq, ioperator, tau, tau_prime) = 0.25d0 * nucFormFactor(&
+                  Wlist(iqq, ioperator, tau, tau_prime) = factor * nucFormFactor(&
                       tau, tau_prime, ioperator, yy, nuc_target%densitymats%rho,&
                       nuc_target%groundstate%Tx2, nuc_target%Mt )
                 end do
