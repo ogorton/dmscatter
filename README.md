@@ -11,8 +11,7 @@ convenient Python interfaces, which offer a minimal interface, optionally
 extensible to the full capabilities of the underlying program.
 
 Read the documentation:
-* [PDF](docs/manual.pdf)
-* [Webpage](https://ogorton.github.io/dmfortfactor/)
+* [PDF](docs/DMFortFactor_User_Manual.pdf)
 
 **Dev Contacts**
 
