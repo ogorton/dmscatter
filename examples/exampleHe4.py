@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import dmfortfactor as dm
 
 dresfiles = [
-        '../targets/He/he4nmax16hw26den.dres']
+        '../targets/He/he4nmax16hw26den']
 hofrequencies = [26.0]
 operators = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
@@ -35,13 +35,13 @@ for opi,operator in enumerate(operators):
         E, R = dm.EventrateSpectra(
                 Z = 2,
                 N = 2,
-                dres = dresfile[:-5],
+                dres = dresfile,
                 controlwords = control_dict,
                 cp = cn,
                 exec_path='../bin/dmfortfactor')
 
         plt.figure(1)
-        plt.plot(E,R,label=dresfile[3:-5])
+        plt.plot(E,R,label=dresfile[3:])
     plt.figure(1) 
     plt.title("He-4, 50 GeV WIMP, Op: %s, neutron 4.8E-4"%operator) 
     plt.xlabel('$E_{recoil}$ (keV)')

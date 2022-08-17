@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 import dmfortfactor as dm
 
 targetsfiles = [
-        '../targets/C/c12Nmax8chi20hw.targets',
-        '../targets/C/c12Nmax6DAEhw22.5.targets',
-        '../targets/C/c12Nmax6chi20hw.targets',
-        '../targets/C/c12Nmax8DAEhw22.5.targets', 
-        '../targets/C/c12ck.targets']
+        '../targets/C/c12Nmax8chi20hw',
+        '../targets/C/c12Nmax6DAEhw22.5',
+        '../targets/C/c12Nmax6chi20hw',
+        '../targets/C/c12Nmax8DAEhw22.5', 
+        '../targets/C/c12ck']
 hofrequencies = [20.0, 22.5, 20.0, 22.5, "na"]
 hofrequencies = len(targetsfiles) * ["na"]
 operators = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -44,7 +44,7 @@ for opi,operator in enumerate(operators):
         E, R = dm.EventrateSpectra(
                 Z = 6,
                 N = 6,
-                dres = targetsfile[:-5],
+                target = targetsfile,
                 controlwords = control_dict,
                 cn = cn,
                 exec_path='../bin/dmfortfactor')
