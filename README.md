@@ -44,20 +44,54 @@ import dmfortfactor as dm
 If necessary, replace "../python" with the path to the `dmfortfactor/python` diretory on your
 system.
 
+To run one of the example Python scripts, try moving to `examples` and running:
+
+    python3 exampleXe.py
+
+More extensive documentation can be found in the manual document.
+
+### EventrateSpectra
 The main function in this module, used to compute the differential event-rate
-spectra, can be called like this:
+spectra. The interface looks like this:
 ```Python
+EventrateSpectra(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1,
+        controlwords={}, cp=None, cn=None, cs=None, cv=None,
+        exec_path='dmfortfactor', name=None)
+```
+Here is an example call to this function:
+```Python
+import sys
+sys.path.append("../python")
+import dmfortfactor as dm
 Recoilenergykev, Eventrate = dm.EventrateSpectra(
             Z = 54,
             N = 77,
             target = "../targets/Xe/xe131gcn",
             cn = [0.00048, 0,0,0,0,0,0,0,0,0,0,0,0,0,0] )
 ```
-To run one of the example Python scripts, try moving to `examples` and running:
+A more detailed example is given in `examples/exampleXe.py`.
 
-    python3 exampleXe.py
-
-More extensive documentation can be found in the manual document.
+### NucFormFactor
+The other availale function is for computing nuclear form factors. The interface
+is
+```Python
+NucFormFactor(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1,
+    controlwords={}, exec_path='dmfortfactor', name=".nucFFspectra")
+```
+Here is an example call to this function:
+```Python
+Wfunc = dm.NucFormFactor(
+        Z = 54,
+        N = 77,
+        dres = "../targets/Xe/xe131gcn",
+        controlwords = cwords,
+        epmin = 0.001,
+        epmax = 10.0,
+        epstep = 0.001,
+        exec_path='../bin/dmfortfactor')
+print(Wfunc(q=0.001))
+```
+A more detailed example is given in `examples/exampleXeFF.py`.
 
 ## Validation plots
 We include a script for generating validation tests against data generated with
