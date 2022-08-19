@@ -62,18 +62,21 @@ module coefficients
     
         print*,'Converting EFT coefficients isospin <=> proton-neutron formalism.'
     
+        ! Convert pn to iso
         do i = 1, num_response_coef
             if (eft%xpnc(0)%c(i) .ne. 0 .or. eft%xpnc(1)%c(i).ne.0) then
-                eft%isoc(0)%c(i) = (eft%xpnc(0)%c(i) + eft%xpnc(1)%c(i))
-                eft%isoc(1)%c(i) = (eft%xpnc(0)%c(i) - eft%xpnc(1)%c(i))
+                eft%isoc(0)%c(i) = (eft%xpnc(0)%c(i) + eft%xpnc(1)%c(i))/2d0
+                eft%isoc(1)%c(i) = (eft%xpnc(0)%c(i) - eft%xpnc(1)%c(i))/2d0
                 print*,'s',i,eft%isoc(0)%c(i)
                 print*,'v',i,eft%isoc(1)%c(i)
             end if
         end do
+
+        ! Convert iso to pn
         do i = 1, num_response_coef
             if (eft%isoc(0)%c(i) .ne. 0 .or. eft%isoc(1)%c(i).ne.0) then
-                eft%xpnc(0)%c(i) = (eft%isoc(0)%c(i) + eft%isoc(1)%c(i))/2
-                eft%xpnc(1)%c(i) = (eft%isoc(0)%c(i) - eft%isoc(1)%c(i))/2
+                eft%xpnc(0)%c(i) = (eft%isoc(0)%c(i) + eft%isoc(1)%c(i))
+                eft%xpnc(1)%c(i) = (eft%isoc(0)%c(i) - eft%isoc(1)%c(i))
                 print*,'p',i,eft%xpnc(0)%c(i)
                 print*,'n',i,eft%xpnc(1)%c(i)
             end if
