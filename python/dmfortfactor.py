@@ -5,7 +5,7 @@ import time
 
 def EventrateSpectra(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1, 
         controlwords={}, cp=None, cn=None, cs=None, cv=None,
-        exec_path='dmfortfactor', name=None):
+        exec_path='dmfortfactor', name=None, debug=False):
 
     '''
     Calls the dmfortfactor eventrate spectra function, which computes the
@@ -68,13 +68,15 @@ def EventrateSpectra(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1
         exec_path, 
         inputfile,
         controlfile, 
-        label=name
+        resultfile="eventrate_spectra.dat",
+        label=name,
+        debug=debug
         )
 
     return RecoilE, EventRate
 
 def NucFormFactor(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1,
-    controlwords={}, exec_path='dmfortfactor', name=".nucFFspectra"):
+    controlwords={}, exec_path='dmfortfactor', name=".nucFFspectra", debug=False):
 
     from scipy.interpolate import interp1d
 
@@ -89,7 +91,8 @@ def NucFormFactor(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1,
         inputfile,
         controlfile,
         label=name,
-        resultfile='nucresponse_spectra.dat'
+        resultfile='nucresponse_spectra.dat',
+        debug=debug
         )
 
     q = columns[0]
@@ -170,9 +173,9 @@ def writecontrol(name, controlword_dict, cp=None, cn=None, cs=None,
     f.close()
     return filename
 
-def runTemplates(exec_name, input_template, control_template, input_dict={},
-    control_dict={}, workdir='./', label='runCustom',
-    resultfile='eventrate_spectra.dat'):
+def runTemplates(exec_name, input_template, control_template, resultfile,
+        input_dict={}, control_dict={}, workdir='./', label='runCustom',
+        debug=False):
 
     """
      Author: Oliver Gorton, 2021
@@ -214,13 +217,14 @@ def runTemplates(exec_name, input_template, control_template, input_dict={},
         exit()
 
     # Control file
+    customcontrol = "%s.control"%label
     if control_dict == {}:
         pass
     else:
         findandreplace = "sed '"
         for keyword in control_dict.keys():
             findandreplace += "s/%s/%s/g;"%(keyword,control_dict[keyword])
-        findandreplace += "' %s > %s.control"%(control_template, label)
+        findandreplace += "' %s > %s"%(control_template, customcontrol)
         returned = subprocess.call(findandreplace, shell=True)    
 
     # Input file
@@ -235,12 +239,25 @@ def runTemplates(exec_name, input_template, control_template, input_dict={},
         returned = subprocess.call(findandreplace, shell=True)    
 
     # Execute
-    command = "%s < %s > %s.output"%(exec_name,custominput,label)
+    customoutput = "%s.output"%label
+    command = "%s < %s > %s"%(exec_name,custominput,customoutput)
     print(command)
     returned = subprocess.call(command,shell=True)
-    if(returned != 0): print("Return code: %s"%returned)    
+    if(returned != 0): print("Execute return code: %s"%returned)    
 
     # Collect output
     columns = np.loadtxt(resultfile, unpack=True)
+
+    # Move resultfile to avoid reading it again
+    command = "mv %s %s.old"%(resultfile,resultfile)
+    returned = subprocess.call(command,shell=True)
+    if(returned != 0): print("mv return code: %s"%returned)
+
+    # Remove io files
+    if not debug:
+        os.remove(custominput)
+        os.remove(customoutput)
+        os.remove(customcontrol)
+
     os.chdir(path)
     return columns
