@@ -96,7 +96,7 @@ for coupleto in ("n","p"):
                     linestyle=ms[idres],marker="x")
 
             # Save dmfortfactor results
-            shutil.copy("eventrate_spectra.dat",
+            shutil.copy("eventrate_spectra.dat.old",
                     "dmfortfactor.si29.%s.%i.%i.dat"%(coupleto,o1,o2))
 
         if o1==o2:
