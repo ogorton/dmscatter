@@ -52,6 +52,66 @@ module densities
         nuc_target%densitymats%rho(:,:,:,:) = 0.0
     
     end subroutine setupdensities
+
+
+    !===================================================================
+    subroutine testValenceCount
+      use norm
+      implicit none
+      integer :: a, jax2
+      integer :: J0x2 ! ground state angular momentum
+      integer :: Jt ! transition operator angular momentum
+      real(kind=8) :: Zval, Nval
+      real(kind=8) :: numberp, numbern
+
+      Jt = 0
+      J0x2 = nuc_target%groundstate%Jx2
+
+      Zval = 0
+      Nval = 0
+
+      print '("Validating valence particle count against declared values")'
+      if (pndens) then
+        do a = 1, norb(1)
+          jax2 = jorb(a)
+          numberp = nuc_target%densitymats%rho(Jt,0,a,a) * q2norm(jax2) / q2norm(J0x2)
+          Zval = Zval + numberp
+
+          numbern = nuc_target%densitymats%rho(Jt,1,a,a) * q2norm(jax2) / q2norm(J0x2)
+          Nval = Nval + numbern
+          print '("a ",i3," jx2 ",i3," protons ",f10.4," neutrons ",f10.4)',a,jax2,numberp,numbern
+        end do
+      else
+        print '("Test valence particle count not implemented for isospin densities.")'
+      end if
+
+      print '(" Protons: ",f10.4," Expected: ",i3)',Zval,nuc_target%Zval
+      print '(" Neutrons: ",f10.4," Expected: ",i3)',Nval,nuc_target%Nval
+
+      Zval = 0
+      Nval = 0
+
+      print '("Validating total particle count against declared values")'
+      if (pndens) then
+        do a = 1, ntotal(1)
+          jax2 = jorb(a)
+          numberp = nuc_target%densitymats%rho(Jt,0,a,a) * q2norm(jax2) / q2norm(J0x2)
+          Zval = Zval + numberp
+
+          numbern = nuc_target%densitymats%rho(Jt,1,a,a) * q2norm(jax2) / q2norm(J0x2)
+          Nval = Nval + numbern
+        end do
+      else
+        print '("Test valence particle count not implemented for isospin densities.")'
+      end if
+
+      print '(" Protons: ",f10.4," Expected: ",i3)',Zval,nuc_target%Z
+      print '(" Neutrons: ",f10.4," Expected: ",i3)',Nval,nuc_target%N
+
+      if (abs(Zval - nuc_target%Z)>1e-3) STOP "ERROR: Density matrix does not satisfy proton number definition"
+      if (abs(Nval - nuc_target%N)>1e-3) STOP "ERROR: Density matrix does not satisfy neutron number definition"      
+
+    end subroutine testValenceCount
     
     
     !===================================================================
@@ -139,15 +199,16 @@ module densities
        integer :: nlocalstates
        real(kind=8) e,ex,xj,xt
        integer np,zp
-          rewind(resfile)
-          read(resfile,'(a)')tmpline
-          read(resfile,*)zp,np
-          if( mod(np+zp,2) == 1)then
-             evenA = .false.
-          else
-             evenA = .true.
-          end if
-          rewind(resfile)
+
+       rewind(resfile)
+       read(resfile,'(a)')tmpline
+       read(resfile,*)zp,np
+       if( mod(np+zp,2) /= 0)then
+          evenA = .false.
+       else
+          evenA = .true.
+       end if
+       rewind(resfile)
        do i = 1,20
           read(resfile,'(a)')tmpline
           if(tmpline(3:7)=='State')then
@@ -160,9 +221,11 @@ module densities
                    if(n==1)then
                      backspace(resfile)
                      read(resfile,*,err=3)n,e,ex,xj,xt
-                     print*,n,e,ex,xj,xt
                      nuc_target%groundstate%Jx2 = closest2J(evenA,xj)
                      nuc_target%groundstate%Tx2 = closest2J(evenA,xt)
+                     print*,"evenA",evenA
+                     print*,"Ground state Jx2",nuc_target%groundstate%Jx2
+                     print*,"Grounod state Tx2",nuc_target%groundstate%Tx2
     
                    end if
     

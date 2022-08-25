@@ -20,6 +20,8 @@ subroutine nucinputs
     if (fillcore) then
         call coredensity
     end if
+
+    call testValenceCount
  
     if (printdens) call printdensities
 

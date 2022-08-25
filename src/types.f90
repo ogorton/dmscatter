@@ -32,6 +32,7 @@ module types
     type nucleus
         integer :: Z
         integer :: N
+        integer :: Zval, Nval
         integer :: A
         integer :: Mt
         real(kind=8) :: mass
