@@ -1,0 +1,10 @@
+Target: 23Na
+
+Empirical calculation in sd shell with fixed 16O core (added automatically by dmfortfactor)
+
+na23usdb.dres:  USDB interaction, Brown and Richter, PRC 74, 034315 (2006)
+
+na23w18.dres:   Wildenthal USD interaction, Wildenthal Prog. Part. Nucl. Phys 11, 5 (1984);
+Brown and Wildenthal, Annu. Rev. Nucl. Part. Sci 38, 29 (1988)
+
+
