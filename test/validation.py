@@ -57,7 +57,7 @@ for coupleto in ("n","p"):
         e_mb, er_mb = np.loadtxt("data/dmformfactor.si29.%s.%i.%i.dat"%(
                 coupleto, o1, o2), unpack=True)
 
-        for idres, dres in enumerate(("Si/si29usd-iso","Si/si29nb-iso")):
+        for idres, dres in enumerate(("si29usd-iso","si29nb-iso")):
 
             print("%s-coupling, operator %i-%i, density %s"%(coupleto,o1,o2,dres))
             cv = np.zeros(15)
@@ -74,7 +74,7 @@ for coupleto in ("n","p"):
             energy, eventrate = dm.EventrateSpectra(
                 Z = 14,
                 N = 15,
-                dres = "../targets/%s"%dres,
+                dres = "%s"%dres,
                 controlwords = cwords,
                 epmin = 1,
                 epmax = 1000.0,
