@@ -1,7 +1,7 @@
 import sys
 sys.path.append("../python")
 import matplotlib.pyplot as plt
-import dmfortfactor as dm
+import dmscatter as dm
 import numpy as np
 
 label = "xe131"
@@ -29,7 +29,7 @@ for wimp_mass in (50.,150.0, 500.,5000.):
         cv = cv,
         cp = cp,
         cn = cn,
-        exec_path='../bin/dmfortfactor')
+        exec_path='../bin/dmscatter')
 
     plt.plot(RecoilE, EventRate, label="$m_\chi=$%2.2f"%wimp_mass)
 

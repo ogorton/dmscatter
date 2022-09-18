@@ -1,4 +1,4 @@
-program dmfortfactor
+program dmscatter
 
     use spectra, only: eventrate_spectra, velocity_curve, nucresponse_spectra
     use wigner
@@ -18,11 +18,11 @@ program dmfortfactor
 
     print '(10(A,/))',&
         '=================================================================================',&
-        'Welcome to DMFortFactor, a modern Fortran WIMP-nucleon scattering code.',&
+        'Welcome to dmscatter, a modern Fortran WIMP-nucleon scattering code.',&
         'Based on the Mathematica script described in arXiv:1308.6288 (2003).',&
         '  VERSION 1.0 RELEASED 2022 from SDSU',&
         '  MIT License',&
-        '  Copyright (c) 2022, DMFortFactor development team',&
+        '  Copyright (c) 2022, dmscatter development team',&
         '  Developer contacts:',&
         '            cjohnson@sdsu.edu',&
         '             ogorton@sdsu.edu',&
@@ -70,4 +70,4 @@ program dmfortfactor
     print*,'Compute time (s)',real(tstop-tstart)/real(clock_rate)
     print*,"6-J Table Lookup min/max requested:", tablemin_used, tablemax_used
         
-end program dmfortfactor
+end program dmscatter

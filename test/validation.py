@@ -1,12 +1,12 @@
 import sys
 sys.path.append('../python')
-import dmfortfactor as dm
+import dmscatter as dm
 
 from scipy.interpolate import interp1d
 import shutil
 import numpy as np
 import matplotlib.pyplot as plt
-import dmfortfactor as dm
+import dmscatter as dm
 
 with open("operators.txt") as f: operatorsymbols = f.readlines()
 
@@ -79,7 +79,7 @@ for coupleto in ("n","p"):
                 epmin = 1,
                 epmax = 1000.0,
                 epstep = 1.0,
-                exec_path='../bin/dmfortfactor',
+                exec_path='../bin/dmscatter',
                 cs = cs,
                 cv = cv,
                 cp = cp,
@@ -95,9 +95,9 @@ for coupleto in ("n","p"):
             plt.plot(x, perr, label = "%s"%dreslbl[idres],
                     linestyle=ms[idres],marker="x")
 
-            # Save dmfortfactor results
+            # Save dmscatter results
             shutil.copy("eventrate_spectra.dat.old",
-                    "dmfortfactor.si29.%s.%i.%i.dat"%(coupleto,o1,o2))
+                    "dmscatter.si29.%s.%i.%i.dat"%(coupleto,o1,o2))
 
         if o1==o2:
             plt.title("$^{29}$Si + 150 GeV WIMP [%s] %s"%(coupleto,
@@ -130,7 +130,7 @@ for coupleto in ("n","p"):
         plt.ylabel("Event rate (1/MeV)", fontsize=12)
         if (all(eventrate==0)): plt.yscale("linear")  
 
-        plt.plot(energy, eventrate, label="dmfortfactor, MB vesc %skm/s"%vesc,lw=2)
+        plt.plot(energy, eventrate, label="dmscatter, MB vesc %skm/s"%vesc,lw=2)
         emax500 = 265.2987
         plt.axvline(x=emax500, label="$E_{R,max}$ @ 550 km/s", linestyle=":",
                 color='red')

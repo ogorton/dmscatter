@@ -5,10 +5,10 @@ import time
 
 def EventrateSpectra(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1, 
         controlwords={}, cp=None, cn=None, cs=None, cv=None,
-        exec_path='dmfortfactor', name=None, debug=False):
+        exec_path='dmscatter', name=None, debug=False):
 
     '''
-    Calls the dmfortfactor eventrate spectra function, which computes the
+    Calls the dmscatter eventrate spectra function, which computes the
     differential WIMP-nucleus scattering event rate as a function of nuclear
     recoil energy.
 
@@ -34,7 +34,7 @@ def EventrateSpectra(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1
             usemomentum control word set to 1. Spectra will be produced for 
             recoil energies from epmin to epmax in steps of epstep.    
         controlwords
-            Dictionary of control words. Keys must be valid dmfortfactor
+            Dictionary of control words. Keys must be valid dmscatter
             control keywords, and values must be numbers.
         cp
             Length-15 array of nonrelativistic proton- coupling coefficients
@@ -45,7 +45,7 @@ def EventrateSpectra(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1
         cv
             Length-15 array of nonrelativistic isotor- coupling coefficients
         exec_path
-            Path to the executable for dmfortfactor
+            Path to the executable for dmscatter
         name
             Name string assigned to temporary files
 
@@ -76,7 +76,7 @@ def EventrateSpectra(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1
     return RecoilE, EventRate
 
 def NucFormFactor(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1,
-    controlwords={}, exec_path='dmfortfactor', name=".nucFFspectra", debug=False):
+    controlwords={}, exec_path='dmscatter', name=".nucFFspectra", debug=False):
 
     from scipy.interpolate import interp1d
 
@@ -129,7 +129,7 @@ def writeinput(option, name, Z, N, dres, epmin, epmax, epstep):
 
     # Error traps
     if not os.path.exists(dres+".dres"):
-        print("dmfortfactor.py WARNING: %s can't be found!"%(dres+".dres"))
+        print("dmscatter.py WARNING: %s can't be found!"%(dres+".dres"))
         exit()
 
 

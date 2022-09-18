@@ -1,4 +1,4 @@
-# DMFortFactor: A Fast Fortran Program for WIMP-Nucleus Form Factors
+# dmscatter: A Fast Fortran Program for WIMP-Nucleus Form Factors
 *Oliver Gorton, Changfeng Jiao, and Calvin Johnson*
 
 Computes the differential event rate per recoil energy for WIMP-nucleon
@@ -11,7 +11,7 @@ convenient Python interfaces, which offer a minimal interface, optionally
 extensible to the full capabilities of the underlying program.
 
 Read the documentation:
-* [PDF](docs/DMFortFactor_User_Manual.pdf)
+* [PDF](docs/dmscatter_User_Manual.pdf)
 
 **Dev Contacts**
 
@@ -27,9 +27,9 @@ installed. to compile an OpenMP-parallel version of the code, navigate to the
 
 To compile a serial version of the code, instead run:
 
-    make dmfortfactor
+    make dmscatter
 
-Both options create the executable `dmfortfactor` in the `bin` directory. (Many
+Both options create the executable `dmscatter` in the `bin` directory. (Many
 of the example Python scripts expect to find it there.) Note that if you want to
 switch between and serial or parallel version, you must run `make clean`
 in-between compiles.
@@ -39,9 +39,9 @@ The main Python interface to the code can be imported and called:
 ```Python
 import sys
 sys.path.append("../python")
-import dmfortfactor as dm
+import dmscatter as dm
 ```
-If necessary, replace "../python" with the path to the `dmfortfactor/python` diretory on your
+If necessary, replace "../python" with the path to the `dmscatter/python` diretory on your
 system.
 
 To run one of the example Python scripts, try moving to `examples` and running:
@@ -56,13 +56,13 @@ spectra. The interface looks like this:
 ```Python
 EventrateSpectra(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1,
         controlwords={}, cp=None, cn=None, cs=None, cv=None,
-        exec_path='dmfortfactor', name=None)
+        exec_path='dmscatter', name=None)
 ```
 Here is an example call to this function:
 ```Python
 import sys
 sys.path.append("../python")
-import dmfortfactor as dm
+import dmscatter as dm
 Recoilenergykev, Eventrate = dm.EventrateSpectra(
             Z = 54,
             N = 77,
@@ -76,7 +76,7 @@ The other availale function is for computing nuclear form factors. The interface
 is
 ```Python
 NucFormFactor(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1,
-    controlwords={}, exec_path='dmfortfactor', name=".nucFFspectra")
+    controlwords={}, exec_path='dmscatter', name=".nucFFspectra")
 ```
 Here is an example call to this function:
 ```Python
@@ -88,7 +88,7 @@ Wfunc = dm.NucFormFactor(
         epmin = 0.001,
         epmax = 10.0,
         epstep = 0.001,
-        exec_path='../bin/dmfortfactor')
+        exec_path='../bin/dmscatter')
 print(Wfunc(q=0.001))
 ```
 A more detailed example is given in `examples/exampleXeFF.py`.
@@ -102,7 +102,7 @@ DMFormFactor (the Mathematica package). After compiling the code, navigate to
 
 After a few minutes, and if you have [pandoc](https://pandoc.org/index.html) 
 installed, a file called `validation.pdf` should be generated with a number of
-plots comparing the output of DMFortFactor against DMFormFactor. If you don't
+plots comparing the output of dmscatter against DMFormFactor. If you don't
 have pandoc, you can still view the plots individually in the test directory. 
 
 ## Directory
@@ -114,6 +114,6 @@ have pandoc, you can still view the plots individually in the test directory.
 | docs      | Manual and other documentation | 
 | data      | Nuclear structure information: the density matrix files (.dres) |
 | examples  | Example Python scripts using our Python wrapper |
-| python    | Python modules containing the wrapper for DMFortFactor |
+| python    | Python modules containing the wrapper for dmscatter |
 | src       | Fortran source code and Makefile. Compile the code here. |
 | test      | Test script and validation data. |

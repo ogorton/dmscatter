@@ -1,6 +1,6 @@
 # Requires 
 #  - python3 with matplotlib, numpy, scipy
-#  - dmfortfactor
+#  - dmscatter
 #  - pandoc
 #
 

@@ -3,7 +3,7 @@ sys.path.append("../python")
 
 import numpy as np
 import matplotlib.pyplot as plt
-import dmfortfactor as dm
+import dmscatter as dm
 
 dresfile = '../targets/C/c12n3lo_nmax8hw20'
 
@@ -41,7 +41,7 @@ for operator in operators:
                 dres = dresfile,
                 controlwords = control_dict,
                 cn = cn,
-                exec_path='../bin/dmfortfactor')
+                exec_path='../bin/dmscatter')
 
 
         if (first):

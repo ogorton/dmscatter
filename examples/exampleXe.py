@@ -1,6 +1,6 @@
 import sys
 sys.path.append("../python")
-import dmfortfactor as dm
+import dmscatter as dm
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -28,7 +28,7 @@ Erkev, ER = dm.EventrateSpectra(
         cv = cv,
         cp = cp,
         cn = cn,
-        exec_path='../bin/dmfortfactor')
+        exec_path='../bin/dmscatter')
 plt.plot(Erkev,ER, label="Xe131, GCN", linestyle=":")
 
 Erkev, ER = dm.EventrateSpectra(
@@ -43,7 +43,7 @@ Erkev, ER = dm.EventrateSpectra(
         cv = cv,
         cp = cp,
         cn = cn,
-        exec_path='../bin/dmfortfactor')
+        exec_path='../bin/dmscatter')
 plt.plot(Erkev,ER, label="Xe131, jj55", linestyle="-")
 
 Erkev, ER = np.loadtxt("test.xe131.dat", unpack=True)

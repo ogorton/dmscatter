@@ -1,12 +1,12 @@
 #############################
-# Makefile for DMFortFactor #
+# Makefile for dmscatter #
 #############################
 .DEFAULT_GOAL := all
 
 SRC_DIR = ../src
 BIN_DIR = ../bin
 
-EXE = $(BIN_DIR)/dmfortfactor
+EXE = $(BIN_DIR)/dmscatter
 SRC = $(wildcard $(SRC_DIR)/*.f*)
 OBJ = $(SRC:$(SRC_DIR)/%.f90=%.o)
 
@@ -40,7 +40,7 @@ constants.o:
 crosssection.o:     main.o constants.o transition.o
 densities.o:        main.o orbitals.o norm.o
 distributions.o:    constants.o 	
-dmfortfactor.o:     spectra.o wigner.o nucresponse.o keywords.o totaleventrate.o parameters.o
+dmscatter.o:     spectra.o wigner.o nucresponse.o keywords.o totaleventrate.o parameters.o
 dmresponse.o:       dmresponselib.o densities.o
 dmresponselib.o:    constants.o
 eventrate.o:        main.o quadrature.o constants.o crosssection.o distributions.o
@@ -68,7 +68,7 @@ zhangjin.o:
 ################
 all: $(EXE)
 
-dmfortfactor:
+dmscatter:
 	$(MAKE)
 
 openmp:
@@ -88,7 +88,7 @@ help:
 	@echo "---"
 	@echo "Here are the compiler options:"
 	@echo "    make all -- (default)"
-	@echo "    make dmfortfactor -- same as make all"
+	@echo "    make dmscatter -- same as make all"
 	@echo "    make openmp -- compile with OpenMP parallelization"
 	@echo "    make clean -- remove object (.o) and module (.mod) files"
 	@echo "    make cleaner -- remove object (.o) files, module (.mod) files, and bin directory"

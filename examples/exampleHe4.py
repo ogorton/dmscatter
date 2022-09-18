@@ -3,7 +3,7 @@ sys.path.append("../python")
 
 import numpy as np
 import matplotlib.pyplot as plt
-import dmfortfactor as dm
+import dmscatter as dm
 
 dresfiles = [
         '../targets/He/he4n3lo_nmax16hw26']
@@ -38,7 +38,7 @@ for opi,operator in enumerate(operators):
                 dres = dresfile,
                 controlwords = control_dict,
                 cp = cn,
-                exec_path='../bin/dmfortfactor')
+                exec_path='../bin/dmscatter')
 
         plt.figure(1)
         plt.plot(E,R,label=dresfile[3:])
