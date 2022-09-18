@@ -1,4 +1,4 @@
-# dmscatter: A Fast Fortran Program for WIMP-Nucleus Form Factors
+# dmscatter: A Fast Fortran Program for WIMP-Nucleus Scattering
 *Oliver Gorton, Changfeng Jiao, and Calvin Johnson*
 
 Computes the differential event rate per recoil energy for WIMP-nucleon
