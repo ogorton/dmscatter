@@ -1,3 +1,12 @@
+70,72,73.74,76Ge targets
+
+model space with 56Ni core and valence space of 0f5/2-1p1/2-1p3/2-0g9/2
+
+JUN45 interaction: Honma et al, PRC 80, 064323 (2009)
+
+ge70jun45.dres, ge72jun45.dres, ge73jun45.dres, ge74jun45.dres, ge76jun45.dres
+
+
 The Ge-73 calculation produced the incorrect ordering of states. The ground
 state and first excited states are very close in energy. Therefore, the .dres
 file was edited by hand in order to provide the correct ground state with

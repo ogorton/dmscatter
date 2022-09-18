@@ -1,0 +1,14 @@
+40Ar target
+
+fixed 16O core, with sdpf valence space
+
+The following weights assigned to the single-particle orbits:
+1s1/2:  1         0d3/2:   2  0d5/2:  1       1p1/2:  4      1p3/2:  3    0f5/2: 4  0f7/2: 3
+Model space allows for a 'W excitation' of 8 (see BIGSTICK manual for description)
+M=0, + parity dimension: 502,175,110
+
+ar40u8.dres:  interaction sdpfu,  Nowacki and Poves, PRC 79, 014310 (2009)
+
+ar40mu8.dres: interaction sdpfmu-db, Iwata et al, PRL 116, 112502 (2016)
+
+

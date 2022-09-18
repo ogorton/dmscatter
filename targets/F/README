@@ -1,0 +1,10 @@
+Target: 19F
+
+Empirical calculation in sd shell with fixed 16O core (added automatically by dmscatter)
+
+f19usdb.dres:  USDB interaction, Brown and Richter, PRC 74, 034315 (2006)
+
+f19w18.dres*:   Wildenthal USD interaction, Wildenthal Prog. Part. Nucl. Phys 11, 5 (1984);
+Brown and Wildenthal, Annu. Rev. Nucl. Part. Sci 38, 29 (1988)
+
+* = is a target available in the 2013 Mathematica code dmformfactor-V6.m

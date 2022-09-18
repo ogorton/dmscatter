@@ -2,7 +2,7 @@ import sys
 sys.path.append("../python")
 import numpy as np
 import matplotlib.pyplot as plt
-import dmfortfactor as dm
+import dmscatter as dm
 
 plt.figure()
 Z = 54
@@ -35,7 +35,7 @@ for j in range(len(ints)):
                 dres = dres,
                 controlwords = controls,
                 cs = cs,
-                exec_path='../bin/dmfortfactor')
+                exec_path='../bin/dmscatter')
     
         weightedsum += EventRate * weights[i]
     plt.plot(RecoilE, weightedsum, label=paths[j]+ints[j])

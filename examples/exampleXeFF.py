@@ -1,6 +1,6 @@
 import sys
 sys.path.append("../python")
-import dmfortfactor as dm
+import dmscatter as dm
 import numpy as np
 import matplotlib.pyplot as plt
 import random
@@ -17,7 +17,7 @@ Wfunc = dm.NucFormFactor(
         epmin = 0.001,
         epmax = 10.0,
         epstep = 0.001,
-        exec_path='../bin/dmfortfactor')
+        exec_path='../bin/dmscatter')
 
 q = 0.001
 print("q = %10.5f"%q)

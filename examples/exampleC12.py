@@ -3,15 +3,15 @@ sys.path.append("../python")
 
 import numpy as np
 import matplotlib.pyplot as plt
-import dmfortfactor as dm
+import dmscatter as dm
 
 targetsfiles = [
-        '../targets/C/c12Nmax8chi20hw',
-        '../targets/C/c12Nmax6DAEhw22.5',
-        '../targets/C/c12Nmax6chi20hw',
-        '../targets/C/c12Nmax8DAEhw22.5', 
+        '../targets/C/c12n3lo_nmax8hw20',
+        '../targets/C/c12n3lo_nmax8hw20',
+        '../targets/C/c12daejon_nmax6hw22.5',
+        '../targets/C/c12daejon_nmax8hw22.5', 
         '../targets/C/c12ck']
-hofrequencies = [20.0, 22.5, 20.0, 22.5, "na"]
+hofrequencies = [20.0, 20.0, 22.5, 22.5, "na"]
 hofrequencies = len(targetsfiles) * ["na"]
 operators = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
@@ -47,7 +47,7 @@ for opi,operator in enumerate(operators):
                 target = targetsfile,
                 controlwords = control_dict,
                 cn = cn,
-                exec_path='../bin/dmfortfactor')
+                exec_path='../bin/dmscatter')
 
 
         if (first):

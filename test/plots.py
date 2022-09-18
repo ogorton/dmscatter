@@ -1,5 +1,5 @@
 f = open("validation.md","w+")
-f.write("---\ngeometry:\n- margin=.5in\n---\n# DMFortFactor Validation Plots for $^{29}$Si\n")
+f.write("---\ngeometry:\n- margin=.5in\n---\n# dmscatter Validation Plots for $^{29}$Si\n")
 pairs = [
         (1,1), (1,2), (1,3),
         (2,2), (2,3),

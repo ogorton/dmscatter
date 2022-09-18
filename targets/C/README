@@ -1,0 +1,30 @@
+12C target
+
+Three interactions in three model spaces:
+
+1) c12ck.dres:  Cohen-Kurath empirical interaction in p-shell 
+with fixed alpha core: Cohen and Kurath, NP A73, 1 (1965); NP A101, 1 (1967)
+
+2) No-core shell model (NCSM); Interaction is two-body N3LO chiral interaction, 
+Entem & Machleidt PRC 68, 041001(R) (2003), SRG evolved to lambda = 2.0 fm^-1.
+
+Computed with h.o. basis frequency hw = 20 MeV; this is approx min for 
+this interaction
+
+in control file set
+hofrequency 20.0
+
+Nmax = 6:  c12n3lo_nmax6hw20.dres
+Nmax = 8:  c12n3lo_nmax8hw20.dres
+
+3) No-core shell model (NCSM); Interaction is Daejon16 interaction, 
+Shirokov et al, Phys Let B 761, 87 (2016)
+
+Computed with h.o. basis frequency hw = 22.5 MeV; this is approx min for 
+this interaction
+
+in control file set
+hofrequency 22.5
+
+Nmax = 6:  c12daejon_nmax6hw22.5.dres
+Nmax = 8:  c12daejon_nmax8hw22.5.dres

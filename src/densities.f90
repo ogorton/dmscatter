@@ -108,8 +108,8 @@ module densities
       print '(" Protons: ",f10.4," Expected: ",i3)',Zval,nuc_target%Z
       print '(" Neutrons: ",f10.4," Expected: ",i3)',Nval,nuc_target%N
 
-      if (abs(Zval - nuc_target%Z)>1e-3) STOP "ERROR: Density matrix does not satisfy proton number definition"
-      if (abs(Nval - nuc_target%N)>1e-3) STOP "ERROR: Density matrix does not satisfy neutron number definition"      
+      if (pndens.and.abs(Zval - nuc_target%Z)>1e-3) STOP "ERROR: Density matrix does not satisfy proton number definition"
+      if (pndens.and.abs(Nval - nuc_target%N)>1e-3) STOP "ERROR: Density matrix does not satisfy neutron number definition"      
 
     end subroutine testValenceCount
     

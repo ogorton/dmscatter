@@ -1,0 +1,11 @@
+4He target
+
+No-core shell model (NCSM) calculated at Nmax=16, 
+with basis frequency hw = 26 MeV; in control file set
+hofrequency 26.0
+
+Interaction is two-body N3LO chiral interaction, 
+Entem & Machleidt PRC 68, 041001(R) (2003) 
+SRG evolved to lambda = 2.0 fm^-1.
+
+
