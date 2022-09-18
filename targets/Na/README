@@ -1,6 +1,6 @@
 Target: 23Na
 
-Empirical calculation in sd shell with fixed 16O core (added automatically by dmfortfactor)
+Empirical calculation in sd shell with fixed 16O core (added automatically by dmscatter)
 
 na23usdb.dres:  USDB interaction, Brown and Richter, PRC 74, 034315 (2006)
 

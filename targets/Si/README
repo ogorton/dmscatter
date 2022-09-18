@@ -1,6 +1,6 @@
 Targets:  28,29,30Si
 
-Empirical calculation in sd shell with fixed 16O core (added automatically by dmfortfactor)
+Empirical calculation in sd shell with fixed 16O core (added automatically by dmscatter)
 
 si28usdb.dres:  USDB interaction, Brown and Richter, PRC 74, 034315 (2006)
 si29usdb.dres
