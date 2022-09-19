@@ -67,7 +67,8 @@ Recoilenergykev, Eventrate = dm.EventrateSpectra(
             Z = 54,
             N = 77,
             target = "../targets/Xe/xe131gcn",
-            cn = [0.00048, 0,0,0,0,0,0,0,0,0,0,0,0,0,0] )
+            cn = [0.00048, 0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            exec_path='../bin/dmscatter' )
 ```
 A more detailed example is given in `examples/exampleXe.py`.
 
