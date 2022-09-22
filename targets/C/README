@@ -17,7 +17,7 @@ hofrequency 20.0
 Nmax = 6:  c12n3lo_nmax6hw20.dres
 Nmax = 8:  c12n3lo_nmax8hw20.dres
 
-3) No-core shell model (NCSM); Interaction is Daejon16 interaction, 
+3) No-core shell model (NCSM); Interaction is Daejeon16 interaction, 
 Shirokov et al, Phys Let B 761, 87 (2016)
 
 Computed with h.o. basis frequency hw = 22.5 MeV; this is approx min for 
@@ -26,5 +26,5 @@ this interaction
 in control file set
 hofrequency 22.5
 
-Nmax = 6:  c12daejon_nmax6hw22.5.dres
-Nmax = 8:  c12daejon_nmax8hw22.5.dres
+Nmax = 6:  c12daejeon_nmax6hw22.5.dres
+Nmax = 8:  c12daejeon_nmax8hw22.5.dres

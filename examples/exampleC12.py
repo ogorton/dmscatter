@@ -8,8 +8,8 @@ import dmscatter as dm
 targetsfiles = [
         '../targets/C/c12n3lo_nmax8hw20',
         '../targets/C/c12n3lo_nmax8hw20',
-        '../targets/C/c12daejon_nmax6hw22.5',
-        '../targets/C/c12daejon_nmax8hw22.5', 
+        '../targets/C/c12daejeon_nmax6hw22.5',
+        '../targets/C/c12daejeon_nmax8hw22.5', 
         '../targets/C/c12ck']
 hofrequencies = [20.0, 20.0, 22.5, 22.5, "na"]
 hofrequencies = len(targetsfiles) * ["na"]
