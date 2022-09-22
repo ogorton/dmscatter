@@ -10,8 +10,11 @@ Can be used as a standard Fortran program via the command line, or via our
 convenient Python interfaces, which offer a minimal interface, optionally 
 extensible to the full capabilities of the underlying program.
 
+Read the paper:
+* [Link to arXiv:2209.09187](https://arxiv.org/abs/2209.09187)
+
 Read the documentation:
-* [PDF](docs/dmscatter_User_Manual.pdf)
+* [Link to PDF](docs/dmscatter_User_Manual.pdf)
 
 **Dev Contacts**
 
