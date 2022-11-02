@@ -35,7 +35,8 @@ if compute:
                 "wimpmass" : WIMPMASS,
                 "vearth" : 232.0,
                 "ntscale" : 2500.0,
-                "maxwellv0" : 220.0
+                "maxwellv0" : 220.0,
+                "outfile" : f"wimpmass_{WIMPMASS}gev.dat"
         }
         tstart = timeit.default_timer()
 
