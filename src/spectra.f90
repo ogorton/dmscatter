@@ -91,16 +91,17 @@ module spectra
     
     
         cslist = velocitycurve(vlist, qr, option)
-    
         select case(option)
         case(3)
-            open(newunit=iunit, file="transition_probability.dat")
+            if (outfile=='default') outfile = "transition_probability.dat"
+            open(newunit=iunit, file=trim(outfile))
             do i = 1, sizevlist
                 write(iunit,*) vlist(i)/kilometerpersecond, cslist(i)
             end do
             close(iunit)
         case(2)
-            open(newunit=iunit, file="crosssection.dat")
+            if (outfile=='default') outfile = "crosssection.dat"
+            open(newunit=iunit, file=trim(outfile))
             do i = 1, sizevlist
                 write(iunit,*) vlist(i)/kilometerpersecond, cslist(i)
             end do
@@ -160,7 +161,8 @@ module spectra
         end do
     
         ! Write results to file
-        open(newunit=iunit, file='eventrate_spectra.dat')
+        if (outfile=='default') outfile = "eventrate_spectra.dat"
+        open(newunit=iunit, file=trim(outfile))
         write(iunit,"(A,T30,A)")"# Recoil energy (kev)","Event rate (events/gev)"
         do calc_num = 1, energy_grid_size
             recoil_energy = energy_grid(calc_num)
@@ -310,7 +312,8 @@ module spectra
           end do
         end if      
     
-        open(newunit=iunit, file='nucresponse_spectra.dat')
+        if (outfile=='default') outfile = 'nucresponse_spectra.dat'
+        open(newunit=iunit, file=trim(outfile))
         write(iunit,'(a,i3)')'# Z = ',nuc_target%Z
         write(iunit,'(a,i3)')'# N = ',nuc_target%N
         write(iunit,'(a)')'# Nuclear response functions W(operator,tau, tau_prime, q)'
@@ -344,7 +347,6 @@ module spectra
         close(iunit)
     
         deallocate(Wlist)
-    
     end subroutine nucresponse_spectra
 
 end module spectra
