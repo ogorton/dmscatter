@@ -113,13 +113,13 @@ module keywords
   
   end subroutine readcontrolfile
 
-  function cnvtString2Real(string) result(stringreal)
+  subroutine cnvtString2Real(string,stringreal,stat)
     implicit none
     character (len=*), intent(in) :: string
-    real (kind=8) :: stringreal
-
-    read(string, *) stringreal
-  end function
+    real (kind=8), intent(out) :: stringreal
+    integer, intent(out) :: stat
+    read(string, *, iostat=stat) stringreal
+  end subroutine
   
   !=============================================
   subroutine setkeyword(keyword, keyvaluestr)
@@ -127,8 +127,15 @@ module keywords
     character (len=*) :: keyword
     character (len=*) :: keyvaluestr
     real (kind=8) :: keyvalue
+    integer :: stat
 
-    if (.not.keyword=='outfile') keyvalue = cnvtString2Real(keyvaluestr)
+    if (.not.keyword=='outfile') then
+      call cnvtString2Real(keyvaluestr, keyvalue, stat)
+      if (stat/=0) then 
+        print '("Could not parse keyword: ",a," ...ignoring")',keyword
+        return
+      end if
+    end if
   
     select case (keyword)
   
