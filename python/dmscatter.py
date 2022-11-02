@@ -64,11 +64,17 @@ def EventrateSpectra(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1
     inputfile = writeinput('er', name, Z, N, dres, epmin, epmax, epstep)
     controlfile = writecontrol(name, controlwords, cp, cn, cs, cv)
 
+    try:
+        resultfile = controlwords["outfile"]
+    except:
+        resultfile = "default"
+    if resultfile == "default": resultfile = "eventrate_spectra.dat"
+
     RecoilE, EventRate = runTemplates(
         exec_path, 
         inputfile,
         controlfile, 
-        resultfile="eventrate_spectra.dat",
+        resultfile=resultfile,
         label=name,
         debug=debug
         )
@@ -85,19 +91,23 @@ def NucFormFactor(Z, N, dres=None, target=None, epmin=1, epmax=1000, epstep=1,
     inputfile = writeinput('ws', name, Z, N, dres, epmin, epmax, epstep)
     controlfile = writecontrol(name, controlwords)
 
+    try:
+        resultfile = controlwords["outfile"]
+    except:
+        resultfile = "default"
+    if resultfile == "default": resultfile = 'nucresponse_spectra.dat'
 
     columns  = runTemplates(
         exec_path,
         inputfile,
         controlfile,
         label=name,
-        resultfile='nucresponse_spectra.dat',
+        resultfile=resultfile,
         debug=debug
         )
 
     q = columns[0]
     W = columns[1:]
-
 
     function_lst = []
     for operator in range(0,8):
@@ -131,7 +141,6 @@ def writeinput(option, name, Z, N, dres, epmin, epmax, epstep):
     if not os.path.exists(dres+".dres"):
         print("dmscatter.py WARNING: %s can't be found!"%(dres+".dres"))
         exit()
-
 
     # Create input file
     CSspectra_inputfilename = name + ".input"
