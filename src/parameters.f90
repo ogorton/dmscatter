@@ -40,7 +40,7 @@ module parameters
         print*,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
         print*,'Control file settings used:'
         do i = 1, numkeywords
-            print '(A, "    ", F20.10)', keywordpairs(i)%key, keywordpairs(i)%val
+            print '(A, "    ", A)', keywordpairs(i)%key, keywordpairs(i)%val
         end do
     
         print*,''
