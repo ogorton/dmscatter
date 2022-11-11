@@ -24,7 +24,7 @@ Read the documentation:
 ## Compile
 To compile the program, you must have the `gfortran` compiler and `make`
 installed. to compile an OpenMP-parallel version of the code, navigate to the 
-`build` directory and run:
+`make` directory and run:
 
     make openmp
 
