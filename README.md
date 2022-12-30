@@ -11,6 +11,7 @@ convenient Python interfaces, which offer a minimal interface, optionally
 extensible to the full capabilities of the underlying program.
 
 Read the paper:
+* [Link to CPC Publication (2022)](https://doi.org/10.1016/j.cpc.2022.108597)
 * [Link to arXiv:2209.09187](https://arxiv.org/abs/2209.09187)
 
 Read the documentation:
