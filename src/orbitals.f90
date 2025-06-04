@@ -163,7 +163,7 @@ module orbitals
             case(40)
                 print*,'Ca-40 core.'
                 ncoreorb = 6
-            case(44)
+            case(56)
                 print*,'Ni-56 core.'
                 ncoreorb = 7
             case(100)
